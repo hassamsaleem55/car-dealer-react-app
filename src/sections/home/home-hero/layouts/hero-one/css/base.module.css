@@ -1,0 +1,99 @@
+/* =======================================
+   BASE HERO STYLES
+======================================= */
+@reference "tailwindcss";
+@import "@dealers-dir/style.css";
+
+.hero {
+  @apply relative w-full min-h-screen overflow-hidden z-0 text-white;
+}
+
+.hero-bg {
+  @apply absolute inset-0 w-full h-full object-cover brightness-50;
+}
+
+.hero-content {
+  @apply relative z-10;
+}
+
+.hero-text {
+  @apply max-w-2xl;
+}
+
+.hero-title {
+  @apply text-4xl md:text-5xl lg:text-6xl font-bold leading-tight drop-shadow-md;
+}
+
+.hero-subtitle {
+  @apply text-base md:text-lg lg:text-xl mt-3 mb-8 text-gray-200;
+}
+
+.hero-filter__wrapper {
+  @apply w-7xl;
+}
+
+@media (max-width: 1340px) {
+  .hero-filter__wrapper {
+    @apply w-6xl;
+  }
+}
+
+@media (max-width: 1175px) {
+  .hero-filter__wrapper {
+    @apply w-5xl;
+  }
+}
+
+@media (max-width: 1040px) {
+  .hero-filter__wrapper {
+    @apply w-5xl;
+  }
+}
+
+/* @media (max-width: 930px) {
+  .hero-filter__wrapper {
+    @apply w-[90%];
+  }
+} */
+
+/* =======================================
+   MOBILE BEHAVIOR (Unified for all variants)
+======================================= */
+@media (max-width: 930px) {
+  .hero {
+    @apply flex flex-col items-center justify-center min-h-[90vh];
+  }
+
+  .hero-content {
+    @apply flex flex-col items-center justify-center h-full px-6 md:px-10 text-center gap-4;
+  }
+
+  .hero-text {
+    @apply text-center max-w-full px-4;
+  }
+
+  .hero-title {
+    @apply text-5xl md:text-4xl lg:text-5xl;
+  }
+
+  .hero-subtitle {
+    @apply text-xl md:text-base lg:text-lg;
+  }
+
+  .hero-filter__wrapper {
+    @apply hidden;
+  }
+
+  .hero-filter__wrapper-mobile {
+    @apply relative z-20 w-full -mt-30;
+  }
+}
+
+/* =======================================
+   DESKTOP FILTER WRAPPER HIDING
+======================================= */
+@media (min-width: 930px) {
+  .hero-filter__wrapper-mobile {
+    @apply hidden;
+  }
+}

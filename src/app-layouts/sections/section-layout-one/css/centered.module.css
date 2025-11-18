@@ -1,0 +1,21 @@
+@import "./base.module.css";
+
+.section__wrapper {
+  @apply p-0;
+}
+
+.section__header {
+  @apply flex flex-col items-center text-center;
+}
+
+.section__heading-text {
+  @apply text-center;
+}
+
+.section__subheading-text {
+  @apply text-center max-w-3xl;
+}
+
+.section__body {
+  @apply py-8 space-y-24;
+}

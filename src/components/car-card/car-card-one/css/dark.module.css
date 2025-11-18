@@ -1,0 +1,26 @@
+@import "./default.module.css";
+
+.car-card {
+  @apply bg-linear-to-bl from-gray-700 to-black text-white shadow-xl;
+}
+
+.car-card__rating {
+  @apply text-white;
+  background-color: var(--color-primary);
+}
+
+.car-card__year {
+  color: var(--color-primary);
+}
+
+.car-card__price-total {
+  @apply text-white;
+}
+
+.car-card__spec {
+  @apply bg-gray-800 text-gray-200;
+}
+
+.car-card__footer {
+  @apply border-gray-800;
+}

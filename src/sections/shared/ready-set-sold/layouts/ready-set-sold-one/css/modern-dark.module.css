@@ -1,0 +1,14 @@
+@import "./base.module.css";
+
+.ready-set-sold-card {
+  @apply bg-linear-to-br from-gray-900/20 via-gray-900/40 to-gray-900;
+  @apply hover:shadow-white/10
+}
+
+.ready-set-sold-card__title {
+  @apply text-white/80;
+}
+
+.ready-set-sold-card__description {
+  @apply text-white/40;
+}

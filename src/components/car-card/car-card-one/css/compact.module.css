@@ -1,0 +1,27 @@
+@import "./default.module.css";
+
+/* Root compact */
+.car-card {
+  @apply max-w-xs;
+}
+
+/* Smaller image */
+.car-card__image-wrapper {
+  @apply h-32;
+}
+
+/* Hide subtitle + footer */
+.car-card__subtitle,
+.car-card__footer {
+  @apply hidden;
+}
+
+/* Tighter content */
+.car-card__content {
+  @apply p-2 space-y-2;
+}
+
+/* Price smaller */
+.car-card__price-total {
+  @apply text-lg;
+}

@@ -1,0 +1,51 @@
+/* Achievements Section Wrapper */
+@reference "tailwindcss";
+@import "@dealers-dir/style.css";
+
+.achievements-wrapper {
+  @apply bg-linear-to-br from-white/70 via-gray-50 to-gray-100 text-gray-900 
+         rounded-2xl shadow-md mx-auto max-w-7xl 
+         grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 
+         divide-y sm:divide-y-0 sm:divide-x divide-gray-200 
+         overflow-hidden transition-all duration-500 
+         ease-in-out 
+         cursor-default text-center;
+}
+
+/* Individual Info Block */
+.achievements-info {
+  @apply relative p-8 flex flex-col items-center justify-center w-full text-center 
+         bg-white hover:bg-gray-50 transition-colors duration-300;
+}
+
+/* Animated Glow Effect */
+.achievements-info::after {
+  content: "";
+  @apply absolute inset-0 opacity-0 bg-linear-to-tr from-yellow-100 via-transparent to-yellow-50 
+         transition-opacity duration-500;
+}
+.achievements-info:hover::after {
+  @apply opacity-100;
+}
+
+/* Main Value */
+.achievements-value {
+  @apply text-3xl sm:text-4xl font-extrabold text-center text-primary 
+         drop-shadow-sm transition-transform duration-500 ease-out 
+         group-hover:scale-110;
+}
+
+/* Title */
+.achievements-title {
+  @apply mt-2 text-basicFont text-sm sm:text-base font-medium 
+         tracking-wide transition-colors duration-300;
+}
+
+/* Hover Effects */
+.achievements-info:hover .achievements-value {
+  @apply text-primary scale-110;
+}
+
+.achievements-info:hover .achievements-title {
+  @apply text-gray-900;
+}

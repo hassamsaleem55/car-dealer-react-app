@@ -1,0 +1,34 @@
+/* =======================================
+   RIGHT CHOICE SECTION STYLES
+   Responsive & Clean Layout
+======================================= */
+
+@reference "tailwindcss";
+@import "@dealers-dir/style.css";
+
+.right-choice-card {
+  @apply px-6 py-5 sm:px-8 sm:py-6 rounded-2xl space-y-2 w-full h-full
+         transition-all duration-400 
+         /* ease-[cubic-bezier(0.4,0,0.2,1)] */
+         ease-in-out
+         hover:shadow-xl hover:scale-[1.03] cursor-default text-center;
+}
+
+.right-choice-card__title {
+  @apply text-lg sm:text-xl font-semibold flex flex-row gap-2 items-center text-center;
+}
+
+.right-choice-card__number {
+  @apply flex items-center justify-center rounded-full w-8 h-8 bg-basicFont text-white text-sm;
+}
+
+.right-choice-card__description {
+  @apply text-basicFont text-sm sm:text-base text-center sm:text-left leading-relaxed;
+}
+
+/* Optional hover improvement for touch devices */
+@media (hover: none) {
+  .right-choice-card {
+    @apply hover:scale-100 hover:shadow-none;
+  }
+}

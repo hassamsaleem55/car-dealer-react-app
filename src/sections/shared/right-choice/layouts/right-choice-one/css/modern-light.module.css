@@ -1,0 +1,5 @@
+@import "./base.module.css";
+
+.right-choice-card {
+  @apply bg-linear-to-br from-white/80 via-white/50 to-white/20;
+}

@@ -1,0 +1,12 @@
+.grid-layout {
+  @apply w-full h-auto grid justify-items-center items-stretch;
+  @apply gap-4 sm:gap-6;
+}
+
+.grid-layout__3-cols {
+  @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3;
+}
+
+.grid-layout__4-cols {
+  @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4;
+}

@@ -1,0 +1,22 @@
+/* =======================================
+   BASE VERTICAL HERO STYLES
+======================================= */
+@import "./base.module.css";
+
+@media (min-width: 769px) {
+  .hero {
+    @apply flex flex-row items-center justify-center;
+  }
+
+  .hero-content {
+    @apply flex flex-row h-full w-full px-16 md:px-32 items-center justify-between;
+  }
+
+  .hero-text {
+    @apply text-center;
+  }
+
+  .hero-filter__wrapper {
+    @apply w-full max-w-sm;
+  }
+}

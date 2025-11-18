@@ -1,0 +1,168 @@
+{
+    "SecondaryLogoUrl": "https://api.motors-hub.co.uk/Company/Images/968ec489-8e6c-4bc1-8af0-e2130d070c45/CompanyLogo/COM-071059158244.png",
+    "CompanyId": 1,
+    "UserId": 0,
+    "OwnerId": 62,
+    "DealerStrapline": "test st",
+    "MotDangerDays": 28,
+    "MotWarningDays": 96,
+    "StripeSecretKey": "SSu8/A+BZonQ6s24uQGW6ywbkb4cSxZdKFUARH8Z8jEqJ1ElAxUxiWbs7tBOXM5m+fnEp2IB5OUR/31+r4JeNt0/oQkaQUnD06Ei3GB+NLyrewOCXcKbQY2L2Mu3KMJbtHwsA9qtPWP3fvMuvCeGWw==",
+    "StripePublishableKey": "/d98q2JyKGSQkbZkWCTIzORVE/30DfQUE96F8F8oNxI3+lwbT86Gco3T0z3YRyyB65KGSvfPb6mIRzEMwqaOOZD3TCZdgJr+CgW7u2CiwwJVQyWmUdi1Gv4/q9N7OQ6kiTOj38mmgHw0IDkXwrvx2Q==",
+    "StripeWebhookSecretKey": "nObIZUOL+CbcKTqQvPNPF/upoac40jPMZ6UdO6SzT2DR87GApeBqzAPpiooBVwFX",
+    "InvoiceTermsAndConditions": "Please review the company's invoice terms and conditions. Adherence to these terms is required prior to the successful completion of your purchase.",
+    "LogoUrl": "https://api.motors-hub.co.uk/Company/Images/968ec489-8e6c-4bc1-8af0-e2130d070c45/CompanyLogo/COM-114937708692.png",
+    "EmailAddress": "test@dealershub.co.uk",
+    "PhoneNumber": "07000000008",
+    "Url": "temp2.motors-hub.co.uk",
+    "IsLive": false,
+    "IsSandboxRetailer": true,
+    "ThemeName": "theme15",
+    "CompanyName": "Motors Hub",
+    "VATTypeId": 6621,
+    "VatStartMonth": "January",
+    "VatTaxYear": "2025",
+    "InvoiceTemplate": "Crimson",
+    "SocialMediaInfo": {
+        "Facebook": "https://www.facebook.com/people/Dealers-Hub/61576353129133",
+        "Instagram": "https://www.instagram.com/dealershub",
+        "LinkedIn": "https://www.linkedin.com/company/dealershub"
+    },
+    "ReservationInfo": {
+        "ReservationAmount": 100
+    },
+    "ContactInfo": {
+        "InfoEmailAddress": "test@dealershub.co.uk",
+        "SupportEmailAddress": "test@dealershub.co.uk",
+        "PhoneNumber": "07000000008",
+        "LandlineNumber": "01456565656",
+        "WhatsAppNumber": "0700000088"
+    },
+    "EmailConfiguration": {
+        "SmtpPort": 8521,
+        "SmtpAuthentication": false,
+        "EnableSsl": false,
+        "SmtpServer": "syrope@mailinator.com",
+        "AuthUser": "nigylumo@mailinator.com",
+        "AuthPassword": "wiwonyl@mailinator.com",
+        "FromEmailAddress": "vohurotir@mailinator.com",
+        "DisplayName": "jaqicokuma@mailinator.com",
+        "IsEmailDisabled": false
+    },
+    "SMSConfiguration": {
+        "IsSmsDisabled": false
+    },
+    "CompanyFinanceDetails": {
+        "CompanyId": 1,
+        "FinanceInfoId": 1,
+        "FinanceApiKey": "w69AtEfPKFLaNrsapVkrCgsu/w7ZzjTbMSRa5XALK/I=",
+        "PCPMileage": 2,
+        "NoOfMonths": 2,
+        "DepositAmount": 7,
+        "DepositPercentage": 0,
+        "FinanceCompaniesMetaData": "[\"automoney\",\"blackhorsefinance\",\"bluemotorfinance\",\"carfinance247\",\"carmoney\",\"mallard\",\"midlandcredit\",\"saf\"]",
+        "FinanceCompanies": [
+            "automoney",
+            "blackhorsefinance",
+            "bluemotorfinance",
+            "carfinance247",
+            "carmoney",
+            "mallard",
+            "midlandcredit",
+            "saf"
+        ]
+    },
+    "PDISettings": {
+        "CompanyId": 0,
+        "CompanyPDISettings": [],
+        "IsSuccess": false
+    },
+    "CompanyNumber": "11200120",
+    "VATNumber": "6746",
+    "FCANumber": "685821",
+    "IsAutoTraderRegistered": false,
+    "AdvertiserId": "326892",
+    "MotorsAdvertiserId": "2122",
+    "IsAdvertiserRestricted": false,
+    "AtStatus": "Active",
+    "Schedules": [
+        {
+            "ScheduleId": 1,
+            "DayId": 1,
+            "OpeningTime": "2025-09-02T20:00:00",
+            "ClosingTime": "2025-09-02T17:30:00",
+            "IsOpen": true,
+            "IsAppointment": false,
+            "BreaksTiming": "[]"
+        },
+        {
+            "ScheduleId": 2,
+            "DayId": 2,
+            "OpeningTime": "2025-09-02T20:00:00",
+            "ClosingTime": "2025-09-02T17:30:00",
+            "IsOpen": false,
+            "IsAppointment": true,
+            "BreaksTiming": "[]"
+        },
+        {
+            "ScheduleId": 3,
+            "DayId": 3,
+            "OpeningTime": "2025-09-02T20:00:00",
+            "ClosingTime": "2025-09-02T17:30:00",
+            "IsOpen": true,
+            "IsAppointment": false,
+            "BreaksTiming": "[]"
+        },
+        {
+            "ScheduleId": 4,
+            "DayId": 4,
+            "OpeningTime": "2025-09-02T20:00:00",
+            "ClosingTime": "2025-09-02T17:30:00",
+            "IsOpen": true,
+            "IsAppointment": false,
+            "BreaksTiming": "[]"
+        },
+        {
+            "ScheduleId": 5,
+            "DayId": 5,
+            "OpeningTime": "2025-09-02T20:00:00",
+            "ClosingTime": "2025-09-02T17:30:00",
+            "IsOpen": true,
+            "IsAppointment": true,
+            "BreaksTiming": "[]"
+        },
+        {
+            "ScheduleId": 6,
+            "DayId": 6,
+            "OpeningTime": "2025-09-02T20:00:00",
+            "ClosingTime": "2025-09-02T17:30:00",
+            "IsOpen": true,
+            "IsAppointment": false,
+            "BreaksTiming": "[]"
+        },
+        {
+            "ScheduleId": 7,
+            "DayId": 7,
+            "OpeningTime": "2025-09-02T22:30:00",
+            "ClosingTime": "2025-09-02T16:30:00",
+            "IsOpen": true,
+            "IsAppointment": false,
+            "BreaksTiming": "[{\"Start\":\"13:00\",\"End\":\"13:30\"}]"
+        }
+    ],
+    "FacebookPageId": "610441728828118",
+    "TwitterApiKey": "fqFFMO31VD7Ogxu87NgBB0mUs",
+    "TwitterApiSecretKey": "ldz7xD0mRJoUilGGA4hIgDj4UJZsDP9xQGWz5baRIS7AgMXCj2",
+    "TwitterAccessToken": "1902291986922795010-2aubdMKqdVpFZCbSR5rx44STKF53T9",
+    "TwitterAccessTokenSecret": "fUxTth4yeKdQ7W1Vdk0UMWgrmUu3ElnQ9QYxR6ZwDaYDW",
+    "PDITemplateId": 10601,
+    "LogoRemoved": false,
+    "SecondLogoRemoved": false,
+    "Address1": "84A Ford End Road",
+    "City": "Bedford",
+    "Country": "England",
+    "PostCode": "MK40 4JH",
+    "Longitude": -0.482538,
+    "Latiitude": 52.1326,
+    "FullAddress": "84A Ford End Road,  Bedford, England, MK40 4JH",
+    "IsSuccess": false
+}

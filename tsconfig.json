@@ -1,0 +1,34 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@dealers-dir/*": ["./dealers/*"],
+      "@app-layout-dir/*": ["src/app-layouts/*"],
+      "@components-dir/*": ["./src/components/*"],
+      "@core-dir/*": ["./src/core/*"],
+      "@elements-dir/*": ["./src/elements/*"],
+      "@sections-dir/*": ["./src/sections/*"],
+      "@types-dir/*": ["./src/types/*"]
+    }
+  },
+  "include": ["src", "dealers", "vite.config.ts"]
+}

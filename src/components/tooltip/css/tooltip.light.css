@@ -1,0 +1,5 @@
+@import './tooltip.base.css';
+
+.tooltip {
+  @apply bg-white/90 text-basicFont;
+}

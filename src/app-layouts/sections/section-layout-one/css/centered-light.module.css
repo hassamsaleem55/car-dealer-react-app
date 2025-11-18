@@ -1,0 +1,9 @@
+@import "./centered.module.css";
+
+.section__wrapper {
+  @apply bg-gray-200/50 m-0;
+}
+
+.section__container {
+  @apply py-18;
+}

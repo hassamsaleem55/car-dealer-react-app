@@ -1,0 +1,5 @@
+@import "./base.module.css";
+
+.ready-set-sold-card {
+  @apply bg-gray-100;
+}

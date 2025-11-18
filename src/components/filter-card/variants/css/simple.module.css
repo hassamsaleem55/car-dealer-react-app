@@ -1,0 +1,38 @@
+/* ===== Filter Card (Simple Style) ===== */
+@reference "tailwindcss";
+@import "@dealers-dir/style.css";
+
+.filter-card {
+  @apply bg-white border border-gray-200 
+         rounded-lg w-full h-50 flex flex-col items-center 
+         justify-center cursor-pointer 
+         transition-all duration-200;
+}
+
+.filter-card:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* ===== Image Type ===== */
+.filter-card img {
+  @apply size-24 sm:size-36 object-contain;
+}
+
+/* ===== Icon Type Wrapper ===== */
+.filter-card-icon {
+  @apply h-14 w-14 rounded-full mb-4 
+         flex items-center justify-center 
+         transition-colors duration-200;
+}
+
+.filter-card:hover .filter-card-icon {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* ===== Card Label / Title ===== */
+.filter-card-title {
+  @apply text-sm font-semibold;
+  color: var(--text-font-basic-color);
+}

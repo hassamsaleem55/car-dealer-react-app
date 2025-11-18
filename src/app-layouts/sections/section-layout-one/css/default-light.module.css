@@ -1,0 +1,9 @@
+@import "./base.module.css";
+
+.section__wrapper {
+  @apply bg-gray-200/50;
+}
+
+.section__container {
+  @apply py-18;
+}

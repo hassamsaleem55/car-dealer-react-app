@@ -1,0 +1,21 @@
+@import './base.module.css';
+
+/* =======================================
+   HORIZONTAL FILTER (desktop)
+======================================= */
+.filter-box {
+  @apply flex-row justify-center items-center;
+}
+
+.filter-box > * {
+  @apply grow;
+}
+
+/* =======================================
+   MOBILE OVERRIDES
+======================================= */
+@media (max-width: 768px) {
+  .filter-box {
+    @apply flex-col items-stretch gap-3;
+  }
+}

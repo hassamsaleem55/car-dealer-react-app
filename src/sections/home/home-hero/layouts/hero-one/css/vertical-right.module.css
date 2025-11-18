@@ -1,0 +1,15 @@
+@import "./vertical-base.module.css";
+
+/* =======================================
+   VERTICAL RIGHT HERO (DESKTOP)
+======================================= */
+
+@media (min-width: 769px) {
+  .hero-text {
+    @apply order-1;
+  }
+
+  .hero-filter__wrapper {
+    @apply order-2;
+  }
+}

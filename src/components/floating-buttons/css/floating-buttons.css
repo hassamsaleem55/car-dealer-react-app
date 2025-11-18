@@ -1,0 +1,25 @@
+/* ====================================
+   Floating Action Buttons Styles
+   ==================================== */
+
+/* Scroll To Top */
+.scroll-to-top-btn {
+  @apply fixed bottom-5 right-2 z-50 flex items-center justify-center cursor-pointer
+         w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary text-white
+         shadow-lg border border-primary/80 hover:bg-neutral-800
+         transition-all duration-300;
+}
+
+.scroll-to-top-btn.hidden {
+  @apply opacity-0 pointer-events-none;
+}
+
+.whatsapp-chat-btn-container {
+  @apply z-888 fixed bottom-5 left-0 transform sm:block;
+}
+
+/* WhatsApp Chat */
+.whatsapp-chat-btn {
+  @apply rounded-tr-lg rounded-br-lg block text-center p-4 transition-all duration-300 
+  text-white bg-green-500 hover:bg-green-600;
+}

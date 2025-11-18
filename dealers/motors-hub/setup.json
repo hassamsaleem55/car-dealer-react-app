@@ -1,0 +1,541 @@
+{
+  "dealer": {
+    "id": "dealer-001",
+    "name": "Motors Hub",
+    "tagline": "Your Trusted Car Dealership",
+    "description": "Your trusted car dealership offering new and pre-owned vehicles with professional service and financing options.",
+    "checkReCheckList": [
+      "HPI Check",
+      "Interior",
+      "Road Test",
+      "Suspension",
+      "Under the bonnet",
+      "Oil",
+      "Wheels & brakes",
+      "Body work",
+      "MOT",
+      "Multi Point Check",
+      "Electric",
+      "Engine",
+      "Transmission",
+      "Exhaust System",
+      "MOT History",
+      "Underbody"
+    ]
+  },
+  "navbar": "NavbarDefault",
+  "footer": "FooterDefault",
+  "pages": [
+    {
+      "isSubmenu": false,
+      "mainMenuText": null,
+      "subMenuText": null,
+      "pageName": "home",
+      "label": "Home",
+      "title": "Home - Motors Hub",
+      "description": "Welcome to Motors Hub, your trusted car dealership.",
+      "path": "/",
+      "showInNavbar": true,
+      "sections": [
+        {
+          "isShared": false,
+          "folderName": "home-hero",
+          "variant": "HeroOneHorizontal",
+          "props": {
+            "heading": "Find Your Dream Car",
+            "subHeading": "Explore the best selection of new and used cars"
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "featured",
+          "variant": "FeaturedDefault",
+          "props": { "heading": "Latest Stock" }
+        },
+        {
+          "isShared": true,
+          "folderName": "brand-listing",
+          "variant": "BrandListingDefault",
+          "props": { "heading": "Popular Brands" }
+        },
+        {
+          "isShared": true,
+          "folderName": "body-type",
+          "variant": "BodyTypeDefault",
+          "props": {
+            "heading": "Browse by Body Type"
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "trust",
+          "variant": "TrustLight",
+          "props": {
+            "heading": "Built on Trust, Bound by Numbers",
+            "subHeading": "We earn trust. The numbers prove we deliver consistently."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "AA",
+          "variant": "AABannerDefault"
+        },
+        {
+          "isShared": true,
+          "folderName": "trusted-partner",
+          "variant": "TrustedPartnerDefault",
+          "props": {
+            "heading": "Our Trusted Partners",
+            "subHeading": "We work with the best in the industry"
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "right-choice",
+          "variant": "RightChoiceLight",
+          "props": {
+            "heading": "Why We're the Right Choice for You",
+            "subHeading": "Your needs first — expert service, honest pricing, no hassle."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "ready-set-sold",
+          "variant": "ReadySetSoldDefault",
+          "props": {
+            "heading": "Ready. Set. Sold",
+            "subHeading": "We make car selling simple. Here's how it works."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "achievements",
+          "variant": "AchievementsLight",
+          "props": {
+            "heading": "Our Achievements",
+            "subHeading": "We take pride in our milestones — each one built on trust, excellence, and passion for what we do."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "testimonials",
+          "variant": "TestimonialsDefault",
+          "props": {
+            "heading": "What Our Customers Say",
+            "subHeading": "Our customers choose us for a stress-free car-buying journey — with upfront pricing, high-quality vehicles, and easy, flexible financing."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "faqs",
+          "variant": "FaqDefault",
+          "props": {
+            "heading": "Frequently Asked Questions"
+          }
+        }
+      ]
+    },
+    {
+      "isSubmenu": false,
+      "mainMenuText": null,
+      "subMenuText": null,
+      "pageName": "stock",
+      "label": "Our Stock",
+      "title": "Our Stock - Motors Hub",
+      "description": "Learn more about Motors Hub, your trusted car dealership.",
+      "path": "/stock",
+      "showInNavbar": true,
+      "sections": [
+        {
+          "isShared": false,
+          "folderName": "stock-listing",
+          "variant": "StockListingDefault"
+        }
+      ]
+    },
+    {
+      "isSubmenu": false,
+      "mainMenuText": null,
+      "subMenuText": null,
+      "pageName": "car-details",
+      "label": "Car Details",
+      "title": "Car Details - Motors Hub",
+      "description": "Learn more about a specific car at Motors Hub.",
+      "path": "/car-details",
+      "showInNavbar": false,
+      "sections": [
+        {
+          "isShared": false,
+          "folderName": "car-details",
+          "variant": "CarDetailsDefault"
+        }
+      ]
+    },
+    {
+      "isSubmenu": false,
+      "mainMenuText": null,
+      "subMenuText": null,
+      "pageName": "finance",
+      "label": "Finance",
+      "title": "Finance - Motors Hub",
+      "description": "Learn more about Motors Hub, your trusted car dealership.",
+      "path": "/finance",
+      "showInNavbar": true,
+      "sections": [
+        {
+          "isShared": true,
+          "folderName": "pages-hero",
+          "variant": "PagesHeroDefault",
+          "props": {
+            "title": "Finance",
+            "heading": "Flexible Finance Options to Suit Your Budget",
+            "subHeading": "A dedicated team of finance specialists ready to assist with your application. Through strong partnerships with leading banks and specialist motor finance providers, we’ve helped hundreds of customers secure the right finance package — even if their credit history isn’t perfect."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "pages-content",
+          "variant": "PagesContentLeft",
+          "props": {
+            "heading": "Drive Your Dream Car with Flexible Financing",
+            "paragraphs": [
+              "We believe everyone deserves the car they love — without the stress of upfront costs. Our tailored finance options make it easy and affordable to get behind the wheel. Whether you’re buying your first car or upgrading, we’ll help you find a payment plan that fits your budget."
+            ],
+            "points": [
+              {
+                "heading": "Flexible Finance Plans",
+                "description": "Drive luxury without stretching your budget—pay comfortably over time."
+              },
+              {
+                "heading": "Quality You Can Trust",
+                "description": "Choose a plan that fits your lifestyle, not the other way around."
+              },
+              {
+                "heading": "Hassle-Free Buying Experience",
+                "description": "Get behind the wheel faster with quick and hassle-free approvals."
+              },
+              {
+                "heading": "No Hidden Fees",
+                "description": "What you see is what you pay—no surprises, just transparency."
+              }
+            ],
+            "mediaLinks": {
+              "type": "video",
+              "urls": ["https://player.vimeo.com/video/165439884"]
+            }
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "pages-content",
+          "variant": "PagesContentRight",
+          "props": {
+            "heading": "Hire Purchase (HP)",
+            "paragraphs": [
+              "HP offers a simple path to car ownership with fixed monthly payments over 3 to 5 years. Once all payments — including any fees — are made, the car is yours.",
+              "While an initial deposit is usually required, some deals offer a zero deposit option. HP is perfect if you want to own the car outright and prefer predictable payments.",
+              "If you like switching cars often, HP may not be ideal, as you must settle the agreement first — either by paying off the balance or part exchanging the car."
+            ],
+            "points": [
+              {
+                "heading": "Fixed Monthly Payments",
+                "description": "Enjoy predictable costs with no surprises over the agreement term."
+              },
+              {
+                "heading": "Car Ownership Guaranteed",
+                "description": "Own the vehicle outright once the final payment is made."
+              },
+              {
+                "heading": "Early Settlement Required",
+                "description": "To switch vehicles early, you'll need to clear the remaining balance."
+              },
+              {
+                "heading": "Zero Deposit Deals",
+                "description": "Start driving with little or no upfront payment, depending on the offer."
+              }
+            ],
+            "mediaLinks": {
+              "type": "video",
+              "urls": ["https://player.vimeo.com/video/165435653"]
+            }
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "pages-content",
+          "variant": "PagesContentLeft",
+          "props": {
+            "heading": "Personal Contract Purchase (PCP)",
+            "paragraphs": [
+              "PCP (Personal Contract Purchase) is a flexible way to finance a used car, allowing for lower monthly payments by deferring a portion of the car’s value until the end of the agreement.",
+              "Throughout your PCP term, you enjoy the benefit of driving the car with manageable payments. When the agreement ends, you can either return the car to the lender if you prefer to move on, pay the final balloon payment to take full ownership, or part exchange the vehicle and use any remaining equity as a deposit towards your next car.",
+              "PCP is ideal if you’re looking for lower monthly costs and the flexibility to change cars regularly. However, since you don’t own the car until the final payment is made, it may not be the best option if long-term ownership is your goal. Keep in mind that returning the car may also incur charges for excess mileage or wear and tear."
+            ],
+            "mediaLinks": {
+              "type": "video",
+              "urls": ["https://player.vimeo.com/video/165440856"]
+            }
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "pages-content",
+          "variant": "PagesContentRight",
+          "props": {
+            "heading": "Conditional Sale (CS)",
+            "paragraphs": [
+              "Conditional Sale (CS) car finance lets you buy a car with manageable monthly payments. You pay a deposit upfront, then repay the car’s full value plus interest over an agreed term.",
+              "With CS finance, the lender buys the car and you make monthly payments until the contract ends. Unlike Hire Purchase, there’s no final fee—ownership automatically transfers once the loan is fully repaid.",
+              "CS agreements are flexible—you can adjust the deposit and contract length to suit your budget. It’s a straightforward, transparent way to buy a car without large upfront costs or surprise charges."
+            ],
+            "mediaLinks": {
+              "type": "video",
+              "urls": ["https://player.vimeo.com/video/887241645"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "isSubmenu": false,
+      "mainMenuText": null,
+      "subMenuText": null,
+      "pageName": "about",
+      "label": "About Us",
+      "title": "About Us - Motors Hub",
+      "description": "Learn more about Motors Hub, your trusted car dealership.",
+      "path": "/about",
+      "showInNavbar": true,
+      "sections": [
+        {
+          "isShared": true,
+          "folderName": "pages-hero",
+          "variant": "PagesHeroDefault",
+          "props": {
+            "title": "About Us",
+            "heading": "We Value Our Clients And Want Them To Have A Nice Experience",
+            "subHeading": "Located in the heart of the UK, our dealership blends decades of experience with a passion for quality and service. Each vehicle is handpicked for reliability and value. Whether you're upgrading or buying your first car, we make the process smooth and stress-free. Our team is here to guide you with honesty and expertise. At every step, your satisfaction drives us forward."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "right-choice",
+          "variant": "RightChoiceLight",
+          "props": {
+            "heading": "Why We're the Right Choice for You",
+            "subHeading": "Your needs first — expert service, honest pricing, no hassle."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "trust",
+          "variant": "TrustLight",
+          "props": {
+            "heading": "Built on Trust, Bound by Numbers",
+            "subHeading": "We earn trust. The numbers prove we deliver consistently."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "achievements",
+          "variant": "AchievementsLight",
+          "props": {
+            "heading": "Our Achievements",
+            "subHeading": "We take pride in our milestones — each one built on trust, excellence, and passion for what we do."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "testimonials",
+          "variant": "TestimonialsDefault",
+          "props": {
+            "heading": "What Our Customers Say",
+            "subHeading": "Our customers choose us for a stress-free car-buying journey — with upfront pricing, high-quality vehicles, and easy, flexible financing."
+          }
+        }
+      ]
+    },
+    {
+      "isSubmenu": false,
+      "mainMenuText": null,
+      "subMenuText": null,
+      "pageName": "warranty",
+      "label": "Warranty",
+      "title": "Warranty - Motors Hub",
+      "description": "Learn more about Motors Hub, your trusted car dealership.",
+      "path": "/warranty",
+      "showInNavbar": true,
+      "sections": [
+        {
+          "isShared": true,
+          "folderName": "pages-hero",
+          "variant": "PagesHeroDefault",
+          "props": {
+            "title": "Warranty",
+            "heading": "Protect Your Vehicle From Unexpected Costs",
+            "subHeading": "Enjoy peace of mind with our comprehensive warranty plans, designed to protect you from unexpected repair costs. From mechanical to electrical components, our coverage includes parts, labour, and VAT — all backed by expert support whenever you need it."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "pages-content",
+          "variant": "PagesContentLeft",
+          "props": {
+            "heading": "Explore Our Warranty Options",
+            "paragraphs": [
+              "Unexpected repairs can quickly become expensive without proper coverage. Our comprehensive warranty plans protect thousands of parts and come with a host of valuable benefits — all supported by our friendly, expert team. With us, you can drive with confidence, knowing your vehicle is in safe hands.",
+              "We help cover the cost of repairs, including parts, labour, and VAT, up to your individual claim limit. Below is a quick comparison of the plans we offer — be sure to check the full details to choose the warranty that best suits your needs."
+            ],
+            "points": [
+              {
+                "heading": "Comprehensive Coverage",
+                "description": "Thousands of mechanical and electrical parts protected"
+              },
+              {
+                "heading": "Labour & VAT Included",
+                "description": "Claims cover parts, labour, and VAT up to your limit"
+              },
+              {
+                "heading": "Flexible Plan Options",
+                "description": "Choose the right warranty level for your needs"
+              },
+              {
+                "heading": "Trusted Support",
+                "description": "Friendly experts ready to help you every step of the way"
+              }
+            ],
+            "mediaLinks": {
+              "type": "image",
+              "urls": ["/images/warranty-main2.jpg"]
+            }
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "warranty-plans",
+          "variant": "WarrantyPlansDefault",
+          "props": {
+            "warrantyPlans": [
+              {
+                "title": "Ultimate",
+                "description": "Comprehensive protection for thousands of parts, including wear and tear, labour, VAT, and essential working materials.",
+                "features": [
+                  "Air conditioning",
+                  "Main 12 volt battery (exc. EV’s and Hybrid) for the first 6 months of your cover*",
+                  "Braking system",
+                  "Camshaft timing belt / chains",
+                  "Casings",
+                  "Clutch",
+                  "Coil springs and shock absorbers (replaced in pairs)",
+                  "Cooling system",
+                  "Diagnosis costs",
+                  "DPF / catalytic converter",
+                  "Drive system",
+                  "Electrical and electronic parts",
+                  "Engine",
+                  "Flywheel",
+                  "Fuel system",
+                  "Gearbox and transmission",
+                  "Hybrid and electric vehicle power generation and transmission parts",
+                  "Ignition system",
+                  "Oil seals and gaskets",
+                  "Original in-car entertainment, Sat Nav, infotainment and telephone",
+                  "Remote key fobs or key cards up to £ 250 inc. VAT",
+                  "Steering system",
+                  "Supercharger",
+                  "Suspension",
+                  "Turbocharger",
+                  "Wear and tear up to 100,000 miles",
+                  "Wheel hubs and bearings",
+                  "Working materials as part of a valid claim (includes oils, fluids, filters, gaskets, seals)"
+                ]
+              },
+              {
+                "title": "Advanced",
+                "description": "Extensive coverage for major systems and components, including parts, labour, VAT, and hybrid/electric elements.",
+                "features": [
+                  "Air Conditioning",
+                  "Braking system",
+                  "Casings",
+                  "Camshaft timing belt / chains",
+                  "Clutch",
+                  "Coil Springs and shock absorbers (replaced in pairs)",
+                  "Cooling system",
+                  "Diagnosis costs",
+                  "Drive system",
+                  "Electrical and electronic parts",
+                  "Engine",
+                  "Flywheel",
+                  "Fuel system",
+                  "Gearbox and transmission",
+                  "Hybrid / EV electric motor, electric controller, AC / DC converter",
+                  "Ignition system",
+                  "Original in-car entertainment, Sat Nav, infotainment and telephone up to £ 500 inc. VAT",
+                  "Remote key fobs or key cards up to £ 250 inc. VAT",
+                  "Steering system",
+                  "Supercharger",
+                  "Suspension",
+                  "Turbocharger",
+                  "Wheel hubs and bearings",
+                  "Working materials as part of a valid repair (oils, antifreeze, fluid, oil filter changes, gaskets & seals)"
+                ]
+              },
+              {
+                "title": "Essential",
+                "description": "Covers all core mechanical, electrical, and powertrain components, including working materials for valid repairs.",
+                "features": [
+                  "Engine: all major internal moving parts of the engine and the camshaft timing belt / timing chain and tensioners, providing the manufacturer’s replacement recommendations have been compiled with and it is free from all contamination.",
+                  "Manual / auto gearbox & transmission: all major internal mechanical parts.",
+                  "Drive system: differential, drive shafts, propshafts, centre bearings, CV and universal joints, bearings & couplings.",
+                  "Clutch: centre plate, pressure plate, release bearing, ring gear, clutch fork, master cylinder, slave cylinder, clutch pedal and cable.",
+                  "Braking: master cylinder, wheel cylinders, servo, brake pumps, limiter valve, ABS pump, actuator and modulator, calipers, vacuum pump and brake pedal.",
+                  "Steering: steering rack and pinion, steering box, pump, idler box, column joints & bearings, pressure pipes, track rod ends and steering column (excludes electric locks and ECU).",
+                  "Cooling system: air con pump, radiator, water pump, viscous cooling fan coupling and thermostat & housing.",
+                  "Suspension: shock absorbers & coil springs (replaced in pairs), wishbones, McPherson struts, suspension arms, leaf springs, track control arms & linkages, self-levelling units, anti-roll bar, reservoir pump & regulator valves, kingpins and ball & swivel joints.",
+                  "Electrical: starter motor / solenoid, alternator, ECU (engine only), voltage regulator, ignition coil, distributor, electronic ignition amplifier, indicator relay, wiper & washer motors, window and sunroof motors, heater fan motor, horn, alarm control unit, cruise control actuator & control unit.",
+                  "Fuel system: fuel pump, injection pump, lift pump, air flow meter, EGR valve, idle control valve.",
+                  "Wheel bearings: front and rear bearings.",
+                  "Hybrid / EV: electric motor, electric controller, AC/DC converter.",
+                  "Casings: casings, where a covered item caused the damage.",
+                  "Working materials: as part of a valid repair (oils, antifreeze, fluids, oil filter changes, gaskets & seals)."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "pageName": "car-care",
+      "label": "Car Care",
+      "title": "Car Care - Motors Hub",
+      "description": "Learn more about Motors Hub, your trusted car dealership.",
+      "path": null,
+      "showInNavbar": true,
+      "hasSubmenu": true,
+      "submenuItems": [
+        {
+          "subMenuText": "Car Protection",
+          "pageName": "paint-protection",
+          "label": "Paint Protection",
+          "title": "Paint Protection - Motors Hub",
+          "description": "Learn more about paint protection at Motors Hub.",
+          "path": "/paint-protection",
+          "showInNavbar": true,
+          "sections": [
+            {
+              "isShared": true,
+              "folderName": "pages-hero",
+              "variant": "PagesHeroDefault",
+              "props": {
+                "title": "Paint Protection",
+                "heading": "We Value Our Clients And Want Them To Have A Nice Experience",
+                "subHeading": "Located in the heart of the UK, our dealership blends decades of experience with a passion for quality and service. Each vehicle is handpicked for reliability and value. Whether you're upgrading or buying your first car, we make the process smooth and stress-free. Our team is here to guide you with honesty and expertise. At every step, your satisfaction drives us forward."
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

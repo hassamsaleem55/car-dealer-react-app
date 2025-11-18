@@ -1,0 +1,17 @@
+@import "./base.module.css";
+
+.section__wrapper {
+  @apply bg-gray-800;
+}
+
+.section__container {
+  @apply py-18;
+}
+
+.section__heading-text {
+  @apply text-white/80;
+}
+
+.section__subheading-text {
+  @apply text-white/60;
+}

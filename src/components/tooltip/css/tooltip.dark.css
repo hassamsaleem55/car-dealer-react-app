@@ -1,0 +1,5 @@
+@import './tooltip.base.css';
+
+.tooltip {
+  @apply bg-linear-to-r from-gray-700 to-gray-900 text-white/80;
+}

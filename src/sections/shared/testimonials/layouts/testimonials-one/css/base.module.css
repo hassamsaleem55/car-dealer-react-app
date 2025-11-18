@@ -1,0 +1,44 @@
+/* Card Container */
+@reference "tailwindcss";
+@import "@dealers-dir/style.css";
+
+.testimonial-card {
+  @apply relative flex flex-col gap-4 rounded-xl bg-white mb-10 
+         hover:shadow-xl transition-all duration-500 
+         ease-in-out p-6 text-gray-800
+         min-h-[250px] max-h-[250px];
+}
+
+/* Rating Section */
+.testimonial-rating {
+  @apply flex items-center gap-1 text-yellow-500;
+}
+
+/* Testimonial Text */
+.testimonial-text {
+  @apply text-sm sm:text-base italic leading-relaxed 
+         overflow-hidden line-clamp-3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+/* Customer Info */
+.testimonial-customer {
+  @apply mt-auto flex flex-col pt-2 border-t border-gray-100;
+}
+
+.testimonial-name {
+  @apply text-lg font-semibold text-gray-900;
+}
+
+.testimonial-date {
+  @apply text-xs text-gray-500;
+}
+
+/* Decorative Glow */
+.testimonial-glow {
+  @apply absolute inset-0 opacity-0 group-hover:opacity-100 
+         transition-opacity duration-500 bg-linear-to-tr 
+         from-yellow-100/40 via-transparent to-yellow-50/50 
+         rounded-xl pointer-events-none;
+}

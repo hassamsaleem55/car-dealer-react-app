@@ -1,0 +1,5 @@
+@import "./base.module.css";
+
+.right-choice-card {
+  @apply bg-gray-100;
+}

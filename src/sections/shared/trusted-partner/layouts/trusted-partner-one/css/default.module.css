@@ -1,0 +1,56 @@
+/* ===============================
+   TRUSTED PARTNER SECTION STYLES
+================================ */
+@reference "tailwindcss";
+@import "@dealers-dir/style.css";
+
+/* Scroll Wrapper: hides overflow */
+.trusted-partner-scroll-wrapper {
+  @apply overflow-hidden relative rounded-full;
+}
+
+/* Scroll Row: infinite horizontal loop */
+.trusted-partner-scroll {
+  @apply flex items-center gap-6 sm:gap-8 md:gap-10 p-8;
+  width: max-content;
+  animation: scroll-left 25s linear infinite;
+  will-change: transform;
+}
+
+.trusted-partner-card {
+  @apply bg-white flex items-center justify-center
+         px-6 sm:px-8
+         rounded-full w-full h-[90px] sm:h-[110px]
+         transition-all duration-500 
+         /* ease-[cubic-bezier(0.4,0,0.2,1)] */
+         ease-in-out
+         hover:shadow-xl hover:scale-[1.03] cursor-default;
+}
+
+.trusted-partner-card__image {
+  @apply object-contain max-h-[60px] sm:max-h-[70px] md:max-h-20
+         w-auto mx-auto transition-all duration-300 ease-in-out;
+  @apply opacity-70 group-hover:opacity-100;
+}
+
+/* Animation */
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Mobile Responsiveness Tweaks */
+@media (max-width: 640px) {
+  .trusted-partner-scroll {
+    animation-duration: 35s; /* slower for smaller screens */
+    gap: 1.5rem;
+  }
+}
+
+.trusted-partner-scroll:hover {
+  animation-play-state: paused;
+}

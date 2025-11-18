@@ -1,0 +1,25 @@
+@reference "tailwindcss";
+@import "@dealers-dir/style.css";
+
+.info-card {
+  @apply px-6 py-5 sm:px-8 sm:py-6 rounded-2xl space-y-2 w-full h-full
+         transition-all duration-400 
+         /* ease-[cubic-bezier(0.4,0,0.2,1)] */
+         ease-in-out
+         hover:shadow-xl hover:scale-[1.03] cursor-default text-center;
+}
+
+.info-card__title {
+  @apply text-lg sm:text-xl font-semibold text-center sm:text-left;
+}
+
+.info-card__description {
+  @apply text-sm sm:text-base text-center sm:text-left leading-relaxed text-basicFont;
+}
+
+/* Optional hover improvement for touch devices */
+@media (hover: none) {
+  .info-card {
+    @apply hover:scale-100 hover:shadow-none;
+  }
+}

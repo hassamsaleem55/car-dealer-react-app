@@ -1,0 +1,121 @@
+/* ===============================
+   🚗 Car Dealer Footer Styles
+   Tailwind CSS v4
+   =============================== */
+@reference "tailwindcss";
+@import "@dealers-dir/style.css";
+
+.footer {
+  @apply bg-neutral-900 text-neutral-200;
+}
+
+/* ----- Main Footer Layout ----- */
+.footer__container {
+  @apply container mx-auto px-4 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10;
+}
+
+/* ----- Columns ----- */
+.footer__col {
+  @apply space-y-4;
+}
+
+/* ----- Titles & Text ----- */
+.footer__title {
+  @apply text-xl font-semibold text-white mb-4;
+}
+
+.footer__subtitle {
+  @apply text-lg font-semibold text-white mb-4;
+}
+
+.footer__desc {
+  @apply text-sm leading-relaxed text-neutral-400;
+}
+
+.footer__desc-sm {
+  @apply text-sm text-neutral-400 mb-4;
+}
+
+/* ----- Contact Info ----- */
+.footer__contact {
+  @apply mt-4 space-y-2 text-sm;
+}
+
+.footer__contact-item {
+  @apply flex items-center gap-2;
+}
+
+/* ----- Social Links ----- */
+.footer__social {
+  @apply flex gap-4 mt-6;
+}
+
+.footer__social-link {
+  @apply p-2 rounded-full bg-neutral-300 hover:bg-neutral-400 transition;
+}
+
+.footer__social-icon {
+  @apply w-4 h-4 object-contain;
+}
+
+/* ----- Quick Links ----- */
+.footer__links {
+  @apply space-y-2 text-sm;
+}
+
+.footer__link {
+  @apply hover:text-white transition-colors;
+}
+
+/* ----- Opening Hours ----- */
+.footer__hours {
+  @apply text-sm space-y-2;
+}
+
+.footer__hour-item {
+  @apply flex justify-between capitalize text-neutral-300;
+}
+
+/* ----- Newsletter ----- */
+.footer__newsletter-form {
+  @apply flex flex-col sm:flex-row gap-3;
+}
+
+.footer__input {
+  @apply flex-1 rounded-lg px-4 py-2 bg-neutral-800 text-neutral-200 text-sm 
+  placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-600;
+}
+
+/* ----- Bottom Bar ----- */
+.footer__bottom {
+  @apply border-t border-neutral-800 mt-10;
+}
+
+.footer__bottom-container {
+  @apply container mx-auto px-4 py-6 flex flex-col sm:flex-row 
+  items-center justify-between gap-4 text-sm text-neutral-500;
+}
+
+.footer__policies {
+  @apply flex gap-4;
+}
+
+.footer__policy-link {
+  @apply hover:text-white transition-colors;
+}
+
+/* ----- Responsive Enhancements ----- */
+@media (max-width: 640px) {
+  .footer__container {
+    @apply py-10 gap-8;
+  }
+  .footer__col {
+    @apply text-center;
+  }
+  .footer__social {
+    @apply justify-center;
+  }
+  .footer__bottom-container {
+    @apply text-center flex-col;
+  }
+}

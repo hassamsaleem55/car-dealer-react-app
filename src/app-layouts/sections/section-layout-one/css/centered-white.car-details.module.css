@@ -1,0 +1,5 @@
+@import "./centered-white.module.css";
+
+.section__wrapper {
+  @apply rounded-2xl;
+}

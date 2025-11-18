@@ -1,0 +1,10 @@
+@import "./base.module.css";
+
+.info-card {
+  @apply px-6 py-5 sm:px-8 sm:py-6 rounded-2xl space-y-2 w-full
+         transition-all duration-400 
+         /* ease-[cubic-bezier(0.4,0,0.2,1)] */
+         ease-in-out
+         hover:shadow-xl hover:scale-[1.03] cursor-default text-center;
+  @apply bg-linear-to-br from-white/80 via-white/50 to-white/20;
+}

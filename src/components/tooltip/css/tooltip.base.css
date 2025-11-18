@@ -1,0 +1,5 @@
+.tooltip {
+  @apply absolute bottom-full mb-1 left-1/2 -translate-x-1/2 
+                         hidden group-hover:block text-xs
+                         px-2 py-1 rounded whitespace-nowrap shadow-lg z-10;
+}

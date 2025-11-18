@@ -1,0 +1,110 @@
+/* ================================
+   CarCard Base Styles
+================================ */
+@reference "tailwindcss";
+@import "@dealers-dir/style.css";
+
+/* Root card */
+.car-card {
+  @apply w-auto h-full rounded-2xl shadow-md border border-gray-200 bg-white 
+         transition-all duration-300 ease-in-out hover:shadow-lg relative;
+}
+
+/* Image wrapper */
+.car-card__image-wrapper {
+  @apply relative overflow-hidden h-56 sm:h-52 md:h-60 lg:h-56 xl:h-54;
+}
+
+.car-card__img {
+  @apply w-full h-full object-cover object-center rounded-t-2xl 
+         transition-all duration-500 ease-in-out hover:scale-105;
+}
+
+/* Year badge */
+.car-card__year {
+  @apply absolute top-3 right-3 bg-white 
+         text-primary text-xs sm:text-sm 
+         font-medium px-2.5 sm:px-3 py-1.5 rounded-full;
+}
+
+/* Content wrapper */
+.car-card__content {
+  @apply p-4 space-y-4;
+}
+
+.car-card__title {
+  @apply text-base sm:text-lg md:text-xl font-semibold line-clamp-1;
+}
+
+.car-card__subtitle {
+  @apply text-sm text-gray-600 line-clamp-2;
+}
+
+.car-card__price-wrapper {
+  @apply grid grid-cols-2 gap-2 justify-between items-center text-center;
+}
+
+.car-card__price-total {
+  @apply text-lg sm:text-xl md:text-2xl font-bold text-basicFont;
+}
+
+.car-card__price-estimated-block {
+  @apply text-gray-500 border-l-2 border-gray-200;
+}
+
+.car-card__price-estimated {
+  @apply text-base font-medium;
+}
+
+.car-card__price-note {
+  @apply text-xs text-gray-500;
+}
+
+/* Specs grid */
+.car-card__specs {
+  @apply grid grid-cols-2 sm:grid-cols-3 gap-1 text-xs justify-between;
+}
+
+.car-card__spec {
+  @apply bg-gray-100 border border-gray-200 rounded-lg py-2 flex flex-col text-center;
+}
+
+.car-card__spec-label {
+  @apply text-gray-500;
+}
+
+.car-card__spec-value {
+  @apply font-semibold;
+}
+
+/* Overlay Container */
+.car-card__actions {
+  @apply absolute inset-0 flex flex-col justify-end gap-2 
+         px-4 pb-4 rounded-2xl transition-opacity duration-300
+         bg-linear-to-t from-primary/70 via-primary/5 to-transparent z-10;
+}
+
+.view-car__buttons-wrapper {
+  @apply flex gap-1 p-2;
+}
+
+/* Buttons inside overlay */
+.view-car__buttons-wrapper,
+.car-card__actions > button {
+  @apply bg-white/90 backdrop-blur-xs
+         rounded-xl transition-all duration-300;
+}
+
+.car-card__actions > button {
+  @apply border border-white/50 hover:border-primary;
+}
+
+.view-car__button {
+  @apply grow;
+}
+
+/* Footer */
+.car-card__footer {
+  @apply px-4 sm:px-5 py-3 border-t border-gray-200 
+         flex justify-center text-xs text-gray-600;
+}

@@ -1,0 +1,30 @@
+@reference "tailwindcss";
+@import "@dealers-dir/style.css";
+
+.section__wrapper {
+  @apply px-4 sm:px-6 lg:px-8 mt-18;
+}
+
+.section__container {
+  @apply container mx-auto space-y-4 px-4 sm:px-6 lg:px-8;
+}
+
+.section__header {
+  @apply flex flex-row justify-between items-center;
+}
+
+.section__heading-text {
+  @apply grow text-2xl sm:text-3xl font-semibold text-left;
+}
+
+.section__subheading-text {
+  @apply text-base font-normal;
+}
+
+.section__heading-link {
+  @apply inline-flex items-center gap-1 text-right text-base cursor-pointer transition-colors duration-150;
+}
+
+.section__heading-link:hover {
+  color: var(--color-primary);
+}
