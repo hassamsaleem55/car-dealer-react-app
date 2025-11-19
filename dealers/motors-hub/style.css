@@ -1,6 +1,6 @@
 @import "@app-layout-dir/styles/grid-layout/grid-layout.base.css";
-@import "@elements-dir/Dropdown/css/dropdown.one.css";
-@import "@elements-dir/Button/css/button.one.css";
+@import "@elements-dir/dropdown/css/dropdown.one.css";
+@import "@elements-dir/button/css/button.one.css";
 @import "@components-dir/tooltip/css/tooltip.dark.css";
 @import "@components-dir/floating-buttons/css/floating-buttons.css";
 
