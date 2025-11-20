@@ -5,6 +5,7 @@ import {
   WhatsAppChatButton,
 } from "@components-dir/floating-buttons";
 import AppOutlet from "./AppOutlet";
+import { Toaster } from "sonner";
 
 export default function Layout() {
   return (
@@ -16,6 +17,7 @@ export default function Layout() {
       <LayoutRenderer module="footer" />
       <ScrollToTopButton />
       <WhatsAppChatButton />
+      <Toaster position="top-right" />
     </div>
   );
 }

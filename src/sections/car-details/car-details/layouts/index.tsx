@@ -13,7 +13,7 @@ import CarCheckRecheck from "@components-dir/car-details/car-check-recheck";
 import CarMOTInfo from "@components-dir/car-details/car-mot-info";
 import CodeWeaverFinance from "@components-dir/car-details/code-weaver-finance";
 import { GetDirectionV1 } from "@sections-dir/shared/get-dealer-direction";
-import { type CarData } from "@components-dir/car-details/car-details.types";
+import { type CarDataTypes } from "@components-dir/car-details/car-details.types";
 import { fetchApi } from "@core-dir/services/Api.service";
 import { processCarCardData } from "@core-dir/helpers/CarCardDataProcessor";
 import { processCarDetailsSpecs } from "@core-dir/helpers/CarDetailsSpecsProcessor";
@@ -24,7 +24,7 @@ export function CarDetailsOne() {
   const { dealerData, dealerAuthToken } = useDealerContext();
   const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [carData, setCarData] = useState<CarData | null>(null);
+  const [carData, setCarData] = useState<CarDataTypes | null>(null);
   const [carDetails, setCarDetails] = useState<any>(null);
   const [carImages, setCarImages] = useState<any[]>([]);
   const [features, setFeatures] = useState<any[]>([]);

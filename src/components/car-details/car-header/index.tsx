@@ -1,18 +1,23 @@
 import { useState } from "react";
 import { Heart } from "lucide-react";
 import Button from "@elements-dir/button";
-import { type CarData } from "../car-details.types";
-import AppointmentModal from "@components-dir/modals/appointment-modal";
+import { type CarDataTypes } from "../car-details.types";
+import AppointmentModal from "@components-dir/book-appointment/appointment-modal";
 
 export default function CarHeader({
   carData,
   isFavorite,
   toggleFavorite,
 }: {
-  carData: CarData;
+  carData: CarDataTypes;
   isFavorite: boolean;
   toggleFavorite: () => void;
 }) {
+  const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
+  const [requestType, setRequestType] = useState<
+    "" | "Appointment" | "testdrive" | "vehicledetails"
+  >("");
+
   return (
     <header className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 space-y-4">
       {/* === Title, Registration, Tags & Favorite Button === */}
@@ -74,43 +79,89 @@ export default function CarHeader({
       </div>
 
       {/* === Actions === */}
-      <CarActions />
-    </header>
-  );
-}
+      <div className="flex flex-wrap items-center gap-2">
+        <Button
+          variant="secondary"
+          btnText="Book an Appointment"
+          paddingUtilities="px-3 py-2"
+          roundUtilities="rounded-lg group"
+          btnTextSize="text-sm"
+          clickEvent={() => {
+            setRequestType("Appointment");
+            setAppointmentModalOpen(true);
+          }}
+          btnIcon={
+            <svg
+              className="text-primary duration-300 transition ease-in-out size-4 group-hover:text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M16 19h6"></path>
+              <path d="M16 2v4"></path>
+              <path d="M19 16v6"></path>
+              <path d="M21 12.598V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8.5"></path>
+              <path d="M3 10h18"></path>
+              <path d="M8 2v4"></path>
+            </svg>
+          }
+        />
+        <div className="flex items-center gap-2 w-full">
+          <Button
+            variant="secondary"
+            btnText="Book Test Drive"
+            paddingUtilities="px-3 py-2"
+            roundUtilities="rounded-lg"
+            btnTextSize="text-sm"
+            clickEvent={() => {
+              setRequestType("testdrive");
+              setAppointmentModalOpen(true);
+            }}
+          />
 
-function CarActions() {
-  const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <Button
-        variant="primary"
-        btnText="Book an Appointment"
-        paddingUtilities="px-3 py-2"
-        widthUtilities="w-full sm:w-auto"
-        btnTextSize="text-sm"
-        clickEvent={() => setAppointmentModalOpen(true)}
-      />
-      <Button
-        variant="secondary"
-        btnText="Reserve for £99"
-        paddingUtilities="px-3 py-2"
-        widthUtilities="w-full sm:w-auto"
-        btnTextSize="text-sm"
-      />
-      <Button
-        variant="secondary"
-        btnText="Apply Finance"
-        paddingUtilities="px-3 py-2"
-        widthUtilities="w-full sm:w-auto"
-        btnTextSize="text-sm"
-      />
+          <Button
+            variant="secondary"
+            btnText="Enquire Now"
+            paddingUtilities="px-3 py-2"
+            roundUtilities="rounded-lg"
+            btnTextSize="text-sm"
+            clickEvent={() => {
+              setRequestType("vehicledetails");
+              setAppointmentModalOpen(true);
+            }}
+          />
+        </div>
+        <div className="flex items-center gap-2 w-full">
+          <Button
+            variant="secondary"
+            btnText="Apply Finance"
+            paddingUtilities="px-3 py-2"
+            roundUtilities="rounded-lg"
+            btnTextSize="text-sm"
+          />
+          <Button
+            variant="secondary"
+            btnText="Reserve for £99"
+            paddingUtilities="px-3 py-2"
+            roundUtilities="rounded-lg"
+            btnTextSize="text-sm"
+          />
+        </div>
+      </div>
       {appointmentModalOpen && (
         <AppointmentModal
           isOpen={appointmentModalOpen}
           setIsOpen={setAppointmentModalOpen}
+          carData={carData}
+          requestType={requestType}
         />
       )}
-    </div>
+    </header>
   );
 }

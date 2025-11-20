@@ -3,7 +3,7 @@ export interface Spec {
   value: string;
 }
 
-export interface CarData {
+export interface CarDataTypes {
   title: string;
   registrationNo: string;
   derivative?: string;

@@ -504,38 +504,6 @@
           }
         }
       ]
-    },
-    {
-      "pageName": "car-care",
-      "label": "Car Care",
-      "title": "Car Care - Motors Hub",
-      "description": "Learn more about Motors Hub, your trusted car dealership.",
-      "path": null,
-      "showInNavbar": true,
-      "hasSubmenu": true,
-      "submenuItems": [
-        {
-          "subMenuText": "Car Protection",
-          "pageName": "paint-protection",
-          "label": "Paint Protection",
-          "title": "Paint Protection - Motors Hub",
-          "description": "Learn more about paint protection at Motors Hub.",
-          "path": "/paint-protection",
-          "showInNavbar": true,
-          "sections": [
-            {
-              "isShared": true,
-              "folderName": "pages-hero",
-              "variant": "PagesHeroDefault",
-              "props": {
-                "title": "Paint Protection",
-                "heading": "We Value Our Clients And Want Them To Have A Nice Experience",
-                "subHeading": "Located in the heart of the UK, our dealership blends decades of experience with a passion for quality and service. Each vehicle is handpicked for reliability and value. Whether you're upgrading or buying your first car, we make the process smooth and stress-free. Our team is here to guide you with honesty and expertise. At every step, your satisfaction drives us forward."
-              }
-            }
-          ]
-        }
-      ]
     }
   ]
 }
