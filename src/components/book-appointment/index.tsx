@@ -1,14 +1,31 @@
+// import { useState } from "react";
+import moment from "moment-timezone";
 import CalendarOne from "@components-dir/calendar";
 
 export function Step1({
+  selectedDate,
+  setSelectedDate,
   selectedTime,
   setSelectedTime,
+  setScheduleDayId,
 }: {
+  selectedDate: Date | null;
+  setSelectedDate: (date: Date | null) => void;
   selectedTime: string | null;
   setSelectedTime: (time: string | null) => void;
+  setScheduleDayId: (id: number | null) => void;
 }) {
+  // const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  // const [_scheduleDayId, setScheduleDayId] = useState<number | null>(null);
+
+  const TODAY = moment().tz("Europe/London");
+
   return (
     <CalendarOne
+      TODAY={TODAY}
+      setScheduleDayId={setScheduleDayId}
+      selectedDate={selectedDate}
+      setSelectedDate={setSelectedDate}
       selectedTime={selectedTime}
       setSelectedTime={setSelectedTime}
     />
