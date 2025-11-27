@@ -165,7 +165,7 @@ export default function CalendarOne({
     const fetchData = async () => {
       setLoadingSlots(true);
       const response = await fetchApi(
-        "/api/companies/schedule",
+        "/companies/schedule",
         dealerAuthToken
       );
 

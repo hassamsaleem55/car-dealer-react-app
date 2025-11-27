@@ -17,7 +17,7 @@ export default function FeaturedOne({ heading }: { heading: string }) {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetchApi(
-        `/api/stocks/list?${queryString}`,
+        `/stocks/list?${queryString}`,
         dealerAuthToken
       );
       setCarData(processCarCardData(response.stockList));

@@ -54,16 +54,15 @@ export default function ModalWithSteps({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 bg-black/20 flex items-center justify-center"
+      className="fixed inset-0 z-50 bg-black/20 flex items-center justify-center p-4"
       onClick={() => setIsOpen(false)}
     >
       <div
-        // className="bg-white rounded-xl shadow-xl max-w-7xl overflow-auto relative flex flex-col"
-        className="bg-white rounded-xl shadow-xl w-full max-w-[1000px] overflow-auto relative flex flex-col"
+        className="bg-white rounded-xl shadow-xl w-full max-w-[1000px] max-h-[90vh] relative flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex justify-between items-center p-4 border-b border-gray-200">
+        <div className="flex justify-between items-center p-4 border-b border-gray-200 shrink-0">
           <h2 className="text-lg font-semibold">{modalHeading}</h2>
           <button
             type="button"
@@ -74,19 +73,19 @@ export default function ModalWithSteps({
           </button>
         </div>
 
-        {/* Body */}
-        {steps[stepIndex]?.content}
+        {/* Body - Scrollable content area */}
+        <div className="flex-1 overflow-y-auto">
+          {steps[stepIndex]?.content}
+        </div>
 
         {/* Footer */}
-        <div className="flex justify-end gap-2 p-4 border-t border-gray-200">
-          {stepIndex !== 0 && stepIndex !== steps.length - 1 && (
+        <div className="flex justify-end gap-2 p-4 border-t border-gray-200 shrink-0">
+          {stepIndex > 0 && (
             <button
               type="button"
               onClick={handleBack}
               disabled={stepIndex === 0}
-              className={`px-4 py-2 rounded bg-gray-200 disabled:opacity-50 ${
-                stepIndex !== 0 ? "cursor-pointer hover:bg-gray-300" : ""
-              }`}
+              className="px-4 py-2 rounded bg-gray-200 disabled:opacity-50 cursor-pointer hover:bg-gray-300"
             >
               Back
             </button>
@@ -98,11 +97,11 @@ export default function ModalWithSteps({
             className="px-4 py-2 rounded bg-primary text-white disabled:opacity-50 cursor-pointer hover:bg-primary/90"
           >
             {loading
-              ? "Checking..."
-              : stepIndex === steps.length - 2 || steps.length === 1
-              ? "Submit"
+              ? "Processing..."
               : stepIndex === steps.length - 1
               ? "Finish"
+              : stepIndex === steps.length - 2 || steps.length === 1
+              ? "Submit"
               : "Next"}
           </button>
         </div>

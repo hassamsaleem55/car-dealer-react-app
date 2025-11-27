@@ -12,7 +12,7 @@ async function requestApi<T = any>(
   endpoint: string,
   { method, body, authToken }: ApiOptions
 ): Promise<T> {
-  const url = `${BASE_URL}${endpoint}`;
+  const url = `${BASE_URL}/api${endpoint}`;
 
   const headers: Record<string, string> = {
     "Content-Type": "application/json",

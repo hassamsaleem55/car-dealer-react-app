@@ -32,7 +32,7 @@ export default function FilterOne({ styles }: { styles: any }) {
       try {
         setLoading(true);
         const response = await fetchApi(
-          `/api/companies/${dealerData.CompanyId}/car-filters${
+          `/companies/${dealerData.CompanyId}/car-filters${
             queryString ? `?${queryString}` : ""
           }`,
           dealerAuthToken

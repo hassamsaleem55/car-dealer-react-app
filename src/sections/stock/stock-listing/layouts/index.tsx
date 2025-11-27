@@ -30,7 +30,7 @@ export function StockListingOne() {
       try {
         setLoading(true);
         const response = await fetchApi(
-          `/api/stocks/list${searchParams ? `?${searchParams}` : ""}`,
+          `/stocks/list${searchParams ? `?${searchParams}` : ""}`,
           dealerAuthToken
         );
 

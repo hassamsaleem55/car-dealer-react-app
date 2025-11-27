@@ -111,7 +111,7 @@ export default function AppointmentLayout({
   carData,
   children,
 }: {
-  requestType: "" | "Appointment" | "testdrive" | "vehicledetails";
+  requestType: "" | "Appointment" | "testdrive" | "vehicledetails" | "reserve";
   carData: CarDataTypes;
   children: React.ReactNode;
 }) {
@@ -142,7 +142,7 @@ export default function AppointmentLayout({
               </div>
               <p className="text-xs">{carData.derivative}</p>
             </div>
-            {requestType === "vehicledetails" && (
+            {requestType === "vehicledetails" || requestType === "reserve" && (
               <div className="flex flex-wrap gap-1">
                 {carData.specs?.map((spec) => (
                   <span
@@ -156,7 +156,7 @@ export default function AppointmentLayout({
               </div>
             )}
             {}
-            {requestType !== "vehicledetails" && (
+            {requestType !== "vehicledetails" && requestType !== "reserve" && (
               <div className="space-y-1">
                 <h2 className="text-md font-semibold">
                   {requestType === "testdrive"

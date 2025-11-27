@@ -54,9 +54,9 @@ export function CarDetailsOne() {
         const stockId = searchParams.split("=")[1];
 
         const [carRes, imgRes, featureRes] = await Promise.all([
-          fetchApi(`/api/stocks/${stockId}`, dealerAuthToken),
-          fetchApi(`/api/stocks/${stockId}/media`, dealerAuthToken),
-          fetchApi(`/api/stocks/${stockId}/features`, dealerAuthToken),
+          fetchApi(`/stocks/${stockId}`, dealerAuthToken),
+          fetchApi(`/stocks/${stockId}/media`, dealerAuthToken),
+          fetchApi(`/stocks/${stockId}/features`, dealerAuthToken),
         ]);
 
         const processedCar = processCarCardData([carRes])[0];

@@ -19,13 +19,17 @@ export default function AppointmentModal({
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   carData: CarDataTypes;
-  requestType: "" | "Appointment" | "testdrive" | "vehicledetails";
+  requestType: "" | "Appointment" | "testdrive" | "vehicledetails" | "reserve";
 }) {
   const TODAY = useMemo(() => moment.tz("Europe/London"), []);
   const { dealerAuthToken } = useDealerContext();
   const [scheduleDayId, setScheduleDayId] = useState<number | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(TODAY.toDate());
+  const searchParams = location.search.startsWith("?")
+    ? location.search.substring(1)
+    : location.search;
+  const stockId = searchParams.split("=")[1];
   const [appointmentForm, setAppointmentForm] = useState([
     {
       name: "name",
@@ -103,10 +107,6 @@ export default function AppointmentModal({
   };
 
   const formSubmit = async (): Promise<boolean> => {
-    const searchParams = location.search.startsWith("?")
-      ? location.search.substring(1)
-      : location.search;
-    const stockId = searchParams.split("=")[1];
     // Prepare payload according to Postman structure
     const body = {
       FullName: appointmentForm.find((f) => f.name === "name")?.value || "",
@@ -126,11 +126,7 @@ export default function AppointmentModal({
       ScheduleDate: selectedDate || "", // Use selected date/time
     };
 
-    const response = await postApi(
-      "/api/companies/support",
-      body,
-      dealerAuthToken
-    );
+    const response = await postApi("/companies/support", body, dealerAuthToken);
 
     if (!response) {
       toast.error("Something went wrong. Please try again later.");
@@ -146,6 +142,8 @@ export default function AppointmentModal({
     }
     return true;
   };
+
+
 
   const allSteps = [
     {

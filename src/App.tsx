@@ -4,6 +4,7 @@ import PageRenderer from "@core-dir/page-renderer";
 import Layout from "./Layout";
 import { useMemo } from "react";
 import { type DealerPageKeys } from "@types-dir/dealer-props";
+import PaymentResponse from "./sections/PaymentResponse";
 
 function AppRouter() {
   const { dealerConfig } = useDealerContext();
@@ -19,6 +20,12 @@ function AppRouter() {
         path: isHome ? undefined : page.path,
         element: <PageRenderer key={page.pageName} page={page} />,
       };
+    });
+
+    // Add the PaymentResponse route
+    childRoutes.push({
+      path: "/Payment/PaymentResponse",
+      element: <PaymentResponse />,
     });
 
     return createBrowserRouter([

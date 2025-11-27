@@ -3,7 +3,7 @@ export default function AppointmentForm({
   appointmentForm,
   setAppointmentForm,
 }: {
-  requestType: "" | "Appointment" | "testdrive" | "vehicledetails";
+  requestType: "" | "Appointment" | "testdrive" | "vehicledetails" | "reserve";
   appointmentForm: {
     name: string;
     type: string;
@@ -25,7 +25,7 @@ export default function AppointmentForm({
     "border border-gray-300 p-2 text-sm rounded placeholder-gray-500 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary/70";
   return (
     <div className="space-y-2">
-      {requestType !== "vehicledetails" && (
+      {requestType !== "vehicledetails" && requestType !== "reserve" && (
         <div className="font-medium">
           <h2 className="text-xl">Ready to See This Vehicle in Person?</h2>
           <p className="text-sm text-basicFont">
