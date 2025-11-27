@@ -3,6 +3,7 @@ import { Heart } from "lucide-react";
 import Button from "@elements-dir/button";
 import { type CarDataTypes } from "../car-details.types";
 import AppointmentModal from "@components-dir/book-appointment/appointment-modal";
+import ReservationModal from "@components-dir/book-reservation/reservation-modal";
 
 export default function CarHeader({
   carData,
@@ -14,6 +15,7 @@ export default function CarHeader({
   toggleFavorite: () => void;
 }) {
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
+  const [reservationModalOpen, setReservationModalOpen] = useState(false);
   const [requestType, setRequestType] = useState<
     "" | "Appointment" | "testdrive" | "vehicledetails"
   >("");
@@ -145,14 +147,13 @@ export default function CarHeader({
             roundUtilities="rounded-lg"
             btnTextSize="text-sm"
           />
-        </div>
-        <div className="flex items-center gap-2 w-full">
           <Button
             variant="secondary"
-            btnText="Apply Finance"
+            btnText="Reserve for £99"
             paddingUtilities="px-3 py-2"
             roundUtilities="rounded-lg"
             btnTextSize="text-sm"
+            clickEvent={() => setReservationModalOpen(true)}
           />
         </div>
       </div>
@@ -162,6 +163,13 @@ export default function CarHeader({
           setIsOpen={setAppointmentModalOpen}
           carData={carData}
           requestType={requestType}
+        />
+      )}
+      {reservationModalOpen && (
+        <ReservationModal
+          isOpen={reservationModalOpen}
+          setIsOpen={setReservationModalOpen}
+          carData={carData}
         />
       )}
     </header>
