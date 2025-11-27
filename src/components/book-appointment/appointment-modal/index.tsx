@@ -19,7 +19,7 @@ export default function AppointmentModal({
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
   carData: CarDataTypes;
-  requestType: "" | "Appointment" | "testdrive" | "vehicledetails" | "reserve";
+  requestType: "" | "Appointment" | "testdrive" | "vehicledetails";
 }) {
   const TODAY = useMemo(() => moment.tz("Europe/London"), []);
   const { dealerAuthToken } = useDealerContext();

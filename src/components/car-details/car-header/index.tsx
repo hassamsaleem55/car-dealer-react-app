@@ -15,7 +15,7 @@ export default function CarHeader({
 }) {
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
   const [requestType, setRequestType] = useState<
-    "" | "Appointment" | "testdrive" | "vehicledetails" | "reserve"
+    "" | "Appointment" | "testdrive" | "vehicledetails"
   >("");
 
   return (
@@ -135,6 +135,15 @@ export default function CarHeader({
               setRequestType("vehicledetails");
               setAppointmentModalOpen(true);
             }}
+          />
+        </div>
+        <div className="flex items-center gap-2 w-full">
+          <Button
+            variant="secondary"
+            btnText="Apply Finance"
+            paddingUtilities="px-3 py-2"
+            roundUtilities="rounded-lg"
+            btnTextSize="text-sm"
           />
         </div>
         <div className="flex items-center gap-2 w-full">
