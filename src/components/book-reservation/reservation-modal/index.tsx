@@ -157,18 +157,18 @@ export default function ReservationModal({
       console.log("Payment intent response:", {
         isSuccess: response.isSuccess,
         hasClientSecret: !!response.clientSecret,
-        hasPublishableKey: !!response.publishableKey,
+        hasPublishableKey: !!response.publishableKeyDecoded,
         hasCheckoutUrl: !!response.checkoutUrl
       });
 
       if (response.isSuccess) {
         if (response.checkoutUrl) {
           window.location.href = response.checkoutUrl;
-        } else if (response.clientSecret && response.publishableKey) {
+        } else if (response.clientSecret && response.publishableKeyDecoded) {
           // Validate Stripe parameters before setting
           console.log("Received Stripe parameters:", {
             clientSecret: response.clientSecret?.substring(0, 20) + "...",
-            publishableKey: response.publishableKey,
+            publishableKey: response.publishableKeyDecoded,
             reservationSecret: response.reservationSecret
           });
 
@@ -188,7 +188,7 @@ export default function ReservationModal({
 
           // Set Stripe parameters for in-modal payment
           setClientSecret(response.clientSecret);
-          setPublishableKey(response.publishableKey);
+          setPublishableKey(response.publishableKeyDecoded);
           setReservationSecret(response.reservationSecret || "");
           console.log("Stripe setup complete - parameters validated");
         }
