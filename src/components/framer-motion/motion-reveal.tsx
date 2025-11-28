@@ -27,13 +27,26 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
   const controls = useAnimation();
   const isInView = useInView(ref, { once, margin: "-100px" });
 
+  // Responsive distance based on screen size
+  const getResponsiveDistance = () => {
+    if (typeof window !== "undefined") {
+      const width = window.innerWidth;
+      if (width < 640) return Math.min(distance, 40); // Mobile: max 40px
+      if (width < 1024) return Math.min(distance, 60); // Tablet: max 60px
+      return distance; // Desktop: original value
+    }
+    return Math.min(distance, 40); // Fallback for SSR
+  };
+
+  const responsiveDistance = getResponsiveDistance();
+
   /** All animation presets */
   const offsets = {
     // Basic Slides
-    slideUp: { y: distance, x: 0 },
-    slideDown: { y: -distance, x: 0 },
-    slideLeft: { x: distance, y: 0 },
-    slideRight: { x: -distance, y: 0 },
+    slideUp: { y: responsiveDistance, x: 0 },
+    slideDown: { y: -responsiveDistance, x: 0 },
+    slideLeft: { x: responsiveDistance, y: 0 },
+    slideRight: { x: -responsiveDistance, y: 0 },
 
     // Fade / Zoom
     fadeIn: { x: 0, y: 0 },
@@ -42,21 +55,29 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
 
     // Rotations
     rotateIn: { rotate: -15 },
-    rotateInDownLeft: { rotate: -25, x: -distance, y: distance },
-    rotateInUpRight: { rotate: 25, x: distance, y: -distance },
+    rotateInDownLeft: {
+      rotate: -25,
+      x: -responsiveDistance,
+      y: responsiveDistance,
+    },
+    rotateInUpRight: {
+      rotate: 25,
+      x: responsiveDistance,
+      y: -responsiveDistance,
+    },
 
     // Flips
     flipIn: { rotateY: 90 },
     flipX: { rotateX: 90 },
 
     // Advanced / Stylized
-    bounceUp: { y: distance },
-    bounceDown: { y: -distance },
+    bounceUp: { y: responsiveDistance },
+    bounceDown: { y: -responsiveDistance },
     popIn: { scale: 0.5, opacity: 0 },
     skewIn: { skewX: 15, opacity: 0 },
     tiltIn: { rotateZ: -10, opacity: 0 },
     blurIn: { filter: "blur(8px)", opacity: 0 },
-    floatIn: { y: distance / 2, opacity: 0 },
+    floatIn: { y: responsiveDistance / 2, opacity: 0 },
 
     none: {},
   }[preset];

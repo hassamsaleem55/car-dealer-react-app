@@ -125,7 +125,7 @@ export default function index({ styles }: { styles: any }) {
           </Link>
         )}
 
-        {/* <ul
+        <ul
           className={styles["navbar-links"]}
           role="menubar"
           aria-label="Main navigation"
@@ -133,119 +133,51 @@ export default function index({ styles }: { styles: any }) {
           {dealerConfig.pages.map(
             (page: DealerPageKeys) =>
               page.showInNavbar && (
-                <li key={page.pageName}>
+                <li
+                  key={page.pageName}
+                  className={styles["menu-item"]}
+                  role="none"
+                  onMouseEnter={() =>
+                    page.hasSubmenu && setOpenSubMenu(page.pageName)
+                  }
+                  onMouseLeave={() => page.hasSubmenu && setOpenSubMenu(null)}
+                >
                   <Link
                     to={page.path || "#"}
                     className={`${styles["navbar-link"]} 
-                ${location.pathname === page.path ? styles["active"] : ""}
+                  ${location.pathname === page.path ? styles["active"] : ""}
                 `}
                     role="menuitem"
+                    aria-haspopup={!!page.hasSubmenu}
+                    aria-expanded={openSubMenu === page.pageName}
                   >
                     {page.label}
                   </Link>
+
+                  {/* --- SUBMENU --- */}
+                  {page.hasSubmenu && openSubMenu === page.pageName && (
+                    <ul
+                      className={styles["submenu"]}
+                      role="menu"
+                      aria-label={`${page.label} submenu`}
+                    >
+                      {page.submenuItems?.map((sub: any, idx) => (
+                        <li key={idx} role="none">
+                          <Link
+                            to={sub.path}
+                            className={styles["submenu-link"]}
+                            role="menuitem"
+                          >
+                            {sub.subMenuText}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               )
           )}
-        </ul> */}
-
-        <ul
-      className={styles["navbar-links"]}
-      role="menubar"
-      aria-label="Main navigation"
-    >
-      {dealerConfig.pages.map(
-        (page: DealerPageKeys) =>
-          page.showInNavbar && (
-            <li
-              key={page.pageName}
-              className={styles["menu-item"]}
-              role="none"
-              onMouseEnter={() => page.hasSubmenu && setOpenSubMenu(page.pageName)}
-              onMouseLeave={() => page.hasSubmenu && setOpenSubMenu(null)}
-            >
-              <Link
-                to={page.path || "#"}
-                className={`${styles["navbar-link"]} 
-                  ${location.pathname === page.path ? styles["active"] : ""}
-                `}
-                role="menuitem"
-                aria-haspopup={!!page.hasSubmenu}
-                aria-expanded={openSubMenu === page.pageName}
-              >
-                {page.label}
-              </Link>
-
-              {/* --- SUBMENU --- */}
-              {page.hasSubmenu && openSubMenu === page.pageName && (
-                <ul
-                  className={styles["submenu"]}
-                  role="menu"
-                  aria-label={`${page.label} submenu`}
-                >
-                  {page.submenuItems?.map((sub: any, idx) => (
-                    <li key={idx} role="none">
-                      <Link
-                        to={sub.path}
-                        className={styles["submenu-link"]}
-                        role="menuitem"
-                      >
-                        {sub.subMenuText}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          )
-      )}
-    </ul>
-
-        {/* <ul
-          className={styles["navbar-links"]}
-          role="menubar"
-          aria-label="Main navigation"
-        >
-          {dealerConfig.pages.map(
-            (page: DealerPageKeys) =>
-              page.showInNavbar &&
-              (page.isSubmenu ? (
-                <li key={page.mainMenuText} className={styles["has-submenu"]}>
-                  <span className={styles["navbar-link"]}>
-                    {page.mainMenuText}
-                  </span>
-
-                  <ul className={styles["navbar-submenu"]} role="menu">
-                    <div className="bg-primary/20">
-                      <div className="px-2 py-1 font-semibold">
-                        {page.subMenuText}
-                      </div>
-                    </div>
-                    <li key={page.pageName}>
-                      <Link
-                        to={page.path}
-                        className={styles["navbar-submenu-link"]}
-                        role="menuitem"
-                      >
-                        {page.label}
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
-              ) : (
-                <li key={page.pageName}>
-                  <Link
-                    to={page.path}
-                    className={`${styles["navbar-link"]} 
-                ${location.pathname === page.path ? styles["active"] : ""}
-                `}
-                    role="menuitem"
-                  >
-                    {page.label}
-                  </Link>
-                </li>
-              ))
-          )}
-        </ul> */}
+        </ul>
 
         <div className="hidden md:flex items-center gap-4">
           <Button variant="secondary" btnText="Contact Us" />

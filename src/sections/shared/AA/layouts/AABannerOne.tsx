@@ -8,13 +8,13 @@ export default function AABannerOne() {
   // const distance = isMobile ? 40 : isTablet ? 100 : 300;
 
   return (
-    <section className="w-full bg-[#FFD302] py-2 px-4 flex flex-row justify-center overflow-hidden items-center gap-4 md:gap-8">
+    <section className="w-full bg-[#FFD302] overflow-hidden flex flex-row justify-center items-center py-1.5 sm:py-2 md:py-3 px-2 sm:px-3 md:px-4 lg:px-6 gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-8">
       {/* <MotionReveal preset="slideRight" distance={distance} duration={1.2}> */}
       <MotionReveal preset="slideRight" duration={1.2}>
         <img
           src="../../images/aa-logo-left.jpg"
           alt="AA Logo Left"
-          className="w-50 sm:w-86 md:w-86 lg:w-100 object-contain transition-transform duration-300 hover:scale-105"
+          className="object-contain transition-transform duration-300 hover:scale-105 w-32 sm:w-40 md:w-50 lg:w-60 xl:w-86 2xl:w-100"
         />
       </MotionReveal>
 
