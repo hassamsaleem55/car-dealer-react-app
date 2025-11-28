@@ -1,6 +1,22 @@
+import { postApi } from "@core-dir/services/Api.service";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import { useDealerContext } from "@core-dir/dealer-provider";
+
+// Declare Stripe global
+declare global {
+  interface Window {
+    Stripe: any;
+  }
+}
+
 export default function PaymentCardForm({
   paymentForm,
   setPaymentForm,
+  clientSecret,
+  publishableKey,
+  reservationSecret,
+  onPaymentSuccess,
 }: {
   paymentForm: {
     name: string;
@@ -22,60 +38,213 @@ export default function PaymentCardForm({
       maxLength?: number;
     }[]
   ) => void;
+  clientSecret?: string;
+  publishableKey?: string;
+  reservationSecret?: string;
+  onPaymentSuccess?: () => void;
 }) {
+  const { dealerAuthToken } = useDealerContext();
+  const [stripe, setStripe] = useState<any>(null);
+  const [elements, setElements] = useState<any>(null);
+  const [cardElement, setCardElement] = useState<any>(null);
+  const [processing, setProcessing] = useState(false);
+  const [cardNumber, setCardNumber] = useState("•••• •••• •••• ••••");
+  const [cardExpiry, setCardExpiry] = useState("••/••");
+  const [cardBrand, setCardBrand] = useState("generic");
+  const cardElementRef = useRef<HTMLDivElement>(null);
+  const cardholderNameRef = useRef<HTMLInputElement>(null);
+
   const inputFieldsClasses =
     "border border-gray-300 p-3 text-sm rounded-lg placeholder-gray-500 focus:outline-none focus:bg-white focus:ring-2 focus:ring-primary/50 focus:border-primary";
 
-  const handleInputChange = (index: number, value: string, fieldName: string) => {
-    let formattedValue = value;
+  useEffect(() => {
+    // Load Stripe script if not already loaded
+    if (!window.Stripe && publishableKey) {
+      const script = document.createElement("script");
+      script.src = "https://js.stripe.com/v3/";
+      script.async = true;
+      script.onload = () => initializeStripe();
+      document.head.appendChild(script);
+    } else if (window.Stripe && publishableKey) {
+      initializeStripe();
+    }
+  }, [publishableKey]);
 
-    // Format card number with spaces every 4 digits
-    if (fieldName === "cardNumber") {
-      formattedValue = value.replace(/\s/g, "").replace(/(.{4})/g, "$1 ").trim();
-      formattedValue = formattedValue.slice(0, 19); // Limit to 16 digits + spaces
+  const initializeStripe = () => {
+    if (!publishableKey || !clientSecret) {
+      console.log("Missing Stripe configuration:", {
+        publishableKey,
+        clientSecret,
+      });
+      return;
     }
 
-    // Format expiry date as MM/YY
-    if (fieldName === "expiryDate") {
-      const cleaned = value.replace(/\D/g, "");
-      if (cleaned.length >= 2) {
-        formattedValue = cleaned.slice(0, 2) + "/" + cleaned.slice(2, 4);
-      } else {
-        formattedValue = cleaned;
+    // Validate publishable key format
+    // if (!publishableKey.startsWith('pk_')) {
+    //   console.error("Invalid Stripe publishable key format:", publishableKey);
+    //   toast.error("Invalid payment configuration. Please contact support.");
+    //   return;
+    // }
+
+    console.log(
+      "Initializing Stripe with key:",
+      publishableKey.substring(0, 20) + "..."
+    );
+
+    try {
+      const stripeInstance = window.Stripe(
+        "pk_test_51QMT4hK1DsGjE5OTLzDRHoQyiGDD1WPJkUIrmiQPqw2rwe8OwNAp04QjE7RAuy6jo8d502b6H94YWeyUU8oQ0a2Y00I0QgbX0S"
+      );
+      const elementsInstance = stripeInstance.elements();
+
+      const cardElementInstance = elementsInstance.create("card");
+
+      if (cardElementRef.current) {
+        cardElementInstance.mount(cardElementRef.current);
       }
-    }
 
-    // Limit CVV to digits only
-    if (fieldName === "cvv") {
-      formattedValue = value.replace(/\D/g, "").slice(0, 4);
-    }
+      // Listen for changes in the card element
+      cardElementInstance.on("change", (event: any) => {
+        if (event.complete) {
+          setCardNumber("**** **** **** ****");
+          setCardExpiry("**/**");
+          setCardBrand(event.brand || "generic");
+        } else {
+          setCardNumber("•••• •••• •••• ••••");
+          setCardExpiry("••/••");
+          setCardBrand("generic");
+        }
+      });
 
-    const updatedForm = [...paymentForm];
-    updatedForm[index].value = formattedValue;
-    setPaymentForm(updatedForm);
+      setStripe(stripeInstance);
+      setElements(elementsInstance);
+      setCardElement(cardElementInstance);
+      console.log("Stripe initialization successful");
+    } catch (error) {
+      console.error("Error initializing Stripe:", error);
+      toast.error(
+        "Failed to initialize payment system. Please refresh and try again."
+      );
+    }
   };
 
-  const getCardNumber = () => {
-    const cardField = paymentForm.find(f => f.name === "cardNumber");
-    return cardField?.value || "•••• •••• •••• ••••";
+  const handleCardholderNameChange = (value: string) => {
+    const updatedForm = [...paymentForm];
+    const nameFieldIndex = paymentForm.findIndex(
+      (f) => f.name === "cardholderName"
+    );
+    if (nameFieldIndex !== -1) {
+      updatedForm[nameFieldIndex].value = value;
+      setPaymentForm(updatedForm);
+    }
+  };
+
+  const handlePaymentSubmit = async (): Promise<boolean> => {
+    if (!stripe || !elements || !cardElement || !clientSecret) {
+      toast.error("Payment system not ready. Please try again.");
+      return false;
+    }
+
+    console.log(
+      "Starting payment submission with clientSecret:",
+      clientSecret.substring(0, 20) + "..."
+    );
+    setProcessing(true);
+
+    const cardholderName =
+      paymentForm.find((f) => f.name === "cardholderName")?.value || "";
+
+    try {
+      const { error, paymentIntent } = await stripe.confirmCardPayment(
+        clientSecret,
+        {
+          payment_method: {
+            card: cardElement,
+            billing_details: {
+              name: cardholderName,
+            },
+          },
+        }
+      );
+
+      if (error) {
+        toast.error(error.message || "Payment failed. Please try again.");
+        setProcessing(false);
+        return false;
+      }
+
+      if (paymentIntent && paymentIntent.status === "succeeded") {
+        toast.success("Payment successful! Verifying...");
+
+        // Call verification endpoint
+        try {
+          //   const response = await fetch("/stocks/reserve/payment-confirmation", {
+          //     method: "POST",
+          //     headers: {
+          //       "Content-Type": "application/json",
+          //     },
+          //     body: JSON.stringify({
+          //       paymentIntentId: paymentIntent.id,
+          //       reservationSecret: reservationSecret,
+          //     }),
+          //   });
+          const body = {
+            paymentIntentId: paymentIntent.id,
+            reservationSecret: reservationSecret,
+          };
+          const response = await postApi(
+            `/stocks/reserve/payment-confirmation`,
+            body,
+            dealerAuthToken
+          );
+
+          if (response.isSuccess) {
+            if (onPaymentSuccess) {
+              onPaymentSuccess();
+            }
+            return true;
+          } else {
+            toast.error("Payment verification failed.");
+            setProcessing(false);
+            return false;
+          }
+        } catch (verificationError) {
+          console.error("Error verifying payment:", verificationError);
+          toast.error("An error occurred during payment verification.");
+          setProcessing(false);
+          return false;
+        }
+      }
+    } catch (error) {
+      console.error("Payment error:", error);
+      toast.error("Payment processing failed. Please try again.");
+      setProcessing(false);
+      return false;
+    }
+
+    setProcessing(false);
+    return false;
   };
 
   const getCardholderName = () => {
-    const nameField = paymentForm.find(f => f.name === "cardholderName");
+    const nameField = paymentForm.find((f) => f.name === "cardholderName");
     return nameField?.value || "CARDHOLDER NAME";
   };
 
-  const getExpiryDate = () => {
-    const expiryField = paymentForm.find(f => f.name === "expiryDate");
-    return expiryField?.value || "MM/YY";
-  };
+  // Expose the payment handler for the modal to use
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      (window as any).stripePaymentHandler = handlePaymentSubmit;
+    }
+  }, [stripe, elements, cardElement, clientSecret, reservationSecret]);
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold mb-2">Payment Information</h2>
+        <h2 className="text-2xl font-semibold mb-2">Secure Payment</h2>
         <p className="text-sm text-gray-600">
-          Enter your card details to secure your £99 reservation.
+          Your payment is processed securely with Stripe. Enter your card
+          details below.
         </p>
       </div>
 
@@ -84,10 +253,9 @@ export default function PaymentCardForm({
         <div className="relative group">
           {/* Card Shadow/Glow */}
           <div className="absolute -inset-1 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-          
+
           {/* Main Card */}
-          <div className="relative w-[400px] h-[250px] bg-linear-to-br from-gray-900 via-gray-800 to-black rounded-2xl shadow-2xl overflow-hidden border border-gray-700/50">
-            
+          <div className="relative w-[400px] h-[260px] bg-linear-to-br from-gray-900 via-gray-800 to-black rounded-2xl shadow-2xl overflow-hidden border border-gray-700/50">
             {/* Premium Background Texture */}
             <div className="absolute inset-0">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
@@ -97,37 +265,42 @@ export default function PaymentCardForm({
                 <div className="absolute bottom-8 left-8 w-16 h-16 border border-white/10 rounded-full"></div>
               </div>
             </div>
-            
+
             {/* Metallic Shine Overlay */}
             <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent opacity-60"></div>
-            
+
             {/* Card Content */}
             <div className="relative z-10 p-8 h-full flex flex-col justify-between">
-              
               {/* Header Section */}
               <div className="flex justify-between items-start">
-                {/* VISA Logo */}
+                {/* Card Brand Logo */}
                 <div className="flex items-center space-x-3">
                   <div className="text-white font-black text-2xl tracking-widest filter drop-shadow-lg">
-                    VISA
+                    {cardBrand.toUpperCase()}
                   </div>
                   <div className="text-white/60 text-xs font-light tracking-widest uppercase">
                     Premium
                   </div>
                 </div>
-                
+
                 {/* Contactless Payment Symbol */}
                 <div className="relative">
                   <div className="w-8 h-8 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
                     <div className="w-4 h-4">
-                      <svg viewBox="0 0 24 24" className="w-full h-full text-white/80">
-                        <path fill="currentColor" d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M8.5,8.5A3.5,3.5 0 0,1 12,5A3.5,3.5 0 0,1 15.5,8.5A3.5,3.5 0 0,1 12,12A3.5,3.5 0 0,1 8.5,8.5M12,7A1.5,1.5 0 0,0 10.5,8.5A1.5,1.5 0 0,0 12,10A1.5,1.5 0 0,0 13.5,8.5A1.5,1.5 0 0,0 12,7Z"/>
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="w-full h-full text-white/80"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M8.5,8.5A3.5,3.5 0 0,1 12,5A3.5,3.5 0 0,1 15.5,8.5A3.5,3.5 0 0,1 12,12A3.5,3.5 0 0,1 8.5,8.5M12,7A1.5,1.5 0 0,0 10.5,8.5A1.5,1.5 0 0,0 12,10A1.5,1.5 0 0,0 13.5,8.5A1.5,1.5 0 0,0 12,7Z"
+                        />
                       </svg>
                     </div>
                   </div>
                 </div>
               </div>
-              
+
               {/* EMV Chip */}
               <div className="absolute top-[72px] left-8">
                 <div className="w-12 h-9 bg-linear-to-b from-amber-200 via-yellow-300 to-amber-400 rounded-lg shadow-lg border-2 border-amber-500/50 relative overflow-hidden">
@@ -135,19 +308,22 @@ export default function PaymentCardForm({
                   <div className="absolute inset-1 bg-linear-to-b from-amber-100 to-amber-300 rounded-sm"></div>
                   <div className="absolute inset-0 grid grid-cols-3 gap-px p-1">
                     {[...Array(9)].map((_, i) => (
-                      <div key={i} className="bg-amber-600/40 rounded-[1px]"></div>
+                      <div
+                        key={i}
+                        className="bg-amber-600/40 rounded-[1px]"
+                      ></div>
                     ))}
                   </div>
                 </div>
               </div>
-              
+
               {/* Card Number */}
-              <div className="mt-6">
+              <div className="pt-16">
                 <div className="text-white text-2xl font-mono tracking-[0.25em] filter drop-shadow-lg font-light">
-                  {getCardNumber()}
+                  {cardNumber}
                 </div>
               </div>
-              
+
               {/* Bottom Information */}
               <div className="flex justify-between items-end">
                 <div className="space-y-1">
@@ -158,46 +334,64 @@ export default function PaymentCardForm({
                     {getCardholderName()}
                   </div>
                 </div>
-                
+
                 <div className="text-right space-y-1">
                   <div className="text-gray-300/80 text-[10px] uppercase tracking-[0.15em] font-medium">
                     Valid Thru
                   </div>
                   <div className="text-white text-base font-mono filter drop-shadow-sm">
-                    {getExpiryDate()}
+                    {cardExpiry}
                   </div>
                 </div>
               </div>
-              
             </div>
-            
+
             {/* Premium Shine Animation */}
             <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-[200%] transition-transform duration-1000 ease-in-out"></div>
-            
           </div>
         </div>
       </div>
 
+      {/* Payment Form */}
       <div className="space-y-4">
-        {paymentForm.map((field, index) => (
-          <div key={index} className="flex flex-col">
-            <label className="mb-2 text-sm font-medium text-gray-700" htmlFor={field.name}>
-              {field.label} {field.required && <span className="text-red-500">*</span>}
-            </label>
-            <input
-              id={field.name}
-              type={field.type}
-              required={field.required}
-              placeholder={field.placeholder}
-              value={field.value}
-              maxLength={field.maxLength}
-              onChange={(e) => handleInputChange(index, e.target.value, field.name)}
-              className={inputFieldsClasses}
-            />
-          </div>
-        ))}
+        {/* Cardholder Name */}
+        <div className="flex flex-col">
+          <label
+            className="mb-2 text-sm font-medium text-gray-700"
+            htmlFor="cardholdername"
+          >
+            Cardholder Name <span className="text-red-500">*</span>
+          </label>
+          <input
+            id="cardholdername"
+            ref={cardholderNameRef}
+            type="text"
+            required
+            placeholder="Name as shown on card"
+            value={
+              paymentForm.find((f) => f.name === "cardholderName")?.value || ""
+            }
+            onChange={(e) => handleCardholderNameChange(e.target.value)}
+            className={inputFieldsClasses}
+          />
+        </div>
+
+        {/* Stripe Card Element */}
+        <div className="flex flex-col">
+          <label className="mb-2 text-sm font-medium text-gray-700">
+            Card Details <span className="text-red-500">*</span>
+          </label>
+          <div
+            ref={cardElementRef}
+            className="border border-gray-300 p-3 rounded-lg focus-within:ring-2 focus-within:ring-primary/50 focus-within:border-primary"
+          />
+        </div>
       </div>
 
+      {/* Payment Message */}
+      <div id="payment-message" className="text-sm"></div>
+
+      {/* Security and Processing Info */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
           <div className="flex items-start">
@@ -215,9 +409,11 @@ export default function PaymentCardForm({
               </svg>
             </div>
             <div className="ml-3">
-              <h3 className="text-sm font-medium text-green-800">Secure Payment</h3>
+              <h3 className="text-sm font-medium text-green-800">
+                Stripe Secure
+              </h3>
               <p className="text-xs text-green-700 mt-1">
-                Your payment information is encrypted and secure.
+                Powered by Stripe's enterprise-grade security.
               </p>
             </div>
           </div>
@@ -265,12 +461,25 @@ export default function PaymentCardForm({
           </div>
           <div className="ml-3">
             <p className="text-sm text-yellow-700">
-              <strong>Important:</strong> We only accept Visa cards at this time. 
-              Your card will be charged £99 to secure your reservation.
+              <strong>Secure Payment:</strong> Your card details are processed
+              directly by Stripe and never stored on our servers. You will be
+              charged £99 to secure your reservation.
             </p>
           </div>
         </div>
       </div>
+
+      {/* Processing Indicator */}
+      {processing && (
+        <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg text-center">
+          <div className="flex items-center justify-center space-x-3">
+            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-primary"></div>
+            <span className="text-sm text-blue-800">
+              Processing your payment...
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

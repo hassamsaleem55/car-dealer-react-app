@@ -6,7 +6,6 @@ import ModalWithSteps from "../../modals/modal-with-steps";
 import ReservationLayout from "../reservation-layout";
 import PersonalInfoForm from "../personal-info-form";
 import PaymentCardForm from "../payment-card-form";
-import ReservationConfirmation from "../reservation-confirmation";
 import { type CarDataTypes } from "@components-dir/car-details/car-details.types";
 
 export default function ReservationModal({
@@ -23,10 +22,8 @@ export default function ReservationModal({
     ? location.search.substring(1)
     : location.search;
   const stockId = searchParams.split("=")[1];
-  
-  const [reservationNumber, setReservationNumber] = useState("");
+  const [reservationSecret, setReservationSecret] = useState<string>("");
 
-  // Personal Information Form State
   const [personalInfoForm, setPersonalInfoForm] = useState([
     {
       name: "firstName",
@@ -58,7 +55,6 @@ export default function ReservationModal({
     },
   ]);
 
-  // Payment Card Form State
   const [paymentForm, setPaymentForm] = useState([
     {
       name: "cardholderName",
@@ -130,112 +126,103 @@ export default function ReservationModal({
     return true;
   };
 
-  // Payment Card Validation
-  const paymentCardValidator = (): boolean => {
-    const emptyField = paymentForm.find(
-      (field) => field.required && !field.value.trim()
-    );
-    if (emptyField) {
-      toast.error(`Please fill out the ${emptyField.label} field.`);
-      return false;
-    }
+  // Note: paymentCardValidator removed - validation now handled by Stripe Elements
 
-    // Validate card number (basic Luhn algorithm check)
-    const cardNumberField = paymentForm.find((f) => f.name === "cardNumber");
-    if (cardNumberField) {
-      const cardNumber = cardNumberField.value.replace(/\s/g, "");
-      if (cardNumber.length < 13 || cardNumber.length > 19) {
-        toast.error("Please enter a valid card number.");
-        return false;
-      }
-      
-      // Basic Visa card validation (starts with 4)
-      if (!cardNumber.startsWith("4")) {
-        toast.error("We only accept Visa cards at this time.");
-        return false;
-      }
-    }
-
-    // Validate expiry date
-    const expiryField = paymentForm.find((f) => f.name === "expiryDate");
-    if (expiryField) {
-      const expiry = expiryField.value;
-      if (!/^\d{2}\/\d{2}$/.test(expiry)) {
-        toast.error("Please enter a valid expiry date (MM/YY).");
-        return false;
-      }
-      
-      const [month, year] = expiry.split("/").map(Number);
-      const currentYear = new Date().getFullYear() % 100;
-      const currentMonth = new Date().getMonth() + 1;
-      
-      if (month < 1 || month > 12) {
-        toast.error("Please enter a valid month (01-12).");
-        return false;
-      }
-      
-      if (year < currentYear || (year === currentYear && month < currentMonth)) {
-        toast.error("Card has expired. Please use a valid card.");
-        return false;
-      }
-    }
-
-    // Validate CVV
-    const cvvField = paymentForm.find((f) => f.name === "cvv");
-    if (cvvField) {
-      const cvv = cvvField.value;
-      if (cvv.length < 3 || cvv.length > 4) {
-        toast.error("Please enter a valid CVV (3-4 digits).");
-        return false;
-      }
-    }
-
-    return true;
-  };
+  const [clientSecret, setClientSecret] = useState<string>("");
+  const [publishableKey, setPublishableKey] = useState<string>("");
 
   // Submit Reservation
   const submitReservation = async (): Promise<boolean> => {
     const body = {
-      FirstName: personalInfoForm.find((f) => f.name === "firstName")?.value || "",
-      LastName: personalInfoForm.find((f) => f.name === "lastName")?.value || "",
-      EmailAddress: personalInfoForm.find((f) => f.name === "email")?.value || "",
-      PhoneNumber: personalInfoForm.find((f) => f.name === "phone")?.value || "",
+      PaymentType: "card",
       StockId: Number(stockId),
-      ReservationAmount: 99,
-      PaymentDetails: {
-        CardholderName: paymentForm.find((f) => f.name === "cardholderName")?.value || "",
-        CardNumber: paymentForm.find((f) => f.name === "cardNumber")?.value?.replace(/\s/g, "") || "",
-        ExpiryDate: paymentForm.find((f) => f.name === "expiryDate")?.value || "",
-        CVV: paymentForm.find((f) => f.name === "cvv")?.value || "",
-      },
-      VehicleTitle: carData.title,
-      VehiclePrice: carData.retailPrice,
+      FirstName:
+        personalInfoForm.find((f) => f.name === "firstName")?.value || "",
+      LastName:
+        personalInfoForm.find((f) => f.name === "lastName")?.value || "",
+      EmailAddress:
+        personalInfoForm.find((f) => f.name === "email")?.value || "",
+      PhoneNumber:
+        personalInfoForm.find((f) => f.name === "phone")?.value || "",
     };
 
     try {
-      // Note: Replace this endpoint with the actual reservation endpoint
-      const response = await postApi("/companies/reservations", body, dealerAuthToken);
+      console.log("Creating payment intent for stockId:", stockId);
+      const response = await postApi(
+        `/stocks/${stockId}/reserve/create-payment-intent`,
+        body,
+        dealerAuthToken
+      );
 
-      if (!response) {
-        toast.error("Something went wrong. Please try again later.");
-        return false;
-      } else if (!response?.isSuccess) {
-        toast.error(response.message || "Failed to process reservation.");
+      console.log("Payment intent response:", {
+        isSuccess: response.isSuccess,
+        hasClientSecret: !!response.clientSecret,
+        hasPublishableKey: !!response.publishableKey,
+        hasCheckoutUrl: !!response.checkoutUrl
+      });
+
+      if (response.isSuccess) {
+        if (response.checkoutUrl) {
+          window.location.href = response.checkoutUrl;
+        } else if (response.clientSecret && response.publishableKey) {
+          // Validate Stripe parameters before setting
+          console.log("Received Stripe parameters:", {
+            clientSecret: response.clientSecret?.substring(0, 20) + "...",
+            publishableKey: response.publishableKey,
+            reservationSecret: response.reservationSecret
+          });
+
+          // Validate publishable key format
+          // if (!response.publishableKey.startsWith('pk_')) {
+          //   console.error("Invalid publishable key received from backend:", response.publishableKey);
+          //   toast.error("Invalid payment configuration received from server. Please try again or contact support.");
+          //   return false;
+          // }
+
+          // // Validate client secret format
+          // if (!response.clientSecret.startsWith('pi_')) {
+          //   console.error("Invalid client secret received from backend:", response.clientSecret?.substring(0, 20));
+          //   toast.error("Invalid payment configuration received from server. Please try again or contact support.");
+          //   return false;
+          // }
+
+          // Set Stripe parameters for in-modal payment
+          setClientSecret(response.clientSecret);
+          setPublishableKey(response.publishableKey);
+          setReservationSecret(response.reservationSecret || "");
+          console.log("Stripe setup complete - parameters validated");
+        }
+      } else {
+        console.log("Payment intent creation failed:", response.errorMessage);
+        toast.error(
+          response.errorMessage || "Payment setup failed. Please try again."
+        );
         return false;
       }
-
-      // Generate a reservation number (in real scenario, this would come from the API)
-      const reservationNum = `RES-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-      setReservationNumber(reservationNum);
-      
-      toast.success("Reservation successful! You will receive a confirmation email shortly.");
       return true;
     } catch (error) {
+      console.error("Network error during payment intent creation:", error);
       toast.error("Network error. Please check your connection and try again.");
       return false;
     }
   };
 
+  // Handle Stripe payment completion
+  const handlePaymentSuccess = () => {
+    // Redirect to payment response page
+    window.location.href = `/Payment/PaymentResponse?stockId=${stockId}&isSuccess=true&isCardPayment=true}`;
+  };
+
+  // Submit payment via Stripe
+  const submitCardPayment = async (): Promise<boolean> => {
+    // This will be handled by the Stripe payment handler in PaymentCardForm
+    if (typeof window !== 'undefined' && (window as any).stripePaymentHandler) {
+      return await (window as any).stripePaymentHandler();
+    } else {
+      toast.error("Payment system not ready. Please try again.");
+      return false;
+    }
+  };
   const steps = [
     {
       content: (
@@ -247,6 +234,7 @@ export default function ReservationModal({
         </ReservationLayout>
       ),
       validate: personalInfoValidator,
+      submitMethod: submitReservation,
     },
     {
       content: (
@@ -254,18 +242,23 @@ export default function ReservationModal({
           <PaymentCardForm
             paymentForm={paymentForm}
             setPaymentForm={setPaymentForm}
+            clientSecret={clientSecret}
+            publishableKey={publishableKey}
+            reservationSecret={reservationSecret}
+            onPaymentSuccess={handlePaymentSuccess}
           />
         </ReservationLayout>
       ),
-      validate: paymentCardValidator,
-      submitMethod: submitReservation,
-    },
-    {
-      content: (
-        <ReservationLayout carData={carData}>
-          <ReservationConfirmation reservationNumber={reservationNumber} />
-        </ReservationLayout>
-      ),
+      validate: () => {
+        // Basic validation - ensure Stripe is loaded and cardholder name is provided
+        const cardholderName = paymentForm.find(f => f.name === "cardholderName")?.value || "";
+        if (!cardholderName.trim()) {
+          toast.error("Please enter the cardholder name.");
+          return false;
+        }
+        return true;
+      },
+      submitMethod: submitCardPayment,
     },
   ];
 
