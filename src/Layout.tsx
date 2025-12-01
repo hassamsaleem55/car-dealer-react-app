@@ -1,3 +1,4 @@
+import { ScrollRestoration } from "react-router-dom";
 import LayoutRenderer from "@core-dir/layout-renderer";
 import MetaManager from "@app-layout-dir/MetaManager";
 import {
@@ -18,6 +19,7 @@ export default function Layout() {
       <ScrollToTopButton />
       <WhatsAppChatButton />
       <Toaster position="top-right" />
+      <ScrollRestoration />
     </div>
   );
 }

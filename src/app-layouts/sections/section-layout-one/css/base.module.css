@@ -2,7 +2,7 @@
 @import "@dealers-dir/style.css";
 
 .section__wrapper {
-  @apply px-4 sm:px-6 lg:px-8 mt-18;
+  @apply px-2 sm:px-6 lg:px-8 mt-18;
 }
 
 .section__container {
@@ -14,11 +14,11 @@
 }
 
 .section__heading-text {
-  @apply grow text-xl md:text-3xl font-semibold text-left;
+  @apply grow text-lg md:text-3xl font-semibold text-left;
 }
 
 .section__subheading-text {
-  @apply text-base font-normal;
+  @apply text-xs md:text-base font-normal;
 }
 
 .section__heading-link {

@@ -1,5 +1,6 @@
-import { ChevronRight, Printer, Share } from "lucide-react";
-import Button from "@elements-dir/button";
+// import { ChevronRight, Printer, Share } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+// import Button from "@elements-dir/button";
 
 export default function Breadcrumb({ title }: { title: string }) {
   return (
@@ -25,7 +26,7 @@ export default function Breadcrumb({ title }: { title: string }) {
         </li>
       </ol>
 
-      <div className="flex justify-start sm:justify-end space-x-2">
+      {/* <div className="flex justify-start sm:justify-end space-x-2">
         <Button
           variant="secondary"
           btnText="Print Advert"
@@ -42,7 +43,7 @@ export default function Breadcrumb({ title }: { title: string }) {
           btnTextSize="text-xs"
           btnIcon={<Share className="w-3 h-3" />}
         />
-      </div>
+      </div> */}
     </nav>
   );
 }

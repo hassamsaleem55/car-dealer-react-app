@@ -80,6 +80,41 @@ export default function CarCard({ car, styles }: { car: Car; styles: any }) {
         </div>
       </div>
 
+      <div className="flex flex-col gap-2 px-4 md:hidden">
+        <Button
+          variant="secondary"
+          btnText="Apply Finance"
+          btnTextSize="text-xs"
+        />
+        <Button
+          variant="secondary"
+          btnText="Reserve for £99"
+          btnTextSize="text-xs"
+        />
+        <div className="flex justify-between items-center">
+          <div className="grow mr-2">
+            <Button
+              variant="secondary"
+              btnText="View Car"
+              btnTextSize="text-xs"
+              clickEvent={() => {
+                navigate(`/car-details?stockId=${stockId}`);
+              }}
+            />
+          </div>
+          <div>
+            <Button
+              variant="secondary"
+              btnTextSize="text-xs"
+              btnIcon={<Heart className="w-4 h-4 sm:w-5 sm:h-5" />}
+              clickEvent={handleSecondaryAction}
+              paddingUtilities="p-2"
+              roundUtilities="rounded-full"
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Overlay Actions */}
       <div
         className={`${styles["car-card__actions"]} opacity-0 group-hover:opacity-100`}

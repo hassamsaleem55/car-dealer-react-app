@@ -9,11 +9,11 @@
 }
 
 .section__heading-text {
-  @apply text-center;
+  @apply text-2xl md:text-3xl text-center;
 }
 
 .section__subheading-text {
-  @apply text-center max-w-3xl;
+  @apply text-sm md:text-base text-center max-w-3xl;
 }
 
 .section__body {

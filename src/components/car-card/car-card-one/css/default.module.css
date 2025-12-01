@@ -6,7 +6,7 @@
 
 /* Root card */
 .car-card {
-  @apply w-auto min-h-125 rounded-2xl shadow-md border border-gray-200 bg-white 
+  @apply w-auto min-h-143 md:min-h-120 rounded-2xl shadow-md border border-gray-200 bg-white 
          transition-all duration-300 ease-in-out hover:shadow-lg relative;
 }
 
@@ -29,7 +29,7 @@
 
 /* Content wrapper */
 .car-card__content {
-  @apply p-4 space-y-4 h-60;
+  @apply p-4 md:h-57 space-y-4;
 }
 
 .car-card__title {
@@ -37,7 +37,7 @@
 }
 
 .car-card__subtitle {
-  @apply text-sm text-gray-600 line-clamp-2;
+  @apply text-xs md:text-sm text-gray-600 line-clamp-2;
 }
 
 .car-card__price-wrapper {
@@ -62,11 +62,11 @@
 
 /* Specs grid */
 .car-card__specs {
-  @apply grid grid-cols-2 sm:grid-cols-3 gap-1 text-xs justify-between;
+  @apply grid grid-cols-3 gap-1 text-xs justify-between;
 }
 
 .car-card__spec {
-  @apply bg-gray-100 border border-gray-200 rounded-lg py-2 flex flex-col text-center;
+  @apply bg-gray-100 border border-gray-200 text-[10px] md:text-xs rounded-lg py-2 flex flex-col text-center;
 }
 
 .car-card__spec-label {
@@ -105,6 +105,6 @@
 
 /* Footer */
 .car-card__footer {
-  @apply px-4 sm:px-5 py-3 border-t border-gray-200 
-         flex justify-center text-xs text-gray-600;
+  @apply hidden md:flex px-4 sm:px-5 py-3 border-t border-gray-200 
+          justify-center text-xs text-gray-600;
 }

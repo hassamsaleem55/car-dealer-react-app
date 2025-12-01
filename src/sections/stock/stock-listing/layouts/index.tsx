@@ -120,7 +120,7 @@ export function StockListingOne() {
           </div>
 
           {/* === Car Listing Grid === */}
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-5">
+          <div className="md:bg-white md:rounded-2xl md:shadow-sm md:border md:border-gray-100 md:p-5">
             {loading ? (
               <div className="flex items-center justify-center h-[60vh]">
                 <div className="w-8 h-8 border-4 border-gray-200 border-t-primary rounded-full animate-spin" />
