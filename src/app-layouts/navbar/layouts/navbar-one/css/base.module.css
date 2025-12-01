@@ -89,12 +89,11 @@
   @apply scale-95 opacity-90; /* subtle shrink/fade when scrolling */
 }
 
-
 /* Desktop links */
 /* .navbar-links {
   @apply hidden md:flex items-center gap-6 lg:gap-8;
 } */
- .navbar-links {
+.navbar-links {
   @apply hidden md:flex gap-24 list-none p-0 m-0;
 }
 
@@ -106,7 +105,6 @@
 .navbar-link.active {
   @apply text-primary border-t border-primary;
 }
-
 
 /* =======================================
    MOBILE MENU
@@ -139,15 +137,18 @@
 }
 
 .navbar-mobile__link {
-  @apply block rounded-md px-3 py-2 transition-colors duration-200 
-         hover:bg-gray-50 hover:text-primary;
+  @apply block rounded-md px-3 py-2 text-sm transition-colors duration-200;
+}
+
+.navbar-mobile__link.active {
+  @apply bg-primary/90 text-white;
 }
 
 /* =======================================
    RESPONSIVE ADJUSTMENTS
 ======================================= */
 /* Tablets & small screens */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .navbar,
   .topbar-container {
     @apply px-4;
@@ -156,10 +157,10 @@
   .navbar-mobile__menu {
     @apply right-3 top-14 w-[92vw];
   }
-}
+} */
 
 /* Large screens */
-@media (min-width: 1280px) {
+/* @media (min-width: 1280px) {
   .navbar,
   .topbar-container {
     @apply px-12;
@@ -168,12 +169,12 @@
   .navbar-links {
     @apply gap-10;
   }
-}
+} */
 
 /* =======================================
    GLOBAL HEADER TRANSITION CONTROL
 ======================================= */
-.topbar,
+/* .topbar,
 .navbar {
   transition: background-color 0.2s ease, color 0.2s ease;
-}
+} */

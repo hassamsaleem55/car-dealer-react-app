@@ -17,10 +17,13 @@ export default function FilterOne({ styles }: { styles: any }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { queryString, setQueryString } = useOutletContext<{
-    queryString: string;
-    setQueryString: (qs: string) => void;
-  }>();
+  const { queryString, setQueryString, achievementsData, setAchievementsData } =
+    useOutletContext<{
+      queryString: string;
+      setQueryString: (qs: string) => void;
+      achievementsData: any;
+      setAchievementsData: (data: any) => void;
+    }>();
 
   const [filtersData, setFiltersData] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(false);
@@ -39,6 +42,21 @@ export default function FilterOne({ styles }: { styles: any }) {
         );
         const transformedData = transformFilterData(response);
         setFiltersData(transformedData);
+        if (
+          achievementsData.soldStockCount === null &&
+          achievementsData.availableStockCount === null
+        ) {
+          const soldStockCount = response.soldStockCount
+            ? response.soldStockCount - 3
+            : 0;
+          const availableStockCount = transformedData[0]?.total
+            ? transformedData[0]?.total - 3
+            : 0;
+          setAchievementsData({
+            soldStockCount,
+            availableStockCount,
+          });
+        }
       } catch (error) {
         console.error("Error fetching filters:", error);
       } finally {

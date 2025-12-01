@@ -5,6 +5,7 @@ import {
 } from "@components-dir/filter/filter.types";
 
 export function transformFilterData(data: RawData): FilterCategory[] {
+  
   const toTitleCase = (str: string) =>
     str
       .toLowerCase()

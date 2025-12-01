@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useInView } from "framer-motion";
 import SectionLayoutOne from "@app-layout-dir/sections/section-layout-one";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
-import { achievements } from "@core-dir/store/Achievements.data";
+// import { achievements } from "@core-dir/store/Achievements.data";
+import { useOutletContext } from "react-router-dom";
 
 export default function AchievementsOne({
   heading,
@@ -15,6 +16,35 @@ export default function AchievementsOne({
   SectionStyles: any;
   styles: any;
 }) {
+  const { achievementsData } = useOutletContext<{
+    achievementsData: any;
+  }>();
+  const achievements = [
+    {
+      id: 1,
+      title: "Happy Customers",
+      value: achievementsData.soldStockCount,
+      suffix: "+",
+    },
+    {
+      id: 2,
+      title: "Vehicles in Stock",
+      value: achievementsData.availableStockCount,
+      suffix: "+",
+    },
+    {
+      id: 3,
+      title: "Years of Experience",
+      value: 11,
+      suffix: "+",
+    },
+    {
+      id: 4,
+      title: "Satisfaction Rate",
+      value: 97,
+      suffix: "%",
+    },
+  ];
   return (
     <SectionLayoutOne
       headingText={heading}
@@ -71,7 +101,10 @@ function AchievementCard({
 
   return (
     <div ref={ref}>
-      <MotionReveal delay={delay} className={`${styles["achievements-info"]} group`}>
+      <MotionReveal
+        delay={delay}
+        className={`${styles["achievements-info"]} group`}
+      >
         <h3 className={styles["achievements-value"]}>
           <motion.span>{display}</motion.span>
           {suffix}

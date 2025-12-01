@@ -1,4 +1,5 @@
-import { MoveUpRight } from "lucide-react";
+// import { ChevronRight, MoveUpRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 export default function SectionLayoutOne({
   headingText,
@@ -32,7 +33,7 @@ export default function SectionLayoutOne({
               className={styles["section__heading-link"]}
             >
               {headingLink.text}
-              <MoveUpRight className="size-4" />
+              <ChevronRight className="size-4" />
             </a>
           )}
         </div>

@@ -80,7 +80,7 @@ export default function SwiperComponent(props: Partial<SwiperComponentProps>) {
       <Swiper
         modules={[Autoplay]}
         speed={speed}
-        autoplay={autoplay}
+        // autoplay={autoplay}
         breakpoints={breakpoints}
         className={className}
         onInit={handleInit}

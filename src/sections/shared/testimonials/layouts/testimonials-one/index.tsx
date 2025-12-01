@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import SectionLayoutOne from "@app-layout-dir/sections/section-layout-one";
 import SwiperComponent from "@components-dir/swiper";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
-import { testimonialsData } from "@core-dir/services/Testimonials.service";
 import SectionStyles from "@app-layout-dir/sections/section-layout-one/css/centered.module.css";
+import { useDealerContext } from "@core-dir/dealer-provider";
+import { fetchApi } from "@core-dir/services/Api.service";
+import { processTestimonialData } from "@core-dir/helpers/TestimonialsDataProcessor";
 
 export default function TestimonialsOne({
   heading,
@@ -14,6 +17,16 @@ export default function TestimonialsOne({
   subHeading: string;
   styles: any;
 }) {
+  const { dealerAuthToken } = useDealerContext();
+  const [testimonialsData, setTestimonialsData] = useState<any[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetchApi("/companies/reviews", dealerAuthToken);
+      const processedData = processTestimonialData(response.reviews || []);
+      setTestimonialsData(processedData);
+    };
+    fetchData();
+  }, []);
   return (
     <SectionLayoutOne
       headingText={heading}
@@ -46,15 +59,13 @@ export default function TestimonialsOne({
                 ))}
               </div>
 
-              <p
-                className={`${styles["testimonial-text"]} italic mt-3`}
-              >
-                “{item.testimonial}”
+              <p className={`${styles["testimonial-text"]} italic mt-3`}>
+                “{item.review}”
               </p>
 
               <div className={`${styles["testimonial-customer"]}mt-4`}>
                 <h4 className="font-semibold text-lg">{item.customerName}</h4>
-                <span className="text-sm text-gray-500">{item.date}</span>
+                <span className="text-sm text-gray-500">{item.reviewDate}</span>
               </div>
             </div>
           </MotionReveal>

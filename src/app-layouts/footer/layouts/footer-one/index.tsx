@@ -90,8 +90,7 @@ export default function Footer({ styles }: { styles: any }) {
           <ul className={styles["footer__links"]}>
             {dealerConfig.pages.map(
               (page: DealerPageKeys) =>
-                page.showInNavbar &&
-                page.hasSubmenu === false && (
+                page.showInNavbar && (
                   <li
                     key={page.pageName}
                     className={styles["footer__link-item"]}

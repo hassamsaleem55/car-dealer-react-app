@@ -14,7 +14,7 @@
 }
 
 .section__heading-text {
-  @apply grow text-2xl sm:text-3xl font-semibold text-left;
+  @apply grow text-xl md:text-3xl font-semibold text-left;
 }
 
 .section__subheading-text {
@@ -22,7 +22,7 @@
 }
 
 .section__heading-link {
-  @apply inline-flex items-center gap-1 text-right text-base cursor-pointer transition-colors duration-150;
+  @apply inline-flex items-center gap-1 text-right text-xs md:text-base font-semibold cursor-pointer transition-colors duration-150;
 }
 
 .section__heading-link:hover {

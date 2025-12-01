@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, Phone, Mail } from "lucide-react";
+// import { Menu, Phone, Mail } from "lucide-react";
+import { Menu } from "lucide-react";
 import Button from "@elements-dir/button";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import type { DealerPageKeys } from "@types-dir/dealer-props";
@@ -11,8 +12,8 @@ export default function index({ styles }: { styles: any }) {
   const [open, setOpen] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  const [phoneNumber, setPhoneNumer] = useState<string>("");
-  const [emailAddress, setEmailAddress] = useState<string>("");
+  // const [phoneNumber, setPhoneNumer] = useState<string>("");
+  // const [emailAddress, setEmailAddress] = useState<string>("");
   const [logoUrl, setLogoUrl] = useState<string>("");
   const menuRef = useRef<HTMLDivElement | null>(null);
   const btnRef = useRef<HTMLButtonElement | null>(null);
@@ -20,53 +21,88 @@ export default function index({ styles }: { styles: any }) {
   const toggle = useCallback(() => setOpen((v) => !v), []);
   const close = useCallback(() => setOpen(false), []);
 
-  // handle scroll
+  // handle scroll with React's onScroll
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 10);
     handleScroll(); // initialize on mount
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    // Use React's passive event handling
+    const onScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // close on outside click
+  // Handle click outside with React event handling
+  // const handleClickOutside = useCallback((e: React.MouseEvent) => {
+  //   const target = e.target as Node;
+  //   if (
+  //     open &&
+  //     menuRef.current &&
+  //     !menuRef.current.contains(target) &&
+  //     btnRef.current &&
+  //     !btnRef.current.contains(target)
+  //   ) {
+  //     close();
+  //   }
+  // }, [open, close]);
+
   useEffect(() => {
-    function handleClick(e: MouseEvent) {
-      const target = e.target as Node;
-      if (
-        open &&
-        menuRef.current &&
-        !menuRef.current.contains(target) &&
-        btnRef.current &&
-        !btnRef.current.contains(target)
-      ) {
-        close();
-      }
+    if (open) {
+      const handleDocumentClick = (e: MouseEvent) => {
+        const target = e.target as Node;
+        if (
+          menuRef.current &&
+          !menuRef.current.contains(target) &&
+          btnRef.current &&
+          !btnRef.current.contains(target)
+        ) {
+          close();
+        }
+      };
+      document.addEventListener("mousedown", handleDocumentClick);
+      return () =>
+        document.removeEventListener("mousedown", handleDocumentClick);
     }
-    window.addEventListener("click", handleClick);
-    return () => window.removeEventListener("click", handleClick);
   }, [open, close]);
 
-  // close on ESC
-  useEffect(() => {
-    function handleKey(e: KeyboardEvent) {
-      if (e.key === "Escape") close();
-    }
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [close]);
-
-  // close on resize >= md
-  useEffect(() => {
-    function onResize() {
-      if (window.innerWidth >= 768) close();
-    }
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [close]);
+  // Handle escape key with React event handling
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Escape") {
+        close();
+      }
+    },
+    [close]
+  );
 
   useEffect(() => {
-    setPhoneNumer(dealerData?.ContactInfo?.PhoneNumber || "");
-    setEmailAddress(dealerData?.ContactInfo?.InfoEmailAddress || "");
+    if (open) {
+      const handleEscapeKey = (e: KeyboardEvent) => {
+        if (e.key === "Escape") close();
+      };
+      document.addEventListener("keydown", handleEscapeKey);
+      return () => document.removeEventListener("keydown", handleEscapeKey);
+    }
+  }, [open, close]);
+
+  // Handle window resize with React event handling
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        close();
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [close]);
+
+  useEffect(() => {
+    // setPhoneNumer(dealerData?.ContactInfo?.PhoneNumber || "");
+    // setEmailAddress(dealerData?.ContactInfo?.InfoEmailAddress || "");
     setLogoUrl(dealerData?.LogoUrl);
   }, []);
 
@@ -79,7 +115,7 @@ export default function index({ styles }: { styles: any }) {
       }
     >
       {/* Top Bar */}
-      <div
+      {/* <div
         className={`${styles["topbar"]}
         ${
           location.pathname === "/"
@@ -107,7 +143,7 @@ export default function index({ styles }: { styles: any }) {
             <a href="#">Login</a>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Navbar */}
       <nav
@@ -188,6 +224,7 @@ export default function index({ styles }: { styles: any }) {
           <button
             ref={btnRef}
             onClick={toggle}
+            onKeyDown={handleKeyDown}
             className={styles["navbar-mobile__btn"]}
             aria-expanded={open}
             aria-controls="mobile-menu"
@@ -205,6 +242,7 @@ export default function index({ styles }: { styles: any }) {
             }`}
             role="menu"
             aria-hidden={!open}
+            onKeyDown={handleKeyDown}
           >
             <div className="px-4 py-3">
               <ul className={styles["navbar-mobile__menu-panel"]}>
@@ -212,24 +250,38 @@ export default function index({ styles }: { styles: any }) {
                   (page: DealerPageKeys) =>
                     page.showInNavbar && (
                       <li key={page.pageName}>
-                        <a
+                        <Link
+                          to={page.path || "#"}
+                          onClick={close}
+                          className={`${styles["navbar-mobile__link"]} 
+                  ${location.pathname === page.path ? styles["active"] : ""}
+                `}
+                          role="menuitem"
+                          aria-haspopup={!!page.hasSubmenu}
+                          aria-expanded={openSubMenu === page.pageName}
+                        >
+                          {page.label}
+                        </Link>
+                        {/* <a
                           href={page.path || "#"}
                           onClick={close}
                           className={styles["navbar-mobile__link"]}
                           role="menuitem"
                         >
                           {page.label}
-                        </a>
+                        </a> */}
                       </li>
                     )
                 )}
-                <li>
-                  <Button
-                    variant="secondary"
-                    btnText="Contact Us"
-                    clickEvent={close}
-                  />
-                </li>
+                <Link
+                  to="contact-us"
+                  onClick={close}
+                  className={`${styles["navbar-mobile__link"]} 
+                  ${location.pathname === "contact-us" ? styles["active"] : ""}
+                `}
+                >
+                  Contact Us
+                </Link>
               </ul>
             </div>
           </div>

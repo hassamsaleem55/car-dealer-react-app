@@ -8,9 +8,8 @@
     "MotWarningDays": 96,
     "StripeSecretKey": "SSu8/A+BZonQ6s24uQGW6ywbkb4cSxZdKFUARH8Z8jEqJ1ElAxUxiWbs7tBOXM5m+fnEp2IB5OUR/31+r4JeNt0/oQkaQUnD06Ei3GB+NLyrewOCXcKbQY2L2Mu3KMJbtHwsA9qtPWP3fvMuvCeGWw==",
     "StripePublishableKey": "/d98q2JyKGSQkbZkWCTIzORVE/30DfQUE96F8F8oNxI3+lwbT86Gco3T0z3YRyyB65KGSvfPb6mIRzEMwqaOOZD3TCZdgJr+CgW7u2CiwwJVQyWmUdi1Gv4/q9N7OQ6kiTOj38mmgHw0IDkXwrvx2Q==",
-    "StripeWebhookSecretKey": "nObIZUOL+CbcKTqQvPNPF/upoac40jPMZ6UdO6SzT2DR87GApeBqzAPpiooBVwFX",
     "InvoiceTermsAndConditions": "Please review the company's invoice terms and conditions. Adherence to these terms is required prior to the successful completion of your purchase.",
-    "LogoUrl": "https://api.motors-hub.co.uk/Company/Images/968ec489-8e6c-4bc1-8af0-e2130d070c45/CompanyLogo/COM-114937708692.png",
+    "LogoUrl": "https://api.motors-hub.co.uk/Company/Images/968ec489-8e6c-4bc1-8af0-e2130d070c45/CompanyLogo/COM-100659653731.png",
     "EmailAddress": "test@dealershub.co.uk",
     "PhoneNumber": "07000000008",
     "Url": "temp2.motors-hub.co.uk",
@@ -21,7 +20,7 @@
     "VATTypeId": 6621,
     "VatStartMonth": "January",
     "VatTaxYear": "2025",
-    "InvoiceTemplate": "Crimson",
+    "InvoiceTemplate": "Monochrome",
     "SocialMediaInfo": {
         "Facebook": "https://www.facebook.com/people/Dealers-Hub/61576353129133",
         "Instagram": "https://www.instagram.com/dealershub",
@@ -59,17 +58,8 @@
         "NoOfMonths": 2,
         "DepositAmount": 7,
         "DepositPercentage": 0,
-        "FinanceCompaniesMetaData": "[\"automoney\",\"blackhorsefinance\",\"bluemotorfinance\",\"carfinance247\",\"carmoney\",\"mallard\",\"midlandcredit\",\"saf\"]",
-        "FinanceCompanies": [
-            "automoney",
-            "blackhorsefinance",
-            "bluemotorfinance",
-            "carfinance247",
-            "carmoney",
-            "mallard",
-            "midlandcredit",
-            "saf"
-        ]
+        "FinanceCompaniesMetaData": "[]",
+        "FinanceCompanies": []
     },
     "PDISettings": {
         "CompanyId": 0,
@@ -88,17 +78,15 @@
         {
             "ScheduleId": 1,
             "DayId": 1,
-            "OpeningTime": "2025-09-02T20:00:00",
-            "ClosingTime": "2025-09-02T17:30:00",
+            "OpeningTime": "2025-11-27T20:00:00",
+            "ClosingTime": "2025-11-27T17:30:00",
             "IsOpen": true,
-            "IsAppointment": false,
+            "IsAppointment": true,
             "BreaksTiming": "[]"
         },
         {
             "ScheduleId": 2,
             "DayId": 2,
-            "OpeningTime": "2025-09-02T20:00:00",
-            "ClosingTime": "2025-09-02T17:30:00",
             "IsOpen": false,
             "IsAppointment": true,
             "BreaksTiming": "[]"
@@ -106,8 +94,8 @@
         {
             "ScheduleId": 3,
             "DayId": 3,
-            "OpeningTime": "2025-09-02T20:00:00",
-            "ClosingTime": "2025-09-02T17:30:00",
+            "OpeningTime": "2025-11-27T20:00:00",
+            "ClosingTime": "2025-11-27T17:30:00",
             "IsOpen": true,
             "IsAppointment": false,
             "BreaksTiming": "[]"
@@ -115,8 +103,8 @@
         {
             "ScheduleId": 4,
             "DayId": 4,
-            "OpeningTime": "2025-09-02T20:00:00",
-            "ClosingTime": "2025-09-02T17:30:00",
+            "OpeningTime": "2025-11-27T20:00:00",
+            "ClosingTime": "2025-11-27T17:30:00",
             "IsOpen": true,
             "IsAppointment": false,
             "BreaksTiming": "[]"
@@ -124,8 +112,8 @@
         {
             "ScheduleId": 5,
             "DayId": 5,
-            "OpeningTime": "2025-09-02T20:00:00",
-            "ClosingTime": "2025-09-02T17:30:00",
+            "OpeningTime": "2025-11-27T20:00:00",
+            "ClosingTime": "2025-11-27T17:30:00",
             "IsOpen": true,
             "IsAppointment": true,
             "BreaksTiming": "[]"
@@ -133,8 +121,8 @@
         {
             "ScheduleId": 6,
             "DayId": 6,
-            "OpeningTime": "2025-09-02T20:00:00",
-            "ClosingTime": "2025-09-02T17:30:00",
+            "OpeningTime": "2025-11-27T20:00:00",
+            "ClosingTime": "2025-11-27T17:30:00",
             "IsOpen": true,
             "IsAppointment": false,
             "BreaksTiming": "[]"
@@ -142,8 +130,8 @@
         {
             "ScheduleId": 7,
             "DayId": 7,
-            "OpeningTime": "2025-09-02T22:30:00",
-            "ClosingTime": "2025-09-02T16:30:00",
+            "OpeningTime": "2025-11-27T22:30:00",
+            "ClosingTime": "2025-11-27T16:30:00",
             "IsOpen": true,
             "IsAppointment": false,
             "BreaksTiming": "[{\"Start\":\"13:00\",\"End\":\"13:30\"}]"

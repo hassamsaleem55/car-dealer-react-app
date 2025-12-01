@@ -16,10 +16,10 @@
 
 /* Testimonial Text */
 .testimonial-text {
-  @apply text-sm sm:text-base italic leading-relaxed 
+  @apply text-sm sm:text-base italic h-20 leading-relaxed 
          overflow-hidden line-clamp-3;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
+  /* display: -webkit-box;
+  -webkit-box-orient: vertical; */
 }
 
 /* Customer Info */

@@ -19,6 +19,7 @@ export function DealerProvider({ children }: { children: ReactNode }) {
       const data = await getDealerData();
       setDealerAuthToken(data.authToken);
       setDealerData(data.dealerData);
+      console.log("Dealer Data:", data.dealerData);
     };
 
     fetchDealersData();
@@ -26,7 +27,11 @@ export function DealerProvider({ children }: { children: ReactNode }) {
 
   return (
     <DealerContext.Provider
-      value={{ dealerConfig, dealerAuthToken, dealerData }}
+      value={{
+        dealerConfig,
+        dealerAuthToken,
+        dealerData,
+      }}
     >
       {dealerData ? children : <PageLoader />}
     </DealerContext.Provider>
