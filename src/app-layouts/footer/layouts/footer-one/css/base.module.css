@@ -78,7 +78,7 @@
 
 /* ----- Newsletter ----- */
 .footer__newsletter-form {
-  @apply flex flex-col sm:flex-row gap-3;
+  @apply flex flex-row gap-3;
 }
 
 .footer__input {
@@ -105,7 +105,7 @@
 }
 
 /* ----- Responsive Enhancements ----- */
-@media (max-width: 640px) {
+/* @media (max-width: 640px) {
   .footer__container {
     @apply py-10 gap-8;
   }
@@ -118,4 +118,4 @@
   .footer__bottom-container {
     @apply text-center flex-col;
   }
-}
+} */

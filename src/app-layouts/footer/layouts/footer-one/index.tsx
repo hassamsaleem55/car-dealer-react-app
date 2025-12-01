@@ -139,7 +139,7 @@ export default function Footer({ styles }: { styles: any }) {
             <Button
               variant="secondary"
               btnText="Subscribe"
-              btnTextSize="text-sm"
+              btnTextSize="text-xs md:text-sm"
               roundUtilities="rounded-lg"
               paddingUtilities="px-5 py-2"
               widthUtilities="w-24"
