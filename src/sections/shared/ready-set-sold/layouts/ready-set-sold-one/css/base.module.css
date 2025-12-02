@@ -6,7 +6,7 @@
 @import "@dealers-dir/style.css";
 
 .ready-set-sold-card {
-  @apply rounded-2xl shadow-sm space-y-2 w-full h-full
+  @apply rounded-2xl shadow-sm w-full h-full
          transition-all duration-400 
          ease-in-out
          hover:shadow-xl hover:scale-[1.03] cursor-default text-center;

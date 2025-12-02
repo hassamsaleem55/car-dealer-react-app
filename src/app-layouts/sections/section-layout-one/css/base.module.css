@@ -2,7 +2,7 @@
 @import "@dealers-dir/style.css";
 
 .section__wrapper {
-  @apply px-2 sm:px-6 lg:px-8 mt-18;
+  @apply px-2 sm:px-6 lg:px-8 mt-14 md:mt-18;
 }
 
 .section__container {

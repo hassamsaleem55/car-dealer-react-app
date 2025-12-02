@@ -42,5 +42,5 @@
 }
 
 .hero-filter__wrapper-mobile {
-  @apply md:hidden relative z-20 w-full -mt-30;
+  @apply md:hidden px-2 w-full -mt-30;
 }

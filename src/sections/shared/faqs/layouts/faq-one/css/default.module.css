@@ -6,7 +6,7 @@
 
 .faqs-container {
   @apply text-basicFont border border-gray-100 rounded-3xl bg-white overflow-hidden 
-         w-full;
+         w-full mb-12 md:mb-16;
 }
 
 .faq-wrapper {

@@ -4,7 +4,7 @@
    HORIZONTAL FILTER (desktop)
 ======================================= */
 .filter-box {
-  @apply flex-col md:flex-row items-stretch md:items-center gap-3 justify-center;
+  @apply flex-col md:flex-row items-stretch md:items-center shadow-2xl md:shadow-none gap-3 justify-center;
 }
 
 .filter-box > * {

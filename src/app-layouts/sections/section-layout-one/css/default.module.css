@@ -1,5 +1,5 @@
 @import "./base.module.css";
 
 .section__wrapper {
-  @apply mb-18;
+  @apply mb-14 md:mb-18;
 }

@@ -1,5 +1,5 @@
 .grid-layout {
-  @apply w-full h-auto grid justify-items-center items-stretch;
+  @apply w-full grid justify-items-center;
   @apply gap-4 sm:gap-6;
 }
 

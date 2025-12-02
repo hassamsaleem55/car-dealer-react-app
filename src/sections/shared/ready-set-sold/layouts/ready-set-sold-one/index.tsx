@@ -56,11 +56,14 @@ export default function ReadySetSoldOne({
           </MotionReveal>
         ))}
       </div>
-      <Button
-        variant="primary"
-        btnText="Sell your car today"
-        widthUtilities="w-auto mx-auto mt-6"
-      />
+      <div className="text-center -mt-8 mb-12">
+        <Button
+          variant="primary"
+          btnText="Sell your car today"
+          btnTextSize="text-sm md:text-base"
+          widthUtilities="w-auto mx-auto "
+        />
+      </div>
     </SectionLayoutOne>
   );
 }

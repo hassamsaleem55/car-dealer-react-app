@@ -6,12 +6,12 @@
 
 /* Scroll Wrapper: hides overflow */
 .trusted-partner-scroll-wrapper {
-  @apply overflow-hidden relative rounded-full;
+  @apply overflow-hidden relative rounded-full mb-16;
 }
 
 /* Scroll Row: infinite horizontal loop */
 .trusted-partner-scroll {
-  @apply flex items-center gap-6 sm:gap-8 md:gap-10 p-8;
+  @apply flex items-center gap-6 sm:gap-8 md:gap-10;
   width: max-content;
   animation: scroll-left 25s linear infinite;
   will-change: transform;

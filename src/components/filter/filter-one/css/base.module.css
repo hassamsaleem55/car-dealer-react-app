@@ -5,7 +5,7 @@
 @import "@dealers-dir/style.css";
 
 .filter-container {
-  @apply relative z-20 w-full;
+  @apply relative w-full;
 }
 
 .filter-box {

@@ -92,9 +92,10 @@ export default function PaymentCardForm({
     );
 
     try {
-      const stripeInstance = window.Stripe(
-        "pk_test_51QMT4hK1DsGjE5OTLzDRHoQyiGDD1WPJkUIrmiQPqw2rwe8OwNAp04QjE7RAuy6jo8d502b6H94YWeyUU8oQ0a2Y00I0QgbX0S"
-      );
+      // const stripeInstance = window.Stripe(
+      //   "pk_test_51QMT4hK1DsGjE5OTLzDRHoQyiGDD1WPJkUIrmiQPqw2rwe8OwNAp04QjE7RAuy6jo8d502b6H94YWeyUU8oQ0a2Y00I0QgbX0S"
+      // );
+      const stripeInstance = window.Stripe(publishableKey);
       const elementsInstance = stripeInstance.elements();
 
       const cardElementInstance = elementsInstance.create("card");

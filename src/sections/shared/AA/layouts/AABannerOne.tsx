@@ -14,7 +14,7 @@ export default function AABannerOne() {
         <img
           src="../../images/aa-logo-left.jpg"
           alt="AA Logo Left"
-          className="object-contain transition-transform duration-300 hover:scale-105 w-36 sm:w-40 md:w-50 lg:w-60 xl:w-86 2xl:w-100"
+          className="object-contain transition-transform duration-300 hover:scale-105 w-44 md:w-50 lg:w-60 xl:w-86 2xl:w-100"
         />
       </MotionReveal>
 
