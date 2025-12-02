@@ -25,12 +25,12 @@ export default function CarHeader({
       {/* === Title, Registration, Tags & Favorite Button === */}
       <div>
         <div className="flex">
-          <h1 className="grow text-2xl sm:text-3xl font-bold">
+          <h1 className="grow text-xl md:text-3xl font-bold">
             {carData.title}
           </h1>
 
           <button
-            className={`flex items-center justify-center w-10 h-10 border border-gray-200 rounded-full transition cursor-pointer ${
+            className={`flex items-center justify-center w-8 h-8 md:w-10 md:h-10 border border-gray-200 rounded-full transition cursor-pointer ${
               isFavorite
                 ? "bg-primary text-white"
                 : "text-primary hover:bg-primary/10"
@@ -40,17 +40,17 @@ export default function CarHeader({
               isFavorite ? "Remove from favorites" : "Add to favorites"
             }
           >
-            <Heart className="w-5 h-5" />
+            <Heart className="w-4 h-4 md:w-5 md:h-5" />
           </button>
         </div>
 
         <div className="flex gap-2">
           {carData.registrationNo && (
-            <span className="text-xs bg-primary/20 font-semibold px-2 py-1 rounded-full">
+            <span className="text-[10px] md:text-xs bg-primary/20 font-semibold px-2 py-1 rounded-full">
               {carData.registrationNo}
             </span>
           )}
-          <span className="text-xs bg-green-100 text-green-700 font-semibold px-2 py-1 rounded-full">
+          <span className="text-[10px] md:text-xs bg-green-100 text-green-700 font-semibold px-2 py-1 rounded-full">
             ULEZ Compliant
           </span>
         </div>
@@ -62,18 +62,18 @@ export default function CarHeader({
           {/* Derivative (subtitle) */}
           {carData.derivative && (
             <span>
-              <p className="font-medium line-clamp-3">{carData.derivative}</p>
+              <p className="text-sm md:text-base font-medium line-clamp-3">{carData.derivative}</p>
             </span>
           )}
         </div>
 
         {/* Pricing */}
         <div className="text-right space-y-1">
-          <p className="text-3xl font-semibold text-primary">
+          <p className="text-xl md:text-3xl font-semibold text-primary">
             {carData.retailPrice}
           </p>
           {carData.pricePerMonth && (
-            <p className="text-xs font-semibold">
+            <p className="text-[10px] md:text-xs font-semibold">
               Starts from <span>{carData.pricePerMonth}/mo.</span>
             </p>
           )}

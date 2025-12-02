@@ -9,7 +9,7 @@ export default function CarOverview({ specs }: { specs: Spec[] }) {
       </div>
 
       {/* Specs Grid */}
-      <div className="p-5 max-h-80 overflow-y-auto">
+      <div className="p-5 md:max-h-80 md:overflow-y-auto">
         {specs.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-2">
             {specs.map((spec, idx) => (

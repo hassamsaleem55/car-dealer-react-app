@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 function AppOutlet() {
   const [queryString, setQueryString] = useState("");
@@ -11,19 +11,15 @@ function AppOutlet() {
     availableStockCount: null,
   });
 
-  const location = useLocation();
-
   return (
-    <div className={location.pathname !== "/" ? "mt-16 md:mt-20" : ""}>
-      <Outlet
-        context={{
-          queryString,
-          setQueryString,
-          achievementsData,
-          setAchievementsData,
-        }}
-      />
-    </div>
+    <Outlet
+      context={{
+        queryString,
+        setQueryString,
+        achievementsData,
+        setAchievementsData,
+      }}
+    />
   );
 }
 

@@ -78,7 +78,7 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
       {/* === Header (sticky) === */}
       <div
         ref={headerRef}
-        className={`sticky top-30 z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3
+        className={`sticky top-20 z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3
           px-8 py-4 mb-2 bg-white
           ${
             isSticky

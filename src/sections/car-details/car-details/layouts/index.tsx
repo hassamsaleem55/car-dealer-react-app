@@ -154,6 +154,20 @@ export function CarDetailsOne() {
               thumbSettings={thumbSliderSettings}
             />
 
+            <aside className="space-y-4 md:hidden">
+              <MotionReveal preset="slideLeft">
+                <CarHeader
+                  carData={carData}
+                  isFavorite={isFavorite}
+                  toggleFavorite={() => setIsFavorite(!isFavorite)}
+                />
+              </MotionReveal>
+
+              <MotionReveal preset="slideUp" delay={0.1}>
+                <CarOverview specs={carData.specs || []} />
+              </MotionReveal>
+            </aside>
+
             {/* Description */}
             {carData.description && (
               <MotionReveal preset="slideRight">
@@ -226,7 +240,7 @@ export function CarDetailsOne() {
           </div>
 
           {/* === Right Column (Sticky Aside) === */}
-          <aside className="col-span-1 relative lg:sticky lg:top-30 space-y-4 pb-5 order-first lg:order-0">
+          <aside className="col-span-1 relative md:sticky md:top-20 space-y-4 hidden md:block">
             <MotionReveal preset="slideLeft">
               <CarHeader
                 carData={carData}

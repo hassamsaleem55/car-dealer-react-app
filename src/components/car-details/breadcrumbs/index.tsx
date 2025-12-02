@@ -5,7 +5,7 @@ import { ChevronRight } from "lucide-react";
 export default function Breadcrumb({ title }: { title: string }) {
   return (
     <nav
-      className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-sm text-gray-500 gap-3"
+      className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs md:text-sm text-gray-500 gap-3"
       aria-label="breadcrumb"
     >
       <ol className="flex flex-wrap items-center space-x-1 sm:space-x-2 truncate">

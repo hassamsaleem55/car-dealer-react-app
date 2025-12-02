@@ -16,7 +16,7 @@
   html,
   body,
   #root {
-    @apply overflow-x-hidden max-w-full scroll-smooth;
+    @apply overflow-x-clip max-w-full scroll-smooth;
   }
 
   html {
@@ -121,7 +121,7 @@
     @apply font-semibold text-gray-900 px-2;
   } 
 } */
- 
+
 @layer base {
   ::selection {
     @apply bg-primary text-white;
