@@ -78,15 +78,15 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
       {/* === Header (sticky) === */}
       <div
         ref={headerRef}
-        className={`sticky top-20 z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3
-          px-8 py-4 mb-2 bg-white
+        className={`sticky top-16 md:top-20 z-999 flex flex-col md:flex-row md:items-center md:justify-between gap-1.5 md:gap-3
+           bg-white transition-all duration-200 ease-in-out
           ${
             isSticky
-              ? "shadow-md bg-linear-to-r from-primary/20 via-primary/10 to-white"
-              : "shadow-none rounded-t-2xl"
+              ? "px-3 py-3 md:px-8 md:py-4 shadow-xl md:shadow-md md:bg-linear-to-r md:from-primary/20 md:via-primary/10 md:to-white rounded-b-2xl md:rounded-none"
+              : "px-4 py-4 md:px-8 md:py-4 mb-2 shadow-none rounded-t-2xl"
           }`}
       >
-        <h2 className="text-2xl font-semibold">Features</h2>
+        <h2 className="text-lg md:text-2xl font-semibold">Features</h2>
         <input
           type="text"
           placeholder="Search Feature..."
@@ -95,7 +95,7 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
             setSearchTerm(e.target.value);
             setExpanded(false);
           }}
-          className="w-full sm:w-64 px-3 py-2 text-sm border border-gray-200 rounded-xl shadow-sm
+          className="w-full md:w-64 px-3 py-1 md:py-2 text-xs md:text-sm border border-gray-200 rounded-xl shadow-sm
             focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
         />
       </div>
@@ -115,21 +115,23 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
           {filteredFeatures.length ? (
             filteredFeatures.map((feature, idx) => (
               <MotionReveal key={idx} preset="zoomOut" delay={idx * 0.001} once>
-                <div className="bg-gray-100 text-gray-800 rounded-md p-3">
+                <div className="bg-gray-100 text-gray-800 rounded-md p-2 md:p-3">
                   <div className="flex gap-2">
                     {/* Icon Circle */}
-                    <span className="flex items-center justify-center w-5 h-5 border border-primary rounded-full shrink-0">
-                      <Check className="w-3 h-3 text-primary" />
+                    <span className="flex items-center justify-center w-3.5 h-3.5 md:w-5 md:h-5 border border-primary rounded-full shrink-0">
+                      <Check className="w-2 h-2 md:w-3 md:h-3 text-primary" />
                     </span>
 
                     {/* Feature Text */}
-                    <span className="text-sm font-medium">{feature.name}</span>
+                    <span className="break-inside-avoid text-xs md:text-sm font-medium">
+                      {feature.name}
+                    </span>
                   </div>
                 </div>
               </MotionReveal>
             ))
           ) : (
-            <p className="col-span-full text-gray-500 text-sm italic">
+            <p className="col-span-full text-gray-500 text-xs md:text-sm italic">
               No features found.
             </p>
           )}
@@ -138,15 +140,16 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
 
       {/* === Fade Gradient when collapsed === */}
       {!expanded && isClamped && (
-        <div className="relative h-10 bg-linear-to-t from-white to-transparent pointer-events-none" />
+        <div className="relative h-4 md:h-10 bg-linear-to-t from-white to-transparent pointer-events-none" />
       )}
 
       {/* === Show More / Show Less === */}
       {isClamped && (
-        <div className="mt-3 flex justify-center pb-6">
+        <div className="md:mt-3 flex justify-center pb-6">
           <Button
             variant="secondary"
-            widthUtilities="w-36"
+            widthUtilities="md:w-36"
+            btnTextSize="text-xs md:text-sm"
             btnText={expanded ? "Show less" : "Show more"}
             clickEvent={() => setExpanded((p) => !p)}
           />

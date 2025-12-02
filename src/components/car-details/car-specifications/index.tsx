@@ -58,29 +58,29 @@ export default function CarSpecifications({
 
   /** === Render === */
   return (
-    <section className="col-span-2 bg-white rounded-2xl shadow-md border border-gray-100">
+    <section className="col-span-2 bg-white rounded-2xl shadow-none md:shadow-md border border-gray-100">
       {/* Sentinel for Sticky Detection */}
       <div ref={sentinelRef} className="w-full h-0" />
 
       {/* === Sticky Header === */}
       <div
         ref={headerRef}
-        className={`sticky top-20 z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3
-          px-8 py-4 mb-2 bg-white
+        className={`sticky top-16 md:top-20 z-999 flex flex-col md:flex-row md:items-center md:justify-between gap-1.5 md:gap-3
+           bg-white transition-all duration-200 ease-in-out
           ${
             isSticky
-              ? "shadow-md bg-linear-to-r from-primary/20 via-primary/10 to-white"
-              : "shadow-none rounded-t-2xl"
+              ? "px-3 py-3 md:px-8 md:py-4 shadow-xl md:shadow-md md:bg-linear-to-r md:from-primary/20 md:via-primary/10 md:to-white rounded-b-2xl md:rounded-none"
+              : "px-4 py-4 md:px-8 md:py-4 mb-2 shadow-none rounded-t-2xl"
           }`}
       >
-        <h2 className="text-2xl font-semibold">Specifications</h2>
+        <h2 className="text-lg md:text-2xl font-semibold">Specifications</h2>
         <input
           id="searchSpecification"
           type="text"
           placeholder="Search Specification..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full sm:w-64 px-3 py-2 text-sm border border-gray-200 rounded-xl shadow-sm 
+          className="w-full md:w-64 px-3 py-1 md:py-2 text-xs md:text-sm border border-gray-200 rounded-xl shadow-sm
             focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
         />
       </div>
@@ -88,19 +88,19 @@ export default function CarSpecifications({
       {/* === Specifications Grid === */}
       <div
         ref={wrapperRef}
-        className="overflow-hidden transition-all duration-500 ease-in-out px-8 pb-6"
+        className="overflow-hidden transition-all duration-500 ease-in-out px-4 md:px-8 pb-6"
       >
         <div className="columns-1 sm:columns-2 gap-4">
           {filteredSpecifications.length ? (
             filteredSpecifications.map((spec, idx) => (
               <div
                 key={idx}
-                className="break-inside-avoid mb-4 bg-white text-gray-800 rounded-xl border border-primary/30 shadow-sm hover:shadow-md transition-shadow duration-200 p-4"
+                className="break-inside-avoid mb-4 bg-white text-gray-800 rounded-xl border border-primary/30 shadow-md hover:shadow-lg transition-shadow duration-200 p-4"
               >
-                <div className="font-semibold">
+                <div className="text-sm md:text-base font-semibold">
                   <span>{spec.category}</span>
                 </div>
-                <div className="px-4 pb-4 pt-4 text-sm">
+                <div className="p-2 md:p-4 text-xs md:text-sm">
                   {spec.specs.map((item, itemIdx) => (
                     <MotionReveal key={itemIdx} preset="zoomOut" once={true}>
                       <div className="flex items-center justify-between py-1 border-b border-gray-200">

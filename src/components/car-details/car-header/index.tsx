@@ -87,7 +87,7 @@ export default function CarHeader({
           btnText="Book an Appointment"
           paddingUtilities="px-3 py-2"
           roundUtilities="rounded-lg group"
-          btnTextSize="text-sm"
+          btnTextSize="text-xs md:text-sm"
           clickEvent={() => {
             setRequestType("Appointment");
             setAppointmentModalOpen(true);
@@ -120,7 +120,7 @@ export default function CarHeader({
             btnText="Book Test Drive"
             paddingUtilities="px-3 py-2"
             roundUtilities="rounded-lg"
-            btnTextSize="text-sm"
+            btnTextSize="text-xs md:text-sm"
             clickEvent={() => {
               setRequestType("testdrive");
               setAppointmentModalOpen(true);
@@ -132,7 +132,7 @@ export default function CarHeader({
             btnText="Enquire Now"
             paddingUtilities="px-3 py-2"
             roundUtilities="rounded-lg"
-            btnTextSize="text-sm"
+            btnTextSize="text-xs md:text-sm"
             clickEvent={() => {
               setRequestType("vehicledetails");
               setAppointmentModalOpen(true);
@@ -145,14 +145,14 @@ export default function CarHeader({
             btnText="Apply Finance"
             paddingUtilities="px-3 py-2"
             roundUtilities="rounded-lg"
-            btnTextSize="text-sm"
+            btnTextSize="text-xs md:text-sm"
           />
           <Button
             variant="secondary"
             btnText="Reserve for £99"
             paddingUtilities="px-3 py-2"
             roundUtilities="rounded-lg"
-            btnTextSize="text-sm"
+            btnTextSize="text-xs md:text-sm"
             clickEvent={() => setReservationModalOpen(true)}
           />
         </div>

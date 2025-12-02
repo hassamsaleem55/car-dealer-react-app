@@ -31,8 +31,8 @@ export default function CarDescription({
   }, [description]);
 
   return (
-    <section className="col-span-2 bg-white rounded-2xl shadow-md border border-gray-100 p-8">
-      <h2 className="text-2xl font-semibold mb-4">Description</h2>
+    <section className="col-span-2 bg-white rounded-2xl shadow-md border border-gray-100 p-4 md:p-8">
+      <h2 className="text-lg md:text-2xl font-semibold mb-4">Description</h2>
 
       {/* Animated wrapper */}
       <div
@@ -43,7 +43,7 @@ export default function CarDescription({
             : `${collapsedHeight}px`,
         }}
       >
-        <p ref={textRef} className="leading-relaxed">
+        <p ref={textRef} className="text-sm md:text-base leading-relaxed">
           {description}
         </p>
       </div>
@@ -56,7 +56,7 @@ export default function CarDescription({
       {isClamped && (
         <button
           onClick={() => setExpanded((prev) => !prev)}
-          className="mt-3 text-primary hover:underline focus:outline-none cursor-pointer"
+          className="mt-3 text-primary text-sm md:text-base hover:underline focus:outline-none cursor-pointer"
         >
           {expanded ? "Read less" : "Read more"}
         </button>

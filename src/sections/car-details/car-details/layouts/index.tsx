@@ -136,7 +136,7 @@ export function CarDetailsOne() {
 
   return (
     <>
-      <div className="container mx-auto px-4 py-6 space-y-6">
+      <div className="container mx-auto px-4 pt-6 space-y-6">
         {/* === Breadcrumb === */}
         <Breadcrumb title={carData.title} />
 
@@ -199,7 +199,7 @@ export function CarDetailsOne() {
 
             {/* Finance Cards */}
             {(financeOptions.PCP || financeOptions.HP) && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 md:mt-2">
                 <MotionReveal preset="slideRight">
                   <CarFinanceCard
                     type="monthly"
