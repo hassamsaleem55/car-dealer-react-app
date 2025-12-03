@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import moment from "moment-timezone";
 import { toast } from "sonner";
 import { useDealerContext } from "@core-dir/dealer-provider";
@@ -21,6 +22,7 @@ export default function AppointmentModal({
   carData: Car;
   requestType: "" | "Appointment" | "testdrive" | "vehicledetails";
 }) {
+  const location = useLocation();
   const TODAY = useMemo(() => moment.tz("Europe/London"), []);
   const { dealerAuthToken } = useDealerContext();
   const [scheduleDayId, setScheduleDayId] = useState<number | null>(null);

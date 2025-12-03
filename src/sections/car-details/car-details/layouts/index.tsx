@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
 import Breadcrumb from "@components-dir/car-details/breadcrumbs";
@@ -22,6 +22,7 @@ import { FeaturedDefault } from "@sections-dir/shared/featured/variants";
 import type { Car } from "@components-dir/car-card/car-card.types";
 
 export function CarDetailsOne() {
+  const location = useLocation();
   const { dealerData, dealerAuthToken } = useDealerContext();
   const { setReservationModalOpen, setReservationCarData } = useOutletContext<{
     setReservationModalOpen: (qs: boolean) => void;

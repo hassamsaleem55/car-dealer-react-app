@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ChevronRight } from "lucide-react";
-import { useOutletContext, useNavigate } from "react-router-dom";
+import { useOutletContext, useNavigate, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
 import FilterOne from "@components-dir/filter/filter-one";
@@ -12,12 +12,12 @@ import { processCarCardData } from "@core-dir/helpers/CarCardDataProcessor";
 import DropdownFlexible from "@elements-dir/dropdown";
 
 export function StockListingOne() {
+  const location = useLocation();
   const { dealerAuthToken } = useDealerContext();
   const { queryString, setQueryString } = useOutletContext<{
     queryString: string;
     setQueryString: (qs: string) => void;
   }>();
-
   const [loading, setLoading] = useState(false);
   const [carData, setCarData] = useState<Array<any>>([]);
   const navigate = useNavigate();

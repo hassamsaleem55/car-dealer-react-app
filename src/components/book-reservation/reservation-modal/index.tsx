@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import { postApi } from "@core-dir/services/Api.service";
@@ -17,6 +18,7 @@ export default function ReservationModal({
   setIsOpen: (open: boolean) => void;
   carData: Car;
 }) {
+  const location = useLocation();
   const { dealerAuthToken } = useDealerContext();
   const searchParams = location.search.startsWith("?")
     ? location.search.substring(1)
