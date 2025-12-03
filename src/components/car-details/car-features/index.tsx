@@ -153,7 +153,7 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
         <div className="columns-1 sm:columns-3 space-y-2">
           {filteredFeatures.length ? (
             filteredFeatures.map((feature, idx) => (
-              <MotionReveal key={idx} preset="zoomOut" delay={idx * 0.001} once>
+              <MotionReveal key={idx} preset="zoomOut" delay={idx * 0.001}>
                 <div className="bg-gray-100 text-gray-800 rounded-md p-2 md:p-3">
                   <div className="flex gap-2">
                     {/* Icon Circle */}

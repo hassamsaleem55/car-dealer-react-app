@@ -11,7 +11,6 @@ import { processCarCardData } from "@core-dir/helpers/CarCardDataProcessor";
 
 export default function FeaturedOne({ heading }: { heading: string }) {
   const { dealerAuthToken } = useDealerContext();
-
   const [carData, setCarData] = useState<Array<any>>([]);
   const queryString = "SortBy=DateAdded&PageSize=8";
   useEffect(() => {

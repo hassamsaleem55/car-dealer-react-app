@@ -24,7 +24,7 @@ export default function CarCheckRecheck() {
         <div className="grid gap-2 grid-cols-2 md:grid-cols-3">
           {dealerConfig.dealer.checkReCheckList?.map(
             (item: string, idx: number) => (
-              <MotionReveal key={idx} preset="zoomOut" once={true}>
+              <MotionReveal key={idx} preset="zoomOut">
                 <div className="group flex flex-row items-center justify-right md:justify-between bg-gray-100 h-11 md:h-auto rounded-md px-1.5 md:p-3">
                   <h3 className="text-xs md:text-sm font-medium order-1 md:order-0">
                     {item}

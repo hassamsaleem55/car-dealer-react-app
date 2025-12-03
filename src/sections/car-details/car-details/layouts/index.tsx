@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
+import { useOutletContext } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
 import Breadcrumb from "@components-dir/car-details/breadcrumbs";
@@ -13,18 +14,22 @@ import CarCheckRecheck from "@components-dir/car-details/car-check-recheck";
 import CarMOTInfo from "@components-dir/car-details/car-mot-info";
 import CodeWeaverFinance from "@components-dir/car-details/code-weaver-finance";
 import { GetDirectionV1 } from "@sections-dir/shared/get-dealer-direction";
-import { type CarDataTypes } from "@components-dir/car-details/car-details.types";
 import { fetchApi } from "@core-dir/services/Api.service";
 import { processCarCardData } from "@core-dir/helpers/CarCardDataProcessor";
 import { processCarDetailsSpecs } from "@core-dir/helpers/CarDetailsSpecsProcessor";
 import { RightChoiceDefault } from "@sections-dir/shared/right-choice/variants";
 import { FeaturedDefault } from "@sections-dir/shared/featured/variants";
+import type { Car } from "@components-dir/car-card/car-card.types";
 
 export function CarDetailsOne() {
   const { dealerData, dealerAuthToken } = useDealerContext();
+  const { setReservationModalOpen, setReservationCarData } = useOutletContext<{
+    setReservationModalOpen: (qs: boolean) => void;
+    setReservationCarData: (data: Car) => void;
+  }>();
   const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [carData, setCarData] = useState<CarDataTypes | null>(null);
+  const [carData, setCarData] = useState<Car | null>(null);
   const [carDetails, setCarDetails] = useState<any>(null);
   const [carImages, setCarImages] = useState<any[]>([]);
   const [features, setFeatures] = useState<any[]>([]);
@@ -62,6 +67,7 @@ export function CarDetailsOne() {
         console.log("Fetched car details:", carRes);
         const processedCar = processCarCardData([carRes])[0];
         setCarData(processedCar);
+        setReservationCarData(processedCar);
         setCarDetails(carRes);
         setCarImages(imgRes?.stockMedia?.[0]?.images || []);
         setFeatures(featureRes?.features || []);
@@ -227,6 +233,7 @@ export function CarDetailsOne() {
                       "Hassle & haggle free",
                     ]}
                     btnText="Reserve for £99"
+                    onButtonClick={() => setReservationModalOpen(true)}
                   />
                 </MotionReveal>
               </div>

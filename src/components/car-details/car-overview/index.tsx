@@ -1,6 +1,8 @@
-import { type Spec } from "../car-details.types";
-
-export default function CarOverview({ specs }: { specs: Spec[] }) {
+export default function CarOverview({
+  specs,
+}: {
+  specs: { label: string; value: string | number }[];
+}) {
   return (
     <section className="bg-white rounded-2xl shadow-md border border-gray-100 overflow-hidden">
       {/* Header */}

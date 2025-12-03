@@ -1,6 +1,7 @@
 export interface Car {
   stockId: number;
   title: string;
+  registrationNo?: string;
   derivative: string | null;
   description: string | null;
   year: number;

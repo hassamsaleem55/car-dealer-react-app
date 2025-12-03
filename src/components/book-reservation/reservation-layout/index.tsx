@@ -1,11 +1,11 @@
 import React from "react";
-import { type CarDataTypes } from "@components-dir/car-details/car-details.types";
+import type { Car } from "@components-dir/car-card/car-card.types";
 
 export default function ReservationLayout({
   carData,
   children,
 }: {
-  carData: CarDataTypes;
+  carData: Car;
   children: React.ReactNode;
 }) {
   return (
@@ -56,42 +56,78 @@ export default function ReservationLayout({
               </h2>
               <div className="space-y-1">
                 <p className="text-sm text-gray-600">
-                  Reservation Fee: <span className="font-semibold text-primary">£99</span>
+                  Reservation Fee:{" "}
+                  <span className="font-semibold text-primary">£99</span>
                 </p>
                 <p className="text-xs text-gray-500 leading-relaxed">
-                  Secure this vehicle for 48 hours. The reservation fee will be deducted 
-                  from your final purchase price.
+                  Secure this vehicle for 48 hours. The reservation fee will be
+                  deducted from your final purchase price.
                 </p>
                 <p className="text-xs text-gray-500 leading-relaxed">
-                  Need to cancel? Full refund available within 24 hours of reservation.
+                  Need to cancel? Full refund available within 24 hours of
+                  reservation.
                 </p>
               </div>
 
               {/* Benefits */}
               <div className="space-y-2 pt-2">
-                <h3 className="text-sm font-semibold text-gray-700">What's Included:</h3>
+                <h3 className="text-sm font-semibold text-gray-700">
+                  What's Included:
+                </h3>
                 <ul className="text-xs text-gray-600 space-y-1">
                   <li className="flex items-center">
-                    <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    <svg
+                      className="w-3 h-3 text-green-500 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     48-hour hold on the vehicle
                   </li>
                   <li className="flex items-center">
-                    <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    <svg
+                      className="w-3 h-3 text-green-500 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     Priority viewing appointment
                   </li>
                   <li className="flex items-center">
-                    <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    <svg
+                      className="w-3 h-3 text-green-500 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     Dedicated sales consultant
                   </li>
                   <li className="flex items-center">
-                    <svg className="w-3 h-3 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    <svg
+                      className="w-3 h-3 text-green-500 mr-2"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
                     </svg>
                     Vehicle history report
                   </li>

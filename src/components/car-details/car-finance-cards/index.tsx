@@ -6,6 +6,7 @@ export default function CarFinanceCard({
   price,
   benefits,
   btnText,
+  onButtonClick,
 }: {
   type: "monthly" | "full";
   price: {
@@ -14,6 +15,7 @@ export default function CarFinanceCard({
   };
   benefits: string[];
   btnText: string;
+  onButtonClick?: () => void;
 }) {
   const isMonthly = type === "monthly";
 
@@ -128,6 +130,7 @@ export default function CarFinanceCard({
           paddingUtilities="px-4 py-2"
           widthUtilities="w-full"
           btnTextSize="text-sm md:text-base font-semibold"
+          clickEvent={onButtonClick}
         />
       </div>
     </div>

@@ -6,7 +6,7 @@ import ModalWithSteps from "../../modals/modal-with-steps";
 import ReservationLayout from "../reservation-layout";
 import PersonalInfoForm from "../personal-info-form";
 import PaymentCardForm from "../payment-card-form";
-import { type CarDataTypes } from "@components-dir/car-details/car-details.types";
+import type { Car } from "@components-dir/car-card/car-card.types";
 
 export default function ReservationModal({
   isOpen,
@@ -15,7 +15,7 @@ export default function ReservationModal({
 }: {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  carData: CarDataTypes;
+  carData: Car;
 }) {
   const { dealerAuthToken } = useDealerContext();
   const searchParams = location.search.startsWith("?")
@@ -157,7 +157,6 @@ export default function ReservationModal({
         if (response.checkoutUrl) {
           window.location.href = response.checkoutUrl;
         } else if (response.clientSecret && response.publishableKeyDecoded) {
-
           // Validate publishable key format
           // if (!response.publishableKey.startsWith('pk_')) {
           //   console.error("Invalid publishable key received from backend:", response.publishableKey);

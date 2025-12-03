@@ -1,21 +1,23 @@
 import { useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import { Heart } from "lucide-react";
 import Button from "@elements-dir/button";
-import { type CarDataTypes } from "../car-details.types";
 import AppointmentModal from "@components-dir/book-appointment/appointment-modal";
-import ReservationModal from "@components-dir/book-reservation/reservation-modal";
+import type { Car } from "@components-dir/car-card/car-card.types";
 
 export default function CarHeader({
   carData,
   isFavorite,
   toggleFavorite,
 }: {
-  carData: CarDataTypes;
+  carData: Car;
   isFavorite: boolean;
   toggleFavorite: () => void;
 }) {
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
-  const [reservationModalOpen, setReservationModalOpen] = useState(false);
+  const { setReservationModalOpen } = useOutletContext<{
+    setReservationModalOpen: (qs: boolean) => void;
+  }>();
   const [requestType, setRequestType] = useState<
     "" | "Appointment" | "testdrive" | "vehicledetails"
   >("");
@@ -62,7 +64,9 @@ export default function CarHeader({
           {/* Derivative (subtitle) */}
           {carData.derivative && (
             <span>
-              <p className="text-sm md:text-base font-medium line-clamp-3">{carData.derivative}</p>
+              <p className="text-sm md:text-base font-medium line-clamp-3">
+                {carData.derivative}
+              </p>
             </span>
           )}
         </div>
@@ -163,13 +167,6 @@ export default function CarHeader({
           setIsOpen={setAppointmentModalOpen}
           carData={carData}
           requestType={requestType}
-        />
-      )}
-      {reservationModalOpen && (
-        <ReservationModal
-          isOpen={reservationModalOpen}
-          setIsOpen={setReservationModalOpen}
-          carData={carData}
         />
       )}
     </header>

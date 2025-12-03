@@ -6,7 +6,7 @@
 
 /* Root card */
 .car-card {
-  @apply w-auto min-h-120 md:min-h-120 rounded-2xl border border-gray-200 bg-white 
+  @apply w-auto h-auto pb-4 min-h-120 md:min-h-120 rounded-2xl border border-gray-200 bg-white 
          transition-all duration-300 ease-in-out relative shadow-2xl md:shadow-md;
 }
 
@@ -79,25 +79,26 @@
 
 /* Overlay Container */
 .car-card__actions {
-  @apply absolute inset-0 flex flex-col justify-end gap-2 
+  @apply absolute inset-0 flex flex-col justify-end gap-1 
          px-4 pb-4 rounded-2xl transition-opacity duration-300
          bg-linear-to-t from-primary/70 via-primary/5 to-transparent z-10;
 }
 
 .view-car__buttons-wrapper {
-  @apply flex gap-1 p-2;
+  @apply flex gap-1;
 }
 
 /* Buttons inside overlay */
-.view-car__buttons-wrapper,
+.view-car__buttons-wrapper button,
 .car-card__actions > button {
-  @apply bg-white/90 backdrop-blur-xs
-         rounded-xl transition-all duration-300;
+  @apply bg-white/80 backdrop-blur-3xl
+         rounded-xl transition-all duration-300
+         border border-white/50 hover:border-primary;
 }
 
-.car-card__actions > button {
+/* .car-card__actions > button {
   @apply border border-white/50 hover:border-primary;
-}
+} */
 
 .view-car__button {
   @apply grow;

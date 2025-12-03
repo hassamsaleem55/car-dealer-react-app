@@ -7,8 +7,8 @@ import ModalWithSteps from "../../modals/modal-with-steps";
 import AppointmentLayout from "../appointment-layout";
 import CalendarOne from "@components-dir/calendar";
 import AppointmentForm from "../appointment-form";
-import { type CarDataTypes } from "@components-dir/car-details/car-details.types";
 import AppointmentConfirmation from "../appointment-confirmation";
+import type { Car } from "@components-dir/car-card/car-card.types";
 
 export default function AppointmentModal({
   isOpen,
@@ -18,7 +18,7 @@ export default function AppointmentModal({
 }: {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  carData: CarDataTypes;
+  carData: Car;
   requestType: "" | "Appointment" | "testdrive" | "vehicledetails";
 }) {
   const TODAY = useMemo(() => moment.tz("Europe/London"), []);
@@ -142,8 +142,6 @@ export default function AppointmentModal({
     }
     return true;
   };
-
-
 
   const allSteps = [
     {

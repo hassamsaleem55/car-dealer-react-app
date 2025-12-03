@@ -151,7 +151,7 @@ export default function CarSpecifications({
                 </div>
                 <div className="p-2 md:p-4 text-xs md:text-sm">
                   {spec.specs.map((item, itemIdx) => (
-                    <MotionReveal key={itemIdx} preset="zoomOut" once={true}>
+                    <MotionReveal key={itemIdx} preset="zoomOut">
                       <div className="flex items-center justify-between py-1 border-b border-gray-200">
                         <span>{item.label}</span>
                         <span>{item.value}</span>
