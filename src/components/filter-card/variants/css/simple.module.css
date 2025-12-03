@@ -16,7 +16,7 @@
 
 /* ===== Image Type ===== */
 .filter-card img {
-  @apply size-24 sm:size-36 object-contain;
+  @apply size-36 object-contain;
 }
 
 /* ===== Icon Type Wrapper ===== */

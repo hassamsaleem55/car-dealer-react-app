@@ -16,7 +16,6 @@ export function processCarCardData(rawData: any[]): any[] {
     }
     return { label, value };
   };
-  // console.log("Raw Data:", rawData);
   const carData: Car[] = rawData.map((car) => {
     return {
       stockId: car.stockId,

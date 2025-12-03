@@ -31,7 +31,6 @@ export default function BrandListingOne({ heading }: { heading: string }) {
     }));
 
     setCarBrands(carBrandsList);
-    console.log("Car Brands Data:", filtersData[0]?.options);
   }, [filtersData]);
 
   return (

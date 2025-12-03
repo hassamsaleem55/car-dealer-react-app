@@ -65,7 +65,6 @@ export function CarDetailsOne() {
           fetchApi(`/stocks/${stockId}/features`, dealerAuthToken),
         ]);
 
-        console.log("Fetched car details:", carRes);
         const processedCar = processCarCardData([carRes])[0];
         setCarData(processedCar);
         setReservationCarData(processedCar);
