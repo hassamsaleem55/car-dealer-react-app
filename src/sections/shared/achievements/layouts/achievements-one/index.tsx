@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useSpring, useInView } from "framer-motion";
 import SectionLayoutOne from "@app-layout-dir/sections/section-layout-one";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
-// import { achievements } from "@core-dir/store/Achievements.data";
 import { useOutletContext } from "react-router-dom";
 
 export default function AchievementsOne({

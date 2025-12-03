@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import {
   Link,
   useOutletContext,
@@ -8,66 +7,25 @@ import {
 import { Search } from "lucide-react";
 import DropdownFlexible from "@elements-dir/dropdown";
 import Button from "@elements-dir/button";
-import { useDealerContext } from "@core-dir/dealer-provider";
-import { fetchApi } from "@core-dir/services/Api.service";
-import { transformFilterData } from "@core-dir/helpers/FilterDataProcessor";
 
 export default function FilterOne({ styles }: { styles: any }) {
-  const { dealerAuthToken, dealerData } = useDealerContext();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { queryString, setQueryString, achievementsData, setAchievementsData } =
-    useOutletContext<{
-      queryString: string;
-      setQueryString: (qs: string) => void;
-      achievementsData: any;
-      setAchievementsData: (data: any) => void;
-    }>();
-
-  const [filtersData, setFiltersData] = useState<Array<any>>([]);
-  const [loading, setLoading] = useState(false);
-  const [firstLoad, setFirstLoad] = useState(true);
+  const {
+    queryString,
+    setQueryString,
+    filtersData,
+    filtersLoading,
+    filtersFirstLoad,
+  } = useOutletContext<{
+    queryString: string;
+    setQueryString: (qs: string) => void;
+    filtersData: Array<any>;
+    filtersLoading: boolean;
+    filtersFirstLoad: boolean;
+  }>();
   const isStockPage = location.pathname.toLowerCase().startsWith("/stock");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await fetchApi(
-          `/companies/${dealerData.CompanyId}/car-filters${
-            queryString ? `?${queryString}` : ""
-          }`,
-          dealerAuthToken
-        );
-        const transformedData = transformFilterData(response);
-        setFiltersData(transformedData);
-        if (
-          achievementsData.soldStockCount === null &&
-          achievementsData.availableStockCount === null
-        ) {
-          const soldStockCount = response.soldStockCount
-            ? response.soldStockCount - 3
-            : 0;
-          const availableStockCount = transformedData[0]?.total
-            ? transformedData[0]?.total - 3
-            : 0;
-          setAchievementsData({
-            soldStockCount,
-            availableStockCount,
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching filters:", error);
-      } finally {
-        setLoading(false);
-        setFirstLoad(false);
-      }
-    };
-
-    fetchData();
-  }, [queryString, dealerAuthToken]);
-
   const getSelectedFromQuery = (category: string) => {
     const params = new URLSearchParams(location.search);
     const cat = category.toLowerCase();
@@ -98,7 +56,7 @@ export default function FilterOne({ styles }: { styles: any }) {
   return (
     <div className={styles["filter-container"]}>
       <div className={styles["filter-box"]}>
-        {firstLoad && loading ? (
+        {filtersFirstLoad && filtersLoading ? (
           <div className="flex justify-center items-center py-6">
             <div className="w-5 h-5 border-4 border-gray-200 border-t-primary rounded-full animate-spin" />
           </div>
@@ -126,7 +84,7 @@ export default function FilterOne({ styles }: { styles: any }) {
                 multiSelect
                 searchable={isStockPage}
                 showTags={isStockPage}
-                loading={loading && !firstLoad}
+                loading={filtersLoading && !filtersFirstLoad}
                 defaultValue={getSelectedFromQuery(category)}
               />
             ))}
