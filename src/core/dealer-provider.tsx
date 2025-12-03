@@ -19,7 +19,6 @@ export function DealerProvider({ children }: { children: ReactNode }) {
       const data = await getDealerData();
       setDealerAuthToken(data.authToken);
       setDealerData(data.dealerData);
-      console.log("Dealer Data:", data.dealerData);
     };
 
     fetchDealersData();

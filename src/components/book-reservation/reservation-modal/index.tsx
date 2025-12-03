@@ -147,30 +147,16 @@ export default function ReservationModal({
     };
 
     try {
-      console.log("Creating payment intent for stockId:", stockId);
       const response = await postApi(
         `/stocks/${stockId}/reserve/create-payment-intent`,
         body,
         dealerAuthToken
       );
 
-      console.log("Payment intent response:", {
-        isSuccess: response.isSuccess,
-        hasClientSecret: !!response.clientSecret,
-        hasPublishableKey: !!response.publishableKeyDecoded,
-        hasCheckoutUrl: !!response.checkoutUrl
-      });
-
       if (response.isSuccess) {
         if (response.checkoutUrl) {
           window.location.href = response.checkoutUrl;
         } else if (response.clientSecret && response.publishableKeyDecoded) {
-          // Validate Stripe parameters before setting
-          console.log("Received Stripe parameters:", {
-            clientSecret: response.clientSecret?.substring(0, 20) + "...",
-            publishableKey: response.publishableKeyDecoded,
-            reservationSecret: response.reservationSecret
-          });
 
           // Validate publishable key format
           // if (!response.publishableKey.startsWith('pk_')) {
@@ -216,7 +202,7 @@ export default function ReservationModal({
   // Submit payment via Stripe
   const submitCardPayment = async (): Promise<boolean> => {
     // This will be handled by the Stripe payment handler in PaymentCardForm
-    if (typeof window !== 'undefined' && (window as any).stripePaymentHandler) {
+    if (typeof window !== "undefined" && (window as any).stripePaymentHandler) {
       return await (window as any).stripePaymentHandler();
     } else {
       toast.error("Payment system not ready. Please try again.");
@@ -251,7 +237,8 @@ export default function ReservationModal({
       ),
       validate: () => {
         // Basic validation - ensure Stripe is loaded and cardholder name is provided
-        const cardholderName = paymentForm.find(f => f.name === "cardholderName")?.value || "";
+        const cardholderName =
+          paymentForm.find((f) => f.name === "cardholderName")?.value || "";
         if (!cardholderName.trim()) {
           toast.error("Please enter the cardholder name.");
           return false;

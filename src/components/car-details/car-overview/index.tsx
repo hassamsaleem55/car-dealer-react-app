@@ -9,13 +9,16 @@ export default function CarOverview({ specs }: { specs: Spec[] }) {
       </div>
 
       {/* Specs Grid */}
-      <div className="p-5 md:max-h-80 md:overflow-y-auto">
+      <div className="p-5">
         {specs.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-2">
-            {specs.map((spec, idx) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {specs.slice(0, 9).map((spec, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-xl border border-primary/30 shadow-sm hover:shadow-md transition-shadow duration-200 text-center px-2 py-5"
+                className={`bg-white rounded-xl border border-primary/30 shadow-sm hover:shadow-md transition-shadow duration-200 text-center px-2 py-5 ${
+                  idx >= 8 ? "hidden md:block" : ""
+                }
+                  `}
               >
                 <h3 className="text-[10px] md:text-xs font-medium text-gray-500 uppercase tracking-wide">
                   {spec.label}

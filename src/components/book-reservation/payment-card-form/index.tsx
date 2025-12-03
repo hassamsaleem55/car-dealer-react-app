@@ -86,10 +86,10 @@ export default function PaymentCardForm({
     //   return;
     // }
 
-    console.log(
-      "Initializing Stripe with key:",
-      publishableKey.substring(0, 20) + "..."
-    );
+    // console.log(
+    //   "Initializing Stripe with key:",
+    //   publishableKey.substring(0, 20) + "..."
+    // );
 
     try {
       // const stripeInstance = window.Stripe(
@@ -146,10 +146,6 @@ export default function PaymentCardForm({
       return false;
     }
 
-    console.log(
-      "Starting payment submission with clientSecret:",
-      clientSecret.substring(0, 20) + "..."
-    );
     setProcessing(true);
 
     const cardholderName =

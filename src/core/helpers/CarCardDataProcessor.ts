@@ -16,7 +16,7 @@ export function processCarCardData(rawData: any[]): any[] {
     }
     return { label, value };
   };
-
+  // console.log("Raw Data:", rawData);
   const carData: Car[] = rawData.map((car) => {
     return {
       stockId: car.stockId,
@@ -38,16 +38,11 @@ export function processCarCardData(rawData: any[]): any[] {
         sanitizeSpec("Transmission", car.transmissionType),
         sanitizeSpec("Fuel", car.fuelType),
         sanitizeSpec("Body Type", car.bodyType),
-        sanitizeSpec(
-          "Mileage",
-          car.odometerReadingMiles?.toLocaleString?.() ?? null
-        ),
-        sanitizeSpec("Doors", car.doors),
+        sanitizeSpec("Mileage", car.odometerReadingMiles?.toLocaleString?.()),
         sanitizeSpec("Color", car.colour),
-        sanitizeSpec(
-          "MOT Date",
-          car.motDue ? new Date(car.motDue).toLocaleDateString() : null
-        ),
+        sanitizeSpec("Doors", car.aT_StockInfo?.vehicle.doors),
+        sanitizeSpec("Seats", car.aT_StockInfo?.vehicle.seats),
+        sanitizeSpec("Gears", car.aT_StockInfo?.vehicle.gears),
       ].filter((spec): spec is { label: string; value: any } => spec !== null),
     };
   });

@@ -14,9 +14,10 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSticky, setIsSticky] = useState(false);
 
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   // === Filtered Features (memoized for performance)
   const filteredFeatures = useMemo(() => {
@@ -70,8 +71,21 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
     return () => observer.disconnect();
   }, []);
 
+  const moveToTop = () => {
+    // sectionRef.current?.scrollIntoView({ behavior: "smooth" });
+    setTimeout(() => {
+      sectionRef.current!.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 50); // Allow re-render before scrolling
+  };
+
   return (
-    <section className="col-span-2 bg-white rounded-2xl shadow-md border border-gray-100">
+    <section
+      ref={sectionRef}
+      className="col-span-2 bg-white rounded-2xl shadow-md border border-gray-100"
+    >
       {/* === Sentinel for sticky detection === */}
       <div ref={sentinelRef} className="w-full h-0" />
 
@@ -87,17 +101,42 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
           }`}
       >
         <h2 className="text-lg md:text-2xl font-semibold">Features</h2>
-        <input
-          type="text"
-          placeholder="Search Feature..."
-          value={searchTerm}
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-            setExpanded(false);
-          }}
-          className="w-full md:w-64 px-3 py-1 md:py-2 text-xs md:text-sm border border-gray-200 rounded-xl shadow-sm
-            focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
-        />
+        <div className="relative w-full md:w-64">
+          <input
+            type="text"
+            placeholder="Search Feature..."
+            value={searchTerm}
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              setExpanded(false);
+              moveToTop();
+            }}
+            className="w-full px-3 py-1 md:py-2 pr-8 text-xs md:text-sm border border-gray-200 rounded-xl shadow-sm
+              focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
+          />
+          {searchTerm && (
+            <button
+              onClick={() => {
+                setSearchTerm("");
+                setExpanded(false);
+              }}
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+              aria-label="Clear search"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* === Features Grid (collapsible wrapper) === */}
@@ -131,8 +170,14 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
               </MotionReveal>
             ))
           ) : (
-            <p className="col-span-full text-gray-500 text-xs md:text-sm italic">
-              No features found.
+            <p className="flex flex-row gap-3 text-gray-500 text-xs md:text-sm italic">
+              <span>No features found for "{searchTerm}".</span>
+              <span
+                className="text-primary cursor-pointer"
+                onClick={() => setSearchTerm("")}
+              >
+                clear search
+              </span>
             </p>
           )}
         </div>
@@ -151,7 +196,15 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
             widthUtilities="md:w-36"
             btnTextSize="text-xs md:text-sm"
             btnText={expanded ? "Show less" : "Show more"}
-            clickEvent={() => setExpanded((p) => !p)}
+            clickEvent={() => {
+              setExpanded((prev) => {
+                const newValue = !prev;
+                if (prev && sectionRef.current) {
+                  moveToTop();
+                }
+                return newValue;
+              });
+            }}
           />
         </div>
       )}
