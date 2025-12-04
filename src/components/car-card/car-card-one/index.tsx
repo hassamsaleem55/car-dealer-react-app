@@ -3,8 +3,10 @@ import { Heart } from "lucide-react";
 import Button from "@elements-dir/button";
 import { type Car } from "../car-card.types";
 import TooltipText from "@components-dir/tooltip";
+import { useDealerContext } from "@core-dir/dealer-provider";
 
 export default function CarCard({ car, styles }: { car: Car; styles: any }) {
+  const { dealerData } = useDealerContext();
   const { setReservationModalOpen, setReservationCarData } = useOutletContext<{
     setReservationModalOpen: (qs: boolean) => void;
     setReservationCarData: (data: Car) => void;
@@ -92,9 +94,15 @@ export default function CarCard({ car, styles }: { car: Car; styles: any }) {
       <div
         className={`${styles["car-card__actions"]} opacity-0 group-hover:opacity-100`}
       >
-        <Button variant="secondary" btnText="Apply Finance" />
+        {dealerData.FCANumber && (
+          <Button
+            variant={car.isReserved ? "disabled" : "secondary"}
+            btnText="Apply Finance"
+          />
+        )}
+
         <Button
-          variant="secondary"
+          variant={car.isReserved ? "disabled" : "secondary"}
           btnText="Reserve for £99"
           clickEvent={() => {
             setReservationModalOpen(true);
@@ -125,13 +133,16 @@ export default function CarCard({ car, styles }: { car: Car; styles: any }) {
       </div>
 
       <div className="flex flex-col gap-1 px-4 md:hidden">
+        {dealerData.FCANumber && (
+          <Button
+            variant={car.isReserved ? "disabled-mobile" : "secondary"}
+            btnText="Apply Finance"
+            btnTextSize="text-xs"
+          />
+        )}
+
         <Button
-          variant="secondary"
-          btnText="Apply Finance"
-          btnTextSize="text-xs"
-        />
-        <Button
-          variant="secondary"
+          variant={car.isReserved ? "disabled-mobile" : "secondary"}
           btnText="Reserve for £99"
           btnTextSize="text-xs"
           clickEvent={() => {

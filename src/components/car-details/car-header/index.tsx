@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
+import { useDealerContext } from "@core-dir/dealer-provider";
 import { Heart } from "lucide-react";
 import Button from "@elements-dir/button";
 import AppointmentModal from "@components-dir/book-appointment/appointment-modal";
@@ -14,6 +15,7 @@ export default function CarHeader({
   isFavorite: boolean;
   toggleFavorite: () => void;
 }) {
+  const { dealerData } = useDealerContext();
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
   const { setReservationModalOpen } = useOutletContext<{
     setReservationModalOpen: (qs: boolean) => void;
@@ -144,13 +146,16 @@ export default function CarHeader({
           />
         </div>
         <div className="flex items-center gap-2 w-full">
-          <Button
-            variant="secondary"
-            btnText="Apply Finance"
-            paddingUtilities="px-3 py-2"
-            roundUtilities="rounded-lg"
-            btnTextSize="text-xs md:text-sm"
-          />
+          {dealerData.FCANumber && (
+            <Button
+              variant="secondary"
+              btnText="Apply Finance"
+              paddingUtilities="px-3 py-2"
+              roundUtilities="rounded-lg"
+              btnTextSize="text-xs md:text-sm"
+            />
+          )}
+
           <Button
             variant="secondary"
             btnText="Reserve for £99"

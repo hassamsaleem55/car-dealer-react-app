@@ -9,5 +9,6 @@ export interface Car {
   priceBeforeDiscount: string | null;
   pricePerMonth: string | null;
   profilePicture: string;
+  isReserved: boolean;
   specs: { label: string; value: string | number }[];
 }

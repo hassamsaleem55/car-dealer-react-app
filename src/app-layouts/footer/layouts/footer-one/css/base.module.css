@@ -11,7 +11,7 @@
 
 /* ----- Main Footer Layout ----- */
 .footer__container {
-  @apply container mx-auto px-4 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10;
+  @apply container mx-auto px-4 pt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10;
 }
 
 /* ----- Columns ----- */
@@ -33,16 +33,16 @@
 }
 
 .footer__desc-sm {
-  @apply text-sm text-neutral-400 mb-4;
+  @apply text-sm text-neutral-400 mb-3;
 }
 
 /* ----- Contact Info ----- */
 .footer__contact {
-  @apply mt-4 space-y-2 text-sm;
+  @apply mt-4 space-y-2 text-sm text-neutral-400;
 }
 
 .footer__contact-item {
-  @apply flex items-center gap-2;
+  @apply flex gap-2;
 }
 
 /* ----- Social Links ----- */
@@ -51,11 +51,11 @@
 }
 
 .footer__social-link {
-  @apply p-2 rounded-full bg-neutral-300 hover:bg-neutral-400 transition;
+  @apply p-2 rounded-full bg-neutral-200 hover:bg-neutral-300 transition;
 }
 
 .footer__social-icon {
-  @apply w-4 h-4 object-contain;
+  @apply w-4.5 h-4.5 object-contain;
 }
 
 /* ----- Quick Links ----- */
@@ -88,16 +88,16 @@
 
 /* ----- Bottom Bar ----- */
 .footer__bottom {
-  @apply border-t border-neutral-800 mt-10;
+  @apply border-t border-neutral-800 mt-6;
 }
 
 .footer__bottom-container {
-  @apply container mx-auto px-4 py-6 flex flex-col sm:flex-row 
-  items-center justify-between gap-4 text-sm text-neutral-500;
+  @apply container mx-auto px-4 py-6 flex flex-col
+  items-center justify-between gap-6 text-sm text-neutral-500;
 }
 
 .footer__policies {
-  @apply flex gap-4;
+  @apply flex text-xs md:text-sm gap-6;
 }
 
 .footer__policy-link {
