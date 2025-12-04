@@ -11,18 +11,6 @@ export interface DealerConfig {
   pages: DealerPageKeys[];
 }
 
-// export interface DealerPageKeys {
-//   pageName: string;
-//   label: string;
-//   title: string;
-//   description: string;
-//   path: string | null;
-//   showInNavbar: boolean;
-//   hasSubmenu: boolean;
-//   submenuItems: DealerPageKeys[];
-//   sections?: DealerSectionKeys[];
-// }
-
 interface BaseDealerPage {
   pageName: string;
   label: string;

@@ -101,8 +101,6 @@ export default function index({ styles }: { styles: any }) {
   }, [close]);
 
   useEffect(() => {
-    // setPhoneNumer(dealerData?.ContactInfo?.PhoneNumber || "");
-    // setEmailAddress(dealerData?.ContactInfo?.InfoEmailAddress || "");
     setLogoUrl(dealerData?.LogoUrl);
   }, []);
 
@@ -168,7 +166,8 @@ export default function index({ styles }: { styles: any }) {
         >
           {dealerConfig.pages.map(
             (page: DealerPageKeys) =>
-              page.showInNavbar && (
+              page.showInNavbar &&
+              !(page.pageName === "finance" && !dealerData.FCANumber) && (
                 <li
                   key={page.pageName}
                   className={styles["menu-item"]}
@@ -248,7 +247,8 @@ export default function index({ styles }: { styles: any }) {
               <ul className={styles["navbar-mobile__menu-panel"]}>
                 {dealerConfig.pages.map(
                   (page: DealerPageKeys) =>
-                    page.showInNavbar && (
+                    page.showInNavbar &&
+                    !(page.pageName === "finance" && dealerData.FCANumber) && (
                       <li key={page.pageName}>
                         <Link
                           to={page.path || "#"}

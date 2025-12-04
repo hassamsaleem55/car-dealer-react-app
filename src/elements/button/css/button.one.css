@@ -54,6 +54,19 @@
   height: 0%;
 }
 
+.btn-disabled {
+  @apply bg-transparent text-primary/50 cursor-not-allowed border-none;
+}
+.btn-disabled-mobile {
+  @apply bg-transparent text-primary/50 border border-primary/50 cursor-not-allowed;
+}
+
+.btn-disabled:hover,
+.btn-disabled:focus,
+.btn-disabled:active {
+  @apply border-none outline-none;
+}
+
 /* ================================
    SHUTTER BOUNCE (Subtle + Smooth)
 ================================ */

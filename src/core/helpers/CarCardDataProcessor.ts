@@ -32,6 +32,7 @@ export function processCarCardData(rawData: any[]): any[] {
         ? `£${car.financePerMonth.toLocaleString()}`
         : null,
       profilePicture: car.profilePicture || "images/awaiting-image-alfa.png",
+      isReserved: car.isReserved || false,
       specs: [
         sanitizeSpec("Engine Capacity", car.engineCapacityCC),
         sanitizeSpec("Transmission", car.transmissionType),

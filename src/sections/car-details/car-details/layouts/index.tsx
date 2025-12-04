@@ -204,47 +204,51 @@ export function CarDetailsOne() {
             {/* Check Recheck */}
             <CarCheckRecheck />
 
-            {/* Finance Cards */}
-            {(financeOptions.PCP || financeOptions.HP) && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 md:mt-2">
-                <MotionReveal preset="slideRight">
-                  <CarFinanceCard
-                    type="monthly"
-                    price={{
-                      monthly: financeOptions,
-                    }}
-                    benefits={[
-                      "Spread the cost",
-                      "Low deposit options",
-                      "Get a quick decision",
-                    ]}
-                    btnText="Personalize your Finance"
-                  />
-                </MotionReveal>
-                <MotionReveal preset="slideLeft">
-                  <CarFinanceCard
-                    type="full"
-                    price={{
-                      full: fullPrice,
-                    }}
-                    benefits={[
-                      "Fully refundable £99",
-                      "Secures this car for you",
-                      "Hassle & haggle free",
-                    ]}
-                    btnText="Reserve for £99"
-                    onButtonClick={() => setReservationModalOpen(true)}
-                  />
-                </MotionReveal>
-              </div>
-            )}
+            {dealerData.FCANumber && (
+              <>
+                {/* Finance Cards */}
+                {(financeOptions.PCP || financeOptions.HP) && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 md:mt-2">
+                    <MotionReveal preset="slideRight">
+                      <CarFinanceCard
+                        type="monthly"
+                        price={{
+                          monthly: financeOptions,
+                        }}
+                        benefits={[
+                          "Spread the cost",
+                          "Low deposit options",
+                          "Get a quick decision",
+                        ]}
+                        btnText="Personalize your Finance"
+                      />
+                    </MotionReveal>
+                    <MotionReveal preset="slideLeft">
+                      <CarFinanceCard
+                        type="full"
+                        price={{
+                          full: fullPrice,
+                        }}
+                        benefits={[
+                          "Fully refundable £99",
+                          "Secures this car for you",
+                          "Hassle & haggle free",
+                        ]}
+                        btnText="Reserve for £99"
+                        onButtonClick={() => setReservationModalOpen(true)}
+                      />
+                    </MotionReveal>
+                  </div>
+                )}
 
-            <CodeWeaverFinance
-              model={carDetails}
-              userFCA={dealerData.FCANumber}
-              codeWeaverApi={dealerData.CompanyFinanceDetails.FinanceApiKey}
-              websiteUrl={dealerData.Url}
-            />
+                <CodeWeaverFinance
+                  model={carDetails}
+                  userFCA={dealerData.FCANumber}
+                  codeWeaverApi={dealerData.CompanyFinanceDetails.FinanceApiKey}
+                  websiteUrl={dealerData.Url}
+                />
+              </>
+            )}
           </div>
 
           {/* === Right Column (Sticky Aside) === */}
