@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface VehicleInfo {
   derivativeId?: string;
@@ -42,6 +42,7 @@ export default function CodeWeaverFinance({
   codeWeaverApi,
   websiteUrl,
 }: Props) {
+  const [isLoading, setIsLoading] = useState(true);
   const depositAmount = Math.floor(model.retailPrice * 0.1);
   const cwVehicleType = model.isPriceExcludingVAT ? "lcv" : "car";
   const linkBackUrl = `${websiteUrl}/stock/${model.stockId}`;
@@ -58,6 +59,7 @@ export default function CodeWeaverFinance({
 
     if (shouldHide) {
       container.style.display = "none";
+      setIsLoading(false);
       console.warn("CodeWeavers hidden due to missing data or conditions");
       return;
     }
@@ -104,9 +106,11 @@ export default function CodeWeaverFinance({
           console.log("CodeWeavers event:", name);
           if (name === "plugin.errored") {
             console.error("CodeWeavers plugin errored");
+            setIsLoading(false);
           }
           if (name === "plugin.loaded") {
             console.log("CodeWeavers plugin successfully loaded");
+            setIsLoading(false);
           }
         },
       });
@@ -123,5 +127,22 @@ export default function CodeWeaverFinance({
     };
   }, [model, userFCA, codeWeaverApi, websiteUrl]);
 
-  return <div id="cw-plugin-container" className="mt-5"></div>;
+  return (
+    <div className="relative">
+      {isLoading && (
+        <div className="flex flex-col items-center justify-center py-20 gap-4">
+          <div className="flex gap-2">
+            <div className="h-3 w-3 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+            <div className="h-3 w-3 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+            <div className="h-3 w-3 bg-primary rounded-full animate-bounce"></div>
+          </div>
+          <p className="text-gray-600 text-sm font-medium">Finance Calculator is loading</p>
+        </div>
+      )}
+      <div 
+        id="cw-plugin-container" 
+        className={`mt-5 ${isLoading ? 'hidden' : ''}`}
+      ></div>
+    </div>
+  );
 }

@@ -46,6 +46,9 @@ export default function CarCard({ car, styles }: { car: Car; styles: any }) {
           alt={`${title}`}
           className={styles["car-card__img"]}
         />
+        {car.isReserved && (
+          <div className={styles["car-card__reserved"]}>Reserved</div>
+        )}
         <div className={styles["car-card__year"]}>{year}</div>
       </div>
 
@@ -98,6 +101,11 @@ export default function CarCard({ car, styles }: { car: Car; styles: any }) {
           <Button
             variant={car.isReserved ? "disabled" : "secondary"}
             btnText="Apply Finance"
+            clickEvent={() => {
+              navigate(
+                `/car-details?stockId=${stockId}#codeweaver-finance-section`
+              );
+            }}
           />
         )}
 
@@ -138,6 +146,11 @@ export default function CarCard({ car, styles }: { car: Car; styles: any }) {
             variant={car.isReserved ? "disabled-mobile" : "secondary"}
             btnText="Apply Finance"
             btnTextSize="text-xs"
+            clickEvent={() => {
+              navigate(
+                `/car-details?stockId=${stockId}#codeweaver-finance-section`
+              );
+            }}
           />
         )}
 
