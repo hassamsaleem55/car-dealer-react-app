@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import DotLoader from "@components-dir/loader";
 
 interface VehicleInfo {
   derivativeId?: string;
@@ -42,6 +43,7 @@ export default function CodeWeaverFinance({
   codeWeaverApi,
   websiteUrl,
 }: Props) {
+  const [isLoading, setIsLoading] = useState(true);
   const depositAmount = Math.floor(model.retailPrice * 0.1);
   const cwVehicleType = model.isPriceExcludingVAT ? "lcv" : "car";
   const linkBackUrl = `${websiteUrl}/stock/${model.stockId}`;
@@ -58,6 +60,7 @@ export default function CodeWeaverFinance({
 
     if (shouldHide) {
       container.style.display = "none";
+      setIsLoading(false);
       console.warn("CodeWeavers hidden due to missing data or conditions");
       return;
     }
@@ -104,9 +107,11 @@ export default function CodeWeaverFinance({
           console.log("CodeWeavers event:", name);
           if (name === "plugin.errored") {
             console.error("CodeWeavers plugin errored");
+            setIsLoading(false);
           }
           if (name === "plugin.loaded") {
             console.log("CodeWeavers plugin successfully loaded");
+            setIsLoading(false);
           }
         },
       });
@@ -123,5 +128,17 @@ export default function CodeWeaverFinance({
     };
   }, [model, userFCA, codeWeaverApi, websiteUrl]);
 
-  return <div id="cw-plugin-container" className="mt-5"></div>;
+  return (
+    <div className="relative">
+      {isLoading && (
+        <div className="py-20">
+          <DotLoader text="Finance Calculator is loading" />
+        </div>
+      )}
+      <div 
+        id="cw-plugin-container" 
+        className={`mt-5 ${isLoading ? 'hidden' : ''}`}
+      ></div>
+    </div>
+  );
 }

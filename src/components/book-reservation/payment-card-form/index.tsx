@@ -2,6 +2,7 @@ import { postApi } from "@core-dir/services/Api.service";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { useDealerContext } from "@core-dir/dealer-provider";
+import DotLoader from "@components-dir/loader";
 
 // Declare Stripe global
 declare global {
@@ -469,12 +470,7 @@ export default function PaymentCardForm({
       {/* Processing Indicator */}
       {processing && (
         <div className="bg-blue-50 border border-blue-200 p-4 rounded-lg text-center">
-          <div className="flex items-center justify-center space-x-3">
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-primary"></div>
-            <span className="text-sm text-blue-800">
-              Processing your payment...
-            </span>
-          </div>
+          <DotLoader text="Processing your payment..." />
         </div>
       )}
     </div>

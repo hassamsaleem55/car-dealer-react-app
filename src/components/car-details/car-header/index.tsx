@@ -89,7 +89,7 @@ export default function CarHeader({
       {/* === Actions === */}
       <div className="flex flex-wrap items-center gap-2">
         <Button
-          variant="secondary"
+          variant={carData.isReserved ? "disabled-mobile" : "secondary"}
           btnText="Book an Appointment"
           paddingUtilities="px-3 py-2"
           roundUtilities="rounded-lg group"
@@ -100,7 +100,12 @@ export default function CarHeader({
           }}
           btnIcon={
             <svg
-              className="text-primary duration-300 transition ease-in-out size-4 group-hover:text-white"
+              className={`duration-300 transition ease-in-out size-4
+                ${
+                  carData.isReserved
+                    ? "text-primary/50"
+                    : "group-hover:text-white"
+                }`}
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -122,7 +127,7 @@ export default function CarHeader({
         />
         <div className="flex items-center gap-2 w-full">
           <Button
-            variant="secondary"
+            variant={carData.isReserved ? "disabled-mobile" : "secondary"}
             btnText="Book Test Drive"
             paddingUtilities="px-3 py-2"
             roundUtilities="rounded-lg"
@@ -134,7 +139,7 @@ export default function CarHeader({
           />
 
           <Button
-            variant="secondary"
+            variant={carData.isReserved ? "disabled-mobile" : "secondary"}
             btnText="Enquire Now"
             paddingUtilities="px-3 py-2"
             roundUtilities="rounded-lg"
@@ -148,16 +153,27 @@ export default function CarHeader({
         <div className="flex items-center gap-2 w-full">
           {dealerData.FCANumber && (
             <Button
-              variant="secondary"
+              variant={carData.isReserved ? "disabled-mobile" : "secondary"}
               btnText="Apply Finance"
               paddingUtilities="px-3 py-2"
               roundUtilities="rounded-lg"
               btnTextSize="text-xs md:text-sm"
+              clickEvent={() => {
+                const financeSection = document.getElementById(
+                  "codeweaver-finance-section"
+                );
+                if (financeSection) {
+                  financeSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+                }
+              }}
             />
           )}
 
           <Button
-            variant="secondary"
+            variant={carData.isReserved ? "disabled-mobile" : "secondary"}
             btnText="Reserve for £99"
             paddingUtilities="px-3 py-2"
             roundUtilities="rounded-lg"

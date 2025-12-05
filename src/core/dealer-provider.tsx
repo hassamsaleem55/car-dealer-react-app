@@ -3,6 +3,7 @@ import {
   useContext,
   useState,
   useEffect,
+  useMemo,
   type ReactNode,
 } from "react";
 import dealerConfig from "@dealers-dir/setup.json";
@@ -25,14 +26,17 @@ export function DealerProvider({ children }: { children: ReactNode }) {
     fetchDealersData();
   }, []);
 
+  const contextValue = useMemo(
+    () => ({
+      dealerConfig,
+      dealerAuthToken,
+      dealerData,
+    }),
+    [dealerAuthToken, dealerData]
+  );
+
   return (
-    <DealerContext.Provider
-      value={{
-        dealerConfig,
-        dealerAuthToken,
-        dealerData,
-      }}
-    >
+    <DealerContext.Provider value={contextValue}>
       {dealerData ? children : <PageLoader />}
     </DealerContext.Provider>
   );

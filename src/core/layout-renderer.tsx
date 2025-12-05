@@ -1,5 +1,6 @@
 import React from "react";
 import { useDealerContext } from "./dealer-provider";
+import { NavbarSkeleton, FooterSkeleton } from "@components-dir/loader/LayoutSkeleton";
 
 export default function LayoutRenderer({ module }: { module: string }) {
   const { dealerConfig } = useDealerContext();
@@ -25,10 +26,20 @@ export default function LayoutRenderer({ module }: { module: string }) {
     }
   });
 
+  // Get appropriate skeleton based on module type
+  const getSkeleton = () => {
+    switch (module) {
+      case "navbar":
+        return <NavbarSkeleton />;
+      case "footer":
+        return <FooterSkeleton />;
+      default:
+        return <div className="animate-pulse bg-gray-100 h-20" />;
+    }
+  };
+
   return (
-    <React.Suspense
-    // fallback={<div>Loading {`${module}-${dealerConfig[module]}`}...</div>}
-    >
+    <React.Suspense fallback={getSkeleton()}>
       <Component />
     </React.Suspense>
   );

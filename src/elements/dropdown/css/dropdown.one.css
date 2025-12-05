@@ -53,10 +53,6 @@
          hover:bg-gray-50 hover:text-primary transition-colors duration-100;
 }
 
-.dropdown-option__loader {
-  @apply w-5 h-5 border-4 border-gray-200 border-t-primary rounded-full animate-spin;
-}
-
 .dropdown-option__check {
   @apply absolute inset-y-0 left-0 flex items-center pl-3 text-primary;
 }

@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
+import DotLoader from "@components-dir/loader";
 import Breadcrumb from "@components-dir/car-details/breadcrumbs";
 import CarSlider from "@components-dir/car-details/car-slider";
 import CarHeader from "@components-dir/car-details/car-header";
@@ -95,6 +96,21 @@ export function CarDetailsOne() {
     fetchData();
   }, [location.search, dealerAuthToken]);
 
+  // === Scroll to finance section if hash is present
+  useEffect(() => {
+    if (location.hash === "#codeweaver-finance-section" && !loading) {
+      const timer = setTimeout(() => {
+        const financeSection = document.getElementById(
+          "codeweaver-finance-section"
+        );
+        if (financeSection) {
+          financeSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 500); // Small delay to ensure page is fully rendered
+      return () => clearTimeout(timer);
+    }
+  }, [location.hash, loading]);
+
   // === Slider settings
   const mainSliderSettings = useMemo(
     () => ({
@@ -129,7 +145,7 @@ export function CarDetailsOne() {
   if (loading)
     return (
       <div className="flex items-center justify-center h-[80vh]">
-        <div className="w-10 h-10 border-4 border-gray-200 border-t-primary rounded-full animate-spin" />
+        <DotLoader size="lg" />
       </div>
     );
 
@@ -240,13 +256,18 @@ export function CarDetailsOne() {
                     </MotionReveal>
                   </div>
                 )}
-
-                <CodeWeaverFinance
-                  model={carDetails}
-                  userFCA={dealerData.FCANumber}
-                  codeWeaverApi={dealerData.CompanyFinanceDetails.FinanceApiKey}
-                  websiteUrl={dealerData.Url}
-                />
+                {dealerData.CompanyFinanceDetails.FinanceApiKey && (
+                  <div id="codeweaver-finance-section">
+                    <CodeWeaverFinance
+                      model={carDetails}
+                      userFCA={dealerData.FCANumber}
+                      codeWeaverApi={
+                        dealerData.CompanyFinanceDetails.FinanceApiKey
+                      }
+                      websiteUrl={dealerData.Url}
+                    />
+                  </div>
+                )}
               </>
             )}
           </div>

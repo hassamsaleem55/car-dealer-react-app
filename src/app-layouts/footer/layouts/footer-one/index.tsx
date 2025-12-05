@@ -220,15 +220,15 @@ export default function Footer({ styles }: { styles: any }) {
             </p>
           )}
           <div className={styles["footer__policies"]}>
-            <a href="#" className={styles["footer__policy-link"]}>
+            <Link to="/privacy-policy" className={styles["footer__policy-link"]}>
               Privacy Policy
-            </a>
-            <a href="#" className={styles["footer__policy-link"]}>
+            </Link>
+            <Link to="/terms-of-service" className={styles["footer__policy-link"]}>
               Terms of Service
-            </a>
-            <a href="#" className={styles["footer__policy-link"]}>
+            </Link>
+            <Link to="/contact" className={styles["footer__policy-link"]}>
               Contact Us
-            </a>
+            </Link>
           </div>
         </div>
       </div>

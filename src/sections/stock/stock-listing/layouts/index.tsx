@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ChevronRight } from "lucide-react";
 import { useOutletContext, useNavigate, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
+import DotLoader from "@components-dir/loader";
 import FilterOne from "@components-dir/filter/filter-one";
 import FilterOneVerticalStyles from "@components-dir/filter/filter-one/css/vertical.module.css";
 import CarCardOne from "@components-dir/car-card/car-card-one";
@@ -10,10 +11,11 @@ import CarCardStyles from "@components-dir/car-card/car-card-one/css/default.mod
 import { fetchApi } from "@core-dir/services/Api.service";
 import { processCarCardData } from "@core-dir/helpers/CarCardDataProcessor";
 import DropdownFlexible from "@elements-dir/dropdown";
+import FinanceRepresentation from "@components-dir/finance-representation";
 
 export function StockListingOne() {
   const location = useLocation();
-  const { dealerAuthToken } = useDealerContext();
+  const { dealerData, dealerAuthToken } = useDealerContext();
   const { queryString, setQueryString } = useOutletContext<{
     queryString: string;
     setQueryString: (qs: string) => void;
@@ -27,6 +29,8 @@ export function StockListingOne() {
       ? location.search.substring(1)
       : location.search;
     const fetchData = async () => {
+      if (!dealerAuthToken) return;
+
       try {
         setLoading(true);
         const response = await fetchApi(
@@ -43,32 +47,35 @@ export function StockListingOne() {
     };
 
     fetchData();
-  }, [location.search]);
+  }, [location.search, dealerAuthToken]);
 
-  const handleSortByChange = (value: string[]) => {
-    const params = new URLSearchParams(queryString);
-    const cat = "sortby";
+  const handleSortByChange = useCallback(
+    (value: string[]) => {
+      const params = new URLSearchParams(queryString);
+      const cat = "sortby";
 
-    params.delete(cat);
-    value.forEach((v) => params.append(cat, v));
+      params.delete(cat);
+      value.forEach((v) => params.append(cat, v));
 
-    const updatedQueryString = params.toString();
-    setQueryString(updatedQueryString);
+      const updatedQueryString = params.toString();
+      setQueryString(updatedQueryString);
 
-    if (location.pathname.startsWith("/stock")) {
-      const newUrl = `/stock${
-        updatedQueryString ? `?${updatedQueryString}` : ""
-      }`;
-      if (location.pathname + location.search !== newUrl) {
-        navigate(newUrl, { replace: true });
+      if (location.pathname.startsWith("/stock")) {
+        const newUrl = `/stock${
+          updatedQueryString ? `?${updatedQueryString}` : ""
+        }`;
+        if (location.pathname + location.search !== newUrl) {
+          navigate(newUrl, { replace: true });
+        }
       }
-    }
-  };
+    },
+    [queryString, setQueryString, navigate, location]
+  );
 
   return (
-    <div className="container mx-auto px-4 py-6 space-y-6">
+    <div className="container mx-auto px-4 py-4 md:py-6 space-y-6">
       {/* === Breadcrumb === */}
-      <nav className="flex text-sm text-gray-500 gap-3" aria-label="breadcrumb">
+      <nav className="flex text-xs md:text-sm text-gray-500 gap-3" aria-label="breadcrumb">
         <ol className="flex flex-wrap items-center space-x-1 sm:space-x-2 truncate">
           <li>
             <a href="/" className="hover:text-primary transition-colors">
@@ -91,12 +98,24 @@ export function StockListingOne() {
 
         {/* === Right Content === */}
         <section className="lg:col-span-3 space-y-4">
+          {dealerData.FCANumber && (
+            <>
+              {/* Finance Representation */}
+              <FinanceRepresentation
+                totalCash={37537}
+                deposit={3527}
+                apr={5.9}
+                nbrOfMonths={24}
+                currencySymbol="£"
+                financeType="PCP"
+              />
+            </>
+          )}
           {/* Header */}
           <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
               Browse All Cars
             </h2>
-
             <div className="w-full sm:w-48">
               <DropdownFlexible
                 category="Sort By"
@@ -123,7 +142,7 @@ export function StockListingOne() {
           <div className="md:bg-white md:rounded-2xl md:shadow-sm md:border md:border-gray-100 md:p-5">
             {loading ? (
               <div className="flex items-center justify-center h-[60vh]">
-                <div className="w-8 h-8 border-4 border-gray-200 border-t-primary rounded-full animate-spin" />
+                <DotLoader size="lg" />
               </div>
             ) : carData.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">

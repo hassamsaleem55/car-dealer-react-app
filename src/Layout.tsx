@@ -10,7 +10,6 @@ import { Toaster } from "sonner";
 
 export default function Layout() {
   return (
-    // <div className="bg-linear-to-r from-transparent to-primary/5 text-basicFont min-h-screen">
     <div className="bg-body text-basicFont min-h-screen">
       <MetaManager />
       <LayoutRenderer module="navbar" />

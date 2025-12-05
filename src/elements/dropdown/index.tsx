@@ -1,6 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { Check, ChevronUp, ChevronDown, X } from "lucide-react";
+import DotLoader from "@components-dir/loader";
 import { type DropdownFlexibleProps } from "./dropdown.types";
+import { useDebounce } from "@core-dir/hooks/useDebounce";
 
 export default function DropdownFlexible({
   category,
@@ -58,8 +60,14 @@ export default function DropdownFlexible({
     onChange?.(updated);
   };
 
-  const filteredOptions = options.filter((opt) =>
-    opt.label.toLowerCase().includes(search.toLowerCase())
+  const debouncedSearch = useDebounce(search, 300);
+
+  const filteredOptions = useMemo(
+    () =>
+      options.filter((opt) =>
+        opt.label.toLowerCase().includes(debouncedSearch.toLowerCase())
+      ),
+    [options, debouncedSearch]
   );
 
   const selectedLabel = !showTags
@@ -135,7 +143,7 @@ export default function DropdownFlexible({
         <div className="dropdown-options">
           {loading ? (
             <div className="flex justify-center items-center py-6">
-              <div className="dropdown-option__loader" />
+              <DotLoader size="sm" />
             </div>
           ) : filteredOptions.length > 0 ? (
             filteredOptions.map((option) => {
