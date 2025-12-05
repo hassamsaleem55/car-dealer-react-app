@@ -504,6 +504,90 @@
           }
         }
       ]
+    },
+    {
+      "isSubmenu": false,
+      "mainMenuText": null,
+      "subMenuText": null,
+      "pageName": "contact",
+      "label": "Contact Us",
+      "title": "Contact Us - Motors Hub",
+      "description": "Get in touch with us for any inquiries about our vehicles and services.",
+      "path": "/contact",
+      "showInNavbar": true,
+      "sections": [
+        {
+          "isShared": true,
+          "folderName": "pages-hero",
+          "variant": "PagesHeroDefault",
+          "props": {
+            "title": "Contact Us",
+            "heading": "We're Here to Help",
+            "subHeading": "Have a question or need assistance? Our friendly team is ready to help you find the perfect vehicle and answer all your questions."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "contact-content",
+          "variant": "ContactContentDefault"
+        }
+      ]
+    },
+    {
+      "isSubmenu": false,
+      "mainMenuText": null,
+      "subMenuText": null,
+      "pageName": "privacy-policy",
+      "label": "Privacy Policy",
+      "title": "Privacy Policy - Motors Hub",
+      "description": "Learn about how we collect, use, and protect your personal information.",
+      "path": "/privacy-policy",
+      "showInNavbar": false,
+      "sections": [
+        {
+          "isShared": true,
+          "folderName": "pages-hero",
+          "variant": "PagesHeroDefault",
+          "props": {
+            "title": "Privacy Policy",
+            "heading": "Your Privacy Matters to Us",
+            "subHeading": "We are committed to protecting your privacy and ensuring the security of your personal information. This policy explains how we collect, use, and safeguard your data."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "privacy-content",
+          "variant": "PrivacyContentDefault"
+        }
+      ]
+    },
+    {
+      "isSubmenu": false,
+      "mainMenuText": null,
+      "subMenuText": null,
+      "pageName": "terms-of-service",
+      "label": "Terms of Service",
+      "title": "Terms of Service - Motors Hub",
+      "description": "Read our terms and conditions for using our website and services.",
+      "path": "/terms-of-service",
+      "showInNavbar": false,
+      "sections": [
+        {
+          "isShared": true,
+          "folderName": "pages-hero",
+          "variant": "PagesHeroDefault",
+          "props": {
+            "title": "Terms of Service",
+            "heading": "Terms and Conditions",
+            "subHeading": "Please read these terms carefully before using our website or services. By accessing our site, you agree to be bound by these terms and conditions."
+          }
+        },
+        {
+          "isShared": true,
+          "folderName": "terms-content",
+          "variant": "TermsContentDefault"
+        }
+      ]
     }
   ]
 }

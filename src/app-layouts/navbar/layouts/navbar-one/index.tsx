@@ -167,6 +167,7 @@ export default function index({ styles }: { styles: any }) {
           {dealerConfig.pages.map(
             (page: DealerPageKeys) =>
               page.showInNavbar &&
+              page.pageName !== "contact" &&
               !(page.pageName === "finance" && !dealerData.FCANumber) && (
                 <li
                   key={page.pageName}
@@ -215,7 +216,9 @@ export default function index({ styles }: { styles: any }) {
         </ul>
 
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="secondary" btnText="Contact Us" />
+          <Link to="/contact">
+            <Button variant="secondary" btnText="Contact Us" />
+          </Link>
         </div>
 
         {/* Mobile Menu */}
@@ -274,10 +277,10 @@ export default function index({ styles }: { styles: any }) {
                     )
                 )}
                 <Link
-                  to="contact-us"
+                  to="/contact"
                   onClick={close}
                   className={`${styles["navbar-mobile__link"]} 
-                  ${location.pathname === "contact-us" ? styles["active"] : ""}
+                  ${location.pathname === "/contact" ? styles["active"] : ""}
                 `}
                 >
                   Contact Us

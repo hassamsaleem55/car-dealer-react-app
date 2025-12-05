@@ -44,11 +44,11 @@ export default function FinanceRepresentation({
   } = calculations;
 
   return (
-    <div className="bg-linear-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-xl px-4 py-4 md:px-6 md:py-5 shadow-sm">
-      <h2 className="text-sm md:text-base lg:text-lg text-center mb-2 md:mb-3 font-semibold text-blue-900">
+    <div className="bg-linear-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-xl px-4 py-2 shadow-sm">
+      <h2 className="text-xs md:text-sm text-center mb-1 font-semibold text-blue-900">
         Representative Example [{financeType}]
       </h2>
-      <p className="text-[10px] sm:text-xs md:text-sm leading-relaxed text-gray-800 text-justify sm:text-left">
+      <p className="text-[8px] md:text-[10px]  text-gray-800 text-justify sm:text-left">
         An On-The-Road (OTR) cash price of{" "}
         <span className="font-semibold text-blue-900 whitespace-nowrap">
           {formatCurrency(totalCash, currencySymbol)}
