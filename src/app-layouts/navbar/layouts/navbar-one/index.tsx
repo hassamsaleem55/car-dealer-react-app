@@ -251,6 +251,7 @@ export default function index({ styles }: { styles: any }) {
                 {dealerConfig.pages.map(
                   (page: DealerPageKeys) =>
                     page.showInNavbar &&
+                    page.pageName !== "contact" &&
                     !(page.pageName === "finance" && dealerData.FCANumber) && (
                       <li key={page.pageName}>
                         <Link

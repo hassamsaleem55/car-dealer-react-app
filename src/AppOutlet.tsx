@@ -90,7 +90,7 @@ function AppOutlet() {
   );
 
   return (
-    <>
+    <div className="min-h-[calc(100vh-400px)]">
       <Outlet context={outletContext} />
       {reservationModalOpen && (
         <ReservationModal
@@ -99,7 +99,7 @@ function AppOutlet() {
           carData={reservationCarData}
         />
       )}
-    </>
+    </div>
   );
 }
 

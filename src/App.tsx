@@ -1,8 +1,8 @@
+import { useMemo } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { DealerProvider, useDealerContext } from "@core-dir/dealer-provider";
 import PageRenderer from "@core-dir/page-renderer";
 import Layout from "./Layout";
-import { useMemo } from "react";
 import { type DealerPageKeys } from "@types-dir/dealer-props";
 import PaymentResponse from "./sections/PaymentResponse";
 
