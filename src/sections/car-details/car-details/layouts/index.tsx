@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
+import DotLoader from "@components-dir/loader";
 import Breadcrumb from "@components-dir/car-details/breadcrumbs";
 import CarSlider from "@components-dir/car-details/car-slider";
 import CarHeader from "@components-dir/car-details/car-header";
@@ -144,7 +145,7 @@ export function CarDetailsOne() {
   if (loading)
     return (
       <div className="flex items-center justify-center h-[80vh]">
-        <div className="w-10 h-10 border-4 border-gray-200 border-t-primary rounded-full animate-spin" />
+        <DotLoader size="lg" />
       </div>
     );
 

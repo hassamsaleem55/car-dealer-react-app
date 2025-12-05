@@ -3,6 +3,7 @@ import { ChevronRight } from "lucide-react";
 import { useOutletContext, useNavigate, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
+import DotLoader from "@components-dir/loader";
 import FilterOne from "@components-dir/filter/filter-one";
 import FilterOneVerticalStyles from "@components-dir/filter/filter-one/css/vertical.module.css";
 import CarCardOne from "@components-dir/car-card/car-card-one";
@@ -123,7 +124,7 @@ export function StockListingOne() {
           <div className="md:bg-white md:rounded-2xl md:shadow-sm md:border md:border-gray-100 md:p-5">
             {loading ? (
               <div className="flex items-center justify-center h-[60vh]">
-                <div className="w-8 h-8 border-4 border-gray-200 border-t-primary rounded-full animate-spin" />
+                <DotLoader size="lg" />
               </div>
             ) : carData.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">

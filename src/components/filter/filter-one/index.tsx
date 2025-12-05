@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import { Search } from "lucide-react";
 import DropdownFlexible from "@elements-dir/dropdown";
+import DotLoader from "@components-dir/loader";
 import Button from "@elements-dir/button";
 
 export default function FilterOne({ styles }: { styles: any }) {
@@ -58,7 +59,7 @@ export default function FilterOne({ styles }: { styles: any }) {
       <div className={styles["filter-box"]}>
         {filtersFirstLoad && filtersLoading ? (
           <div className="flex justify-center items-center py-6">
-            <div className="w-5 h-5 border-4 border-gray-200 border-t-primary rounded-full animate-spin" />
+            <DotLoader size="sm" />
           </div>
         ) : (
           <>

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Check, ChevronUp, ChevronDown, X } from "lucide-react";
+import DotLoader from "@components-dir/loader";
 import { type DropdownFlexibleProps } from "./dropdown.types";
 
 export default function DropdownFlexible({
@@ -135,7 +136,7 @@ export default function DropdownFlexible({
         <div className="dropdown-options">
           {loading ? (
             <div className="flex justify-center items-center py-6">
-              <div className="dropdown-option__loader" />
+              <DotLoader size="sm" />
             </div>
           ) : filteredOptions.length > 0 ? (
             filteredOptions.map((option) => {

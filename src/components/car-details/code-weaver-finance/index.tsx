@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import DotLoader from "@components-dir/loader";
 
 interface VehicleInfo {
   derivativeId?: string;
@@ -130,13 +131,8 @@ export default function CodeWeaverFinance({
   return (
     <div className="relative">
       {isLoading && (
-        <div className="flex flex-col items-center justify-center py-20 gap-4">
-          <div className="flex gap-2">
-            <div className="h-3 w-3 bg-primary rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-            <div className="h-3 w-3 bg-primary rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-            <div className="h-3 w-3 bg-primary rounded-full animate-bounce"></div>
-          </div>
-          <p className="text-gray-600 text-sm font-medium">Finance Calculator is loading</p>
+        <div className="py-20">
+          <DotLoader text="Finance Calculator is loading" />
         </div>
       )}
       <div 
