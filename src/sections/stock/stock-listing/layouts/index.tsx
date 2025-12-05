@@ -11,10 +11,11 @@ import CarCardStyles from "@components-dir/car-card/car-card-one/css/default.mod
 import { fetchApi } from "@core-dir/services/Api.service";
 import { processCarCardData } from "@core-dir/helpers/CarCardDataProcessor";
 import DropdownFlexible from "@elements-dir/dropdown";
+import FinanceRepresentation from "@components-dir/finance-representation";
 
 export function StockListingOne() {
   const location = useLocation();
-  const { dealerAuthToken } = useDealerContext();
+  const { dealerData, dealerAuthToken } = useDealerContext();
   const { queryString, setQueryString } = useOutletContext<{
     queryString: string;
     setQueryString: (qs: string) => void;
@@ -29,7 +30,7 @@ export function StockListingOne() {
       : location.search;
     const fetchData = async () => {
       if (!dealerAuthToken) return;
-      
+
       try {
         setLoading(true);
         const response = await fetchApi(
@@ -48,25 +49,28 @@ export function StockListingOne() {
     fetchData();
   }, [location.search, dealerAuthToken]);
 
-  const handleSortByChange = useCallback((value: string[]) => {
-    const params = new URLSearchParams(queryString);
-    const cat = "sortby";
+  const handleSortByChange = useCallback(
+    (value: string[]) => {
+      const params = new URLSearchParams(queryString);
+      const cat = "sortby";
 
-    params.delete(cat);
-    value.forEach((v) => params.append(cat, v));
+      params.delete(cat);
+      value.forEach((v) => params.append(cat, v));
 
-    const updatedQueryString = params.toString();
-    setQueryString(updatedQueryString);
+      const updatedQueryString = params.toString();
+      setQueryString(updatedQueryString);
 
-    if (location.pathname.startsWith("/stock")) {
-      const newUrl = `/stock${
-        updatedQueryString ? `?${updatedQueryString}` : ""
-      }`;
-      if (location.pathname + location.search !== newUrl) {
-        navigate(newUrl, { replace: true });
+      if (location.pathname.startsWith("/stock")) {
+        const newUrl = `/stock${
+          updatedQueryString ? `?${updatedQueryString}` : ""
+        }`;
+        if (location.pathname + location.search !== newUrl) {
+          navigate(newUrl, { replace: true });
+        }
       }
-    }
-  }, [queryString, setQueryString, navigate, location]);
+    },
+    [queryString, setQueryString, navigate, location]
+  );
 
   return (
     <div className="container mx-auto px-4 py-6 space-y-6">
@@ -94,12 +98,24 @@ export function StockListingOne() {
 
         {/* === Right Content === */}
         <section className="lg:col-span-3 space-y-4">
+          {dealerData.FCANumber && (
+            <>
+              {/* Finance Representation */}
+              <FinanceRepresentation
+                totalCash={37537}
+                deposit={3527}
+                apr={5.9}
+                nbrOfMonths={24}
+                currencySymbol="£"
+                financeType="PCP"
+              />
+            </>
+          )}
           {/* Header */}
           <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
               Browse All Cars
             </h2>
-
             <div className="w-full sm:w-48">
               <DropdownFlexible
                 category="Sort By"
