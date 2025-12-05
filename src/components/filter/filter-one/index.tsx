@@ -1,3 +1,4 @@
+import { memo } from "react";
 import {
   Link,
   useOutletContext,
@@ -9,7 +10,7 @@ import DropdownFlexible from "@elements-dir/dropdown";
 import DotLoader from "@components-dir/loader";
 import Button from "@elements-dir/button";
 
-export default function FilterOne({ styles }: { styles: any }) {
+function FilterOne({ styles }: { styles: any }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -105,3 +106,5 @@ export default function FilterOne({ styles }: { styles: any }) {
     </div>
   );
 }
+
+export default memo(FilterOne);

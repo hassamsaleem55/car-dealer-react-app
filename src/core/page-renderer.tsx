@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import type {
   DealerPageKeys,
   DealerSectionKeys,
@@ -8,20 +8,25 @@ const sectionModules = import.meta.glob("../sections/**/variants/index.tsx");
 
 export default function PageRenderer({ page }: { page: DealerPageKeys }) {
   const { dealerData } = useDealerContext();
+  
+  const filteredSections = useMemo(
+    () =>
+      page.sections?.filter((section: DealerSectionKeys) => {
+        // Exclude finance page if dealer has FCANumber
+        if (
+          section.folderName === "trusted-partner" &&
+          !dealerData.FCANumber
+        ) {
+          return false;
+        }
+        return true;
+      }) || [],
+    [page.sections, dealerData.FCANumber]
+  );
+
   return (
     <>
-      {page.sections
-        ?.filter((section: DealerSectionKeys) => {
-          // Exclude finance page if dealer has FCANumber
-          if (
-            section.folderName === "trusted-partner" &&
-            !dealerData.FCANumber
-          ) {
-            return false;
-          }
-          return true;
-        })
-        .map((section: DealerSectionKeys, i) => {
+      {filteredSections.map((section: DealerSectionKeys, i) => {
           const { isShared, folderName, variant, props } = section;
           const key = `../sections/${
             isShared ? "shared" : page.pageName

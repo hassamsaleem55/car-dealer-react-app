@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ChevronRight } from "lucide-react";
 import { useOutletContext, useNavigate, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
@@ -28,6 +28,8 @@ export function StockListingOne() {
       ? location.search.substring(1)
       : location.search;
     const fetchData = async () => {
+      if (!dealerAuthToken) return;
+      
       try {
         setLoading(true);
         const response = await fetchApi(
@@ -44,9 +46,9 @@ export function StockListingOne() {
     };
 
     fetchData();
-  }, [location.search]);
+  }, [location.search, dealerAuthToken]);
 
-  const handleSortByChange = (value: string[]) => {
+  const handleSortByChange = useCallback((value: string[]) => {
     const params = new URLSearchParams(queryString);
     const cat = "sortby";
 
@@ -64,7 +66,7 @@ export function StockListingOne() {
         navigate(newUrl, { replace: true });
       }
     }
-  };
+  }, [queryString, setQueryString, navigate, location]);
 
   return (
     <div className="container mx-auto px-4 py-6 space-y-6">

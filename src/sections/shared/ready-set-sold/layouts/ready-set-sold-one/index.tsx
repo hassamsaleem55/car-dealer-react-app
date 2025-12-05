@@ -27,7 +27,7 @@ export default function ReadySetSoldOne({
               key={item.id}
               className={readySetSoldStyles["ready-set-sold-card"]}
             >
-              <img src={item.imgSrc} alt={item.title} />
+              <img src={item.imgSrc} alt={item.title} loading="lazy" decoding="async" />
               <div
                 className={readySetSoldStyles["ready-set-sold-card__content"]}
               >

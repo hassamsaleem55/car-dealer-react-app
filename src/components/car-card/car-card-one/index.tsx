@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { Heart } from "lucide-react";
 import Button from "@elements-dir/button";
@@ -5,7 +6,7 @@ import { type Car } from "../car-card.types";
 import TooltipText from "@components-dir/tooltip";
 import { useDealerContext } from "@core-dir/dealer-provider";
 
-export default function CarCard({ car, styles }: { car: Car; styles: any }) {
+function CarCard({ car, styles }: { car: Car; styles: any }) {
   const { dealerData } = useDealerContext();
   const { setReservationModalOpen, setReservationCarData } = useOutletContext<{
     setReservationModalOpen: (qs: boolean) => void;
@@ -45,6 +46,8 @@ export default function CarCard({ car, styles }: { car: Car; styles: any }) {
           src={profilePicture}
           alt={`${title}`}
           className={styles["car-card__img"]}
+          loading="lazy"
+          decoding="async"
         />
         {car.isReserved && (
           <div className={styles["car-card__reserved"]}>Reserved</div>
@@ -194,3 +197,5 @@ export default function CarCard({ car, styles }: { car: Car; styles: any }) {
     </div>
   );
 }
+
+export default memo(CarCard);

@@ -1,9 +1,11 @@
+import { memo } from "react";
+
 interface DotLoaderProps {
   size?: "sm" | "md" | "lg";
   text?: string;
 }
 
-export default function DotLoader({ size = "md", text }: DotLoaderProps) {
+function DotLoader({ size = "md", text }: DotLoaderProps) {
   const sizeClasses = {
     sm: "h-2 w-2",
     md: "h-3 w-3",
@@ -27,3 +29,5 @@ export default function DotLoader({ size = "md", text }: DotLoaderProps) {
     </div>
   );
 }
+
+export default memo(DotLoader);

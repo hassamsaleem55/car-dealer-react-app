@@ -10,7 +10,9 @@ function AppRouter() {
   const { dealerConfig, dealerData } = useDealerContext();
 
   const router = useMemo(() => {
-    const pages: DealerPageKeys[] = dealerConfig?.pages || [];
+    if (!dealerConfig?.pages || !dealerData) return null;
+    
+    const pages: DealerPageKeys[] = dealerConfig.pages;
 
     const childRoutes: any = pages
       .filter((page: DealerPageKeys) => {
@@ -42,7 +44,9 @@ function AppRouter() {
         children: childRoutes,
       },
     ]);
-  }, [dealerConfig]);
+  }, [dealerConfig?.pages, dealerData?.FCANumber]);
+
+  if (!router) return null;
 
   return <RouterProvider router={router} />;
 }

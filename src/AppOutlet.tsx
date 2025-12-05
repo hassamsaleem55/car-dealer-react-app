@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import { fetchApi } from "@core-dir/services/Api.service";
@@ -29,11 +29,9 @@ function AppOutlet() {
     }
   }, [location.pathname]);
 
-  useEffect(() => {
-    fetchData();
-  }, [queryString, dealerAuthToken]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
+    if (!dealerAuthToken || !dealerData?.CompanyId) return;
+    
     try {
       setFiltersLoading(true);
       const response = await fetchApi(
@@ -65,21 +63,35 @@ function AppOutlet() {
       setFiltersLoading(false);
       setFiltersFirstLoad(false);
     }
-  };
+  }, [queryString, dealerAuthToken, dealerData?.CompanyId, achievementsData.soldStockCount, achievementsData.availableStockCount]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+  
+  const outletContext = useMemo(
+    () => ({
+      queryString,
+      setQueryString,
+      filtersData,
+      filtersLoading,
+      filtersFirstLoad,
+      achievementsData,
+      setReservationModalOpen,
+      setReservationCarData,
+    }),
+    [
+      queryString,
+      filtersData,
+      filtersLoading,
+      filtersFirstLoad,
+      achievementsData,
+    ]
+  );
+
   return (
     <>
-      <Outlet
-        context={{
-          queryString,
-          setQueryString,
-          filtersData,
-          filtersLoading,
-          filtersFirstLoad,
-          achievementsData,
-          setReservationModalOpen,
-          setReservationCarData,
-        }}
-      />
+      <Outlet context={outletContext} />
       {reservationModalOpen && (
         <ReservationModal
           isOpen={reservationModalOpen}
