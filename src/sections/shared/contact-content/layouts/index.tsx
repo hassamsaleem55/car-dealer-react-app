@@ -4,9 +4,10 @@ import { toast } from "sonner";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import Button from "@elements-dir/button";
 import { getCompanyOpeningHours } from "@core-dir/helpers/CompanyInfoProcessor";
+import { postApi } from "@core-dir/services/Api.service";
 
 export default function ContactContentOne() {
-  const { dealerData } = useDealerContext();
+  const { dealerData, dealerAuthToken } = useDealerContext();
   const dealerName = dealerData?.CompanyName || "Our Dealership";
 
   const [formData, setFormData] = useState({
@@ -30,32 +31,115 @@ export default function ContactContentOne() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
 
-    try {
-      // Simulate API call - replace with actual API endpoint
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+  //   try {
+  //     // Simulate API call - replace with actual API endpoint
+  //     await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      toast.success("Message sent successfully!", {
-        description: "We'll get back to you as soon as possible.",
-      });
+  //     toast.success("Message sent successfully!", {
+  //       description: "We'll get back to you as soon as possible.",
+  //     });
 
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        message: "",
-      });
-    } catch (error) {
-      toast.error("Failed to send message", {
-        description: "Please try again or contact us directly.",
-      });
-    } finally {
-      setIsSubmitting(false);
+  //     // Reset form
+  //     setFormData({
+  //       name: "",
+  //       email: "",
+  //       phone: "",
+  //       message: "",
+  //     });
+  //   } catch (error) {
+  //     toast.error("Failed to send message", {
+  //       description: "Please try again or contact us directly.",
+  //     });
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+  const formValidator = (): boolean => {
+    // const emptyField = formData.find(
+    //   (field) => field.required && !field.value.trim()
+    // );
+    if (formData.name.trim() === "") {
+      toast.error(`Please fill out the name field.`);
+      return false;
     }
+    if (formData.email.trim() === "") {
+      toast.error(`Please fill out the email field.`);
+      return false;
+    }
+    if (formData.phone.trim() === "") {
+      toast.error(`Please fill out the phone field.`);
+      return false;
+    }
+    if (formData.message.trim() === "") {
+      toast.error(`Please fill out the message field.`);
+      return false;
+    }
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (formData.email && !emailRegex.test(formData.email)) {
+      toast.error("Please enter a valid email address.");
+      return false;
+    }
+
+    // Validate UK phone number
+    // UK phone regex: +44 or 0 followed by 9–10 digits
+    const ukPhoneRegex =
+      /^(?:\+?44\s?\d{10}|0044\s?\d{10}|07\d{9}|01\d{9}|02\d{9})$/;
+    if (
+      formData.phone &&
+      !ukPhoneRegex.test(formData.phone.replace(/\s+/g, ""))
+    ) {
+      toast.error("Please enter a valid UK phone number.");
+      return false;
+    }
+
+    return true;
+  };
+
+  const formSubmit = async (): Promise<boolean> => {
+    if (!formValidator()) {
+      return false;
+    }
+    setIsSubmitting(true);
+    // Prepare payload according to Postman structure
+    const body = {
+      FullName: formData.name,
+      EmailAddress: formData.email,
+      PhoneNumber: formData.phone,
+      Subject: "General Inquiry",
+      Comments: formData.message,
+      RequestType: "ContactUs",
+    };
+
+    const response = await postApi("/companies/support", body, dealerAuthToken);
+
+    if (!response) {
+      toast.error("Something went wrong. Please try again later.");
+      return false;
+    } else if (!response?.isSuccess) {
+      toast.error(response.message || "Failed to submit appointment request.");
+      return false;
+    }
+
+    toast.success("Message sent successfully!", {
+      description: "We'll get back to you as soon as possible.",
+    });
+
+    // Reset form
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    });
+
+    setIsSubmitting(false);
+    return true;
   };
 
   const inputClasses =
@@ -147,22 +231,13 @@ export default function ContactContentOne() {
                         getCompanyOpeningHours(dealerData?.Schedules || [])
                       ).map(([day, hours]) => (
                         <div
-                          //   key={index}
+                          key={day}
                           className="flex justify-between items-center text-sm"
                         >
                           <span className="text-gray-700 font-medium capitalize">
                             {day}
                           </span>
-                          <span className="text-gray-600">
-                            {/* {schedule.IsClosed ? (
-                              <span className="text-red-600 font-medium">
-                                Closed
-                              </span>
-                            ) : (
-                              `${schedule.OpenTime} - ${schedule.CloseTime}`
-                            )} */}
-                            {hours}
-                          </span>
+                          <span className="text-gray-600">{hours}</span>
                         </div>
                       ))}
                     </div>
@@ -201,7 +276,7 @@ export default function ContactContentOne() {
           <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
             <h3 className="text-2xl font-bold mb-6">Send Us a Message</h3>
 
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="space-y-5">
               {/* Name */}
               <div>
                 <label
@@ -261,7 +336,7 @@ export default function ContactContentOne() {
                   className={inputClasses}
                 />
               </div>
-              
+
               {/* Message */}
               <div>
                 <label
@@ -284,18 +359,17 @@ export default function ContactContentOne() {
 
               {/* Submit Button */}
               <Button
-                variant="primary"
+                variant={isSubmitting ? "disabled-mobile" : "primary"}
                 btnText={isSubmitting ? "Sending..." : "Send Message"}
-                // type="submit"
                 widthUtilities="w-full"
-                // disabled={isSubmitting}
+                clickEvent={formSubmit}
               />
 
               <p className="text-xs text-gray-500 text-center">
                 By submitting this form, you agree to our Privacy Policy and
                 Terms of Service.
               </p>
-            </form>
+            </div>
           </div>
         </div>
       </div>

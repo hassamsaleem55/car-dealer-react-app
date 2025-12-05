@@ -75,7 +75,10 @@ export function StockListingOne() {
   return (
     <div className="container mx-auto px-4 py-4 md:py-6 space-y-6">
       {/* === Breadcrumb === */}
-      <nav className="flex text-xs md:text-sm text-gray-500 gap-3" aria-label="breadcrumb">
+      <nav
+        className="flex text-xs md:text-sm text-gray-500 gap-3"
+        aria-label="breadcrumb"
+      >
         <ol className="flex flex-wrap items-center space-x-1 sm:space-x-2 truncate">
           <li>
             <a href="/" className="hover:text-primary transition-colors">
@@ -114,9 +117,9 @@ export function StockListingOne() {
           {/* Header */}
           <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
             <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
-              Browse All Cars
+              {`Browse All ${!loading ? carData.length : ""} Cars`}
             </h2>
-            <div className="w-full sm:w-48">
+            <div className="w-full sm:w-56">
               <DropdownFlexible
                 category="Sort By"
                 options={[
