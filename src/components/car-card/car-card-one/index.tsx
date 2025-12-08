@@ -151,12 +151,34 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
         </div> */}
       </div>
 
-      <div className="flex flex-col gap-3 px-4 md:hidden">
+      <div className="flex flex-col gap-3 px-4 pb-3 md:hidden">
+        <Button
+          variant="secondary"
+          btnText="View Car"
+          btnTextSize="text-xs"
+          paddingUtilities="px-4 py-3"
+          clickEvent={() => {
+            navigate(`/car-details?stockId=${stockId}`);
+          }}
+        />
+
+        <Button
+          variant={car.isReserved ? "disabled-mobile" : "secondary"}
+          btnText="Reserve for £99"
+          btnTextSize="text-xs"
+          paddingUtilities="px-4 py-3"
+          clickEvent={() => {
+            setReservationModalOpen(true);
+            setReservationCarData(car);
+          }}
+        />
+
         {dealerData.FCANumber && (
           <Button
             variant={car.isReserved ? "disabled-mobile" : "secondary"}
             btnText="Apply Finance"
             btnTextSize="text-xs"
+            paddingUtilities="px-4 py-3"
             clickEvent={() => {
               navigate(
                 `/car-details?stockId=${stockId}#codeweaver-finance-section`
@@ -164,25 +186,6 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
             }}
           />
         )}
-
-        <Button
-          variant={car.isReserved ? "disabled-mobile" : "secondary"}
-          btnText="Reserve for £99"
-          btnTextSize="text-xs"
-          clickEvent={() => {
-            setReservationModalOpen(true);
-            setReservationCarData(car);
-          }}
-        />
-
-        <Button
-          variant="secondary"
-          btnText="View Car"
-          btnTextSize="text-xs"
-          clickEvent={() => {
-            navigate(`/car-details?stockId=${stockId}`);
-          }}
-        />
 
         {/* <div className="flex gap-1 justify-between items-center">
           <div className="grow">
