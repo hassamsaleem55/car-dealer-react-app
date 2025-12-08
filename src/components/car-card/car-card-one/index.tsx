@@ -69,7 +69,14 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
 
         <div className={styles["car-card__price-wrapper"]}>
           {pricePerMonth && (
-            <div className={styles["car-card__price-estimated-block"]}>
+            <div
+              onClick={() => {
+                navigate(
+                  `/car-details?stockId=${stockId}#codeweaver-finance-section`
+                );
+              }}
+              className={styles["car-card__price-estimated-block"]}
+            >
               <p className={styles["car-card__price-estimated"]}>
                 {pricePerMonth}
               </p>
@@ -178,7 +185,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
           <Button
             variant={car.isReserved ? "disabled-mobile" : "secondary"}
             btnText="Apply Finance"
-             btnTextSize="text-sm"
+            btnTextSize="text-sm"
             paddingUtilities="px-3 py-2"
             clickEvent={() => {
               navigate(
