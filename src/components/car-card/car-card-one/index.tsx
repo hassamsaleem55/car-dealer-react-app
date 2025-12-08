@@ -152,11 +152,11 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
         </div> */}
       </div>
 
-      <div className="flex flex-col gap-1 px-4 md:hidden">
+      <div className="flex flex-col gap-2 px-4 md:hidden">
         <Button
           variant="secondary"
           btnText="View Car"
-          btnTextSize="text-xs"
+          btnTextSize="text-sm"
           paddingUtilities="px-3 py-2"
           clickEvent={() => {
             navigate(`/car-details?stockId=${stockId}`);
@@ -166,7 +166,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
         <Button
           variant={car.isReserved ? "disabled-mobile" : "secondary"}
           btnText="Reserve for £99"
-          btnTextSize="text-xs"
+          btnTextSize="text-sm"
           paddingUtilities="px-3 py-2"
           clickEvent={() => {
             setReservationModalOpen(true);
@@ -178,7 +178,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
           <Button
             variant={car.isReserved ? "disabled-mobile" : "secondary"}
             btnText="Apply Finance"
-            btnTextSize="text-xs"
+             btnTextSize="text-sm"
             paddingUtilities="px-3 py-2"
             clickEvent={() => {
               navigate(
