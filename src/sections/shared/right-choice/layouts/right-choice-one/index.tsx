@@ -26,11 +26,17 @@ export default function RightChoiceOne({
               key={item.id}
               className={rightChoiceStyles["right-choice-card"]}
             >
-              <div className={rightChoiceStyles["right-choice-card__title"]}>
+              <div
+                className={
+                  rightChoiceStyles["right-choice-card__title-wrapper"]
+                }
+              >
                 <div className={rightChoiceStyles["right-choice-card__number"]}>
                   {index + 1}
                 </div>
-                <div>{item.title}</div>
+                <div className={rightChoiceStyles["right-choice-card__title"]}>
+                  {item.title}
+                </div>
               </div>
 
               <div

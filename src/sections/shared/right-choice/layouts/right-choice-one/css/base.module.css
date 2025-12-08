@@ -14,12 +14,16 @@
          hover:shadow-xl hover:scale-[1.03] cursor-default text-center;
 }
 
-.right-choice-card__title {
-  @apply text-lg sm:text-xl font-semibold flex flex-row gap-2 items-center text-center;
+.right-choice-card__title-wrapper {
+  @apply font-semibold flex flex-row gap-2 items-center ;
 }
 
 .right-choice-card__number {
-  @apply flex items-center justify-center rounded-full w-8 h-8 bg-basicFont text-white text-sm;
+  @apply flex items-center justify-center rounded-full w-6 h-6 md:w-8 md:h-8 bg-basicFont text-white text-xs md:text-sm;
+}
+
+.right-choice-card__title {
+  @apply text-left text-base md:text-xl;
 }
 
 .right-choice-card__description {
