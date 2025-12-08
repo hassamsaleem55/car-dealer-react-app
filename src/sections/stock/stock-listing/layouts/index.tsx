@@ -74,7 +74,7 @@ export function StockListingOne() {
   );
 
   return (
-    <div className="container mx-auto px-4 py-4 md:py-6 space-y-3 md:space-y-6">
+    <div className="container mx-auto px-4 py-4 md:py-6 md:space-y-6">
       {/* === Breadcrumb === */}
       <nav
         className="flex text-xs md:text-sm text-gray-500 gap-3"
@@ -94,7 +94,7 @@ export function StockListingOne() {
       </nav>
 
       {/* === Mobile Filter Toggle Button === */}
-      <div className="lg:hidden sticky top-16 z-30 bg-transparent backdrop-blur-xs py-2 -mx-4 px-4">
+      <div className="lg:hidden sticky top-16 z-30 bg-transparent backdrop-blur-xs py-2 -mx-4 mt-3 px-4">
         <button
           onClick={() => setShowFilters(!showFilters)}
           className="btn btn-primary-no-hover w-full px-4 py-2 rounded-sm"
@@ -126,7 +126,7 @@ export function StockListingOne() {
       </div>
 
       {/* === Main Content === */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4">
         {/* === Sidebar (Filters) === */}
         <aside
           id="mobile-filters"
