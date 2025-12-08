@@ -106,7 +106,7 @@ export function StockListingOne() {
           <div className="relative w-5 h-5">
             <SlidersHorizontal
               size={20}
-              className={`absolute inset-0 transition-all duration-200 ${
+              className={`absolute inset-0 transition-all duration-500 ease-in-out ${
                 showFilters
                   ? "rotate-90 opacity-0 scale-0"
                   : "rotate-0 opacity-100 scale-100"
@@ -114,14 +114,16 @@ export function StockListingOne() {
             />
             <X
               size={20}
-              className={`absolute inset-0 transition-all duration-200 ${
+              className={`absolute inset-0 transition-all duration-500 ease-in-out ${
                 showFilters
                   ? "rotate-0 opacity-100 scale-100"
                   : "-rotate-90 opacity-0 scale-0"
               }`}
             />
           </div>
-          <span>{showFilters ? "Hide Filters" : "Show Filters"}</span>
+          <span className="transition-all duration-500 ease-in-out">
+            {showFilters ? "Hide Filters" : "Show Filters"}
+          </span>
         </button>
       </div>
 
@@ -130,13 +132,13 @@ export function StockListingOne() {
         {/* === Sidebar (Filters) === */}
         <aside
           id="mobile-filters"
-          className={`lg:col-span-1 lg:sticky lg:top-24 h-fit 
-                     transition-all duration-300 ease-in-out
-                     lg:block lg:opacity-100 lg:max-h-none
+          className={`lg:col-span-1 lg:sticky lg:top-24 
+                     overflow-hidden transition-all duration-500 ease-in-out
+                     lg:opacity-100! lg:max-h-none! lg:h-fit
                      ${
                        showFilters
-                         ? "block opacity-100 max-h-[2000px]"
-                         : "hidden opacity-0 max-h-0 lg:opacity-100 lg:max-h-none"
+                         ? "opacity-100 max-h-[3000px] translate-y-0"
+                         : "opacity-0 max-h-0 -translate-y-4"
                      }`}
         >
           <FilterOne styles={FilterOneVerticalStyles} />
