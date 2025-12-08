@@ -29,7 +29,7 @@ export function CarDetailsOne() {
     setReservationModalOpen: (qs: boolean) => void;
     setReservationCarData: (data: Car) => void;
   }>();
-  const [isFavorite, setIsFavorite] = useState(false);
+  // const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
   const [carData, setCarData] = useState<Car | null>(null);
   const [carDetails, setCarDetails] = useState<any>(null);
@@ -181,8 +181,8 @@ export function CarDetailsOne() {
               <MotionReveal preset="slideLeft">
                 <CarHeader
                   carData={carData}
-                  isFavorite={isFavorite}
-                  toggleFavorite={() => setIsFavorite(!isFavorite)}
+                  // isFavorite={isFavorite}
+                  // toggleFavorite={() => setIsFavorite(!isFavorite)}
                 />
               </MotionReveal>
 
@@ -277,8 +277,8 @@ export function CarDetailsOne() {
             <MotionReveal preset="slideLeft">
               <CarHeader
                 carData={carData}
-                isFavorite={isFavorite}
-                toggleFavorite={() => setIsFavorite(!isFavorite)}
+                // isFavorite={isFavorite}
+                // toggleFavorite={() => setIsFavorite(!isFavorite)}
               />
             </MotionReveal>
 
