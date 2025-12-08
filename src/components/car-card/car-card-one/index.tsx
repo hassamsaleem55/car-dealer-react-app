@@ -151,7 +151,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
         </div> */}
       </div>
 
-      <div className="flex flex-col gap-1.5 px-4 md:hidden">
+      <div className="flex flex-col gap-3 px-4 md:hidden">
         {dealerData.FCANumber && (
           <Button
             variant={car.isReserved ? "disabled-mobile" : "secondary"}
