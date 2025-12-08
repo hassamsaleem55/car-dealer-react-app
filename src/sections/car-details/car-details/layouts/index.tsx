@@ -256,13 +256,13 @@ export function CarDetailsOne() {
                     </MotionReveal>
                   </div>
                 )}
-                {dealerData.CompanyFinanceDetails.FinanceApiKey && (
+                {dealerData.CompanyFinanceDetails.FinanceApiKeyDecoded && (
                   <div id="codeweaver-finance-section">
                     <CodeWeaverFinance
                       model={carDetails}
                       userFCA={dealerData.FCANumber}
                       codeWeaverApi={
-                        dealerData.CompanyFinanceDetails.FinanceApiKey
+                        dealerData.CompanyFinanceDetails.FinanceApiKeyDecoded
                       }
                       websiteUrl={dealerData.Url}
                     />

@@ -66,8 +66,8 @@ export default function CodeWeaverFinance({
     }
 
     const script = document.createElement("script");
-    // script.src = `https://plugins.codeweavers.net/scripts/v1/platform/finance?ApiKey=${codeWeaverApi}`;
-    script.src = `https://plugins.codeweavers.net/scripts/v1/platform/finance?ApiKey=zFI826du651DPUPv32`;
+    script.src = `https://plugins.codeweavers.net/scripts/v1/platform/finance?ApiKey=${codeWeaverApi}`;
+    // script.src = `https://plugins.codeweavers.net/scripts/v1/platform/finance?ApiKey=zFI826du651DPUPv32`;
     script.async = true;
 
     const initializePlugin = () => {
@@ -135,9 +135,9 @@ export default function CodeWeaverFinance({
           <DotLoader text="Finance Calculator is loading" />
         </div>
       )}
-      <div 
-        id="cw-plugin-container" 
-        className={`mt-5 ${isLoading ? 'hidden' : ''}`}
+      <div
+        id="cw-plugin-container"
+        className={`mt-5 ${isLoading ? "hidden" : ""}`}
       ></div>
     </div>
   );

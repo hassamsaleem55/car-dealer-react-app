@@ -147,18 +147,20 @@ export default function ReservationModal({
       PhoneNumber:
         personalInfoForm.find((f) => f.name === "phone")?.value || "",
     };
-
+    const response = await postApi(
+      `/stocks/${stockId}/reserve/create-payment-intent`,
+      body,
+      dealerAuthToken
+    );
+    console.log("response:", response);
     try {
-      const response = await postApi(
-        `/stocks/${stockId}/reserve/create-payment-intent`,
-        body,
-        dealerAuthToken
-      );
-
       if (response.isSuccess) {
         if (response.checkoutUrl) {
           window.location.href = response.checkoutUrl;
-        } else if (response.clientSecret && response.publishableKeyDecoded) {
+        } else if (
+          response.clientSecret &&
+          response.StripePublishableKeyDecoded
+        ) {
           // Validate publishable key format
           // if (!response.publishableKey.startsWith('pk_')) {
           //   console.error("Invalid publishable key received from backend:", response.publishableKey);
@@ -175,7 +177,7 @@ export default function ReservationModal({
 
           // Set Stripe parameters for in-modal payment
           setClientSecret(response.clientSecret);
-          setPublishableKey(response.publishableKeyDecoded);
+          setPublishableKey(response.StripePublishableKeyDecoded);
           setReservationSecret(response.reservationSecret || "");
           console.log("Stripe setup complete - parameters validated");
         }
