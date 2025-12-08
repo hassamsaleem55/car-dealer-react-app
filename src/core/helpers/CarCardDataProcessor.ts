@@ -34,7 +34,7 @@ export function processCarCardData(rawData: any[]): any[] {
       profilePicture: car.profilePicture || "images/awaiting-image-alfa.png",
       isReserved: car.isReserved || false,
       specs: [
-        sanitizeSpec("Engine Capacity", car.engineCapacityCC),
+        sanitizeSpec("Engine", `${car.engineCapacityCC.toLocaleString()} CC`),
         sanitizeSpec("Transmission", car.transmissionType),
         sanitizeSpec("Fuel", car.fuelType),
         sanitizeSpec("Body Type", car.bodyType),

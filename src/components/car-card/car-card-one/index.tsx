@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import { Heart } from "lucide-react";
+// import { Heart } from "lucide-react";
 import Button from "@elements-dir/button";
 import { type Car } from "../car-card.types";
 import TooltipText from "@components-dir/tooltip";
@@ -24,12 +24,12 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
     specs,
   } = car;
 
-  const handleSecondaryAction = () => {
-    console.log(`Added to favorites ${stockId}: ${title}`);
-    // Replace with wishlist logic or UI feedback
-  };
+  // const handleSecondaryAction = () => {
+  //   console.log(`Added to favorites ${stockId}: ${title}`);
+  //   // Replace with wishlist logic or UI feedback
+  // };
 
-  const specOrder = ["Fuel", "Transmission", "Mileage"];
+  const specOrder = ["Fuel", "Engine", "Mileage"];
   const visibleSpecs = specs
     .filter((s) => specOrder.includes(s.label))
     .sort((a, b) => specOrder.indexOf(a.label) - specOrder.indexOf(b.label));
@@ -68,10 +68,6 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
         </div>
 
         <div className={styles["car-card__price-wrapper"]}>
-          <div className={styles["car-card__price-total-block"]}>
-            <p className={styles["car-card__price-total"]}>{retailPrice}</p>
-            <p className={styles["car-card__price-note"]}>Total</p>
-          </div>
           {pricePerMonth && (
             <div className={styles["car-card__price-estimated-block"]}>
               <p className={styles["car-card__price-estimated"]}>
@@ -80,6 +76,10 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
               <p className={styles["car-card__price-note"]}>per month</p>
             </div>
           )}
+          <div className={styles["car-card__price-total-block"]}>
+            <p className={styles["car-card__price-total"]}>{retailPrice}</p>
+            <p className={styles["car-card__price-note"]}>Total</p>
+          </div>
         </div>
 
         <div className={styles["car-card__specs"]}>
@@ -120,7 +120,15 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
             setReservationCarData(car);
           }}
         />
-        <div
+
+        <Button
+          variant="secondary"
+          btnText="View Car"
+          clickEvent={() => {
+            navigate(`/car-details?stockId=${stockId}`);
+          }}
+        />
+        {/* <div
           className={`${styles["view-car__buttons-wrapper"]} flex justify-between items-center`}
         >
           <div className={styles["view-car__button"]}>
@@ -140,7 +148,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
               paddingUtilities="p-3"
             />
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="flex flex-col gap-1 px-4 md:hidden">
@@ -166,7 +174,17 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
             setReservationCarData(car);
           }}
         />
-        <div className="flex gap-1 justify-between items-center">
+
+        <Button
+          variant="secondary"
+          btnText="View Car"
+          btnTextSize="text-xs"
+          clickEvent={() => {
+            navigate(`/car-details?stockId=${stockId}`);
+          }}
+        />
+
+        {/* <div className="flex gap-1 justify-between items-center">
           <div className="grow">
             <Button
               variant="secondary"
@@ -187,7 +205,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
               roundUtilities="rounded-full"
             />
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Footer */}

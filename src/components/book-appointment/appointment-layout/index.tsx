@@ -39,7 +39,7 @@ export default function AppointmentLayout({
             </div>
             {requestType === "vehicledetails" && (
               <div className="flex flex-wrap gap-1">
-                {carData.specs?.map((spec) => (
+                {carData.specs?.slice(0, 6).map((spec) => (
                   <span
                     key={spec.label}
                     className="border border-primary/50 text-xs rounded-xl px-2 py-1"

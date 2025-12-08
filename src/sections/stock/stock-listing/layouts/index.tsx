@@ -150,7 +150,7 @@ export function StockListingOne() {
             ) : carData.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
                 {carData.map((item, index) => (
-                  <MotionReveal key={item.id ?? index} once preset="slideLeft">
+                  <MotionReveal key={item.id ?? index} preset="slideLeft">
                     <CarCardOne car={item} styles={CarCardStyles} />
                   </MotionReveal>
                 ))}

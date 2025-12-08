@@ -166,10 +166,10 @@ export default function Footer({ styles }: { styles: any }) {
                 <Button
                   variant="secondary"
                   btnText="Subscribe"
-                  btnTextSize="text-xs md:text-sm"
+                  btnTextSize="text-xs"
                   roundUtilities="rounded-lg"
-                  paddingUtilities="px-5 py-2"
-                  widthUtilities="w-24"
+                  paddingUtilities="px-6 py-2"
+                  widthUtilities="w-auto"
                 />
               </form>
             </div>

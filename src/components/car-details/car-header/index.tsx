@@ -1,19 +1,19 @@
 import { useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
-import { Heart } from "lucide-react";
+// import { Heart } from "lucide-react";
 import Button from "@elements-dir/button";
 import AppointmentModal from "@components-dir/book-appointment/appointment-modal";
 import type { Car } from "@components-dir/car-card/car-card.types";
 
 export default function CarHeader({
   carData,
-  isFavorite,
-  toggleFavorite,
-}: {
+}: // isFavorite,
+// toggleFavorite,
+{
   carData: Car;
-  isFavorite: boolean;
-  toggleFavorite: () => void;
+  // isFavorite: boolean;
+  // toggleFavorite: () => void;
 }) {
   const { dealerData } = useDealerContext();
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
@@ -32,7 +32,7 @@ export default function CarHeader({
           <h1 className="grow text-xl md:text-3xl font-bold">
             {carData.title}
           </h1>
-
+          {/* 
           <button
             className={`flex items-center justify-center w-8 h-8 md:w-10 md:h-10 border border-gray-200 rounded-full transition cursor-pointer ${
               isFavorite
@@ -45,7 +45,7 @@ export default function CarHeader({
             }
           >
             <Heart className="w-4 h-4 md:w-5 md:h-5" />
-          </button>
+          </button> */}
         </div>
 
         <div className="flex gap-2">
@@ -60,31 +60,49 @@ export default function CarHeader({
         </div>
       </div>
 
-      {/* === Derivative & Pricing === */}
-      <div className="flex gap-8">
-        <div className="grow">
-          {/* Derivative (subtitle) */}
-          {carData.derivative && (
-            <span>
-              <p className="text-sm md:text-base font-medium line-clamp-3">
-                {carData.derivative}
-              </p>
-            </span>
-          )}
+      {/* === Derivative === */}
+      {carData.derivative && (
+        <div>
+          <p className="text-sm md:text-base font-medium line-clamp-3">
+            {carData.derivative}
+          </p>
         </div>
+      )}
 
-        {/* Pricing */}
-        <div className="text-right space-y-1">
-          <p className="text-xl md:text-3xl font-semibold text-primary">
+      {/* === Pricing === */}
+      {carData.pricePerMonth ? (
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 md:gap-8">
+          <div className="flex-1 md:flex-none space-y-1 text-center md:text-left">
+            <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wide">
+              Finance from
+            </p>
+            <p className="text-xl md:text-2xl font-bold text-primary">
+              {carData.pricePerMonth}
+              <span className="text-xs font-medium text-gray-500 ml-1">
+                /mo
+              </span>
+            </p>
+          </div>
+          <div className="h-px md:h-12 w-full md:w-px bg-gray-200"></div>
+          <div className="flex-1 md:flex-none space-y-1 text-center md:text-left">
+            <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wide">
+              Cash Price
+            </p>
+            <p className="text-xl md:text-2xl font-bold">
+              {carData.retailPrice}
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="text-center">
+          <p className="text-sm text-gray-500 font-medium uppercase tracking-wide">
+            Price
+          </p>
+          <p className="text-2xl md:text-3xl font-bold text-primary">
             {carData.retailPrice}
           </p>
-          {carData.pricePerMonth && (
-            <p className="text-[10px] md:text-xs font-semibold">
-              Starts from <span>{carData.pricePerMonth}/mo.</span>
-            </p>
-          )}
         </div>
-      </div>
+      )}
 
       {/* === Actions === */}
       <div className="flex flex-wrap items-center gap-2">

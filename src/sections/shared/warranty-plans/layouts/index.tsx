@@ -47,7 +47,7 @@ function PlanCard({
 
       {/* Sticky Header */}
       <div
-        className={`sticky top-30 z-10 bg-gray-50 px-5 py-4 border-b border-gray-100 transition-all duration-300 ${
+        className={`sticky top-20 z-10 bg-gray-50 px-5 py-4 border-b border-gray-100 transition-all duration-300 ${
           isSticky
             ? "shadow-md"
             : "shadow-none rounded-t-2xl"
