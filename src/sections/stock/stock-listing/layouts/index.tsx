@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, SlidersHorizontal, X } from "lucide-react";
 import { useOutletContext, useNavigate, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
@@ -22,6 +22,7 @@ export function StockListingOne() {
   }>();
   const [loading, setLoading] = useState(false);
   const [carData, setCarData] = useState<Array<any>>([]);
+  const [showFilters, setShowFilters] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -92,10 +93,52 @@ export function StockListingOne() {
         </ol>
       </nav>
 
+      {/* === Mobile Filter Toggle Button === */}
+      <div className="lg:hidden sticky top-16 z-30 bg-white pb-4 -mx-4 px-4">
+        <button
+          onClick={() => setShowFilters(!showFilters)}
+          className="w-full bg-primary text-white px-4 py-3 rounded-lg font-medium 
+                     flex items-center justify-center gap-2 transition-all duration-200
+                     hover:bg-primary/90 active:scale-[0.98] shadow-md"
+          aria-expanded={showFilters}
+          aria-controls="mobile-filters"
+        >
+          <div className="relative w-5 h-5">
+            <SlidersHorizontal
+              size={20}
+              className={`absolute inset-0 transition-all duration-200 ${
+                showFilters
+                  ? "rotate-90 opacity-0 scale-0"
+                  : "rotate-0 opacity-100 scale-100"
+              }`}
+            />
+            <X
+              size={20}
+              className={`absolute inset-0 transition-all duration-200 ${
+                showFilters
+                  ? "rotate-0 opacity-100 scale-100"
+                  : "-rotate-90 opacity-0 scale-0"
+              }`}
+            />
+          </div>
+          <span>{showFilters ? "Hide Filters" : "Show Filters"}</span>
+        </button>
+      </div>
+
       {/* === Main Content === */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
         {/* === Sidebar (Filters) === */}
-        <aside className="lg:col-span-1 lg:sticky lg:top-24 h-fit">
+        <aside
+          id="mobile-filters"
+          className={`lg:col-span-1 lg:sticky lg:top-24 h-fit 
+                     transition-all duration-300 ease-in-out
+                     lg:block lg:opacity-100 lg:max-h-none
+                     ${
+                       showFilters
+                         ? "block opacity-100 max-h-[2000px]"
+                         : "hidden opacity-0 max-h-0 lg:opacity-100 lg:max-h-none"
+                     }`}
+        >
           <FilterOne styles={FilterOneVerticalStyles} />
         </aside>
 
