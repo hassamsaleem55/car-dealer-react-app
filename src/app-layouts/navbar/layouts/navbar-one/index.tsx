@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-// import { Menu, Phone, Mail } from "lucide-react";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Button from "@elements-dir/button";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import type { DealerPageKeys } from "@types-dir/dealer-props";
@@ -12,8 +11,6 @@ export default function index({ styles }: { styles: any }) {
   const [open, setOpen] = useState(false);
   const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  // const [phoneNumber, setPhoneNumer] = useState<string>("");
-  // const [emailAddress, setEmailAddress] = useState<string>("");
   const [logoUrl, setLogoUrl] = useState<string>("");
   const menuRef = useRef<HTMLDivElement | null>(null);
   const btnRef = useRef<HTMLButtonElement | null>(null);
@@ -34,20 +31,6 @@ export default function index({ styles }: { styles: any }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // Handle click outside with React event handling
-  // const handleClickOutside = useCallback((e: React.MouseEvent) => {
-  //   const target = e.target as Node;
-  //   if (
-  //     open &&
-  //     menuRef.current &&
-  //     !menuRef.current.contains(target) &&
-  //     btnRef.current &&
-  //     !btnRef.current.contains(target)
-  //   ) {
-  //     close();
-  //   }
-  // }, [open, close]);
 
   useEffect(() => {
     if (open) {
@@ -100,6 +83,18 @@ export default function index({ styles }: { styles: any }) {
     return () => window.removeEventListener("resize", handleResize);
   }, [close]);
 
+  // Close menu on scroll
+  useEffect(() => {
+    if (open) {
+      const handleScroll = () => {
+        close();
+      };
+
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      return () => window.removeEventListener("scroll", handleScroll);
+    }
+  }, [open, close]);
+
   useEffect(() => {
     setLogoUrl(dealerData?.LogoUrl);
   }, []);
@@ -112,37 +107,6 @@ export default function index({ styles }: { styles: any }) {
           : styles["header-wrapper"]
       }
     >
-      {/* Top Bar */}
-      {/* <div
-        className={`${styles["topbar"]}
-        ${
-          location.pathname === "/"
-            ? scrolled
-              ? styles["scrolled"]
-              : ""
-            : styles["scrolled"]
-        }`}
-      >
-        <div className={styles["topbar-container"]}>
-          <div className={styles["topbar-left"]}>
-            <span className="flex items-center gap-1">
-              <Phone size={14} />{" "}
-              <a href={`tel:${phoneNumber}`}>{phoneNumber}</a>
-            </span>
-            <span className="flex items-center gap-1">
-              <Mail size={14} />{" "}
-              <a href={`mailto:${emailAddress}`}>{emailAddress}</a>
-            </span>
-          </div>
-
-          <div className={styles["topbar-right"]}>
-            <a href="#">Buying</a>
-            <a href="#">Selling</a>
-            <a href="#">Login</a>
-          </div>
-        </div>
-      </div> */}
-
       {/* Main Navbar */}
       <nav
         className={`${styles["navbar"]} ${
@@ -233,7 +197,24 @@ export default function index({ styles }: { styles: any }) {
             aria-label={open ? "Close menu" : "Open menu"}
             type="button"
           >
-            <Menu size={18} />
+            <div className="relative w-[18px] h-[18px]">
+              <Menu
+                size={18}
+                className={`absolute inset-0 transition-all duration-200 ${
+                  open
+                    ? "rotate-90 opacity-0 scale-0"
+                    : "rotate-0 opacity-100 scale-100"
+                }`}
+              />
+              <X
+                size={18}
+                className={`absolute inset-0 transition-all duration-200 ${
+                  open
+                    ? "rotate-0 opacity-100 scale-100"
+                    : "-rotate-90 opacity-0 scale-0"
+                }`}
+              />
+            </div>
           </button>
 
           <div
@@ -246,48 +227,43 @@ export default function index({ styles }: { styles: any }) {
             aria-hidden={!open}
             onKeyDown={handleKeyDown}
           >
-            <div className="px-4 py-3">
-              <ul className={styles["navbar-mobile__menu-panel"]}>
-                {dealerConfig.pages.map(
-                  (page: DealerPageKeys) =>
-                    page.showInNavbar &&
-                    page.pageName !== "contact" &&
-                    !(page.pageName === "finance" && dealerData.FCANumber) && (
-                      <li key={page.pageName}>
-                        <Link
-                          to={page.path || "#"}
-                          onClick={close}
-                          className={`${styles["navbar-mobile__link"]} 
-                  ${location.pathname === page.path ? styles["active"] : ""}
-                `}
-                          role="menuitem"
-                          aria-haspopup={!!page.hasSubmenu}
-                          aria-expanded={openSubMenu === page.pageName}
-                        >
-                          {page.label}
-                        </Link>
-                        {/* <a
-                          href={page.path || "#"}
-                          onClick={close}
-                          className={styles["navbar-mobile__link"]}
-                          role="menuitem"
-                        >
-                          {page.label}
-                        </a> */}
-                      </li>
-                    )
-                )}
+            <ul className={styles["navbar-mobile__menu-panel"]}>
+              {dealerConfig.pages.map(
+                (page: DealerPageKeys) =>
+                  page.showInNavbar &&
+                  page.pageName !== "contact" &&
+                  !(page.pageName === "finance" && !dealerData.FCANumber) && (
+                    <li key={page.pageName}>
+                      <Link
+                        to={page.path || "#"}
+                        onClick={close}
+                        className={`${styles["navbar-mobile__link"]} ${
+                          location.pathname === page.path
+                            ? styles["active"]
+                            : ""
+                        }`}
+                        role="menuitem"
+                        aria-haspopup={!!page.hasSubmenu}
+                        aria-expanded={openSubMenu === page.pageName}
+                      >
+                        {page.label}
+                      </Link>
+                    </li>
+                  )
+              )}
+              <li>
                 <Link
                   to="/contact"
                   onClick={close}
-                  className={`${styles["navbar-mobile__link"]} 
-                  ${location.pathname === "/contact" ? styles["active"] : ""}
-                `}
+                  className={`${styles["navbar-mobile__link"]} ${
+                    location.pathname === "/contact" ? styles["active"] : ""
+                  }`}
+                  role="menuitem"
                 >
                   Contact Us
                 </Link>
-              </ul>
-            </div>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>
