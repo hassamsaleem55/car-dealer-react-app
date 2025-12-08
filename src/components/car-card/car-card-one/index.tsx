@@ -34,12 +34,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
     .filter((s) => specOrder.includes(s.label))
     .sort((a, b) => specOrder.indexOf(a.label) - specOrder.indexOf(b.label));
   return (
-    <div
-      // onClick={() => {
-      //   navigate(`/car-details?stockId=${stockId}`);
-      // }}
-      className={`${styles["car-card"]} group`}
-    >
+    <div className={`${styles["car-card"]} group`}>
       {/* Image */}
       <div className={styles["car-card__image-wrapper"]}>
         <img
@@ -103,62 +98,43 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
         </div>
       </div>
 
-      {/* Overlay Actions */}
-      <div
-        className={`${styles["car-card__actions"]} opacity-0 group-hover:opacity-100`}
-      >
-        <Button
-          variant="secondary"
-          btnText="View Car"
-          clickEvent={() => {
-            navigate(`/car-details?stockId=${stockId}`);
-          }}
-        />
-
-        <Button
-          variant={car.isReserved ? "disabled" : "secondary"}
-          btnText="Reserve for £99"
-          clickEvent={() => {
-            setReservationModalOpen(true);
-            setReservationCarData(car);
-          }}
-        />
-
-        {dealerData.FCANumber && (
+      {/* Overlay Actions - Desktop Only */}
+      <div className="hidden md:block">
+        <div
+          className={`${styles["car-card__actions"]} opacity-0 group-hover:opacity-100`}
+        >
           <Button
-            variant={car.isReserved ? "disabled" : "secondary"}
-            btnText="Apply Finance"
+            variant="secondary"
+            btnText="View Car"
             clickEvent={() => {
-              navigate(
-                `/car-details?stockId=${stockId}#codeweaver-finance-section`
-              );
+              navigate(`/car-details?stockId=${stockId}`);
             }}
           />
-        )}
 
-        {/* <div
-          className={`${styles["view-car__buttons-wrapper"]} flex justify-between items-center`}
-        >
-          <div className={styles["view-car__button"]}>
+          <Button
+            variant={car.isReserved ? "disabled" : "secondary"}
+            btnText="Reserve for £99"
+            clickEvent={() => {
+              setReservationModalOpen(true);
+              setReservationCarData(car);
+            }}
+          />
+
+          {dealerData.FCANumber && (
             <Button
-              variant="secondary"
-              btnText="View Car"
+              variant={car.isReserved ? "disabled" : "secondary"}
+              btnText="Apply Finance"
               clickEvent={() => {
-                navigate(`/car-details?stockId=${stockId}`);
+                navigate(
+                  `/car-details?stockId=${stockId}#codeweaver-finance-section`
+                );
               }}
             />
-          </div>
-          <div>
-            <Button
-              variant="secondary"
-              btnIcon={<Heart className="w-4 h-4 sm:w-5 sm:h-5" />}
-              clickEvent={handleSecondaryAction}
-              paddingUtilities="p-3"
-            />
-          </div>
-        </div> */}
+          )}
+        </div>
       </div>
 
+      {/* Mobile Actions */}
       <div className="flex flex-col gap-2 px-4 md:hidden">
         <Button
           variant="secondary"
