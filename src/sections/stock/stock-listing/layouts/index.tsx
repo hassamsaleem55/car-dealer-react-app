@@ -94,36 +94,34 @@ export function StockListingOne() {
       </nav>
 
       {/* === Mobile Filter Toggle Button === */}
-      <div className="lg:hidden sticky top-16 z-30 bg-white pb-4 -mx-4 px-4">
+      <div className="lg:hidden sticky top-16 z-30 bg-transparent backdrop-blur-xs py-2 -mx-4 px-4">
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="w-full bg-primary text-white px-4 py-3 rounded-lg font-medium 
-                     flex items-center justify-center gap-2 transition-all duration-200
-                     hover:bg-primary/90 active:scale-[0.98] shadow-md"
-          aria-expanded={showFilters}
-          aria-controls="mobile-filters"
+          className="btn btn-primary-no-hover w-full px-4 py-2 rounded-sm"
         >
-          <div className="relative w-5 h-5">
-            <SlidersHorizontal
-              size={20}
-              className={`absolute inset-0 transition-all duration-500 ease-in-out ${
-                showFilters
-                  ? "rotate-90 opacity-0 scale-0"
-                  : "rotate-0 opacity-100 scale-100"
-              }`}
-            />
-            <X
-              size={20}
-              className={`absolute inset-0 transition-all duration-500 ease-in-out ${
-                showFilters
-                  ? "rotate-0 opacity-100 scale-100"
-                  : "-rotate-90 opacity-0 scale-0"
-              }`}
-            />
+          <div className="flex items-center justify-center gap-2">
+            <div className="relative w-5 h-5">
+              <SlidersHorizontal
+                size={20}
+                className={`absolute inset-0 transition-all duration-500 ease-in-out ${
+                  showFilters
+                    ? "rotate-90 opacity-0 scale-0"
+                    : "rotate-0 opacity-100 scale-100"
+                }`}
+              />
+              <X
+                size={20}
+                className={`absolute inset-0 transition-all duration-500 ease-in-out ${
+                  showFilters
+                    ? "rotate-0 opacity-100 scale-100"
+                    : "-rotate-90 opacity-0 scale-0"
+                }`}
+              />
+            </div>
+            <span className="transition-all duration-500 ease-in-out">
+              {showFilters ? "Hide Filters" : "Show Filters"}
+            </span>
           </div>
-          <span className="transition-all duration-500 ease-in-out">
-            {showFilters ? "Hide Filters" : "Show Filters"}
-          </span>
         </button>
       </div>
 

@@ -54,6 +54,15 @@
   height: 0%;
 }
 
+/* --- PRIMARY NO HOVER (Static) --- */
+.btn-primary-no-hover {
+  @apply bg-primary text-white;
+}
+
+.btn-primary-no-hover::before {
+  content: none;
+}
+
 .btn-disabled {
   @apply bg-transparent text-primary/50 cursor-not-allowed border-none pointer-events-none;
 }
