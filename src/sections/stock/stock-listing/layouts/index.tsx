@@ -74,7 +74,7 @@ export function StockListingOne() {
   );
 
   return (
-    <div className="container mx-auto px-4 py-4 md:py-6 space-y-6">
+    <div className="container mx-auto px-4 py-4 md:py-6 space-y-3 md:space-y-6">
       {/* === Breadcrumb === */}
       <nav
         className="flex text-xs md:text-sm text-gray-500 gap-3"
