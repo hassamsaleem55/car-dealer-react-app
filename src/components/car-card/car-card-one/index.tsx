@@ -211,8 +211,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
           <div className="carGuruContainer ml-auto">
             <div className="carGuruPricetag" style={{ display: "none" }}>
               <span
-                id={`cg-price-${car.registrationNo}`}
-                className="text-sm font-semibold capitalize"
+                className={`cg-price-${car.registrationNo} text-sm font-semibold capitalize`}
               ></span>
               <CarGuruLogo className="w-16" />
               <span

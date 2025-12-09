@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { ChevronRight, SlidersHorizontal, X } from "lucide-react";
+import { ChevronRight, SlidersHorizontal, X, Search } from "lucide-react";
 import { useOutletContext, useNavigate, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
@@ -22,7 +22,9 @@ export function StockListingOne() {
   }>();
   const [loading, setLoading] = useState(false);
   const [carData, setCarData] = useState<Array<any>>([]);
+  const [allCarData, setAllCarData] = useState<Array<any>>([]);
   const [showFilters, setShowFilters] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,7 +41,9 @@ export function StockListingOne() {
           dealerAuthToken
         );
 
-        setCarData([...processCarCardData(response.stockList)]);
+        const processedData = processCarCardData(response.stockList);
+        setAllCarData([...processedData]);
+        setCarData([...processedData]);
       } catch (error) {
         console.error("Error fetching filters:", error);
       } finally {
@@ -49,6 +53,33 @@ export function StockListingOne() {
 
     fetchData();
   }, [location.search, dealerAuthToken]);
+
+  // Search filter effect
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setCarData(allCarData);
+      return;
+    }
+
+    const query = searchQuery.toLowerCase();
+    const filtered = allCarData.filter((car) => {
+      const title = car.title?.toLowerCase() || "";
+      const derivative = car.derivative?.toLowerCase() || "";
+      const registrationNo = car.registrationNo?.toLowerCase() || "";
+      const make = car.make?.toLowerCase() || "";
+      const model = car.model?.toLowerCase() || "";
+
+      return (
+        title.includes(query) ||
+        derivative.includes(query) ||
+        registrationNo.includes(query) ||
+        make.includes(query) ||
+        model.includes(query)
+      );
+    });
+
+    setCarData(filtered);
+  }, [searchQuery, allCarData]);
 
   const handleSortByChange = useCallback(
     (value: string[]) => {
@@ -185,29 +216,61 @@ export function StockListingOne() {
             </>
           )}
           {/* Header */}
-          <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-            <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
-              {`Browse All ${!loading ? carData.length : ""} Cars`}
-            </h2>
-            <div className="w-full sm:w-56">
-              <DropdownFlexible
-                category="Sort By"
-                options={[
-                  {
-                    id: 1,
-                    label: "Mileage (High to Low)",
-                    value: "mileage_desc",
-                  },
-                  {
-                    id: 2,
-                    label: "Mileage (Low to High)",
-                    value: "mileage_asc",
-                  },
-                  { id: 3, label: "Price (High to Low)", value: "price_desc" },
-                  { id: 4, label: "Price (Low to High)", value: "price_asc" },
-                ]}
-                onChange={(value: string[]) => handleSortByChange(value)}
-              />
+          <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
+                {`Browse All ${!loading ? carData.length : ""} Cars`}
+              </h2>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+                <div className="relative flex-1 sm:flex-initial sm:min-w-60">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <Search className="h-4 w-4 text-gray-400" />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="block w-full pl-9 pr-9 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none placeholder:text-gray-400"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center hover:text-primary transition-colors"
+                    >
+                      <X className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+                    </button>
+                  )}
+                </div>
+                <div className="w-full sm:w-56">
+                  <DropdownFlexible
+                    category="Sort By"
+                    options={[
+                      {
+                        id: 1,
+                        label: "Mileage (High to Low)",
+                        value: "mileage_desc",
+                      },
+                      {
+                        id: 2,
+                        label: "Mileage (Low to High)",
+                        value: "mileage_asc",
+                      },
+                      {
+                        id: 3,
+                        label: "Price (High to Low)",
+                        value: "price_desc",
+                      },
+                      {
+                        id: 4,
+                        label: "Price (Low to High)",
+                        value: "price_asc",
+                      },
+                    ]}
+                    onChange={(value: string[]) => handleSortByChange(value)}
+                  />
+                </div>
+              </div>
             </div>
           </div>
 

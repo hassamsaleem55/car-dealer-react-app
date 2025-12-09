@@ -43,15 +43,20 @@ export default function useCarGurusBadge() {
 // --------------------------------
 let isProcessed = false;
 function processCarGurusBadges() {
-  console.log("Initializing CarGurus custom badges...");
   const carGurusSpans = document.querySelectorAll(".carGurusPriceText");
+  console.log("Processing CarGurus badges...", carGurusSpans.length);
 
   carGurusSpans.forEach(function (span) {
     const vrn = span.getAttribute("data-cg-vrn");
-    const container = span.closest(".carGuruContainer") as HTMLElement | null;
+    if (!vrn) return;
 
+    const container = span.closest(".carGuruContainer") as HTMLElement | null;
+    if (!container) return;
+    
     const badgeElement = span.querySelector(".cg-dealrating-badge");
-    const custommSpan = document.getElementById("cg-price-" + vrn);
+    
+    // Search within the container to get the correct price display element for THIS specific car
+    const custommSpan = container.querySelector(`.cg-price-${vrn}`) as HTMLElement;
 
     if (badgeElement && span instanceof HTMLElement) {
       span.style.display = "none";

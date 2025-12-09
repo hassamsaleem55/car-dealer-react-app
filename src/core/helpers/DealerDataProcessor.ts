@@ -15,6 +15,7 @@ export async function getDealerData() {
   const authToken = tokens.authToken;
   const infoToken = tokens.infoToken;
   const decodedInfoToken = decodeJwt(infoToken);
+  console.log("Decoded Info Token Payload:", decodedInfoToken.payload);
   const parsedPayload = dealerDataParser(decodedInfoToken.payload);
 
   return {

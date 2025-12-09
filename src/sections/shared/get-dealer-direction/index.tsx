@@ -25,20 +25,6 @@ export function GetDirectionV1() {
     }
   };
 
-  useEffect(() => {
-    // Initialize map functionality
-    const initMap = () => {
-      console.log(
-        "Map initialized with coordinates:",
-        dealerData.Latiitude,
-        dealerData.Longitude
-      );
-    };
-
-    const timer = setTimeout(initMap, 1500);
-    return () => clearTimeout(timer);
-  }, [dealerData.Latiitude, dealerData.longitude]);
-
   return (
     // <section className="bg-white">
     <div className="container mx-auto px-4">

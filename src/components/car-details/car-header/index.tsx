@@ -5,6 +5,8 @@ import { useDealerContext } from "@core-dir/dealer-provider";
 import Button from "@elements-dir/button";
 import AppointmentModal from "@components-dir/book-appointment/appointment-modal";
 import type { Car } from "@components-dir/car-card/car-card.types";
+import { AutoTraderLogo, CarGuruLogo } from "@core-dir/svgs";
+import useCarGurusBadge from "@core-dir/hooks/useCarGurusBadge";
 
 export default function CarHeader({
   carData,
@@ -15,6 +17,7 @@ export default function CarHeader({
   // isFavorite: boolean;
   // toggleFavorite: () => void;
 }) {
+  useCarGurusBadge();
   const { dealerData } = useDealerContext();
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
   const { setReservationModalOpen } = useOutletContext<{
@@ -26,13 +29,12 @@ export default function CarHeader({
 
   return (
     <header className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 space-y-4">
-      {/* === Title, Registration, Tags & Favorite Button === */}
-      <div>
-        <div className="flex">
-          <h1 className="grow text-xl md:text-3xl font-bold">
+      <div className="space-y-4">
+        {/* Title and Tags */}
+        <div className="space-y-2">
+          <h1 className="text-xl md:text-3xl font-bold">
             {carData.title}
-          </h1>
-          {/* 
+            {/* 
           <button
             className={`flex items-center justify-center w-8 h-8 md:w-10 md:h-10 border border-gray-200 rounded-full transition cursor-pointer ${
               isFavorite
@@ -46,28 +48,27 @@ export default function CarHeader({
           >
             <Heart className="w-4 h-4 md:w-5 md:h-5" />
           </button> */}
-        </div>
+          </h1>
 
-        <div className="flex gap-2">
-          {carData.registrationNo && (
-            <span className="text-[10px] md:text-xs bg-primary/20 font-semibold px-2 py-1 rounded-full">
-              {carData.registrationNo}
+          <div className="flex flex-wrap items-center gap-2">
+            {carData.registrationNo && (
+              <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
+                {carData.registrationNo}
+              </span>
+            )}
+            <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              ULEZ Compliant
             </span>
-          )}
-          <span className="text-[10px] md:text-xs bg-green-100 text-green-700 font-semibold px-2 py-1 rounded-full">
-            ULEZ Compliant
-          </span>
+          </div>
         </div>
-      </div>
 
-      {/* === Derivative === */}
-      {carData.derivative && (
-        <div>
-          <p className="text-sm md:text-base font-medium line-clamp-3">
+        {/* Derivative */}
+        {carData.derivative && (
+          <p className="text-sm md:text-base text-gray-600">
             {carData.derivative}
           </p>
-        </div>
-      )}
+        )}
+      </div>
 
       {/* === Pricing === */}
       {carData.pricePerMonth ? (
@@ -198,6 +199,32 @@ export default function CarHeader({
             btnTextSize="text-xs md:text-sm"
             clickEvent={() => setReservationModalOpen(true)}
           />
+        </div>
+      </div>
+
+      <div className="border-t border-t-gray-200 mt-4 pt-4">
+        <div className="flex flex-row justify-between items-start w-full">
+          {carData.priceIndicator !== "high" &&
+            carData.priceIndicator !== "noanalysis" && (
+              <div className="flex flex-col">
+                <span className="text-sm font-semibold capitalize">{`${carData.priceIndicator} Price`}</span>
+                <AutoTraderLogo className="w-16" />
+              </div>
+            )}
+          <div className="carGuruContainer ml-auto">
+            <div className="carGuruPricetag" style={{ display: "none" }}>
+              <span
+                className={`cg-price-${carData.registrationNo} text-sm font-semibold capitalize`}
+              ></span>
+              <CarGuruLogo className="w-16" />
+              <span
+                className="carGurusPriceText"
+                data-cg-vrn={carData.registrationNo}
+                data-cg-price={carData.retailPrice.replace(/[^0-9.-]+/g, "")}
+                style={{ display: "none" }}
+              ></span>
+            </div>
+          </div>
         </div>
       </div>
       {appointmentModalOpen && (

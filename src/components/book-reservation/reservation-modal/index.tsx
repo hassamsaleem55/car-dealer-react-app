@@ -152,15 +152,11 @@ export default function ReservationModal({
       body,
       dealerAuthToken
     );
-    console.log("response:", response);
     try {
       if (response.isSuccess) {
         if (response.checkoutUrl) {
           window.location.href = response.checkoutUrl;
-        } else if (
-          response.clientSecret &&
-          response.StripePublishableKeyDecoded
-        ) {
+        } else if (response.clientSecret && response.publishableKeyDecoded) {
           // Validate publishable key format
           // if (!response.publishableKey.startsWith('pk_')) {
           //   console.error("Invalid publishable key received from backend:", response.publishableKey);
@@ -177,7 +173,7 @@ export default function ReservationModal({
 
           // Set Stripe parameters for in-modal payment
           setClientSecret(response.clientSecret);
-          setPublishableKey(response.StripePublishableKeyDecoded);
+          setPublishableKey(response.publishableKeyDecoded);
           setReservationSecret(response.reservationSecret || "");
           console.log("Stripe setup complete - parameters validated");
         }
