@@ -31,7 +31,7 @@ export default function CarHeader({
     <header className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 space-y-4">
       <div className="space-y-4">
         {/* Title and Tags */}
-        <div className="space-y-2">
+        <div className="space-y-1">
           <h1 className="text-xl md:text-3xl font-bold">
             {carData.title}
             {/* 
@@ -72,7 +72,7 @@ export default function CarHeader({
 
       {/* === Pricing === */}
       {carData.pricePerMonth ? (
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 md:gap-8">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 md:gap-12">
           <div className="flex-1 md:flex-none space-y-1 text-center md:text-left">
             <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wide">
               Finance from

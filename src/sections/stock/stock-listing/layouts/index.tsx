@@ -194,14 +194,14 @@ export function StockListingOne() {
       </div>
 
       {/* === Main Content === */}
-      <div className="grid grid-cols-1 lg:grid-cols-4">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
         {/* === Sidebar (Filters - Desktop Only) === */}
         <aside className="hidden lg:block lg:col-span-1 lg:sticky lg:top-24 h-fit">
           <FilterOne styles={FilterOneVerticalStyles} />
         </aside>
 
         {/* === Right Content === */}
-        <section className="lg:col-span-3 space-y-4">
+        <section className="lg:col-span-3 space-y-2">
           {dealerData.FCANumber && (
             <>
               {/* Finance Representation */}
@@ -275,13 +275,13 @@ export function StockListingOne() {
           </div>
 
           {/* === Car Listing Grid === */}
-          <div className="md:bg-white md:rounded-2xl md:shadow-sm md:border md:border-gray-100 md:p-5">
+          {/* <div className="md:bg-white md:rounded-2xl md:shadow-sm md:border md:border-gray-100 md:p-5"> */}
             {loading ? (
               <div className="flex items-center justify-center h-[60vh]">
                 <DotLoader size="lg" />
               </div>
             ) : carData.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                 {carData.map((item, index) => (
                   <MotionReveal key={item.id ?? index} preset="slideLeft">
                     <CarCardOne car={item} styles={CarCardStyles} />
@@ -293,7 +293,7 @@ export function StockListingOne() {
                 No cars found matching your filters.
               </div>
             )}
-          </div>
+          {/* </div> */}
         </section>
       </div>
     </div>
