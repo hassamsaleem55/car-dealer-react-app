@@ -97,7 +97,7 @@ export function StockListingOne() {
       <div className="lg:hidden sticky top-16 z-30 bg-transparent backdrop-blur-xs py-2 -mx-4 mt-3 px-4">
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className="btn btn-primary-no-hover w-full px-4 py-2 rounded-sm"
+          className="btn btn-primary-no-hover w-full px-4 py-2 rounded-sm transition-transform duration-200 active:scale-95"
         >
           <div className="flex items-center justify-center gap-2">
             <div className="relative w-5 h-5">
@@ -105,7 +105,7 @@ export function StockListingOne() {
                 size={20}
                 className={`absolute inset-0 transition-all duration-500 ease-in-out ${
                   showFilters
-                    ? "rotate-90 opacity-0 scale-0"
+                    ? "rotate-180 opacity-0 scale-0"
                     : "rotate-0 opacity-100 scale-100"
                 }`}
               />
@@ -114,7 +114,7 @@ export function StockListingOne() {
                 className={`absolute inset-0 transition-all duration-500 ease-in-out ${
                   showFilters
                     ? "rotate-0 opacity-100 scale-100"
-                    : "-rotate-90 opacity-0 scale-0"
+                    : "-rotate-180 opacity-0 scale-0"
                 }`}
               />
             </div>
@@ -125,20 +125,47 @@ export function StockListingOne() {
         </button>
       </div>
 
+      {/* === Mobile Filter Modal === */}
+      <div
+        className={`lg:hidden fixed inset-0 z-40 transition-all duration-300 ease-in-out ${
+          showFilters
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        }`}
+      >
+        {/* Backdrop */}
+        <div
+          className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-in-out ${
+            showFilters ? "opacity-100" : "opacity-0"
+          }`}
+          onClick={() => setShowFilters(false)}
+        />
+
+        {/* Filter Panel */}
+        <div
+          className={`absolute inset-x-0 top-[120px] bottom-0 bg-white overflow-y-auto transition-transform duration-500 ease-out ${
+            showFilters ? "translate-y-0" : "translate-y-full"
+          }`}
+        >
+          {/* <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center z-10 shadow-sm">
+            <h3 className="text-lg font-semibold">Filters</h3>
+            <button
+              onClick={() => setShowFilters(false)}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-all duration-200 hover:scale-110 active:scale-95"
+            >
+              <X size={20} className="transition-transform duration-200" />
+            </button>
+          </div> */}
+          {/* <div className="p-4"> */}
+          <FilterOne styles={FilterOneVerticalStyles} />
+          {/* </div> */}
+        </div>
+      </div>
+
       {/* === Main Content === */}
       <div className="grid grid-cols-1 lg:grid-cols-4">
-        {/* === Sidebar (Filters) === */}
-        <aside
-          id="mobile-filters"
-          className={`lg:col-span-1 lg:sticky lg:top-24 
-                     overflow-hidden transition-all duration-500 ease-in-out
-                     lg:opacity-100! lg:max-h-none! lg:h-fit
-                     ${
-                       showFilters
-                         ? "opacity-100 max-h-[3000px] translate-y-0"
-                         : "opacity-0 max-h-0 -translate-y-4"
-                     }`}
-        >
+        {/* === Sidebar (Filters - Desktop Only) === */}
+        <aside className="hidden lg:block lg:col-span-1 lg:sticky lg:top-24 h-fit">
           <FilterOne styles={FilterOneVerticalStyles} />
         </aside>
 
