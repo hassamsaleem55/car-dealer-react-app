@@ -5,8 +5,11 @@ import Button from "@elements-dir/button";
 import { type Car } from "../car-card.types";
 import TooltipText from "@components-dir/tooltip";
 import { useDealerContext } from "@core-dir/dealer-provider";
+import { AutoTraderLogo, CarGuruLogo } from "@core-dir/svgs";
+import useCarGurusBadge from "@core-dir/hooks/useCarGurusBadge";
 
 function CarCard({ car, styles }: { car: Car; styles: any }) {
+  useCarGurusBadge();
   const { dealerData } = useDealerContext();
   const { setReservationModalOpen, setReservationCarData } = useOutletContext<{
     setReservationModalOpen: (qs: boolean) => void;
@@ -197,7 +200,30 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
 
       {/* Footer */}
       <div className={styles["car-card__footer"]}>
-        <span>Verified Dealer</span>
+        <div className="flex flex-row justify-between items-start w-full">
+          {car.priceIndicator !== "high" &&
+            car.priceIndicator !== "noanalysis" && (
+              <div className="flex flex-col">
+                <span className="text-sm font-semibold capitalize">{`${car.priceIndicator} Price`}</span>
+                <AutoTraderLogo className="w-16" />
+              </div>
+            )}
+          <div className="carGuruContainer ml-auto">
+            <div className="carGuruPricetag" style={{ display: "none" }}>
+              <span
+                id={`cg-price-${car.registrationNo}`}
+                className="text-sm font-semibold capitalize"
+              ></span>
+              <CarGuruLogo className="w-16" />
+              <span
+                className="carGurusPriceText"
+                data-cg-vrn={car.registrationNo}
+                data-cg-price={car.retailPrice.replace(/[^0-9.-]+/g, "")}
+                style={{ display: "none" }}
+              ></span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
