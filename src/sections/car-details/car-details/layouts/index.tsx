@@ -186,9 +186,9 @@ export function CarDetailsOne() {
                 />
               </MotionReveal>
 
-              <MotionReveal preset="slideUp" delay={0.1}>
+              {/* <MotionReveal preset="slideUp" delay={0.1}>
                 <CarOverview specs={carData.specs || []} />
-              </MotionReveal>
+              </MotionReveal> */}
             </aside>
 
             {/* Description */}

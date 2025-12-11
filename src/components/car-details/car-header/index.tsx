@@ -70,26 +70,55 @@ export default function CarHeader({
         )}
       </div>
 
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+        {carData.specs.slice(0, 9).map((spec, idx) => (
+          <div
+            key={idx}
+            className={`bg-transparent rounded-xl border border-primary/30 shadow-xs hover:shadow-sm transition-shadow duration-200 text-center px-2 py-3 ${
+              idx >= 8 ? "hidden md:block" : ""
+            }`}
+          >
+            <h3 className="text-[10px] font-medium text-gray-500 uppercase tracking-wide">
+              {spec.label}
+            </h3>
+            <p className="text-xs font-semibold">{spec.value}</p>
+          </div>
+        ))}
+      </div>
+
       {/* === Pricing === */}
       {carData.pricePerMonth ? (
-        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 md:gap-12">
-          <div className="flex-1 md:flex-none space-y-1 text-center md:text-left">
+        <div className="flex flex-col md:flex-row items-stretch md:items-center justify-center gap-4 md:gap-12 py-4">
+          <div
+            onClick={() => {
+              const financeSection = document.getElementById(
+                "codeweaver-finance-section"
+              );
+              if (financeSection) {
+                financeSection.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+                });
+              }
+            }}
+            className="flex-1 md:flex-none space-y-1 text-center md:text-left cursor-pointer"
+          >
             <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wide">
               Finance from
             </p>
-            <p className="text-xl md:text-2xl font-bold text-primary">
+            <p className="text-3xl md:text-3xl font-bold text-primary">
               {carData.pricePerMonth}
               <span className="text-xs font-medium text-gray-500 ml-1">
                 /mo
               </span>
             </p>
           </div>
-          <div className="h-px md:h-12 w-full md:w-px bg-gray-200"></div>
+          <div className="h-px md:h-12 w-full md:w-px bg-gray-100 md:bg-gray-300"></div>
           <div className="flex-1 md:flex-none space-y-1 text-center md:text-left">
             <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wide">
               Cash Price
             </p>
-            <p className="text-xl md:text-2xl font-bold">
+            <p className="text-3xl md:text-2xl font-bold">
               {carData.retailPrice}
             </p>
           </div>
