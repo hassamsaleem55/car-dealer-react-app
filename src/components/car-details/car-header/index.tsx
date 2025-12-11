@@ -74,7 +74,7 @@ export default function CarHeader({
         {carData.specs.slice(0, 9).map((spec, idx) => (
           <div
             key={idx}
-            className={`bg-transparent rounded-xl border border-primary/30 shadow-xs hover:shadow-sm transition-shadow duration-200 text-center px-2 py-3 ${
+            className={`bg-transparent rounded-xl border border-primary/30 shadow-sm hover:shadow-md transition-shadow duration-200 text-center px-2 py-3 ${
               idx >= 8 ? "hidden md:block" : ""
             }`}
           >
