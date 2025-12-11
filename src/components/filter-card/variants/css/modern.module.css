@@ -24,9 +24,5 @@
 }
 
 .filter-card:hover .filter-card-title  {
-  @apply top-1.5 left-1.5 rounded-tl-2xl;
-}
-
-.filter-card:hover .filter-card-title {
-  @apply bg-primary/75 text-white;
+  @apply top-1.5 left-1.5 bg-primary/75 text-white rounded-none rounded-tl-2xl rounded-br-lg;
 }
