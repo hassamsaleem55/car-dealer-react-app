@@ -6,7 +6,7 @@
 
 /* Root card */
 .car-card {
-  @apply w-auto h-auto pb-4 min-h-120 md:min-h-120 rounded-2xl border border-gray-200 bg-white 
+  @apply w-auto h-157 md:h-125 pb-4 rounded-2xl border border-gray-200 bg-white 
          transition-all duration-300 ease-in-out relative shadow-2xl md:shadow-md;
 }
 
