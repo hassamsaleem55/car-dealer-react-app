@@ -98,7 +98,7 @@
 }
 
 .navbar-link {
-  @apply text-sm md:text-base py-2 md:py-4 border-t-2 border-transparent 
+  @apply text-sm md:text-base py-2 border-t-2 border-transparent 
          transition-colors duration-150 hover:text-primary hover:border-primary;
 }
 

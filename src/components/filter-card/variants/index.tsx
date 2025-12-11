@@ -8,7 +8,7 @@ export function FilterCardSimple({ type, filterKey, item }: FilterCardProps) {
     <Link
       to={`/stock?${filterKey.toLowerCase()}=${item.name.toLowerCase()}`}
       key={item.id}
-      className={`${SimpleStyles["filter-card"]} group`}
+      className={`${SimpleStyles["filter-card"]}`}
     >
       {type === "image" ? (
         <img alt={item.name} src={item.media} />
@@ -37,7 +37,7 @@ export function FilterCardModern({ filterKey, item }: FilterCardProps) {
     <Link
       to={`/stock?${filterKey.toLowerCase()}=${item.name.toLowerCase()}`}
       key={item.id}
-      className={`${ModernStyles["filter-card"]} group`}
+      className={`${ModernStyles["filter-card"]}`}
     >
       <img src={item.media} alt={item.name} loading="lazy" />
       <h3 className={ModernStyles["filter-card-title"]}>{item.name}</h3>

@@ -28,19 +28,22 @@ export function transformFilterData(data: RawData): FilterCategory[] {
   };
 
   const filters: FilterCategory[] = [
-    { category: "Make", ...makeOptions(data.makes, data.makeCounts) },
-    { category: "Model", ...makeOptions(data.models, data.modelCounts) },
+    { filterName: "Make", filterKey: "make", ...makeOptions(data.makes, data.makeCounts) },
+    { filterName: "Model", filterKey: "model", ...makeOptions(data.models, data.modelCounts) },
     {
-      category: "Fuel Type",
+      filterName: "Fuel Type",
+      filterKey: "fueltype",  
       ...makeOptions(data.fuelTypes, data.fuelTypeCounts),
     },
     {
-      category: "Transmission",
+      filterName: "Transmission",
+      filterKey: "transmission",
       ...makeOptions(data.transmissions, data.transmissionCounts),
     },
-    { category: "Color", ...makeOptions(data.colours, data.colourCounts) },
+    { filterName: "Color", filterKey: "color", ...makeOptions(data.colours, data.colourCounts) },
     {
-      category: "Body Type",
+      filterName: "Body Type",
+      filterKey: "bodytype",
       ...makeOptions(data.bodyTypes, data.bodyTypeCounts),
     },
   ];

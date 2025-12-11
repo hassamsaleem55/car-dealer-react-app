@@ -23,7 +23,8 @@ export interface FilterOption {
 
 // Define transformed category structure
 export interface FilterCategory {
-  category: string;
+  filterName: string;
+  filterKey: string;
   total: number;
   options: FilterOption[];
 }

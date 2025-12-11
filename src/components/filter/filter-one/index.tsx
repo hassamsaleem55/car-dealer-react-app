@@ -28,16 +28,16 @@ function FilterOne({ styles }: { styles: any }) {
     filtersFirstLoad: boolean;
   }>();
   const isStockPage = location.pathname.toLowerCase().startsWith("/stock");
-  const getSelectedFromQuery = (category: string) => {
+  const getSelectedFromQuery = (filterKey: string) => {
     const params = new URLSearchParams(location.search);
-    const cat = category.toLowerCase();
+    const cat = filterKey.toLowerCase();
     const selectedParams = params.getAll(cat).map((v) => v.toLowerCase());
     return selectedParams;
   };
 
-  const handleFilterChange = (category: string, selectedValues: string[]) => {
+  const handleFilterChange = (filterKey: string, selectedValues: string[]) => {
     const params = new URLSearchParams(queryString);
-    const cat = category.toLowerCase();
+    const cat = filterKey.toLowerCase();
 
     params.delete(cat);
     selectedValues.forEach((value) => params.append(cat, value.toLowerCase()));
@@ -75,19 +75,19 @@ function FilterOne({ styles }: { styles: any }) {
               </div>
             )}
 
-            {filtersData.map(({ category, options, total }) => (
+            {filtersData.map(({ filterName, filterKey, options, total }) => (
               <DropdownFlexible
-                key={category}
-                category={`${category} ${isStockPage ? `(${total})` : ""}`}
+                key={filterKey}
+                category={`${filterName} ${isStockPage ? `(${total})` : ""}`}
                 options={options}
                 onChange={(values: string[]) =>
-                  handleFilterChange(category, values)
+                  handleFilterChange(filterKey, values)
                 }
                 multiSelect
                 searchable={isStockPage}
                 showTags={isStockPage}
                 loading={filtersLoading && !filtersFirstLoad}
-                defaultValue={getSelectedFromQuery(category)}
+                defaultValue={getSelectedFromQuery(filterKey)}
               />
             ))}
 

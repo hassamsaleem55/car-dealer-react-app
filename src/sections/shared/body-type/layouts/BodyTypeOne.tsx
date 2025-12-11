@@ -25,7 +25,7 @@ export default function BodyTypeOne({ heading }: { heading: string }) {
         }}
         renderItem={(item, index) => (
           <MotionReveal preset="slideUp" delay={index * 0.1}>
-            <FilterCardModern filterKey="body-type" item={item} />
+            <FilterCardModern filterKey="bodytype" item={item} />
           </MotionReveal>
         )}
       />

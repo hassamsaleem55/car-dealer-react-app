@@ -1,5 +1,35 @@
 import { useState, useRef, useEffect } from "react";
 
+// Convert markdown-style text to HTML
+function parseMarkdown(text: string): string {
+  let html = text;
+
+  // Bold text: **text** or __text__
+  html = html.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  html = html.replace(/__(.+?)__/g, "<strong>$1</strong>");
+
+  // Italic text: *text* or _text_
+  html = html.replace(/\*(.+?)\*/g, "<em>$1</em>");
+  html = html.replace(/_(.+?)_/g, "<em>$1</em>");
+
+  // Bullet points: * item or - item at start of line
+  html = html.replace(/^[\*\-]\s+(.+)$/gm, "<li>$1</li>");
+
+  // Wrap consecutive <li> elements in <ul>
+  html = html.replace(/(<li>.*<\/li>\n?)+/gs, (match) => `<ul>${match}</ul>`);
+
+  // Line breaks
+  html = html.replace(/\n\n/g, "</p><p>");
+  html = html.replace(/\n/g, "<br />");
+
+  // Wrap in paragraph if not already wrapped
+  if (!html.startsWith("<")) {
+    html = `<p>${html}</p>`;
+  }
+
+  return html;
+}
+
 export default function CarDescription({
   description,
 }: {
@@ -8,7 +38,7 @@ export default function CarDescription({
   const [expanded, setExpanded] = useState(false);
   const [isClamped, setIsClamped] = useState(false);
   const [collapsedHeight, setCollapsedHeight] = useState<number>(0);
-  const textRef = useRef<HTMLParagraphElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = textRef.current;
@@ -43,9 +73,17 @@ export default function CarDescription({
             : `${collapsedHeight}px`,
         }}
       >
-        <p ref={textRef} className="text-sm md:text-base leading-relaxed">
+        {/* <p ref={textRef} className="text-sm md:text-base leading-relaxed">
           {description}
-        </p>
+        </p> */}
+
+        <div
+          ref={textRef}
+          className="text-sm md:text-base leading-relaxed prose prose-sm md:prose-base max-w-none
+            [&>p]:mb-4 [&>ul]:list-disc [&>ul]:ml-6 [&>ul]:mb-4 [&>ul]:space-y-2
+            [&>strong]:font-semibold [&>strong]:text-gray-900"
+          dangerouslySetInnerHTML={{ __html: parseMarkdown(description) }}
+        />
       </div>
 
       {/* Gradient fade for collapsed state */}
