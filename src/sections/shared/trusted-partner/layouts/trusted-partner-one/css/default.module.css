@@ -4,53 +4,41 @@
 @reference "tailwindcss";
 @import "@dealers-dir/style.css";
 
-/* Scroll Wrapper: hides overflow */
-.trusted-partner-scroll-wrapper {
-  @apply overflow-hidden relative rounded-full mb-16;
+.trusted-partner-wrapper {
+  @apply overflow-hidden relative mb-12;
 }
 
-/* Scroll Row: infinite horizontal loop */
-.trusted-partner-scroll {
-  @apply flex items-center gap-6 sm:gap-8 md:gap-10;
-  width: max-content;
-  animation: scroll-left 25s linear infinite;
-  will-change: transform;
+.trusted-partner-container {
+  @apply flex flex-wrap justify-center w-full items-center gap-8;
 }
 
 .trusted-partner-card {
-  @apply bg-white flex items-center justify-center
-         px-6 sm:px-8
-         rounded-full w-full h-[90px] sm:h-[110px]
+  @apply flex items-center justify-center w-auto min-w-45 px-10
+         h-[85px] sm:h-[95px] md:h-[105px]
          transition-all duration-500 
-         /* ease-[cubic-bezier(0.4,0,0.2,1)] */
-         ease-in-out
-         hover:shadow-xl hover:scale-[1.03] cursor-default;
+         ease-out
+         cursor-pointer
+         relative
+         shrink-0;
+}
+
+.trusted-partner-card::before {
+  @apply absolute inset-0 bg-linear-to-br from-primary/0 to-primary/0
+         transition-all duration-500 ease-out opacity-0
+         content-[''];
+}
+
+.trusted-partner-card:hover::before {
+  @apply rounded-full from-primary/5 to-primary/10 opacity-100;
 }
 
 .trusted-partner-card__image {
-  @apply object-contain max-h-[60px] sm:max-h-[70px] md:max-h-20
-         w-auto mx-auto transition-all duration-300 ease-in-out;
-  @apply opacity-70 group-hover:opacity-100;
+  @apply object-contain max-h-[55px] sm:max-h-[65px] md:max-h-[75px]
+         w-auto mx-auto transition-all duration-500 ease-out
+         grayscale opacity-60
+         relative z-10;
 }
 
-/* Animation */
-@keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-/* Mobile Responsiveness Tweaks */
-@media (max-width: 640px) {
-  .trusted-partner-scroll {
-    animation-duration: 35s; /* slower for smaller screens */
-    gap: 1.5rem;
-  }
-}
-
-.trusted-partner-scroll:hover {
-  animation-play-state: paused;
+.trusted-partner-card:hover .trusted-partner-card__image {
+  @apply grayscale-0 opacity-100 scale-105;
 }

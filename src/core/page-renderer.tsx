@@ -17,17 +17,19 @@ const sectionModules = import.meta.glob("../sections/**/variants/index.tsx");
 
 export default function PageRenderer({ page }: { page: DealerPageKeys }) {
   const { dealerData } = useDealerContext();
-  
+
   const filteredSections = useMemo(
     () =>
       page.sections?.filter((section: DealerSectionKeys) => {
         // Exclude finance page if dealer has FCANumber
         if (
           section.folderName === "trusted-partner" &&
-          !dealerData.FCANumber
-        ) {
+          !dealerData.FCANumber &&
+          dealerData.dealerData.CompanyFinanceDetails.FinanceCompanies
+            .length === 0
+        )
           return false;
-        }
+        else if (section.folderName === "ready-set-sold") return false;
         return true;
       }) || [],
     [page.sections, dealerData.FCANumber]

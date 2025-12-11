@@ -1,6 +1,7 @@
+import { trustedPartners } from "@core-dir/services/TrustedPartner.service";
+// import { useDealerContext } from "@core-dir/dealer-provider";
 import SectionLayoutOne from "@app-layout-dir/sections/section-layout-one";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
-import { trustedPartners } from "@core-dir/services/TrustedPartner.service";
 import sectionStyles from "@app-layout-dir/sections/section-layout-one/css/centered.module.css";
 
 export default function TrustedPartnerOne({
@@ -12,26 +13,34 @@ export default function TrustedPartnerOne({
   subHeading: string;
   styles: any;
 }) {
+  // const { dealerData } = useDealerContext();
+  // const imageRootPath = "../images/finance-logos/";
+
   return (
     <SectionLayoutOne
       headingText={heading}
       subHeadingText={subHeading}
       styles={sectionStyles}
     >
-      <MotionReveal className={styles["trusted-partner-scroll-wrapper"]}>
-        <div className={styles["trusted-partner-scroll"]}>
-          {trustedPartners.concat(trustedPartners).map((item, index) => (
-            <div key={index} className={styles["trusted-partner-card"]}>
-              <img
-                src={item.image}
-                alt={item.name}
-                className={styles["trusted-partner-card__image"]}
-                loading="lazy"
-              />
-            </div>
-          ))}
-        </div>
-      </MotionReveal>
+      <div className={styles["trusted-partner-wrapper"]}>
+        <MotionReveal>
+          <div className={styles["trusted-partner-container"]}>
+            {trustedPartners.map((item, index) => (
+              <div
+                key={`${item}-${index}`}
+                className={`${styles["trusted-partner-card"]}`}
+              >
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className={styles["trusted-partner-card__image"]}
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </MotionReveal>
+      </div>
     </SectionLayoutOne>
   );
 }
