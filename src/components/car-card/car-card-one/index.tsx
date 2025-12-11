@@ -6,7 +6,6 @@ import { type Car } from "../car-card.types";
 import TooltipText from "@components-dir/tooltip";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import { AutoTraderLogo, CarGuruLogo } from "@core-dir/svgs";
-// import { AutoTraderLogo } from "@core-dir/svgs";
 import useCarGurusBadge from "@core-dir/hooks/useCarGurusBadge";
 
 function CarCard({ car, styles }: { car: Car; styles: any }) {
@@ -199,35 +198,32 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
         </div> */}
       </div>
 
-      {/* {car.priceIndicator !== "high" && car.priceIndicator !== "noanalysis" && ( */}
-        <div className={styles["car-card__footer"]}>
-          <div className="flex flex-row justify-between items-start w-full">
-            {car.priceIndicator !== "high" &&
-              car.priceIndicator !== "noanalysis" && (
-                <div className="flex flex-col">
-                  <span className="text-sm font-semibold capitalize">{`${car.priceIndicator} Price`}</span>
-                  <AutoTraderLogo className="w-16" />
-                </div>
-              )}
-            <div className="carGuruContainer ml-auto">
-              <div className="carGuruPricetag" 
-              // style={{ display: "none" }}
-              >
-                <span
-                  className={`cg-price-${car.registrationNo} text-sm font-semibold capitalize`}
-                ></span>
-                <CarGuruLogo className="w-16" />
-                <span
-                  className="carGurusPriceText"
-                  data-cg-vrn={car.registrationNo}
-                  data-cg-price={car.retailPrice.replace(/[^0-9.-]+/g, "")}
-                  style={{ display: "none" }}
-                ></span>
+      {/* Footer */}
+      <div className={styles["car-card__footer"]}>
+        <div className="flex flex-row justify-between items-start w-full">
+          {car.priceIndicator !== "high" &&
+            car.priceIndicator !== "noanalysis" && (
+              <div className="flex flex-col">
+                <span className="text-sm font-semibold capitalize">{`${car.priceIndicator} Price`}</span>
+                <AutoTraderLogo className="w-16" />
               </div>
+            )}
+          <div className="carGuruContainer ml-auto">
+            <div className="carGuruPricetag" style={{ display: "none" }}>
+              <span
+                className={`cg-price-${car.registrationNo} text-sm font-semibold capitalize`}
+              ></span>
+              <CarGuruLogo className="w-16" />
+              <span
+                className="carGurusPriceText"
+                data-cg-vrn={car.registrationNo}
+                data-cg-price={car.retailPrice.replace(/[^0-9.-]+/g, "")}
+                style={{ display: "none" }}
+              ></span>
             </div>
           </div>
         </div>
-      {/* )} */}
+      </div>
     </div>
   );
 }
