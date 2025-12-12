@@ -178,18 +178,16 @@ export function StockListingOne() {
             showFilters ? "translate-y-0" : "translate-y-full"
           }`}
         >
-          {/* <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center z-10 shadow-sm">
-            <h3 className="text-lg font-semibold">Filters</h3>
+          <div className="sticky top-0 flex justify-end z-10 mb-4">
             <button
               onClick={() => setShowFilters(false)}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-all duration-200 hover:scale-110 active:scale-95"
+              className="px-2 py-2 bg-primary text-white rounded-bl-xl shadow-2xl"
+              aria-label="Close filters"
             >
-              <X size={20} className="transition-transform duration-200" />
+              <X size={18} />
             </button>
-          </div> */}
-          {/* <div className="p-4"> */}
+          </div>
           <FilterOne styles={FilterOneVerticalStyles} />
-          {/* </div> */}
         </div>
       </div>
 
@@ -276,23 +274,23 @@ export function StockListingOne() {
 
           {/* === Car Listing Grid === */}
           {/* <div className="md:bg-white md:rounded-2xl md:shadow-sm md:border md:border-gray-100 md:p-5"> */}
-            {loading ? (
-              <div className="flex items-center justify-center h-[60vh]">
-                <DotLoader size="lg" />
-              </div>
-            ) : carData.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                {carData.map((item, index) => (
-                  <MotionReveal key={item.id ?? index} preset="slideLeft">
-                    <CarCardOne car={item} styles={CarCardStyles} />
-                  </MotionReveal>
-                ))}
-              </div>
-            ) : (
-              <div className="flex items-center justify-center h-[40vh] text-gray-500 text-base">
-                No cars found matching your filters.
-              </div>
-            )}
+          {loading ? (
+            <div className="flex items-center justify-center h-[60vh]">
+              <DotLoader size="lg" />
+            </div>
+          ) : carData.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+              {carData.map((item, index) => (
+                <MotionReveal key={item.id ?? index} preset="slideLeft">
+                  <CarCardOne car={item} styles={CarCardStyles} />
+                </MotionReveal>
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center h-[40vh] text-gray-500 text-base">
+              No cars found matching your filters.
+            </div>
+          )}
           {/* </div> */}
         </section>
       </div>

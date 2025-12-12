@@ -16,7 +16,7 @@
   html,
   body,
   #root {
-    @apply overflow-x-clip max-w-full scroll-smooth;
+    @apply overflow-x-clip max-w-full scroll-smooth ;
   }
 
   html {
@@ -24,7 +24,7 @@
   }
 
   body {
-    @apply m-0 p-0 text-gray-900 bg-gray-100 leading-relaxed font-inter;
+    @apply m-0 p-0 text-gray-900 bg-gray-100 leading-relaxed font-urbanist;
   }
 
   * {
