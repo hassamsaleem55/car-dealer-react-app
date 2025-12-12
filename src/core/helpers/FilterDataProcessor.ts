@@ -5,7 +5,6 @@ import {
 } from "@components-dir/filter/filter.types";
 
 export function transformFilterData(data: RawData): FilterCategory[] {
-  
   const toTitleCase = (str: string) =>
     str
       .toLowerCase()
@@ -28,11 +27,24 @@ export function transformFilterData(data: RawData): FilterCategory[] {
   };
 
   const filters: FilterCategory[] = [
-    { filterName: "Make", filterKey: "make", ...makeOptions(data.makes, data.makeCounts) },
-    { filterName: "Model", filterKey: "model", ...makeOptions(data.models, data.modelCounts) },
+    {
+      filterName: "Make",
+      filterKey: "make",
+      ...makeOptions(data.makes, data.makeCounts),
+    },
+    {
+      filterName: "Model",
+      filterKey: "model",
+      ...makeOptions(data.models, data.modelCounts),
+    },
+    {
+      filterName: "Body Type",
+      filterKey: "bodytype",
+      ...makeOptions(data.bodyTypes, data.bodyTypeCounts),
+    },
     {
       filterName: "Fuel Type",
-      filterKey: "fueltype",  
+      filterKey: "fueltype",
       ...makeOptions(data.fuelTypes, data.fuelTypeCounts),
     },
     {
@@ -40,11 +52,10 @@ export function transformFilterData(data: RawData): FilterCategory[] {
       filterKey: "transmission",
       ...makeOptions(data.transmissions, data.transmissionCounts),
     },
-    { filterName: "Color", filterKey: "color", ...makeOptions(data.colours, data.colourCounts) },
     {
-      filterName: "Body Type",
-      filterKey: "bodytype",
-      ...makeOptions(data.bodyTypes, data.bodyTypeCounts),
+      filterName: "Colour",
+      filterKey: "colour",
+      ...makeOptions(data.colours, data.colourCounts),
     },
   ];
 
