@@ -2,7 +2,7 @@ import { memo } from "react";
 import {
   Link,
   useOutletContext,
-  useNavigate,
+  // useNavigate,
   useLocation,
 } from "react-router-dom";
 import { Search } from "lucide-react";
@@ -11,7 +11,7 @@ import DotLoader from "@components-dir/loader";
 import Button from "@elements-dir/button";
 
 function FilterOne({ styles }: { styles: any }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const location = useLocation();
 
   const {
@@ -45,14 +45,14 @@ function FilterOne({ styles }: { styles: any }) {
     const updatedQueryString = params.toString();
     setQueryString(updatedQueryString);
 
-    if (location.pathname.startsWith("/stock")) {
-      const newUrl = `/stock${
-        updatedQueryString ? `?${updatedQueryString}` : ""
-      }`;
-      if (location.pathname + location.search !== newUrl) {
-        navigate(newUrl, { replace: true });
-      }
-    }
+    // if (location.pathname.startsWith("/stock")) {
+    //   const newUrl = `/stock${
+    //     updatedQueryString ? `?${updatedQueryString}` : ""
+    //   }`;
+    //   if (location.pathname + location.search !== newUrl) {
+    //     navigate(newUrl, { replace: true });
+    //   }
+    // }
   };
 
   return (
@@ -69,9 +69,9 @@ function FilterOne({ styles }: { styles: any }) {
                 <div className="grow text-lg font-semibold">
                   <h2>Filters</h2>
                 </div>
-                {/* <div className="flex-1 text-right cursor-pointer text-primary text-xs">
+                <div className="flex-1 text-right cursor-pointer text-primary text-xs">
                   <h3>Reset All</h3>
-                </div> */}
+                </div>
               </div>
             )}
 
@@ -91,15 +91,29 @@ function FilterOne({ styles }: { styles: any }) {
               />
             ))}
 
-            {!location.pathname.startsWith("/stock") && (
-              <Link to={`/stock${queryString ? `?${queryString}` : ""}`}>
-                <Button
-                  variant="primary"
-                  // btnText="Search Car"
-                  btnIcon={<Search className="w-5 h-5" />}
-                />
-              </Link>
-            )}
+            {/* {!location.pathname.startsWith("/stock") && ( */}
+            <Link
+              to={`/stock${queryString ? `?${queryString}` : ""}`}
+              className="hidden md:block"
+            >
+              <Button
+                variant="primary"
+                btnText={isStockPage ? "View Cars" : ""}
+                btnIcon={<Search className="w-5 h-5" />}
+              />
+            </Link>
+
+            <Link
+              to={`/stock${queryString ? `?${queryString}` : ""}`}
+              className="block md:hidden"
+            >
+              <Button
+                variant="primary"
+                btnText="View Cars"
+                btnIcon={<Search className="w-5 h-5" />}
+              />
+            </Link>
+            {/* )} */}
           </>
         )}
       </div>

@@ -48,9 +48,9 @@ export default function PagesContentOne({
         </div>
 
         {/* === Video Section === */}
-        <div className={`${isLeft ? "order-2" : "order-1"}`}>
+        <div className={`${isLeft ? "order-1 md:order-2" : "order-2 md:order-1"}`}>
           {mediaLinks.urls.length > 0 && (
-            <div className="w-full rounded-xl overflow-hidden shadow-lg">
+            <div className="w-full h-full rounded-xl overflow-hidden shadow-lg">
               {mediaLinks.type === "image" ? (
                 <img
                   className="w-full h-full"
