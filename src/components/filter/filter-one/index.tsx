@@ -10,7 +10,13 @@ import DropdownFlexible from "@elements-dir/dropdown";
 import DotLoader from "@components-dir/loader";
 import Button from "@elements-dir/button";
 
-function FilterOne({ styles }: { styles: any }) {
+function FilterOne({
+  setShowFilters,
+  styles,
+}: {
+  setShowFilters?: (show: boolean) => void;
+  styles: any;
+}) {
   // const navigate = useNavigate();
   const location = useLocation();
 
@@ -108,6 +114,7 @@ function FilterOne({ styles }: { styles: any }) {
               className="block md:hidden"
             >
               <Button
+              clickEvent={() => setShowFilters && setShowFilters(false)}
                 variant="primary"
                 btnText="View Cars"
                 btnIcon={<Search className="w-5 h-5" />}

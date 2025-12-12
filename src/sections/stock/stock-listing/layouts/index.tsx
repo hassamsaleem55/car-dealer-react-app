@@ -187,7 +187,7 @@ export function StockListingOne() {
               <X size={18} />
             </button>
           </div>
-          <FilterOne styles={FilterOneVerticalStyles} />
+          <FilterOne setShowFilters={setShowFilters} styles={FilterOneVerticalStyles} />
         </div>
       </div>
 
