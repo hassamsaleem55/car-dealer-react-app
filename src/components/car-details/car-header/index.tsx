@@ -23,7 +23,7 @@ export default function CarHeader({
   // isFavorite: boolean;
   // toggleFavorite: () => void;
 }) {
-  const { dealerData } = useDealerContext();
+  const {dealerConfig, dealerData } = useDealerContext();
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
   const { setReservationModalOpen } = useOutletContext<{
     setReservationModalOpen: (qs: boolean) => void;
@@ -33,7 +33,7 @@ export default function CarHeader({
   >("");
 
   const hasAutoTraderRating = isValidRating(carData.autoTraderRating);
-  const hasCarGuruRating = isValidRating(carData.carGuruRating);
+  const hasCarGuruRating = dealerConfig.dealer.isCarGuruRatingEnabled && isValidRating(carData.carGuruRating);
   const showRatingFooter = hasAutoTraderRating || hasCarGuruRating;
   return (
     <header className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 space-y-4">

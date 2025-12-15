@@ -16,7 +16,7 @@ const isValidRating = (rating: string | undefined): boolean => {
 
 function CarCard({ car, styles }: { car: Car; styles: any }) {
   // useCarGurusBadge();
-  const { dealerData } = useDealerContext();
+  const { dealerConfig, dealerData } = useDealerContext();
   const { setReservationModalOpen, setReservationCarData } = useOutletContext<{
     setReservationModalOpen: (qs: boolean) => void;
     setReservationCarData: (data: Car) => void;
@@ -37,7 +37,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
   } = car;
 
   const hasAutoTraderRating = isValidRating(autoTraderRating);
-  const hasCarGuruRating = isValidRating(carGuruRating);
+  const hasCarGuruRating = dealerConfig.dealer.isCarGuruRatingEnabled && isValidRating(carGuruRating);
   const showRatingFooter = hasAutoTraderRating || hasCarGuruRating;
 
   // const handleSecondaryAction = () => {

@@ -4,11 +4,12 @@ export interface DealerConfig {
     name: string;
     tagline: string;
     description: string;
+    isCarGuruRatingEnabled: boolean;
     checkReCheckList: string[];
   };
   navbar: string;
   footer: string;
-  pages: DealerPageKeys[];
+  pages: BaseDealerPage[];
 }
 
 interface BaseDealerPage {
@@ -20,31 +21,6 @@ interface BaseDealerPage {
   showInNavbar: boolean;
   sections?: DealerSectionKeys[];
 }
-
-/** Parent page with submenu */
-interface DealerPageWithSubmenu extends BaseDealerPage {
-  hasSubmenu: true;
-  path: null; // parent pages do not have paths
-  submenuItems: DealerPageChild[];
-}
-
-/** Submenu child page (clickable items) */
-interface DealerPageChild extends BaseDealerPage {
-  hasSubmenu?: false;
-  path: string; // submenu children always have a valid path
-  submenuItems?: never; // prevents accidental recursion
-}
-
-/** Normal standalone page */
-interface DealerPageStandalone extends BaseDealerPage {
-  hasSubmenu?: false;
-  submenuItems?: never;
-}
-
-export type DealerPageKeys =
-  | DealerPageWithSubmenu
-  | DealerPageChild
-  | DealerPageStandalone;
 
 export interface DealerSectionKeys {
   isShared: boolean;

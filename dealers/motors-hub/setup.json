@@ -4,6 +4,7 @@
     "name": "Motors Hub",
     "tagline": "Your Trusted Car Dealership",
     "description": "Your trusted car dealership offering new and pre-owned vehicles with professional service and financing options.",
+    "isCarGuruRatingEnabled": true,
     "checkReCheckList": [
       "HPI Check",
       "Interior",
@@ -27,9 +28,6 @@
   "footer": "FooterDefault",
   "pages": [
     {
-      "isSubmenu": false,
-      "mainMenuText": null,
-      "subMenuText": null,
       "pageName": "home",
       "label": "Home",
       "title": "Home - Motors Hub",
