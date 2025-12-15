@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import type {
-  DealerPageKeys,
+  BaseDealerPage,
   DealerSectionKeys,
 } from "@types-dir/dealer-props";
 import { useDealerContext } from "@core-dir/dealer-provider";
@@ -15,7 +15,7 @@ import {
 
 const sectionModules = import.meta.glob("../sections/**/variants/index.tsx");
 
-export default function PageRenderer({ page }: { page: DealerPageKeys }) {
+export default function PageRenderer({ page }: { page: BaseDealerPage }) {
   const { dealerData } = useDealerContext();
 
   const filteredSections = useMemo(

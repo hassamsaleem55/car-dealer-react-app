@@ -10,7 +10,7 @@ import Button from "@elements-dir/button";
 import { Link } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import { getCompanyOpeningHours } from "@core-dir/helpers/CompanyInfoProcessor";
-import type { DealerPageKeys } from "@types-dir/dealer-props";
+import type { BaseDealerPage } from "@types-dir/dealer-props";
 
 export default function Footer({ styles }: { styles: any }) {
   const { dealerConfig, dealerData } = useDealerContext();
@@ -89,7 +89,7 @@ export default function Footer({ styles }: { styles: any }) {
           <h4 className={styles["footer__subtitle"]}>Quick Links</h4>
           <ul className={styles["footer__links"]}>
             {dealerConfig.pages.map(
-              (page: DealerPageKeys) =>
+              (page: BaseDealerPage) =>
                 page.showInNavbar && (
                   <li
                     key={page.pageName}

@@ -75,9 +75,9 @@ function FilterOne({
                 <div className="grow text-lg font-semibold">
                   <h2>Filters</h2>
                 </div>
-                <div className="flex-1 text-right cursor-pointer text-primary text-xs">
+                {/* <div className="flex-1 text-right cursor-pointer text-primary text-xs">
                   <h3>Reset All</h3>
-                </div>
+                </div> */}
               </div>
             )}
 

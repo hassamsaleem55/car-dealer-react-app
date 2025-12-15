@@ -3,13 +3,12 @@ import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import Button from "@elements-dir/button";
 import { useDealerContext } from "@core-dir/dealer-provider";
-import type { DealerPageKeys } from "@types-dir/dealer-props";
+import type { BaseDealerPage } from "@types-dir/dealer-props";
 
 export default function index({ styles }: { styles: any }) {
   const { dealerConfig, dealerData } = useDealerContext();
   const location = useLocation();
   const [open, setOpen] = useState(false);
-  const [openSubMenu, setOpenSubMenu] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [logoUrl, setLogoUrl] = useState<string>("");
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -129,51 +128,19 @@ export default function index({ styles }: { styles: any }) {
           aria-label="Main navigation"
         >
           {dealerConfig.pages.map(
-            (page: DealerPageKeys) =>
+            (page: BaseDealerPage) =>
               page.showInNavbar &&
               page.pageName !== "contact" &&
               !(page.pageName === "finance" && !dealerData.FCANumber) && (
-                <li
-                  key={page.pageName}
-                  className={styles["menu-item"]}
-                  role="none"
-                  onMouseEnter={() =>
-                    page.hasSubmenu && setOpenSubMenu(page.pageName)
-                  }
-                  onMouseLeave={() => page.hasSubmenu && setOpenSubMenu(null)}
-                >
+                <li key={page.pageName} className={styles["menu-item"]}>
                   <Link
                     to={page.path || "#"}
                     className={`${styles["navbar-link"]} 
                   ${location.pathname === page.path ? styles["active"] : ""}
                 `}
-                    role="menuitem"
-                    aria-haspopup={!!page.hasSubmenu}
-                    aria-expanded={openSubMenu === page.pageName}
                   >
                     {page.label}
                   </Link>
-
-                  {/* --- SUBMENU --- */}
-                  {page.hasSubmenu && openSubMenu === page.pageName && (
-                    <ul
-                      className={styles["submenu"]}
-                      role="menu"
-                      aria-label={`${page.label} submenu`}
-                    >
-                      {page.submenuItems?.map((sub: any, idx) => (
-                        <li key={idx} role="none">
-                          <Link
-                            to={sub.path}
-                            className={styles["submenu-link"]}
-                            role="menuitem"
-                          >
-                            {sub.subMenuText}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
                 </li>
               )
           )}
@@ -229,7 +196,7 @@ export default function index({ styles }: { styles: any }) {
           >
             <ul className={styles["navbar-mobile__menu-panel"]}>
               {dealerConfig.pages.map(
-                (page: DealerPageKeys) =>
+                (page: BaseDealerPage) =>
                   page.showInNavbar &&
                   page.pageName !== "contact" &&
                   !(page.pageName === "finance" && !dealerData.FCANumber) && (
@@ -242,9 +209,6 @@ export default function index({ styles }: { styles: any }) {
                             ? styles["active"]
                             : ""
                         }`}
-                        role="menuitem"
-                        aria-haspopup={!!page.hasSubmenu}
-                        aria-expanded={openSubMenu === page.pageName}
                       >
                         {page.label}
                       </Link>

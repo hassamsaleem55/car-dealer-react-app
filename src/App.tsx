@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { DealerProvider, useDealerContext } from "@core-dir/dealer-provider";
 import PageRenderer from "@core-dir/page-renderer";
 import Layout from "./Layout";
-import { type DealerPageKeys } from "@types-dir/dealer-props";
+import { type BaseDealerPage } from "@types-dir/dealer-props";
 import PaymentResponse from "./sections/PaymentResponse";
 
 function AppRouter() {
@@ -12,17 +12,17 @@ function AppRouter() {
   const router = useMemo(() => {
     if (!dealerConfig?.pages || !dealerData) return null;
     
-    const pages: DealerPageKeys[] = dealerConfig.pages;
+    const pages: BaseDealerPage[] = dealerConfig.pages;
 
     const childRoutes: any = pages
-      .filter((page: DealerPageKeys) => {
+      .filter((page: BaseDealerPage) => {
         // Exclude finance page if dealer has FCANumber
         if (page.pageName === "finance" && !dealerData.FCANumber) {
           return false;
         }
         return true;
       })
-      .map((page: DealerPageKeys) => {
+      .map((page: BaseDealerPage) => {
         const isHome = page.path === "/";
 
         return {

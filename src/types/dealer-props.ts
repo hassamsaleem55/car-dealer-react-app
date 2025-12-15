@@ -12,7 +12,7 @@ export interface DealerConfig {
   pages: BaseDealerPage[];
 }
 
-interface BaseDealerPage {
+export interface BaseDealerPage {
   pageName: string;
   label: string;
   title: string;
