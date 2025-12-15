@@ -1,7 +1,7 @@
 export interface Car {
   stockId: number;
   title: string;
-  registrationNo?: string;
+  registrationNo: string;
   derivative: string | null;
   description: string | null;
   year: number;
@@ -10,6 +10,7 @@ export interface Car {
   pricePerMonth: string | null;
   profilePicture: string;
   isReserved: boolean;
+  attentionGrabber: string;
   autoTraderRating: string;
   carGuruRating: string;
   specs: { label: string; value: string | number }[];

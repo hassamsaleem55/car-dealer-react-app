@@ -55,7 +55,7 @@ export default function PaymentResponse() {
               </button>
               <button
                 onClick={() => navigate("/stock")}
-                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-lg transition-colors"
+                className="w-full bg-gray-100 hover:bg-gray-200 font-medium py-3 px-4 rounded-lg transition-colors"
               >
                 Browse More Vehicles
               </button>
@@ -111,7 +111,7 @@ export default function PaymentResponse() {
             </button>
             <button
               onClick={() => navigate("/stock")}
-              className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-lg transition-colors"
+              className="w-full bg-gray-100 hover:bg-gray-200 font-medium py-3 px-4 rounded-lg transition-colors"
             >
               Browse Other Vehicles
             </button>

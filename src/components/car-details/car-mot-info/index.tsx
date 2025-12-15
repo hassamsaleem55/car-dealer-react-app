@@ -10,14 +10,14 @@ export default function CarMOTInfo({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 mt-4 mb-12 gap-4 md:my-0 md:pb-4">
       <MotionReveal preset="slideRight">
-        <div className="bg-white text-primary rounded-2xl flex flex-col items-center space-y-2 px-4 py-12 border border-gray-100 shadow-xl md:shadow-md group">
+        <div className="bg-white text-primary rounded-2xl flex flex-col items-center space-y-4 px-6 py-12 border border-gray-200 shadow-xl hover:shadow-2xl hover:border-primary/40 transition-all duration-300 group">
           <svg
             width="85"
             height="74"
             viewBox="0 0 85 74"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="group-hover:scale-110 transition-all duration-300 ease-in-out"
+            className="group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 ease-in-out drop-shadow-md"
           >
             <g clipPath="url(#clip0_4641_450)">
               <mask
@@ -81,25 +81,30 @@ export default function CarMOTInfo({
               </clipPath>
             </defs>
           </svg>
-          <div className="text-basicFont text-center">
-            <h2 className="text-2xl md:text-4xl tracking-tighter font-semibold text-balance">
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl md:text-4xl tracking-tight font-bold text-primary">
               MOT Information
             </h2>
-            <p className="text-sm md:text-base">
-              Current MOT Date: {new Date(motDate).toLocaleDateString()}
-            </p>
+            <div className="bg-linear-to-r from-primary/10 to-transparent px-4 py-2 rounded-lg border border-primary/20">
+              <p className="text-sm md:text-base font-semibold">
+                Current MOT Date:{" "}
+                <span className="text-primary font-bold">
+                  {new Date(motDate).toLocaleDateString()}
+                </span>
+              </p>
+            </div>
           </div>
         </div>
       </MotionReveal>
       <MotionReveal preset="slideLeft">
-        <div className="bg-white text-primary rounded-2xl flex flex-col items-center space-y-2 px-4 py-12 border border-gray-100 shadow-2xl md:shadow-md group">
+        <div className="bg-white to-gray-50 text-primary rounded-2xl flex flex-col items-center space-y-4 px-6 py-12 border border-gray-200 shadow-xl hover:shadow-2xl hover:border-primary/40 transition-all duration-300 group">
           <svg
             width="85"
             height="74"
             viewBox="0 0 60 64"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="group-hover:scale-110 transition-all duration-300 ease-in-out"
+            className="group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 ease-in-out drop-shadow-md"
           >
             <g clipPath="url(#clip0_4626_472)">
               <path
@@ -125,14 +130,18 @@ export default function CarMOTInfo({
               </clipPath>
             </defs>
           </svg>
-          <div className="text-basicFont text-center">
-            <h2 className="text-2xl md:text-4xl tracking-tighter font-semibold text-balance">
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl md:text-4xl tracking-tight font-bold text-primary">
               Service History
             </h2>
-            <p className="text-sm md:text-base">
-              Last Service Date:{" "}
-              {new Date(lastServiceDate).toLocaleDateString()}
-            </p>
+            <div className="bg-linear-to-r from-primary/10 to-transparent px-4 py-2 rounded-lg border border-primary/20">
+              <p className="text-sm md:text-base font-semibold">
+                Last Service Date:{" "}
+                <span className="text-primary font-bold">
+                  {new Date(lastServiceDate).toLocaleDateString()}
+                </span>
+              </p>
+            </div>
           </div>
         </div>
       </MotionReveal>

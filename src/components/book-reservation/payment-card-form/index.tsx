@@ -253,7 +253,7 @@ export default function PaymentCardForm({
           <div className="absolute -inset-1 bg-linear-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
 
           {/* Main Card */}
-          <div className="relative w-[400px] h-[260px] bg-linear-to-br from-gray-900 via-gray-800 to-black rounded-2xl shadow-2xl overflow-hidden border border-gray-700/50">
+          <div className="relative w-[400px] h-[260px] bg-linear-to-br from-gray-900 via-gray-800 to-black rounded-2xl shadow-2xl overflow-hidden border border-basicFont/50">
             {/* Premium Background Texture */}
             <div className="absolute inset-0">
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
@@ -355,7 +355,7 @@ export default function PaymentCardForm({
         {/* Cardholder Name */}
         <div className="flex flex-col">
           <label
-            className="mb-2 text-sm font-medium text-gray-700"
+            className="mb-2 text-sm font-medium"
             htmlFor="cardholdername"
           >
             Cardholder Name <span className="text-red-500">*</span>
@@ -376,7 +376,7 @@ export default function PaymentCardForm({
 
         {/* Stripe Card Element */}
         <div className="flex flex-col">
-          <label className="mb-2 text-sm font-medium text-gray-700">
+          <label className="mb-2 text-sm font-medium">
             Card Details <span className="text-red-500">*</span>
           </label>
           <div

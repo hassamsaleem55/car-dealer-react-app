@@ -34,7 +34,7 @@ export default function PersonalInfoForm({
       <div className="space-y-4">
         {personalInfoForm.map((field, index) => (
           <div key={index} className="flex flex-col">
-            <label className="mb-2 text-sm font-medium text-gray-700" htmlFor={field.name}>
+            <label className="mb-2 text-sm font-medium" htmlFor={field.name}>
               {field.label} {field.required && <span className="text-red-500">*</span>}
             </label>
             <input

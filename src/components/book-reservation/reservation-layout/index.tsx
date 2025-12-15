@@ -71,7 +71,7 @@ export default function ReservationLayout({
 
               {/* Benefits */}
               <div className="space-y-2 pt-2">
-                <h3 className="text-sm font-semibold text-gray-700">
+                <h3 className="text-sm font-semibold">
                   What's Included:
                 </h3>
                 <ul className="text-xs text-gray-600 space-y-1">

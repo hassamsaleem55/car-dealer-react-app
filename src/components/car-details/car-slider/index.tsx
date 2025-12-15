@@ -2,12 +2,13 @@ import MotionReveal from "@components-dir/framer-motion/motion-reveal";
 import ImageSlider from "@components-dir/image-slider";
 
 export default function CarSlider({
+  isReserved,
   images,
   mainSettings,
   thumbSettings,
 }: any) {
   return (
-    <section className="bg-white rounded-2xl shadow-md border border-gray-100">
+    <section className="relative bg-white rounded-2xl shadow-md border border-gray-100">
       {/* === Main Image Slider === */}
       <MotionReveal preset="fadeIn" once={true}>
         <ImageSlider
@@ -28,17 +29,26 @@ export default function CarSlider({
             ease-in-out
           "
         />
+        {isReserved && (
+          <div
+            className="absolute top-3 left-3 bg-neutral-700/90 
+         text-white text-base md:text-lg 
+         font-medium px-4 md:px-5 py-2 rounded-xl"
+          >
+            Reserved
+          </div>
+        )}
       </MotionReveal>
 
       {/* === Thumbnail Slider === */}
       {images.length > 1 && (
         // <MotionReveal preset="slideLeft">
-          <div className="px-2">
-            <ImageSlider
-              images={images}
-              settings={thumbSettings}
-              className="w-full"
-              imageClassName="
+        <div className="px-2">
+          <ImageSlider
+            images={images}
+            settings={thumbSettings}
+            className="w-full"
+            imageClassName="
               h-16 
               sm:h-20 
               md:h-24 
@@ -55,8 +65,8 @@ export default function CarSlider({
               duration-200 
               ease-in-out
             "
-            />
-          </div>
+          />
+        </div>
         // </MotionReveal>
       )}
     </section>

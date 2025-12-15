@@ -6,7 +6,6 @@ import DotLoader from "@components-dir/loader";
 import Breadcrumb from "@components-dir/car-details/breadcrumbs";
 import CarSlider from "@components-dir/car-details/car-slider";
 import CarHeader from "@components-dir/car-details/car-header";
-import CarOverview from "@components-dir/car-details/car-overview";
 import CarDescription from "@components-dir/car-details/car-description";
 import CarFeatures from "@components-dir/car-details/car-features";
 import CarSpecifications from "@components-dir/car-details/car-specifications";
@@ -169,6 +168,7 @@ export function CarDetailsOne() {
           <div className="col-span-2 space-y-4">
             {/* Slider */}
             <CarSlider
+              isReserved={carData.isReserved}
               images={
                 carImages.length
                   ? carImages
@@ -186,10 +186,6 @@ export function CarDetailsOne() {
                   // toggleFavorite={() => setIsFavorite(!isFavorite)}
                 />
               </MotionReveal>
-
-              {/* <MotionReveal preset="slideUp" delay={0.1}>
-                <CarOverview specs={carData.specs || []} />
-              </MotionReveal> */}
             </aside>
 
             {/* Description */}
@@ -281,10 +277,6 @@ export function CarDetailsOne() {
                 // isFavorite={isFavorite}
                 // toggleFavorite={() => setIsFavorite(!isFavorite)}
               />
-            </MotionReveal>
-
-            <MotionReveal preset="slideUp" delay={0.1}>
-              <CarOverview specs={carData.specs || []} />
             </MotionReveal>
           </aside>
         </main>

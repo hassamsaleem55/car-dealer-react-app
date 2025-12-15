@@ -1,3 +1,4 @@
+import Button from "@elements-dir/button";
 import { useState, useRef, useEffect } from "react";
 
 // Convert markdown-style text to HTML
@@ -61,8 +62,8 @@ export default function CarDescription({
   }, [description]);
 
   return (
-    <section className="col-span-2 bg-white rounded-2xl shadow-md border border-gray-100 p-4 md:p-8">
-      <h2 className="text-lg md:text-2xl font-semibold mb-4">Description</h2>
+    <section className="col-span-2 bg-white rounded-2xl shadow-xl border border-gray-200 p-6 md:p-8">
+      <h2 className="text-lg md:text-2xl font-semibold mb-5">Description</h2>
 
       {/* Animated wrapper */}
       <div
@@ -81,23 +82,28 @@ export default function CarDescription({
           ref={textRef}
           className="text-sm md:text-base leading-relaxed prose prose-sm md:prose-base max-w-none
             [&>p]:mb-4 [&>ul]:list-disc [&>ul]:ml-6 [&>ul]:mb-4 [&>ul]:space-y-2
-            [&>strong]:font-semibold [&>strong]:text-gray-900"
+            [&>strong]:font-bold [&>strong]:text-gray-900"
           dangerouslySetInnerHTML={{ __html: parseMarkdown(description) }}
         />
       </div>
 
       {/* Gradient fade for collapsed state */}
       {!expanded && isClamped && (
-        <div className="relative -mt-10 h-10 bg-linear-to-t from-white to-transparent pointer-events-none" />
+        <div className="relative -mt-10 h-10 pointer-events-none" />
       )}
 
       {isClamped && (
-        <button
-          onClick={() => setExpanded((prev) => !prev)}
-          className="mt-3 text-primary text-sm md:text-base hover:underline focus:outline-none cursor-pointer"
-        >
-          {expanded ? "Read less" : "Read more"}
-        </button>
+        <div className="mt-4">
+          <Button
+            variant="secondary"
+            widthUtilities="md:w-30"
+            btnTextSize="text-sm md:text-base font-semibold"
+            roundUtilities="rounded-lg"
+            paddingUtilities="px-4 py-2"
+            btnText={expanded ? "Read less" : "Read more"}
+            clickEvent={() => setExpanded((prev) => !prev)}
+          />
+        </div>
       )}
     </section>
   );

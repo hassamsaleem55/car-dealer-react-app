@@ -234,7 +234,7 @@ export default function ContactContentOne() {
                           key={day}
                           className="flex justify-between items-center text-sm"
                         >
-                          <span className="text-gray-700 font-medium capitalize">
+                          <span className="font-medium capitalize">
                             {day}
                           </span>
                           <span className="text-gray-600">{hours}</span>

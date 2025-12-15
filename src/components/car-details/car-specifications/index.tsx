@@ -72,7 +72,7 @@ export default function CarSpecifications({
   return (
     <section
       ref={sectionRef}
-      className="col-span-2 bg-white rounded-2xl shadow-none md:shadow-md border border-gray-100"
+      className="col-span-2 bg-white rounded-2xl shadow-xl border border-gray-200"
     >
       {/* Sentinel for Sticky Detection */}
       <div ref={sentinelRef} className="w-full h-0" />
@@ -80,24 +80,15 @@ export default function CarSpecifications({
       {/* === Sticky Header === */}
       <div
         ref={headerRef}
-        className={`sticky top-16 md:top-20 z-999 flex flex-col md:flex-row md:items-center md:justify-between gap-1.5 md:gap-3
+        className={`sticky top-16 md:top-20 z-999 flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4
            bg-white transition-all duration-200 ease-in-out
           ${
             isSticky
-              ? "px-3 py-3 md:px-8 md:py-4 shadow-xl md:shadow-md md:bg-linear-to-r md:from-primary/20 md:via-primary/10 md:to-white rounded-b-2xl md:rounded-none"
-              : "px-4 py-4 md:px-8 md:py-4 mb-2 shadow-none rounded-t-2xl"
+              ? "px-4 py-3 md:px-8 md:py-4 shadow-xl md:shadow-lg md:bg-linear-to-r md:from-primary/20 md:via-primary/10 md:to-transparent rounded-b-2xl md:rounded-none"
+              : "px-4 py-4 md:px-8 md:py-4 mb-2 shadow-none rounded-t-2xl bg-linear-to-r from-primary/10 via-primary/5 to-transparent"
           }`}
       >
         <h2 className="text-lg md:text-2xl font-semibold">Specifications</h2>
-        {/* <input
-          id="searchSpecification"
-          type="text"
-          placeholder="Search Specification..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full md:w-64 px-3 py-1 md:py-2 text-xs md:text-sm border border-gray-200 rounded-xl shadow-sm
-            focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
-        /> */}
         <div className="relative w-full md:w-64">
           <input
             type="text"
@@ -107,8 +98,8 @@ export default function CarSpecifications({
               setSearchTerm(e.target.value);
               moveToTop();
             }}
-            className="w-full px-3 py-1 md:py-2 pr-8 text-xs md:text-sm border border-gray-200 rounded-xl shadow-sm
-              focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
+            className="w-full px-3 py-2 pr-8 text-xs md:text-sm border border-gray-300 rounded-xl shadow-sm bg-white
+              focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
           />
           {searchTerm && (
             <button
@@ -144,17 +135,17 @@ export default function CarSpecifications({
             filteredSpecifications.map((spec, idx) => (
               <div
                 key={idx}
-                className="break-inside-avoid mb-4 bg-white text-gray-800 rounded-xl border border-primary/30 shadow-md hover:shadow-lg transition-shadow duration-200 p-4"
+                className="break-inside-avoid mb-4 bg-white text-gray-800 rounded-xl border border-gray-200 shadow-md hover:shadow-lg hover:border-primary/40 transition-all duration-300 p-5 group"
               >
-                <div className="text-sm md:text-base font-semibold">
+                <div className="text-sm md:text-base font-semibold text-primary mb-3">
                   <span>{spec.category}</span>
                 </div>
-                <div className="p-2 md:p-4 text-xs md:text-sm">
+                <div className="text-xs md:text-sm">
                   {spec.specs.map((item, itemIdx) => (
                     <MotionReveal key={itemIdx} preset="zoomOut">
-                      <div className="flex items-center justify-between py-1 border-b border-gray-200">
-                        <span>{item.label}</span>
-                        <span>{item.value}</span>
+                      <div className="flex items-center justify-between py-0.5 px-2 rounded-lg border-b border-gray-200 last:border-0 hover:bg-gray-50 transition-colors">
+                        <span className="font-medium text-gray-600">{item.label}</span>
+                        <span className="font-semibold text-gray-800">{item.value}</span>
                       </div>
                     </MotionReveal>
                   ))}

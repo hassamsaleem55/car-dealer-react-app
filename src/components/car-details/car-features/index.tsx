@@ -84,7 +84,7 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
   return (
     <section
       ref={sectionRef}
-      className="col-span-2 bg-white rounded-2xl shadow-md border border-gray-100"
+      className="col-span-2 bg-white rounded-2xl shadow-xl border border-gray-200"
     >
       {/* === Sentinel for sticky detection === */}
       <div ref={sentinelRef} className="w-full h-0" />
@@ -92,15 +92,15 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
       {/* === Header (sticky) === */}
       <div
         ref={headerRef}
-        className={`sticky top-16 md:top-20 z-999 flex flex-col md:flex-row md:items-center md:justify-between gap-1.5 md:gap-3
+        className={`sticky top-16 md:top-20 z-999 flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4
            bg-white transition-all duration-200 ease-in-out
           ${
             isSticky
-              ? "px-3 py-3 md:px-8 md:py-4 shadow-xl md:shadow-md md:bg-linear-to-r md:from-primary/20 md:via-primary/10 md:to-white rounded-b-2xl md:rounded-none"
-              : "px-4 py-4 md:px-8 md:py-4 mb-2 shadow-none rounded-t-2xl"
+              ? "px-4 py-3 md:px-8 md:py-4 shadow-xl md:shadow-lg md:bg-linear-to-r md:from-primary/20 md:via-primary/10 md:to-transparent rounded-b-2xl md:rounded-none"
+              : "px-4 py-4 md:px-8 md:py-4 mb-2 shadow-none rounded-t-2xl bg-linear-to-r from-primary/10 via-primary/5 to-transparent"
           }`}
       >
-        <h2 className="text-lg md:text-2xl font-semibold">Features</h2>
+        <h2 className="text-lg md:text-2xl font-semibold ">Features</h2>
         <div className="relative w-full md:w-64">
           <input
             type="text"
@@ -111,8 +111,8 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
               setExpanded(false);
               moveToTop();
             }}
-            className="w-full px-3 py-1 md:py-2 pr-8 text-xs md:text-sm border border-gray-200 rounded-xl shadow-sm
-              focus:outline-none focus:ring-2 focus:ring-primary/40 transition"
+            className="w-full px-3 py-2 pr-8 text-xs md:text-sm border border-gray-300 rounded-xl shadow-sm bg-white
+              focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
           />
           {searchTerm && (
             <button
@@ -154,15 +154,15 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
           {filteredFeatures.length ? (
             filteredFeatures.map((feature, idx) => (
               <MotionReveal key={idx} preset="zoomOut" delay={idx * 0.001}>
-                <div className="bg-gray-100 text-gray-800 rounded-md p-2 md:p-3">
-                  <div className="flex gap-2">
+                <div className=" rounded-lg p-2.5 md:p-3 border border-gray-200 shadow-sm hover:shadow-md hover:border-primary/40 transition-all duration-300">
+                  <div className="flex gap-2 items-start">
                     {/* Icon Circle */}
-                    <span className="flex items-center justify-center w-3.5 h-3.5 md:w-5 md:h-5 border border-primary rounded-full shrink-0">
-                      <Check className="w-2 h-2 md:w-3 md:h-3 text-primary" />
+                    <span className="flex items-center justify-center w-4 h-4 md:w-5 md:h-5 border-2 border-primary/60 bg-primary/10 rounded-full shrink-0">
+                      <Check className="w-2.5 h-2.5 md:w-3 md:h-3 text-primary" />
                     </span>
 
                     {/* Feature Text */}
-                    <span className="break-inside-avoid text-xs md:text-sm font-medium">
+                    <span className="break-inside-avoid text-xs md:text-sm font-semibold">
                       {feature.name}
                     </span>
                   </div>
@@ -185,7 +185,7 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
 
       {/* === Fade Gradient when collapsed === */}
       {!expanded && isClamped && (
-        <div className="relative h-4 md:h-10 bg-linear-to-t from-white to-transparent pointer-events-none" />
+        <div className="relative h-4 md:h-10 pointer-events-none" />
       )}
 
       {/* === Show More / Show Less === */}
@@ -193,8 +193,9 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
         <div className="md:mt-3 flex justify-center pb-6">
           <Button
             variant="secondary"
-            widthUtilities="md:w-36"
-            btnTextSize="text-xs md:text-sm"
+            widthUtilities="md:w-40"
+            btnTextSize="text-sm md:text-base font-semibold"
+            roundUtilities="rounded-lg"
             btnText={expanded ? "Show less" : "Show more"}
             clickEvent={() => {
               setExpanded((prev) => {

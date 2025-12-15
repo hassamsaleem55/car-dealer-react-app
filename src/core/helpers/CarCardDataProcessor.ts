@@ -103,9 +103,9 @@ const getCarGurusRating = (
   carGurusData: CarGurusRating[]
 ): string => {
   const rating = carGurusData.find((cg) => cg.vrn === registration);
-  
+
   if (!rating?.deal_rating_value) return "";
-  
+
   // Extract first part of rating (e.g., "GREAT_PRICE" -> "great")
   return rating.deal_rating_value.split("_")[0].toLowerCase();
 };
@@ -173,6 +173,7 @@ export async function processCarCardData(rawData: any[]): Promise<Car[]> {
       : null,
     profilePicture: car.profilePicture || "images/awaiting-image-alfa.png",
     isReserved: car.isReserved || false,
+    attentionGrabber: sanitizeText(car?.advert?.attentionGrabber) || "",
     autoTraderRating: sanitizeText(car.priceIndicator?.toLowerCase()) || "",
     carGuruRating: getCarGurusRating(car.registration, carGurusRatings),
     specs: buildCarSpecs(car),
