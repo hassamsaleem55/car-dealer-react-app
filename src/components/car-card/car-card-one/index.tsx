@@ -6,10 +6,16 @@ import { type Car } from "../car-card.types";
 import TooltipText from "@components-dir/tooltip";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import { AutoTraderLogo, CarGuruLogo } from "@core-dir/svgs";
-import useCarGurusBadge from "@core-dir/hooks/useCarGurusBadge";
+
+const isValidRating = (rating: string | undefined): boolean => {
+  if (!rating) return false;
+  
+  const invalidRatings = ["null", "high", "noanalysis", ""];
+  return !invalidRatings.includes(rating.toLowerCase());
+};
 
 function CarCard({ car, styles }: { car: Car; styles: any }) {
-  useCarGurusBadge();
+  // useCarGurusBadge();
   const { dealerData } = useDealerContext();
   const { setReservationModalOpen, setReservationCarData } = useOutletContext<{
     setReservationModalOpen: (qs: boolean) => void;
@@ -24,8 +30,15 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
     retailPrice,
     pricePerMonth,
     profilePicture,
+    isReserved,
+    autoTraderRating,
+    carGuruRating,
     specs,
   } = car;
+
+  const hasAutoTraderRating = isValidRating(autoTraderRating);
+  const hasCarGuruRating = isValidRating(carGuruRating);
+  const showRatingFooter = hasAutoTraderRating || hasCarGuruRating;
 
   // const handleSecondaryAction = () => {
   //   console.log(`Added to favorites ${stockId}: ${title}`);
@@ -47,7 +60,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
           loading="lazy"
           decoding="async"
         />
-        {car.isReserved && (
+        {isReserved && (
           <div className={styles["car-card__reserved"]}>Reserved</div>
         )}
         <div className={styles["car-card__year"]}>{year}</div>
@@ -115,7 +128,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
           />
 
           <Button
-            variant={car.isReserved ? "disabled" : "secondary"}
+            variant={isReserved ? "disabled" : "secondary"}
             btnText="Reserve for £99"
             clickEvent={() => {
               setReservationModalOpen(true);
@@ -125,7 +138,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
 
           {dealerData.FCANumber && (
             <Button
-              variant={car.isReserved ? "disabled" : "secondary"}
+              variant={isReserved ? "disabled" : "secondary"}
               btnText="Apply Finance"
               clickEvent={() => {
                 navigate(
@@ -150,7 +163,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
         />
 
         <Button
-          variant={car.isReserved ? "disabled-mobile" : "secondary"}
+          variant={isReserved ? "disabled-mobile" : "secondary"}
           btnText="Reserve for £99"
           btnTextSize="text-sm"
           paddingUtilities="px-3 py-2"
@@ -162,7 +175,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
 
         {dealerData.FCANumber && (
           <Button
-            variant={car.isReserved ? "disabled-mobile" : "secondary"}
+            variant={isReserved ? "disabled-mobile" : "secondary"}
             btnText="Apply Finance"
             btnTextSize="text-sm"
             paddingUtilities="px-3 py-2"
@@ -198,32 +211,36 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
         </div> */}
       </div>
 
-      {/* Footer */}
-      <div className={styles["car-card__footer"]}>
-        <div className="flex flex-row justify-between items-start w-full">
-          {car.priceIndicator !== "high" &&
-            car.priceIndicator !== "noanalysis" && (
-              <div className="flex flex-col">
-                <span className="text-sm font-semibold capitalize">{`${car.priceIndicator} Price`}</span>
-                <AutoTraderLogo className="w-16" />
+      {/* Footer - Price Ratings */}
+      {showRatingFooter && (
+        <div className={styles["car-card__footer"]}>
+          <div
+            className={`flex flex-row items-center w-full ${
+              hasAutoTraderRating && hasCarGuruRating
+                ? "justify-between"
+                : "justify-center"
+            }`}
+          >
+            {hasAutoTraderRating && (
+              <div className="flex flex-col items-start">
+                <span className="text-sm text-primary font-bold capitalize">
+                  {autoTraderRating} Price
+                </span>
+                <AutoTraderLogo className="w-14" />
               </div>
             )}
-          <div className="carGuruContainer ml-auto">
-            <div className="carGuruPricetag" style={{ display: "none" }}>
-              <span
-                className={`cg-price-${car.registrationNo} text-sm font-semibold capitalize`}
-              ></span>
-              <CarGuruLogo className="w-16" />
-              <span
-                className="carGurusPriceText"
-                data-cg-vrn={car.registrationNo}
-                data-cg-price={car.retailPrice.replace(/[^0-9.-]+/g, "")}
-                style={{ display: "none" }}
-              ></span>
-            </div>
+
+            {hasCarGuruRating && (
+              <div className="flex flex-col items-end">
+                <span className="text-sm text-primary font-bold capitalize">
+                  {carGuruRating} Price
+                </span>
+                <CarGuruLogo className="w-14" />
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

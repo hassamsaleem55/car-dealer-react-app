@@ -66,7 +66,8 @@ export function CarDetailsOne() {
           fetchApi(`/stocks/${stockId}/features`, dealerAuthToken),
         ]);
 
-        const processedCar = processCarCardData([carRes])[0];
+        const processedCarArray = await processCarCardData([carRes]);
+        const processedCar = processedCarArray[0];
         setCarData(processedCar);
         setReservationCarData(processedCar);
         setCarDetails(carRes);

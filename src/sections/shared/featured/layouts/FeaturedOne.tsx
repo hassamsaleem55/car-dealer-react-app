@@ -19,7 +19,8 @@ export default function FeaturedOne({ heading }: { heading: string }) {
         `/stocks/list?${queryString}`,
         dealerAuthToken
       );
-      setCarData(processCarCardData(response.stockList));
+      const processedData = await processCarCardData(response.stockList);
+      setCarData(processedData);
     };
     fetchData();
   }, []);

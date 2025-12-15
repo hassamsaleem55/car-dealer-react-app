@@ -10,6 +10,7 @@ export interface Car {
   pricePerMonth: string | null;
   profilePicture: string;
   isReserved: boolean;
-  priceIndicator: string;
+  autoTraderRating: string;
+  carGuruRating: string;
   specs: { label: string; value: string | number }[];
 }

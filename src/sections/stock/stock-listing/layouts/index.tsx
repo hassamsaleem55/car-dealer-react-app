@@ -41,7 +41,8 @@ export function StockListingOne() {
           dealerAuthToken
         );
 
-        const processedData = processCarCardData(response.stockList);
+        const processedData = await processCarCardData(response.stockList);
+        console.log("Processed Car Data:", processedData);
         setAllCarData([...processedData]);
         setCarData([...processedData]);
       } catch (error) {

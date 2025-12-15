@@ -6,7 +6,13 @@ import Button from "@elements-dir/button";
 import AppointmentModal from "@components-dir/book-appointment/appointment-modal";
 import type { Car } from "@components-dir/car-card/car-card.types";
 import { AutoTraderLogo, CarGuruLogo } from "@core-dir/svgs";
-import useCarGurusBadge from "@core-dir/hooks/useCarGurusBadge";
+
+const isValidRating = (rating: string | undefined): boolean => {
+  if (!rating) return false;
+
+  const invalidRatings = ["null", "high", "noanalysis", ""];
+  return !invalidRatings.includes(rating.toLowerCase());
+};
 
 export default function CarHeader({
   carData,
@@ -17,7 +23,6 @@ export default function CarHeader({
   // isFavorite: boolean;
   // toggleFavorite: () => void;
 }) {
-  useCarGurusBadge();
   const { dealerData } = useDealerContext();
   const [appointmentModalOpen, setAppointmentModalOpen] = useState(false);
   const { setReservationModalOpen } = useOutletContext<{
@@ -27,6 +32,9 @@ export default function CarHeader({
     "" | "Appointment" | "testdrive" | "vehicledetails"
   >("");
 
+  const hasAutoTraderRating = isValidRating(carData.autoTraderRating);
+  const hasCarGuruRating = isValidRating(carData.carGuruRating);
+  const showRatingFooter = hasAutoTraderRating || hasCarGuruRating;
   return (
     <header className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 space-y-4">
       <div className="space-y-4">
@@ -231,31 +239,35 @@ export default function CarHeader({
         </div>
       </div>
 
-      <div className="border-t border-t-gray-200 mt-4 pt-4">
-        <div className="flex flex-row justify-between items-start w-full">
-          {carData.priceIndicator !== "high" &&
-            carData.priceIndicator !== "noanalysis" && (
-              <div className="flex flex-col">
-                <span className="text-sm font-semibold capitalize">{`${carData.priceIndicator} Price`}</span>
-                <AutoTraderLogo className="w-16" />
+      {showRatingFooter && (
+        <div className="border-t border-t-gray-200 mt-4 pt-4">
+          <div
+            className={`flex flex-row items-center w-full ${
+              hasAutoTraderRating && hasCarGuruRating
+                ? "justify-between"
+                : "justify-center"
+            }`}
+          >
+            {hasAutoTraderRating && (
+              <div className="flex flex-col items-start">
+                <span className="text-sm text-primary font-bold capitalize">
+                  {carData.autoTraderRating} Price
+                </span>
+                <AutoTraderLogo className="w-14" />
               </div>
             )}
-          <div className="carGuruContainer ml-auto">
-            <div className="carGuruPricetag" style={{ display: "none" }}>
-              <span
-                className={`cg-price-${carData.registrationNo} text-sm font-semibold capitalize`}
-              ></span>
-              <CarGuruLogo className="w-16" />
-              <span
-                className="carGurusPriceText"
-                data-cg-vrn={carData.registrationNo}
-                data-cg-price={carData.retailPrice.replace(/[^0-9.-]+/g, "")}
-                style={{ display: "none" }}
-              ></span>
-            </div>
+
+            {hasCarGuruRating && (
+              <div className="flex flex-col items-end">
+                <span className="text-sm text-primary font-bold capitalize">
+                  {carData.carGuruRating} Price
+                </span>
+                <CarGuruLogo className="w-14" />
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      )}
       {appointmentModalOpen && (
         <AppointmentModal
           isOpen={appointmentModalOpen}
