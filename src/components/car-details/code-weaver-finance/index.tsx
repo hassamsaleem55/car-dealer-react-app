@@ -77,8 +77,6 @@ export default function CodeWeaverFinance({
         return;
       }
 
-      console.log("Initializing CodeWeavers plugin...");
-
       window.codeweavers.main({
         pluginContentDivId: "cw-plugin-container",
         vehicle: {
@@ -104,13 +102,11 @@ export default function CodeWeaverFinance({
           },
         },
         onDomainEvent: (name: string) => {
-          console.log("CodeWeavers event:", name);
           if (name === "plugin.errored") {
             console.error("CodeWeavers plugin errored");
             setIsLoading(false);
           }
           if (name === "plugin.loaded") {
-            console.log("CodeWeavers plugin successfully loaded");
             setIsLoading(false);
           }
         },
@@ -118,7 +114,6 @@ export default function CodeWeaverFinance({
     };
 
     script.onload = () => {
-      console.log("CodeWeavers script loaded");
       setTimeout(initializePlugin, 300);
     };
 

@@ -42,7 +42,6 @@ export function StockListingOne() {
         );
 
         const processedData = await processCarCardData(response.stockList);
-        console.log("Processed Car Data:", processedData);
         setAllCarData([...processedData]);
         setCarData([...processedData]);
       } catch (error) {
@@ -188,7 +187,10 @@ export function StockListingOne() {
               <X size={18} />
             </button>
           </div>
-          <FilterOne setShowFilters={setShowFilters} styles={FilterOneVerticalStyles} />
+          <FilterOne
+            setShowFilters={setShowFilters}
+            styles={FilterOneVerticalStyles}
+          />
         </div>
       </div>
 

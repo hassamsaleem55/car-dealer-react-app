@@ -38,7 +38,7 @@ export default function CarHeader({
     isValidRating(carData.carGuruRating);
   const showRatingFooter = hasAutoTraderRating || hasCarGuruRating;
   return (
-    <div className="h-full rounded-xl flex flex-col bg-linear-to-br from-violet-500 via-primary p-0.5 shadow-2xl">
+    <div className="h-full rounded-xl flex flex-col bg-linear-to-br from-violet-400 via-primary p-0.5 shadow-2xl">
       {carData.attentionGrabber && (
         <div className="text-white text-lg font-bold px-4 py-3 text-center">
           {carData.attentionGrabber}

@@ -93,11 +93,11 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
       <div
         ref={headerRef}
         className={`sticky top-16 md:top-20 z-999 flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4
-           bg-white transition-all duration-200 ease-in-out
+           bg-white text-gray-600 bg-linear-to-r from-transparent to-violet-200 transition-all duration-200 ease-in-out
           ${
             isSticky
-              ? "px-4 py-3 md:px-8 md:py-4 shadow-xl md:shadow-lg md:bg-linear-to-r md:from-primary/20 md:via-primary/10 md:to-transparent rounded-b-2xl md:rounded-none"
-              : "px-4 py-4 md:px-8 md:py-4 mb-2 shadow-none rounded-t-2xl bg-linear-to-r from-primary/10 via-primary/5 to-transparent"
+              ? "px-4 py-3 md:px-8 md:py-4 shadow-xl md:shadow-lg rounded-b-2xl md:rounded-none"
+              : "px-4 py-4 md:px-8 md:py-4 mb-2 shadow-none rounded-t-2xl"
           }`}
       >
         <h2 className="text-lg md:text-2xl font-semibold ">Features</h2>
@@ -112,7 +112,7 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
               moveToTop();
             }}
             className="w-full px-3 py-2 pr-8 text-xs md:text-sm border border-gray-300 rounded-xl shadow-sm bg-white
-              focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all"
+              focus:outline-none focus:ring-0.5 focus:ring-primary/50 focus:border-primary/50 transition-all"
           />
           {searchTerm && (
             <button
