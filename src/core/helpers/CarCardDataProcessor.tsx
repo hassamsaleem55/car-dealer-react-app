@@ -1,4 +1,13 @@
+import React from "react";
 import { type Car } from "@components-dir/car-card/car-card.types";
+import {
+  EngineSvg,
+  TransmissionSvg,
+  FuelSvg,
+  BodyTypeSvg,
+  MileageSvg,
+  ColorSvg,
+} from "@core-dir/svgs";
 
 // ============================================
 // TYPE DEFINITIONS
@@ -35,9 +44,10 @@ const sanitizeText = (value: any): string | null => {
  * Creates a spec object if the value is valid, otherwise returns null
  */
 const sanitizeSpec = (
-  label: string,
+  key: string,
+  icon: React.JSX.Element,
   value: any
-): { label: string; value: any } | null => {
+): { key: string; icon: React.JSX.Element; value: any } | null => {
   if (
     value === null ||
     value === undefined ||
@@ -45,7 +55,7 @@ const sanitizeSpec = (
   ) {
     return null;
   }
-  return { label, value };
+  return { key, icon, value };
 };
 
 /**
@@ -117,21 +127,29 @@ const getCarGurusRating = (
 /**
  * Builds the specs array for a car from raw data
  */
-const buildCarSpecs = (car: any): { label: string; value: any }[] => {
+const buildCarSpecs = (
+  car: any
+): { key: string; icon: React.JSX.Element; value: any }[] => {
   const specs = [
-    sanitizeSpec("Engine", `${car.engineCapacityCC.toLocaleString()} CC`),
-    sanitizeSpec("Transmission", car.transmissionType),
-    sanitizeSpec("Fuel", car.fuelType),
-    sanitizeSpec("Body Type", car.bodyType),
-    sanitizeSpec("Mileage", car.odometerReadingMiles?.toLocaleString?.()),
-    sanitizeSpec("Color", car.colour),
-    sanitizeSpec("Doors", car.aT_StockInfo?.vehicle.doors),
-    sanitizeSpec("Seats", car.aT_StockInfo?.vehicle.seats),
-    sanitizeSpec("Gears", car.aT_StockInfo?.vehicle.gears),
+    sanitizeSpec("Body Type", <BodyTypeSvg />, car.bodyType),
+    sanitizeSpec(
+      "Engine",
+      <EngineSvg />,
+      `${car.engineCapacityCC.toLocaleString()} CC`
+    ),
+    sanitizeSpec("Fuel", <FuelSvg />, car.fuelType),
+    sanitizeSpec("Transmission", <TransmissionSvg />, car.transmissionType),
+    sanitizeSpec(
+      "Mileage",
+      <MileageSvg />,
+      `${car.odometerReadingMiles?.toLocaleString?.()} miles`
+    ),
+    sanitizeSpec("Color", <ColorSvg />, car.colour),
   ];
 
   return specs.filter(
-    (spec): spec is { label: string; value: any } => spec !== null
+    (spec): spec is { key: string; icon: React.JSX.Element; value: any } =>
+      spec !== null
   );
 };
 

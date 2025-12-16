@@ -1,0 +1,6 @@
+@reference "tailwindcss";
+@import "@dealers-dir/style.css";
+
+.thumb-slider .swiper-slide-thumb-active img {
+  @apply border-2 border-primary;
+}

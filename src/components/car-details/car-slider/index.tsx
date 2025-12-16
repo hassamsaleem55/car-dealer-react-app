@@ -6,6 +6,7 @@ import { ChevronRight, ChevronLeft } from "lucide-react";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
 import "swiper/css";
 import "swiper/css/effect-fade";
+import "./car-slider.css";
 
 export default function CarSlider({ isReserved, images }: any) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
@@ -37,7 +38,7 @@ export default function CarSlider({ isReserved, images }: any) {
               },
               768: {
                 direction: "vertical",
-                slidesPerView: 6
+                slidesPerView: 6,
               },
             }}
             className="h-20 md:h-[630px] thumb-slider"
@@ -53,17 +54,17 @@ export default function CarSlider({ isReserved, images }: any) {
             ))}
           </Swiper>
           {/* Horizontal Navigation (Mobile) */}
-          <button className="thumb-nav-prev md:hidden absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-lg p-1.5 rounded-full transition-all">
+          <button className="thumb-nav-prev md:hidden absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-lg p-1.5 rounded-full transition-all cursor-pointer">
             <ChevronLeft className="w-4 h-4" />
           </button>
-          <button className="thumb-nav-next md:hidden absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-lg p-1.5 rounded-full transition-all">
+          <button className="thumb-nav-next md:hidden absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-lg p-1.5 rounded-full transition-all cursor-pointer">
             <ChevronRight className="w-4 h-4" />
           </button>
           {/* Vertical Navigation (Desktop) */}
-          <button className="thumb-nav-prev hidden md:block absolute top-2 left-1/2 -translate-x-1/2 z-10 bg-white/80 hover:bg-white shadow-lg p-1.5 rounded-full transition-all">
+          <button className="thumb-nav-prev hidden md:block absolute top-2 left-1/2 -translate-x-1/2 z-10 bg-white/80 hover:bg-white shadow-lg p-1.5 rounded-full transition-all cursor-pointer">
             <ChevronLeft className="w-4 h-4 rotate-90" />
           </button>
-          <button className="thumb-nav-next hidden md:block absolute bottom-2 left-1/2 -translate-x-1/2 z-10 bg-white/80 hover:bg-white shadow-lg p-1.5 rounded-full transition-all">
+          <button className="thumb-nav-next hidden md:block absolute bottom-2 left-1/2 -translate-x-1/2 z-10 bg-white/80 hover:bg-white shadow-lg p-1.5 rounded-full transition-all cursor-pointer">
             <ChevronRight className="w-4 h-4 rotate-90" />
           </button>
         </div>
@@ -99,10 +100,10 @@ export default function CarSlider({ isReserved, images }: any) {
               </SwiperSlide>
             ))}
           </Swiper>
-          <button className="main-nav-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-lg p-2 rounded-full transition-all">
+          <button className="main-nav-prev absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-lg p-2 rounded-full transition-all cursor-pointer">
             <ChevronLeft className="w-5 h-5" />
           </button>
-          <button className="main-nav-next absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-lg p-2 rounded-full transition-all">
+          <button className="main-nav-next absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white shadow-lg p-2 rounded-full transition-all cursor-pointer">
             <ChevronRight className="w-5 h-5" />
           </button>
           {isReserved && (
@@ -112,13 +113,6 @@ export default function CarSlider({ isReserved, images }: any) {
           )}
         </MotionReveal>
       </section>
-
-      {/* Custom Styles for Active Thumb */}
-      <style>{`
-        .thumb-slider .swiper-slide-thumb-active img {
-          border: 2px solid var(--color-primary) !important;
-        }
-      `}</style>
     </div>
   );
 }

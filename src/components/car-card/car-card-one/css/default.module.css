@@ -35,7 +35,7 @@
 
 /* Content wrapper */
 .car-card__content {
-  @apply p-4 md:h-53 space-y-4;
+  @apply p-4 md:h-56 space-y-4;
 }
 
 .car-card__title {
@@ -68,11 +68,12 @@
 
 /* Specs grid */
 .car-card__specs {
-  @apply grid grid-cols-3 gap-1 text-xs justify-between;
+  @apply grid grid-cols-3 gap-2 text-xs justify-between;
 }
 
 .car-card__spec {
-  @apply bg-gray-100 border border-gray-200 text-[10px] md:text-xs rounded-lg py-2 flex flex-col text-center;
+  /* @apply bg-gray-100 border border-gray-200 text-[10px] md:text-xs rounded-lg py-2 flex flex-col items-center gap-1 text-center; */
+  @apply bg-linear-to-br from-white to-gray-50 rounded-lg border border-gray-200 text-[10px] md:text-xs  flex flex-col items-center text-center gap-1 py-2;
 }
 
 .car-card__spec-label {

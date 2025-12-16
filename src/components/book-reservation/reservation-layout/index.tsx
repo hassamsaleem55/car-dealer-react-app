@@ -40,10 +40,11 @@ export default function ReservationLayout({
             <div className="flex flex-wrap gap-1">
               {carData.specs?.slice(0, 6).map((spec) => (
                 <span
-                  key={spec.label}
-                  className="border border-primary/50 text-xs rounded-xl px-2 py-1"
-                  title={spec.label}
+                  key={spec.key}
+                  className="border border-primary/50 text-xs rounded-xl px-2 py-1 flex items-center gap-1"
+                  title={spec.key}
                 >
+                  <span className="w-4 h-4">{spec.icon}</span>
                   {spec.value}
                 </span>
               ))}

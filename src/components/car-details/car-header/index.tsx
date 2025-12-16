@@ -38,9 +38,9 @@ export default function CarHeader({
     isValidRating(carData.carGuruRating);
   const showRatingFooter = hasAutoTraderRating || hasCarGuruRating;
   return (
-    <div className="h-full rounded-xl flex flex-col bg-linear-to-br from-primary/70 via-primary p-0.5 shadow-2xl">
+    <div className="h-full rounded-xl flex flex-col bg-linear-to-br from-violet-500 via-primary p-0.5 shadow-2xl">
       {carData.attentionGrabber && (
-        <div className="text-white text-lg font-semibold px-4 py-3 text-center">
+        <div className="text-white text-lg font-bold px-4 py-3 text-center">
           {carData.attentionGrabber}
         </div>
       )}
@@ -91,13 +91,13 @@ export default function CarHeader({
           {carData.specs.slice(0, 9).map((spec, idx) => (
             <div
               key={idx}
-              className={`bg-linear-to-br from-white to-gray-50 rounded-xl border border-gray-200 shadow-md hover:shadow-lg hover:border-primary/40 transition-all duration-300 text-center px-3 py-3.5 group ${
+              className={`bg-linear-to-br from-white to-gray-50 rounded-xl border border-gray-200 shadow-md hover:shadow-lg hover:border-primary/40 transition-all duration-300 text-center px-2 py-2 group ${
                 idx >= 8 ? "hidden md:block" : ""
               }`}
             >
-              <h3 className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider group-hover:text-primary transition-colors">
-                {spec.label}
-              </h3>
+              <div className="flex justify-center mb-1 text-gray-500 group-hover:text-primary transition-colors">
+                {spec.icon}
+              </div>
               <p className="text-xs font-bold text-gray-800">
                 {spec.value}
               </p>

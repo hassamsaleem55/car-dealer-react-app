@@ -9,13 +9,12 @@ import { AutoTraderLogo, CarGuruLogo } from "@core-dir/svgs";
 
 const isValidRating = (rating: string | undefined): boolean => {
   if (!rating) return false;
-  
+
   const invalidRatings = ["null", "high", "noanalysis", ""];
   return !invalidRatings.includes(rating.toLowerCase());
 };
 
 function CarCard({ car, styles }: { car: Car; styles: any }) {
-  // useCarGurusBadge();
   const { dealerConfig, dealerData } = useDealerContext();
   const { setReservationModalOpen, setReservationCarData } = useOutletContext<{
     setReservationModalOpen: (qs: boolean) => void;
@@ -37,7 +36,8 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
   } = car;
 
   const hasAutoTraderRating = isValidRating(autoTraderRating);
-  const hasCarGuruRating = dealerConfig.dealer.isCarGuruRatingEnabled && isValidRating(carGuruRating);
+  const hasCarGuruRating =
+    dealerConfig.dealer.isCarGuruRatingEnabled && isValidRating(carGuruRating);
   const showRatingFooter = hasAutoTraderRating || hasCarGuruRating;
 
   // const handleSecondaryAction = () => {
@@ -45,10 +45,10 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
   //   // Replace with wishlist logic or UI feedback
   // };
 
-  const specOrder = ["Fuel", "Engine", "Mileage"];
+  const specOrder = ["Fuel", "Transmission", "Mileage"];
   const visibleSpecs = specs
-    .filter((s) => specOrder.includes(s.label))
-    .sort((a, b) => specOrder.indexOf(a.label) - specOrder.indexOf(b.label));
+    .filter((s) => specOrder.includes(s.key))
+    .sort((a, b) => specOrder.indexOf(a.key) - specOrder.indexOf(b.key));
   return (
     <div className={`${styles["car-card"]} group`}>
       {/* Image */}
@@ -102,9 +102,9 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
 
         <div className={styles["car-card__specs"]}>
           {visibleSpecs.map((spec) => (
-            <div key={spec.label} className={styles["car-card__spec"]}>
+            <div key={spec.key} className={styles["car-card__spec"]}>
               <span className={styles["car-card__spec-label"]}>
-                {spec.label}
+                {spec.icon}
               </span>
               <span className={styles["car-card__spec-value"]}>
                 {spec.value}

@@ -13,5 +13,5 @@ export interface Car {
   attentionGrabber: string;
   autoTraderRating: string;
   carGuruRating: string;
-  specs: { label: string; value: string | number }[];
+  specs: { key: string; icon: React.JSX.Element; value: string | number }[];
 }
