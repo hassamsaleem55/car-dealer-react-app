@@ -38,7 +38,7 @@ export default function CarHeader({
     isValidRating(carData.carGuruRating);
   const showRatingFooter = hasAutoTraderRating || hasCarGuruRating;
   return (
-    <div className="h-full rounded-xl flex flex-col bg-linear-to-br from-primary via-primary/90 p-0.5 shadow-2xl">
+    <div className="h-full rounded-xl flex flex-col bg-linear-to-br from-primary/70 via-primary p-0.5 shadow-2xl">
       {carData.attentionGrabber && (
         <div className="text-white text-lg font-semibold px-4 py-3 text-center">
           {carData.attentionGrabber}
@@ -49,7 +49,7 @@ export default function CarHeader({
         <div className="space-y-4">
           {/* Title and Tags */}
           <div className="space-y-2">
-            <h1 className="text-xl md:text-3xl font-bold ">
+            <h1 className="text-xl md:text-3xl font-semibold">
               {carData.title}
               {/* 
           <button
@@ -98,7 +98,7 @@ export default function CarHeader({
               <h3 className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider group-hover:text-primary transition-colors">
                 {spec.label}
               </h3>
-              <p className="text-xs font-bold text-gray-800 mt-1">
+              <p className="text-xs font-bold text-gray-800">
                 {spec.value}
               </p>
             </div>
@@ -137,7 +137,7 @@ export default function CarHeader({
               <p className="text-[10px] text-gray-600 font-semibold uppercase tracking-wider">
                 Total Price
               </p>
-              <p className="text-3xl md:text-2xl font-bold text-gray-800">
+              <p className="text-3xl md:text-2xl font-semibold">
                 {carData.retailPrice}
               </p>
             </div>

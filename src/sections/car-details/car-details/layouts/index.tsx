@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useOutletContext, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
@@ -45,9 +45,6 @@ export function CarDetailsOne() {
     PCP: null,
     HP: null,
   });
-  const [nav1, setNav1] = useState<any>(null);
-  const [nav2, setNav2] = useState<any>(null);
-
   // === Fetch data on mount
   useEffect(() => {
     const searchParams = location.search.startsWith("?")
@@ -111,36 +108,6 @@ export function CarDetailsOne() {
     }
   }, [location.hash, loading]);
 
-  // === Slider settings
-  const mainSliderSettings = useMemo(
-    () => ({
-      asNavFor: nav2,
-      ref: (slider: any) => setNav1(slider),
-      fade: true,
-      speed: 700,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-    }),
-    [nav2]
-  );
-
-  const thumbSliderSettings = useMemo(
-    () => ({
-      asNavFor: nav1,
-      ref: (slider: any) => setNav2(slider),
-      slidesToShow: 5,
-      swipeToSlide: true,
-      focusOnSelect: true,
-      speed: 400,
-      responsive: [
-        { breakpoint: 1280, settings: { slidesToShow: 4 } },
-        { breakpoint: 1024, settings: { slidesToShow: 3 } },
-        { breakpoint: 640, settings: { slidesToShow: 2 } },
-      ],
-    }),
-    [nav1]
-  );
-
   // === Loading state
   if (loading)
     return (
@@ -174,8 +141,6 @@ export function CarDetailsOne() {
                   ? carImages
                   : [{ photoPath: carData.profilePicture }]
               }
-              mainSettings={mainSliderSettings}
-              thumbSettings={thumbSliderSettings}
             />
 
             <aside className="space-y-4 md:hidden">
