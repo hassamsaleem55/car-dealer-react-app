@@ -17,9 +17,12 @@ import { GetDirectionV1 } from "@sections-dir/shared/get-dealer-direction";
 import { fetchApi } from "@core-dir/services/Api.service";
 import { processCarCardData } from "@core-dir/helpers/CarCardDataProcessor";
 import { processCarDetailsSpecs } from "@core-dir/helpers/CarDetailsSpecsProcessor";
-import { RightChoiceDefault } from "@sections-dir/shared/right-choice/variants";
+import { RightChoiceForDetailsPage } from "@sections-dir/shared/right-choice/variants";
 import { FeaturedDefault } from "@sections-dir/shared/featured/variants";
 import type { Car } from "@components-dir/car-card/car-card.types";
+import { FaqDefault } from "@sections-dir/shared/faqs/variants";
+import { AABannerDefault } from "@sections-dir/shared/AA/variants";
+import { AchievementsDefault } from "@sections-dir/shared/achievements/variants";
 
 export function CarDetailsOne() {
   const location = useLocation();
@@ -250,9 +253,10 @@ export function CarDetailsOne() {
       <div className="container mx-auto px-4">
         <FeaturedDefault props={{ heading: "Latest Stock" }} />
       </div>
+      <AABannerDefault />
       {/* </section> */}
-      <div className="pb-12">
-        <RightChoiceDefault
+      <div className="mb-18 pb-18 bg-white border border-gray-200">
+        <RightChoiceForDetailsPage
           props={{
             heading: "Why We're the Right Choice for You",
             subHeading:
@@ -260,6 +264,8 @@ export function CarDetailsOne() {
           }}
         />
       </div>
+      <AchievementsDefault props={{ heading: "Our Achievements", subHeading: "We take pride in our milestones — each one built on trust, excellence, and passion for what we do." }} />
+      <FaqDefault props={{ heading: "Frequently Asked Questions" }} />
       <GetDirectionV1 />
     </>
   );

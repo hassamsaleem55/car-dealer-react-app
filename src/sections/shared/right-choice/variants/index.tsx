@@ -1,7 +1,7 @@
 import { type DealerSectionProps } from "@types-dir/dealer-props";
 import centeredDefaultSectionStyles from "@app-layout-dir/sections/section-layout-one/css/centered.module.css";
 import centeredWhiteBGSectionStyles from "@app-layout-dir/sections/section-layout-one/css/centered-white.module.css";
-import centeredWhiteCarDetailsStyles from "@app-layout-dir/sections/section-layout-one/css/centered-white.car-details.module.css";
+// import centeredWhiteCarDetailsStyles from "@app-layout-dir/sections/section-layout-one/css/centered-white.car-details.module.css";
 import centeredLightSectionStyles from "@app-layout-dir/sections/section-layout-one/css/centered-light.module.css";
 import centeredDarkSectionStyles from "@app-layout-dir/sections/section-layout-one/css/centered-dark.module.css";
 import RightChoiceOne from "@sections-dir/shared/right-choice/layouts/right-choice-one";
@@ -44,7 +44,7 @@ export function RightChoiceForDetailsPage({
     <RightChoiceOne
       heading={props.heading || ""}
       subHeading={props.subHeading || ""}
-      sectionStyles={centeredWhiteCarDetailsStyles}
+      sectionStyles={centeredDefaultSectionStyles}
       rightChoiceStyles={carDetailsRightChoiceOneStyles}
     />
   );

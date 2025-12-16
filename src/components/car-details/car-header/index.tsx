@@ -45,7 +45,7 @@ export default function CarHeader({
         </div>
       )}
 
-      <header className="bg-white rounded-xl shadow-xl p-6 space-y-5">
+      <header className="bg-white rounded-xl shadow-xl p-6 space-y-4">
         <div className="space-y-4">
           {/* Title and Tags */}
           <div className="space-y-2">
@@ -120,7 +120,7 @@ export default function CarHeader({
                   });
                 }
               }}
-              className="flex-1 md:flex-none space-y-1 text-center md:text-left cursor-pointer hover:scale-105 transition-transform"
+              className="flex-1 md:flex-none space-y-1 text-center md:text-left cursor-pointer hover:scale-105 transition-all duration-150"
             >
               <p className="text-[10px] text-gray-600 font-semibold uppercase tracking-wider">
                 Finance from
@@ -261,7 +261,7 @@ export default function CarHeader({
             >
               {hasAutoTraderRating && (
                 <div className="flex flex-col items-start gap-1">
-                  <span className="text-sm bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent font-bold capitalize">
+                  <span className="text-sm text-primary font-bold capitalize">
                     {carData.autoTraderRating} Price
                   </span>
                   <AutoTraderLogo className="w-14 opacity-90" />
@@ -270,7 +270,7 @@ export default function CarHeader({
 
               {hasCarGuruRating && (
                 <div className="flex flex-col items-end gap-1">
-                  <span className="text-sm bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent font-bold capitalize">
+                  <span className="text-sm text-primary font-bold capitalize">
                     {carData.carGuruRating} Price
                   </span>
                   <CarGuruLogo className="w-14 opacity-90" />

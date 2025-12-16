@@ -95,7 +95,15 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
             </div>
           )}
           <div className={styles["car-card__price-total-block"]}>
-            <p className={styles["car-card__price-total"]}>{retailPrice}</p>
+            <p
+              className={`${
+                pricePerMonth
+                  ? styles["car-card__price-total"]
+                  : styles["car-card__price-estimated"]
+              }`}
+            >
+              {retailPrice}
+            </p>
             <p className={styles["car-card__price-note"]}>Total</p>
           </div>
         </div>

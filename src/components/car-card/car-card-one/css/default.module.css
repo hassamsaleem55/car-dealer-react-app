@@ -6,17 +6,17 @@
 
 /* Root card */
 .car-card {
-  @apply w-auto h-157 md:h-125 pb-4 rounded-2xl border border-gray-200 bg-white 
+  @apply w-auto h-132 pb-4 rounded-2xl border border-gray-200 bg-white 
          transition-all duration-300 ease-in-out relative shadow-2xl md:shadow-md;
 }
 
 /* Image wrapper */
 .car-card__image-wrapper {
-  @apply relative overflow-hidden h-56 sm:h-52 md:h-60 lg:h-56 xl:h-54;
+  @apply relative overflow-hidden md:h-64;
 }
 
 .car-card__img {
-  @apply w-full h-full object-cover object-center rounded-t-2xl 
+  @apply w-full h-full object-fill object-center rounded-t-2xl 
          transition-all duration-500 ease-in-out hover:scale-105;
 }
 
@@ -35,7 +35,7 @@
 
 /* Content wrapper */
 .car-card__content {
-  @apply p-4 md:h-56 space-y-4;
+  @apply p-4 md:h-50 space-y-4;
 }
 
 .car-card__title {
@@ -43,7 +43,7 @@
 }
 
 .car-card__subtitle {
-  @apply text-xs md:text-sm text-gray-600 line-clamp-2;
+  @apply text-xs md:text-sm text-gray-600 line-clamp-1;
 }
 
 .car-card__price-wrapper {
@@ -59,7 +59,7 @@
 }
 
 .car-card__price-estimated {
-  @apply font-bold text-primary;
+  @apply font-bold text-2xl text-primary;
 }
 
 .car-card__price-note {
@@ -72,7 +72,6 @@
 }
 
 .car-card__spec {
-  /* @apply bg-gray-100 border border-gray-200 text-[10px] md:text-xs rounded-lg py-2 flex flex-col items-center gap-1 text-center; */
   @apply bg-linear-to-br from-white to-gray-50 rounded-lg border border-gray-200 text-[10px] md:text-xs  flex flex-col items-center text-center gap-1 py-2;
 }
 

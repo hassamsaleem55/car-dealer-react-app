@@ -142,7 +142,7 @@ const buildCarSpecs = (
     sanitizeSpec(
       "Mileage",
       <MileageSvg />,
-      `${car.odometerReadingMiles?.toLocaleString?.()} miles`
+      `${car.odometerReadingMiles?.toLocaleString?.()} mi`
     ),
     sanitizeSpec("Color", <ColorSvg />, car.colour),
   ];

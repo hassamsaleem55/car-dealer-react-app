@@ -82,7 +82,7 @@ export default function CarMOTInfo({
             </defs>
           </svg>
           <div className="text-center space-y-2">
-            <h2 className="text-2xl md:text-4xl tracking-tight font-bold text-primary">
+            <h2 className="text-2xl md:text-4xl tracking-tight bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent font-bold">
               MOT Information
             </h2>
             <div className="bg-linear-to-r from-primary/10 to-transparent px-4 py-2 rounded-lg border border-primary/20">
@@ -131,7 +131,7 @@ export default function CarMOTInfo({
             </defs>
           </svg>
           <div className="text-center space-y-2">
-            <h2 className="text-2xl md:text-4xl tracking-tight font-bold text-primary">
+            <h2 className="text-2xl md:text-4xl tracking-tight bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent font-bold">
               Service History
             </h2>
             <div className="bg-linear-to-r from-primary/10 to-transparent px-4 py-2 rounded-lg border border-primary/20">
