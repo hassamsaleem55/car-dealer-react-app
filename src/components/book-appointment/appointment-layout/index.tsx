@@ -45,7 +45,6 @@ export default function AppointmentLayout({
                     className="border border-primary/50 text-xs rounded-xl px-2 py-1 flex items-center gap-1"
                     title={spec.key}
                   >
-                    <span className="w-4 h-4">{spec.icon}</span>
                     {spec.value}
                   </span>
                 ))}

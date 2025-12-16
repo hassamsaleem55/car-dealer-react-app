@@ -6,7 +6,7 @@ export default function CarCheckRecheck() {
   const { dealerConfig } = useDealerContext();
 
   return (
-    <section className="col-span-2 bg-white rounded-2xl shadow-none md:shadow-md border border-gray-100 overflow-hidden">
+    <section className="col-span-2 bg-white rounded-2xl shadow-xl border border-gray-200">
       {/* Header */}
       <div className="px-3 py-12 md:mb-6 md:py-6">
         <div className="text-center">

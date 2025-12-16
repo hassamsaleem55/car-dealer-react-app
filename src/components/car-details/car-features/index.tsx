@@ -93,7 +93,7 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
       <div
         ref={headerRef}
         className={`sticky top-16 md:top-20 z-999 flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4
-           bg-white text-gray-600 bg-linear-to-r from-transparent to-violet-200 transition-all duration-200 ease-in-out
+           bg-white text-gray-600 bg-linear-to-r from-transparent to-violet-200/70 transition-all duration-200 ease-in-out
           ${
             isSticky
               ? "px-4 py-3 md:px-8 md:py-4 shadow-xl md:shadow-lg rounded-b-2xl md:rounded-none"
@@ -170,7 +170,7 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
               </MotionReveal>
             ))
           ) : (
-            <p className="flex flex-row gap-3 text-gray-500 text-xs md:text-sm italic">
+            <p className="flex flex-row py-6 gap-3 text-gray-500 text-xs md:text-sm italic">
               <span>No features found for "{searchTerm}".</span>
               <span
                 className="text-primary cursor-pointer"
