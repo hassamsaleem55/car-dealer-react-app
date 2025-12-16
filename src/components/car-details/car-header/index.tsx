@@ -160,7 +160,7 @@ export default function CarHeader({
             btnText="Book an Appointment"
             paddingUtilities="px-3 py-2"
             roundUtilities="rounded-lg group"
-            btnTextSize="text-xs md:text-sm"
+            btnTextSize="text-sm"
             clickEvent={() => {
               setRequestType("Appointment");
               setAppointmentModalOpen(true);
@@ -198,7 +198,7 @@ export default function CarHeader({
               btnText="Book Test Drive"
               paddingUtilities="px-3 py-2"
               roundUtilities="rounded-lg"
-              btnTextSize="text-xs md:text-sm"
+               btnTextSize="text-sm"
               clickEvent={() => {
                 setRequestType("testdrive");
                 setAppointmentModalOpen(true);
@@ -210,7 +210,7 @@ export default function CarHeader({
               btnText="Enquire Now"
               paddingUtilities="px-3 py-2"
               roundUtilities="rounded-lg"
-              btnTextSize="text-xs md:text-sm"
+              btnTextSize="text-sm"
               clickEvent={() => {
                 setRequestType("vehicledetails");
                 setAppointmentModalOpen(true);
@@ -224,7 +224,7 @@ export default function CarHeader({
                 btnText="Apply Finance"
                 paddingUtilities="px-3 py-2"
                 roundUtilities="rounded-lg"
-                btnTextSize="text-xs md:text-sm"
+                btnTextSize="text-sm"
                 clickEvent={() => {
                   const financeSection = document.getElementById(
                     "codeweaver-finance-section"
@@ -244,16 +244,16 @@ export default function CarHeader({
               btnText="Reserve for £99"
               paddingUtilities="px-3 py-2"
               roundUtilities="rounded-lg"
-              btnTextSize="text-xs md:text-sm"
+              btnTextSize="text-sm"
               clickEvent={() => setReservationModalOpen(true)}
             />
           </div>
         </div>
 
         {showRatingFooter && (
-          <div className="border-t border-t-gray-200 mt-5 pt-5 bg-linear-to-r from-transparent via-gray-50 to-transparent">
+          <div className="border-t border-t-gray-200">
             <div
-              className={`flex flex-row items-center w-full ${
+              className={`flex flex-row items-center pt-4 w-full ${
                 hasAutoTraderRating && hasCarGuruRating
                   ? "justify-between"
                   : "justify-center"
