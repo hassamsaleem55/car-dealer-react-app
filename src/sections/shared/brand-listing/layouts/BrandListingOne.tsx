@@ -1,11 +1,10 @@
+import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import SectionLayoutOne from "@app-layout-dir/sections/section-layout-one";
 import SwiperComponent from "@components-dir/swiper";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
 import { FilterCardSimple } from "@components-dir/filter-card/variants";
-// import { carBrands } from "@core-dir/services/CarBrands.service";
 import SectionStyles from "@app-layout-dir/sections/section-layout-one/css/default.module.css";
-import { useEffect, useState } from "react";
 
 export default function BrandListingOne({ heading }: { heading: string }) {
   const { filtersData } = useOutletContext<{
@@ -15,13 +14,14 @@ export default function BrandListingOne({ heading }: { heading: string }) {
 
   useEffect(() => {
     if (!filtersData || !filtersData[0]?.options) return;
-
     const imageRootPath = "../images/car-brand-logo/";
-    
     const toTitleCase = (str: string) => {
-      return str.split(' ').map(word => 
-        word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-      ).join(' ');
+      return str
+        .split(" ")
+        .map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        )
+        .join(" ");
     };
 
     const carBrandsList = filtersData[0].options.map((item: any) => ({

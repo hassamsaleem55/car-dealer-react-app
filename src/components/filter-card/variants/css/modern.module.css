@@ -3,7 +3,7 @@
 @import "@dealers-dir/style.css";
 
 .filter-card {
-  @apply relative rounded-2xl overflow-hidden 
+  @apply relative md:p-2 rounded-2xl overflow-hidden 
          w-full h-full transition-all duration-300 brightness-95 hover:brightness-110;
 }
 
@@ -17,12 +17,12 @@
 }
 
 .filter-card-title {
-  @apply absolute top-3 left-3 text-white 
-         text-sm font-semibold 
-         bg-black/50 backdrop-blur-sm px-3 py-1.5 rounded-md 
+  @apply absolute top-3 left-3 text-gray-700 
+         text-[10px] md:text-xs font-semibold 
+         bg-violet-100 backdrop-blur-sm px-3 py-1.5 rounded-md 
          transition-all duration-300 ease-in-out;
 }
 
 .filter-card:hover .filter-card-title  {
-  @apply top-1.5 left-2 md:left-1.5 bg-primary/75 text-white rounded-none rounded-tl-2xl rounded-br-lg;
+  @apply top-1.5 left-2 md:left-1.5 bg-primary/80 text-white rounded-none rounded-tl-2xl rounded-br-lg;
 }

@@ -33,13 +33,14 @@ export function FilterCardSimple({ type, filterKey, item }: FilterCardProps) {
 }
 
 export function FilterCardModern({ filterKey, item }: FilterCardProps) {
+  console.log("FilterCardModern item:", item);
   return (
     <Link
       to={`/stock?${filterKey.toLowerCase()}=${item.name.toLowerCase()}`}
       key={item.id}
       className={`${ModernStyles["filter-card"]}`}
     >
-      <img src={item.media} alt={item.name} loading="lazy" />
+      <img src={item.media} alt={item.media} loading="lazy" />
       <h3 className={ModernStyles["filter-card-title"]}>{item.name}</h3>
     </Link>
   );
