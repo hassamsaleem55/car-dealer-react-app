@@ -15,20 +15,23 @@ export default function BodyTypeOne({ heading }: { heading: string }) {
 
   useEffect(() => {
     if (!filtersData || !filtersData[2]?.options) return;
-    const imageRootPath = "../images/car-body-type-2/";
-    // const toTitleCase = (str: string) => {
-    //   return str
-    //     .split(" ")
-    //     .map(
-    //       (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-    //     )
-    //     .join(" ");
-    // };
+    const imageRootPath = "../images/car-body-type/";
+    const toTitleCase = (str: string) => {
+      return str
+        .split(" ")
+        .map(
+          (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        )
+        .join(" ");
+    };
 
     const carTypesList = filtersData[2].options.map((item: any) => ({
       id: item.id,
       name: item.value.toUpperCase(),
-      media: `${imageRootPath}hatchback-sample.png`,
+      media: `${imageRootPath}${toTitleCase(item.value)}.png`,
+      fallbackMedia: `${imageRootPath}${toTitleCase(
+        filtersData[2].options[0].value
+      )}.png`,
     }));
 
     setCarTypes(carTypesList);
@@ -52,9 +55,7 @@ export default function BodyTypeOne({ heading }: { heading: string }) {
         }}
         renderItem={(item, index) => (
           <MotionReveal preset="slideUp" delay={index * 0.1}>
-           {/* <div className="border border-gray-200 rounded-2xl p-4"> */}
-             <FilterCardModern filterKey="bodytype" item={item} />
-           {/* </div> */}
+            <FilterCardModern filterKey="bodytype" item={item} />
           </MotionReveal>
         )}
       />

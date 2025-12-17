@@ -135,10 +135,10 @@ export default function CarSpecifications({
             filteredSpecifications.map((spec, idx) => (
               <div
                 key={idx}
-                className="break-inside-avoid mb-4 bg-white text-gray-800 rounded-xl border border-gray-200 shadow-md hover:shadow-lg hover:border-primary/40 transition-all duration-300 p-5 group"
+                className="break-inside-avoid mb-4 rounded-xl border border-gray-200 shadow-md hover:shadow-lg hover:border-primary/40 transition-all duration-300 p-5 group"
               >
-                <div className="text-sm md:text-base font-semibold bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent mb-3">
-                  <span>{spec.category}</span>
+                <div className="text-sm md:text-base font-semibold mb-3">
+                  <span className="bg-linear-to-r from-primary to-primary/70 bg-clip-text text-transparent">{spec.category}</span>
                 </div>
                 <div className="text-xs md:text-sm">
                   {spec.specs.map((item, itemIdx) => (

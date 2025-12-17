@@ -40,7 +40,14 @@ export function FilterCardModern({ filterKey, item }: FilterCardProps) {
       key={item.id}
       className={`${ModernStyles["filter-card"]}`}
     >
-      <img src={item.media} alt={item.media} loading="lazy" />
+      <img
+        src={item.media}
+        alt={item.media}
+        onError={(e) => {
+          e.currentTarget.src = item.fallbackMedia; // Set fallback image
+        }}
+        loading="lazy"
+      />
       <h3 className={ModernStyles["filter-card-title"]}>{item.name}</h3>
     </Link>
   );
