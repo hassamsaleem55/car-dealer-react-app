@@ -19,7 +19,7 @@
 .filter-card-title {
   @apply absolute top-3 left-3 text-gray-700 
          text-[10px] md:text-xs font-semibold 
-         bg-violet-100 backdrop-blur-sm px-3 py-1.5 rounded-md 
+         bg-gray-50 backdrop-blur-sm px-3 py-1.5 rounded-md 
          transition-all duration-300 ease-in-out;
 }
 
