@@ -9,6 +9,7 @@ import {
   Zap,
 } from "lucide-react";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
+import { Link } from "react-router-dom";
 
 // --- Types ---
 interface BentoCardProps {
@@ -340,12 +341,18 @@ export default function AAOne() {
 
         <MotionReveal preset="slideUp" delay={0.4}>
           <div className="flex flex-col sm:flex-row justify-center gap-3 md:gap-4">
-            <button className="bg-primary hover:bg-primary/90 text-white font-bold uppercase py-3 md:py-4 px-6 md:px-8 lg:px-10 rounded-full transition-all shadow-lg hover:shadow-xl active:scale-95 flex items-center justify-center gap-2 text-sm md:text-base">
+            <Link
+              to="/stock"
+              className="bg-primary hover:bg-primary/90 text-white font-bold uppercase py-3 md:py-4 px-6 md:px-8 lg:px-10 rounded-full transition-all shadow-lg hover:shadow-xl active:scale-95 flex items-center justify-center gap-2 text-sm md:text-base"
+            >
               <Car size={18} className="md:w-5 md:h-5" /> {primaryButton}
-            </button>
-            <button className="bg-white border-2 border-gray-300 text-basicFont hover:border-primary hover:text-primary font-bold uppercase py-3 md:py-4 px-6 md:px-8 lg:px-10 rounded-full transition-all flex items-center justify-center gap-2 text-sm md:text-base">
+            </Link>
+            <Link
+              to="/contact"
+              className="bg-white border-2 border-gray-300 text-basicFont hover:border-primary hover:text-primary font-bold uppercase py-3 md:py-4 px-6 md:px-8 lg:px-10 rounded-full transition-all flex items-center justify-center gap-2 text-sm md:text-base"
+            >
               <Zap size={18} className="md:w-5 md:h-5" /> {secondaryButton}
-            </button>
+            </Link>
           </div>
         </MotionReveal>
       </section>
