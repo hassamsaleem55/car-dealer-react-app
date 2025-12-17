@@ -134,9 +134,6 @@
       ]
     },
     {
-      "isSubmenu": false,
-      "mainMenuText": null,
-      "subMenuText": null,
       "pageName": "stock",
       "label": "Our Stock",
       "title": "Our Stock - Motors Hub",
@@ -152,9 +149,6 @@
       ]
     },
     {
-      "isSubmenu": false,
-      "mainMenuText": null,
-      "subMenuText": null,
       "pageName": "car-details",
       "label": "Car Details",
       "title": "Car Details - Motors Hub",
@@ -169,10 +163,22 @@
         }
       ]
     },
+        {
+      "pageName": "AA-cars",
+      "label": "AA Cars",
+      "title": "AA Cars - Motors Hub",
+      "description": "Learn more about AA Cars at Motors Hub.",
+      "path": "/aa-cars",
+      "showInNavbar": true,
+      "sections": [
+        {
+          "isShared": false,
+          "folderName": "AA-cars",
+          "variant": "AACarsDefault"
+        }
+      ]
+    },
     {
-      "isSubmenu": false,
-      "mainMenuText": null,
-      "subMenuText": null,
       "pageName": "finance",
       "label": "Finance",
       "title": "Finance - Motors Hub",
@@ -295,9 +301,6 @@
       ]
     },
     {
-      "isSubmenu": false,
-      "mainMenuText": null,
-      "subMenuText": null,
       "pageName": "about",
       "label": "About Us",
       "title": "About Us - Motors Hub",
@@ -354,9 +357,6 @@
       ]
     },
     {
-      "isSubmenu": false,
-      "mainMenuText": null,
-      "subMenuText": null,
       "pageName": "warranty",
       "label": "Warranty",
       "title": "Warranty - Motors Hub",
@@ -504,9 +504,6 @@
       ]
     },
     {
-      "isSubmenu": false,
-      "mainMenuText": null,
-      "subMenuText": null,
       "pageName": "contact",
       "label": "Contact Us",
       "title": "Contact Us - Motors Hub",
@@ -532,9 +529,6 @@
       ]
     },
     {
-      "isSubmenu": false,
-      "mainMenuText": null,
-      "subMenuText": null,
       "pageName": "privacy-policy",
       "label": "Privacy Policy",
       "title": "Privacy Policy - Motors Hub",
@@ -560,9 +554,6 @@
       ]
     },
     {
-      "isSubmenu": false,
-      "mainMenuText": null,
-      "subMenuText": null,
       "pageName": "terms-of-service",
       "label": "Terms of Service",
       "title": "Terms of Service - Motors Hub",

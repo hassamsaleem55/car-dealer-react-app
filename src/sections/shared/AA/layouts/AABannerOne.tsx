@@ -12,20 +12,20 @@ export default function AABannerOne() {
       {/* <MotionReveal preset="slideRight" distance={distance} duration={1.2}> */}
       <MotionReveal preset="slideRight" duration={1.2}>
         <img
-          src="../../images/aa-logo-left.jpg"
+          src="../../images/AACars/aa-logo-left.jpg"
           alt="AA Logo Left"
-          className="object-contain transition-transform duration-300 hover:scale-105 w-44 md:w-50 lg:w-60 xl:w-86 2xl:w-100"
+          className="object-contain transition-transform duration-300 hover:scale-105 w-60 sm:w-80 md:w-100 lg:w-125"
         />
       </MotionReveal>
 
-      <div className="h-16 md:h-22 w-[3px] bg-black/50 rounded-full" />
+      <div className="h-16 sm:h-24 md:30 lg:h-34 w-[3px] bg-black/50 rounded-full" />
 
       {/* <MotionReveal preset="slideLeft" distance={distance} duration={1.2}> */}
       <MotionReveal preset="slideLeft" duration={1.2}>
         <img
-          src="../../images/aa-logo-right.jpg"
+          src="../../images/AACars/aa-standards-trading.webp"
           alt="AA Logo Right"
-          className="w-36 sm:w-52 md:w-64 lg:w-72 object-contain transition-transform duration-300 hover:scale-105"
+          className="w-36 sm:w-52 md:w-64 lg:w-68 object-contain transition-transform duration-300 hover:scale-105"
         />
       </MotionReveal>
     </section>

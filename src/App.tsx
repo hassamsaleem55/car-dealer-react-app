@@ -4,7 +4,7 @@ import { DealerProvider, useDealerContext } from "@core-dir/dealer-provider";
 import PageRenderer from "@core-dir/page-renderer";
 import Layout from "./Layout";
 import { type BaseDealerPage } from "@types-dir/dealer-props";
-import PaymentResponse from "./sections/PaymentResponse";
+import PaymentResponse from "./pages/PaymentResponse";
 
 function AppRouter() {
   const { dealerConfig, dealerData } = useDealerContext();

@@ -24,7 +24,7 @@ import { FaqDefault } from "@sections-dir/shared/faqs/variants";
 import { AABannerDefault } from "@sections-dir/shared/AA/variants";
 import { AchievementsDefault } from "@sections-dir/shared/achievements/variants";
 
-export function CarDetailsOne() {
+export default function CarDetailsOne() {
   const location = useLocation();
   const { dealerData, dealerAuthToken } = useDealerContext();
   const { setReservationModalOpen, setReservationCarData } = useOutletContext<{
