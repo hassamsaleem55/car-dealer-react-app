@@ -33,7 +33,6 @@ export function FilterCardSimple({ type, filterKey, item }: FilterCardProps) {
 }
 
 export function FilterCardModern({ filterKey, item }: FilterCardProps) {
-  console.log("FilterCardModern item:", item);
   return (
     <Link
       to={`/stock?${filterKey.toLowerCase()}=${item.name.toLowerCase()}`}

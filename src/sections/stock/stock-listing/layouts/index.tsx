@@ -1,5 +1,6 @@
-import { useEffect, useState, useCallback } from "react";
-import { ChevronRight, SlidersHorizontal, X, Search } from "lucide-react";
+import { useEffect, useState, useCallback, useRef } from "react";
+// import { ChevronRight, SlidersHorizontal, X, Search } from "lucide-react";
+import { ChevronRight, SlidersHorizontal, X } from "lucide-react";
 import { useOutletContext, useNavigate, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
@@ -22,64 +23,120 @@ export function StockListingOne() {
   }>();
   const [loading, setLoading] = useState(false);
   const [carData, setCarData] = useState<Array<any>>([]);
-  const [allCarData, setAllCarData] = useState<Array<any>>([]);
+  // const [allCarData, setAllCarData] = useState<Array<any>>([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  // const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalRecords, setTotalRecords] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const loaderRef = useRef<HTMLDivElement | null>(null);
+  const isInitialLoading = loading && currentPage === 1;
+  const PageSize = 9;
   const navigate = useNavigate();
+
+  // Search filter effect
+
+  useEffect(() => {
+    setCurrentPage(1);
+    setHasMore(true);
+    // setAllCarData([]);
+    setCarData([]);
+  }, [location.search]);
 
   useEffect(() => {
     const searchParams = location.search.startsWith("?")
       ? location.search.substring(1)
       : location.search;
+
     const fetchData = async () => {
       if (!dealerAuthToken) return;
+      if (!hasMore && currentPage !== 1) return;
+
+      console.log(
+        "Fetching data...",
+        "page:",
+        currentPage,
+        "params:",
+        searchParams
+      );
 
       try {
         setLoading(true);
+
         const response = await fetchApi(
-          `/stocks/list${searchParams ? `?${searchParams}` : ""}`,
+          `/stocks/list?CurrentPage=${currentPage}&PageSize=${PageSize}${
+            searchParams ? `&${searchParams}` : ""
+          }`,
           dealerAuthToken
         );
 
-        const processedData = await processCarCardData(response.stockList);
-        setAllCarData([...processedData]);
-        setCarData([...processedData]);
+        const processedData = await processCarCardData(
+          response.stockList || []
+        );
+
+        // setAllCarData((prev) =>
+        //   currentPage === 1 ? processedData : [...prev, ...processedData]
+        // );
+
+        setCarData((prev) =>
+          currentPage === 1 ? processedData : [...prev, ...processedData]
+        );
+
+        if (processedData.length < PageSize) {
+          setHasMore(false);
+        }
+
+        setTotalRecords(response.totalRecords);
       } catch (error) {
-        console.error("Error fetching filters:", error);
+        console.error("Error fetching stock list:", error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [location.search, dealerAuthToken]);
+  }, [currentPage, location.search, dealerAuthToken, hasMore]);
 
-  // Search filter effect
   useEffect(() => {
-    if (!searchQuery.trim()) {
-      setCarData(allCarData);
-      return;
-    }
+    if (!loaderRef.current || loading || !hasMore) return;
 
-    const query = searchQuery.toLowerCase();
-    const filtered = allCarData.filter((car) => {
-      const title = car.title?.toLowerCase() || "";
-      const derivative = car.derivative?.toLowerCase() || "";
-      const registrationNo = car.registrationNo?.toLowerCase() || "";
-      const make = car.make?.toLowerCase() || "";
-      const model = car.model?.toLowerCase() || "";
-
-      return (
-        title.includes(query) ||
-        derivative.includes(query) ||
-        registrationNo.includes(query) ||
-        make.includes(query) ||
-        model.includes(query)
-      );
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setCurrentPage((prev) => prev + 1);
+      }
     });
 
-    setCarData(filtered);
-  }, [searchQuery, allCarData]);
+    observer.observe(loaderRef.current);
+
+    return () => observer.disconnect();
+  }, [loading, hasMore]);
+
+  // search field filtering effect
+  // useEffect(() => {
+  //   if (!searchQuery.trim()) {
+  //     setCarData(allCarData);
+  //     return;
+  //   }
+
+  //   const query = searchQuery.toLowerCase();
+  //   const filtered = allCarData.filter((car) => {
+  //     const title = car.title?.toLowerCase() || "";
+  //     const derivative = car.derivative?.toLowerCase() || "";
+  //     const registrationNo = car.registrationNo?.toLowerCase() || "";
+  //     const make = car.make?.toLowerCase() || "";
+  //     const model = car.model?.toLowerCase() || "";
+
+  //     return (
+  //       title.includes(query) ||
+  //       derivative.includes(query) ||
+  //       registrationNo.includes(query) ||
+  //       make.includes(query) ||
+  //       model.includes(query)
+  //     );
+  //   });
+
+  //   setCarData(filtered);
+  // }, [searchQuery, allCarData]);
 
   const handleSortByChange = useCallback(
     (value: string[]) => {
@@ -220,10 +277,10 @@ export function StockListingOne() {
           <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
-                {`Browse All ${!loading ? carData.length : ""} Cars`}
+                {`Browse All ${!loading ? totalRecords : ""} Cars`}
               </h2>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
-                <div className="relative flex-1 sm:flex-initial sm:min-w-60">
+                {/* <div className="relative flex-1 sm:flex-initial sm:min-w-60">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Search className="h-4 w-4 text-gray-400" />
                   </div>
@@ -242,7 +299,7 @@ export function StockListingOne() {
                       <X className="h-4 w-4 text-gray-400 hover:text-gray-600" />
                     </button>
                   )}
-                </div>
+                </div> */}
                 <div className="w-full sm:w-56">
                   <DropdownFlexible
                     category="Sort By"
@@ -276,25 +333,61 @@ export function StockListingOne() {
           </div>
 
           {/* === Car Listing Grid === */}
-          {/* <div className="md:bg-white md:rounded-2xl md:shadow-sm md:border md:border-gray-100 md:p-5"> */}
-          {loading ? (
+
+          {/* {loading ? (
             <div className="flex items-center justify-center h-[60vh]">
               <DotLoader size="lg" />
             </div>
           ) : carData.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-              {carData.map((item, index) => (
-                <MotionReveal key={item.id ?? index} preset="slideLeft">
-                  <CarCardOne car={item} styles={CarCardStyles} />
-                </MotionReveal>
-              ))}
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                {carData.map((item, index) => (
+                  <MotionReveal key={item.id ?? index} preset="slideLeft">
+                    <CarCardOne car={item} styles={CarCardStyles} />
+                  </MotionReveal>
+                ))}
+              </div>
+              {hasMore && (
+                <div ref={loaderRef} className="flex justify-center py-10">
+                  <DotLoader size="md" />
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="flex items-center justify-center h-[40vh] text-gray-500 text-base">
+              No cars found matching your filters.
             </div>
+          )} */}
+
+          {isInitialLoading ? (
+            <div className="flex items-center justify-center h-[60vh]">
+              <DotLoader size="lg" />
+            </div>
+          ) : carData.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                {carData.map((item, index) => (
+                  <MotionReveal key={item.id ?? index} preset="slideLeft">
+                    <CarCardOne car={item} styles={CarCardStyles} />
+                  </MotionReveal>
+                ))}
+              </div>
+
+              {/* Pagination Loader (ONLY for next pages) */}
+              {loading && currentPage > 1 && (
+                <div className="flex justify-center py-10">
+                  <DotLoader size="md" />
+                </div>
+              )}
+
+              {/* Intersection Observer Trigger */}
+              {!loading && hasMore && <div ref={loaderRef} className="h-10" />}
+            </>
           ) : (
             <div className="flex items-center justify-center h-[40vh] text-gray-500 text-base">
               No cars found matching your filters.
             </div>
           )}
-          {/* </div> */}
         </section>
       </div>
     </div>

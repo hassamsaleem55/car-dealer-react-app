@@ -29,7 +29,7 @@ export default function PageRenderer({ page }: { page: BaseDealerPage }) {
             .length === 0
         )
           return false;
-        else if (section.folderName === "ready-set-sold") return false;
+        // else if (section.folderName === "ready-set-sold") return false;
         return true;
       }) || [],
     [page.sections, dealerData.FCANumber]

@@ -163,7 +163,7 @@
         }
       ]
     },
-        {
+    {
       "pageName": "AA-cars",
       "label": "AA Cars",
       "title": "AA Cars - Motors Hub",
@@ -297,6 +297,21 @@
               "urls": ["https://player.vimeo.com/video/887241645"]
             }
           }
+        }
+      ]
+    },
+    {
+      "pageName": "sell-your-car",
+      "label": "Sell Your Car",
+      "title": "Sell Your Car - Motors Hub",
+      "description": "Learn more about selling your car at Motors Hub.",
+      "path": "/sell-your-car",
+      "showInNavbar": true,
+      "sections": [
+        {
+          "isShared": false,
+          "folderName": "sell-car-wizard",
+          "variant": "SellCarWizardDefault"
         }
       ]
     },

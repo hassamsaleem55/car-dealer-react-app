@@ -114,7 +114,7 @@ function FilterOne({
               className="block md:hidden"
             >
               <Button
-              clickEvent={() => setShowFilters && setShowFilters(false)}
+                clickEvent={() => setShowFilters && setShowFilters(false)}
                 variant="primary"
                 btnText="View Cars"
                 btnIcon={<Search className="w-5 h-5" />}

@@ -6,7 +6,7 @@
 
 /* Root card */
 .car-card {
-  @apply w-auto h-165 md:h-132 pb-4 rounded-2xl border border-gray-200 bg-white 
+  @apply w-auto h-auto md:h-132 pb-4 rounded-2xl border border-gray-200 bg-white 
          transition-all duration-300 ease-in-out relative shadow-2xl md:shadow-md;
 }
 
@@ -30,7 +30,7 @@
 .car-card__year {
   @apply absolute top-3 right-3 bg-white/90 
          text-primary text-xs md:text-sm 
-         font-medium px-2.5 sm:px-3 py-1.5 rounded-full;
+         font-bold px-2.5 sm:px-3 py-1.5 rounded-full;
 }
 
 /* Content wrapper */
