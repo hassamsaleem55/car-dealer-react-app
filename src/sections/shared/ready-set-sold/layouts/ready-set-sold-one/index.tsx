@@ -2,6 +2,7 @@ import SectionLayoutOne from "@app-layout-dir/sections/section-layout-one";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
 import Button from "@elements-dir/button";
 import { readySetSold } from "@core-dir/store/ReadySetSold.data";
+import { useNavigate } from "react-router-dom";
 
 export default function ReadySetSoldOne({
   heading,
@@ -14,6 +15,7 @@ export default function ReadySetSoldOne({
   sectionStyles: any;
   readySetSoldStyles: any;
 }) {
+  const navigate = useNavigate();
   return (
     <SectionLayoutOne
       headingText={heading}
@@ -27,7 +29,12 @@ export default function ReadySetSoldOne({
               key={item.id}
               className={readySetSoldStyles["ready-set-sold-card"]}
             >
-              <img src={item.imgSrc} alt={item.title} loading="lazy" decoding="async" />
+              <img
+                src={item.imgSrc}
+                alt={item.title}
+                loading="lazy"
+                decoding="async"
+              />
               <div
                 className={readySetSoldStyles["ready-set-sold-card__content"]}
               >
@@ -58,6 +65,7 @@ export default function ReadySetSoldOne({
       </div>
       <div className="text-center -mt-8 mb-12">
         <Button
+          clickEvent={() => navigate("/sell-your-car")}
           variant="primary"
           btnText="Sell your car today"
           btnTextSize="text-sm md:text-base"

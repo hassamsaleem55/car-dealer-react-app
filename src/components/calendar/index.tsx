@@ -12,7 +12,7 @@ export default function CalendarOne({
   setSelectedTime,
 }: {
   TODAY: moment.Moment;
-  setScheduleDayId: (id: number | null) => void;
+  setScheduleDayId?: (id: number | null) => void;
   selectedDate: Date | null;
   setSelectedDate: (date: Date | null) => void;
   selectedTime: string | null;
@@ -328,7 +328,7 @@ export default function CalendarOne({
                       key={slot.scheduleDayId}
                       onClick={() => {
                         setSelectedTime(formatted);
-                        setScheduleDayId(slot.scheduleDayId);
+                        setScheduleDayId?.(slot.scheduleDayId);
                       }}
                       className={`group flex items-center justify-center rounded-lg px-3 py-2 cursor-pointer ${
                         isSelected
