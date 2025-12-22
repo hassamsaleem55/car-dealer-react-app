@@ -14,7 +14,6 @@ export default function TrustedPartnerOne({
 }) {
   const { dealerData } = useDealerContext();
   const imageRootPath = "../images/finance-logos/";
-  console.log("dealerData in TrustedPartnerOne:", dealerData);
   return (
     <SectionLayoutOne
       headingText={heading}

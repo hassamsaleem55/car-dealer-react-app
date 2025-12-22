@@ -1,34 +1,38 @@
 import { useEffect, useState } from "react";
-import type { WizardStepProps, FormData } from "../sell-car-wizard.types";
-// import { Car, Upload } from "lucide-react";
+import type {
+  PersonalDetailsStepProps,
+  FormData,
+} from "../sell-car-wizard.types";
 import { Upload } from "lucide-react";
 import Button from "@elements-dir/button";
 import { postFormDataApi } from "@core-dir/services/Api.service";
 import { useDealerContext } from "@core-dir/dealer-provider";
+import Breadcrumb from "../breadcrumbs";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
 }
 
-const Input: React.FC<InputProps> = ({
+const Input = ({
   label,
   id,
   error,
   className = "",
+  required,
   ...props
-}) => (
+}: InputProps) => (
   <div className="w-full">
     <label
       htmlFor={id}
       className="block mb-2 text-sm font-medium text-gray-700"
     >
-      {label}
+      {label} {required && <span className="text-red-600">*</span>}
     </label>
     <input
       id={id}
-      className={`bg-gray-50 border text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition-all outline-none ${
-        error ? "border-red-500 ring-1 ring-red-500" : "border-gray-200"
+      className={`bg-gray-50 border text-gray-900 text-sm rounded-xl block w-full p-3 transition-all outline-none ${
+        error ? "border-red-500" : "focus:border-gray-400 border-gray-200"
       } ${className}`}
       {...props}
     />
@@ -37,16 +41,18 @@ const Input: React.FC<InputProps> = ({
 );
 
 export default function PersonalDetailsForm({
-  vehicleDetails,
   formData,
-  updateData,
+  updateFormData,
+  vehicleDetails,
+  updateVehicleDetails,
   onNext,
   onBack,
   setStep,
-}: WizardStepProps) {
+}: PersonalDetailsStepProps) {
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>(
     {}
   );
+  const [loading, setLoading] = useState(false);
   const { dealerAuthToken } = useDealerContext();
   const handleImagesChange = (files: FileList | null) => {
     if (!files) return;
@@ -60,7 +66,7 @@ export default function PersonalDetailsForm({
         )
     );
 
-    updateData({
+    updateFormData({
       images: [...existing, ...newFiles],
     });
   };
@@ -69,11 +75,11 @@ export default function PersonalDetailsForm({
     if (!formData.images) return;
     const updatedImages = [...formData.images];
     updatedImages.splice(index, 1);
-    updateData({ images: updatedImages });
+    updateFormData({ images: updatedImages });
   };
 
   const removeAllImages = () => {
-    updateData({ images: [] });
+    updateFormData({ images: [] });
   };
 
   const validate = () => {
@@ -81,19 +87,30 @@ export default function PersonalDetailsForm({
     if (!formData.name) newErrors.name = "Required";
     if (!formData.email) newErrors.email = "Required";
     if (!formData.phone) newErrors.phone = "Required";
+    if (!formData.address) newErrors.address = "Required";
+
+    // UK phone regex: +44 or 0 followed by 9–10 digits
+    const ukPhoneRegex =
+      /^(?:\+?44\s?\d{10}|0044\s?\d{10}|07\d{9}|01\d{9}|02\d{9})$/;
+    if (
+      formData.phone &&
+      !ukPhoneRegex.test(formData.phone.replace(/\s+/g, ""))
+    ) {
+      newErrors.phone = "Invalid UK phone number";
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (formData.email && !emailRegex.test(formData.email)) {
+      newErrors.email = "Invalid email address";
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  async function addSellingCustomer({
-    stockId,
-    formData,
-  }: {
-    stockId: number;
-    formData: FormData;
-  }) {
+  async function addSellingCustomer() {
     const payload = new FormData();
-    payload.append("StockId", stockId.toString());
+    payload.append("StockId", formData.stockId?.toString() || "");
     payload.append("FullName", formData.name || "");
     payload.append("EmailAddress", formData.email || "");
     payload.append("PhoneNumber", formData.phone || "");
@@ -101,242 +118,266 @@ export default function PersonalDetailsForm({
     payload.append("Message", formData.message || "");
     payload.append("ImageType", "SellingStock");
 
-    if (formData.images?.length) {
+    if (formData.images.length) {
       formData.images.forEach((file) => {
         payload.append("Images", file);
       });
     }
     const response = await postFormDataApi(
-      `/stocks/add-selling-customer/${stockId}`,
+      `/stocks/add-selling-customer/${formData.stockId}`,
       payload,
       dealerAuthToken
     );
 
-    console.log("addSellingCustomer response:", response);
+    updateFormData({ customerId: response.customerId });
+    updateVehicleDetails({ retailPrice: response.retailPrice });
   }
 
   const handleNext = async () => {
     if (!validate()) return;
 
+    setLoading(true);
     try {
-      await addSellingCustomer({
-        stockId: vehicleDetails.stockId,
-        formData,
-      });
+      await addSellingCustomer();
 
       onNext(); // move to success step
     } catch (error) {
       console.error(error);
       alert("Something went wrong while submitting the form");
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     return () => {
-      formData.images?.forEach((file) =>
+      formData.images.forEach((file) =>
         URL.revokeObjectURL(URL.createObjectURL(file))
       );
     };
   }, [formData.images]);
 
   return (
-    <div className="grid md:grid-cols-3 gap-8">
-      {/* <div className="p-12 flex flex-col items-center justify-center gap-2">
-        <h2 className="text-5xl md:text-7xl font-black text-center uppercase tracking-tighter text-gray-900 mb-4">
-          Sell My Car
-        </h2>
-        <p className="mb-8 text-gray-600 text-lg max-w-lg text-center leading-relaxed">
-          <span className="font-bold text-gray-900">Get a free valuation</span>,
-          the best offer from our experts, and free home collection with
-          same-day payment.
-        </p>
-      </div> */}
-      {/* Left: Summary */}
-      <div className="md:col-span-1">
-        <div className="rounded-3xl bg-white shadow-xl border border-primary overflow-hidden">
-          <div className="p-8 flex flex-col gap-2">
-            <div>
-              <h3 className="text-3xl font-bold">
-                {vehicleDetails?.make} {vehicleDetails?.model}
-              </h3>
-              <p className="text-base text-gray-500">
-                {vehicleDetails?.derivative}
-              </p>
-            </div>
-            <div className="flex items-center gap-4 mb-6">
-              {/* <span className="bg-yellow-300 border border-black px-4 py-1 rounded font-mono font-bold text-xl uppercase shadow-sm"> */}
-              <span className="inline-flex items-center px-3 py-1.5 rounded-lg font-bold text-xl uppercase bg-linear-to-r from-primary/15 to-primary/5 text-primary border border-primary/30 shadow-sm">
-                {vehicleDetails?.registration}
-              </span>
-              <span className="text-sm text-bold">
+    <div className="flex flex-col gap-6">
+      <Breadcrumb pageName="Your Personal Details" />
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Left: Vehicle Summary */}
+        <div className="lg:col-span-1">
+          <div className="rounded-2xl bg-linear-to-br from-white via-gray-50/50 to-white shadow-2xl border border-gray-200/60 overflow-hidden h-full">
+            <div className="p-6 flex flex-col gap-4">
+              <div className="border-b border-gray-200 pb-4">
+                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                  Your Vehicle
+                </h4>
+                <h3 className="text-2xl font-bold text-gray-900 leading-tight">
+                  {vehicleDetails.make} {vehicleDetails.model}
+                </h3>
+                <p className="text-sm text-gray-600 mt-1">
+                  {vehicleDetails.derivative}
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-3 mb-2">
+                <span className="inline-flex items-center px-4 py-2 rounded-lg font-bold text-lg uppercase bg-linear-to-r from-primary/20 via-primary/10 to-primary/5 text-primary border-2 border-primary/40 shadow-md">
+                  {vehicleDetails.regNo}
+                </span>
+                {formData.mileage && (
+                  <div className="bg-gray-100 rounded-lg px-3 py-1.5">
+                    <p className="text-[10px] text-gray-500 font-medium">
+                      Mileage
+                    </p>
+                    <p className="text-xs font-bold text-gray-900">
+                      {Number(formData.mileage).toLocaleString()} mi
+                    </p>
+                  </div>
+                )}
+              </div>
+              <div className="text-sm text-gray-600 mb-2">
                 Not your car?{" "}
                 <button
                   onClick={() => setStep && setStep(1)}
-                  className="text-primary underline"
+                  className="text-primary font-semibold underline hover:no-underline transition-all"
                 >
                   Change
                 </button>
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {[
-                {
-                  icon: "Year",
-                  value: new Date(
-                    vehicleDetails?.firstRegistrationDate
-                  ).getFullYear(),
-                },
-                { icon: "Fuel", value: vehicleDetails?.fuelType },
-                { icon: "Trans", value: vehicleDetails?.transmissionType },
-                { icon: "Body", value: vehicleDetails?.bodyType },
-                { icon: "Color", value: vehicleDetails?.colour },
-              ].map((spec, idx) => (
-                <div
-                  key={idx}
-                  className="bg-linear-to-br from-white to-gray-50 rounded-xl border border-gray-200 shadow-md hover:shadow-lg hover:border-primary/40 transition-all duration-300 text-center px-2 py-2 group"
-                >
-                  <div className="flex justify-center mb-1 text-gray-500 group-hover:text-primary transition-colors">
-                    {spec.icon}
-                  </div>
-                  <p className="text-xs font-bold text-gray-800">
-                    {spec.value}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Right: Form */}
-      <div className="md:col-span-2">
-        <div className="grid grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-            <h3 className="text-xl font-bold mb-4">Contact Details</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                label="Full Name"
-                id="name"
-                value={formData.name}
-                onChange={(e) => updateData({ name: e.target.value })}
-                error={errors.name}
-              />
-              <Input
-                label="Phone Number"
-                id="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={(e) => updateData({ phone: e.target.value })}
-                error={errors.phone}
-              />
-              <div className="md:col-span-2">
-                <Input
-                  label="Email Address"
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => updateData({ email: e.target.value })}
-                  error={errors.email}
-                />
-              </div>
-              <div className="md:col-span-2">
-                <Input
-                  label="Address"
-                  id="address"
-                  value={formData.address}
-                  onChange={(e) => updateData({ address: e.target.value })}
-                />
-              </div>
-              <div className="md:col-span-2">
-                <label className="block mb-2 text-sm font-medium text-gray-700">
-                  Message (Optional)
-                </label>
-                <textarea
-                  className="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-blue-500 block w-full p-3 outline-none"
-                  rows={3}
-                  value={formData.message}
-                  onChange={(e) => updateData({ message: e.target.value })}
-                ></textarea>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-            <h3 className="text-xl font-bold mb-4">Upload Photos</h3>
-
-            <label className="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:bg-gray-50 transition-colors cursor-pointer group block">
-              <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform">
-                <Upload size={20} />
               </div>
 
-              <p className="text-sm font-medium text-gray-900">
-                Click or drag photos here
-              </p>
-              <p className="text-xs text-gray-500 mt-1">JPG, PNG up to 10MB</p>
-              <input
-                type="file"
-                multiple
-                accept="image/*"
-                hidden
-                onChange={(e) => {
-                  handleImagesChange(e.target.files);
-                  e.currentTarget.value = ""; // 👈 RESET
-                }}
-              />
-            </label>
-
-            {/* Image Preview Grid */}
-            {formData.images?.length ? (
-              <>
-                <div className="flex items-center justify-between mt-4">
-                  <p className="text-xs text-gray-600">
-                    {formData.images.length} image(s) selected
-                  </p>
-
-                  <button
-                    type="button"
-                    onClick={removeAllImages}
-                    className="text-xs font-medium text-red-600 hover:underline"
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  {
+                    label: "Year",
+                    value: vehicleDetails.year
+                      ? new Date(vehicleDetails.year).getFullYear()
+                      : "N/A",
+                  },
+                  { label: "Fuel", value: vehicleDetails.fuel || "N/A" },
+                  {
+                    label: "Trans",
+                    value: vehicleDetails.transmission || "N/A",
+                  },
+                  { label: "Body", value: vehicleDetails.body || "N/A" },
+                  { label: "Color", value: vehicleDetails.color || "N/A" },
+                ].map((spec, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md hover:border-primary/40 transition-all duration-300 text-center p-3 group"
                   >
-                    Remove all
-                  </button>
-                </div>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
-                  {formData.images.map((file, index) => (
-                    <div
-                      key={index}
-                      className="relative group rounded-xl overflow-hidden border border-gray-200 shadow-sm"
-                    >
-                      <img
-                        src={URL.createObjectURL(file)}
-                        alt={`upload-${index}`}
-                        className="h-28 w-full object-cover"
-                      />
-
-                      {/* Remove Button */}
-                      <button
-                        type="button"
-                        onClick={() => removeImage(index)}
-                        className="absolute top-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </>
-            ) : null}
+                    <p className="text-[10px] text-gray-500 font-medium mb-1 group-hover:text-primary transition-colors uppercase tracking-wide">
+                      {spec.label}
+                    </p>
+                    <p className="text-xs font-bold text-gray-900 truncate">
+                      {spec.value}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="flex w-sm gap-4 pt-4 ml-auto">
-          <Button variant="secondary" btnText="Back" clickEvent={onBack} />
-          <Button
-            variant="primary"
-            btnText="Continue"
-            clickEvent={handleNext}
-          />
+        {/* Right: Form */}
+        <div className="lg:col-span-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-linear-to-br from-white via-blue-50/20 to-white p-6 rounded-2xl shadow-xl border border-blue-200/60">
+              <h3 className="text-xl font-bold mb-5 text-gray-900">
+                Contact Details
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Input
+                  label="Full Name"
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => updateFormData({ name: e.target.value })}
+                  error={errors.name}
+                  required={true}
+                />
+                <Input
+                  label="Phone Number"
+                  id="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={(e) => updateFormData({ phone: e.target.value })}
+                  error={errors.phone}
+                  required={true}
+                />
+                <div className="md:col-span-2">
+                  <Input
+                    label="Email Address"
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => updateFormData({ email: e.target.value })}
+                    error={errors.email}
+                    required={true}
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <Input
+                    label="Address"
+                    id="address"
+                    value={formData.address}
+                    onChange={(e) =>
+                      updateFormData({ address: e.target.value })
+                    }
+                    error={errors.address}
+                    required={true}
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block mb-2 text-sm font-medium text-gray-700">
+                    Message (Optional)
+                  </label>
+                  <textarea
+                    className="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 block w-full p-3 outline-none transition-all"
+                    rows={3}
+                    value={formData.message}
+                    onChange={(e) =>
+                      updateFormData({ message: e.target.value })
+                    }
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-linear-to-br from-white via-purple-50/20 to-white p-6 rounded-2xl shadow-xl border border-purple-200/60">
+              <h3 className="text-xl font-bold mb-5 text-gray-900">
+                Upload Photos
+              </h3>
+
+              <label className="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:bg-gray-50 hover:border-primary/50 transition-all cursor-pointer group block">
+                <div className="w-14 h-14 bg-linear-to-br from-primary/20 to-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform shadow-sm">
+                  <Upload size={24} strokeWidth={2.5} />
+                </div>
+
+                <p className="text-sm font-semibold text-gray-900">
+                  Click or drag photos here
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  JPG, PNG up to 10MB each
+                </p>
+                <input
+                  type="file"
+                  multiple
+                  accept="image/*"
+                  hidden
+                  onChange={(e) => {
+                    handleImagesChange(e.target.files);
+                    e.currentTarget.value = ""; // 👈 RESET
+                  }}
+                />
+              </label>
+
+              {/* Image Preview Grid */}
+              {formData.images.length ? (
+                <>
+                  <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-200">
+                    <p className="text-xs text-gray-600 font-medium">
+                      {formData.images.length} image(s) selected
+                    </p>
+
+                    <button
+                      type="button"
+                      onClick={removeAllImages}
+                      className="text-xs font-semibold text-red-600 hover:text-red-700 hover:underline transition-colors"
+                    >
+                      Remove all
+                    </button>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 mt-3">
+                    {formData.images.map((file, index) => (
+                      <div
+                        key={index}
+                        className="relative group rounded-xl overflow-hidden border-2 border-gray-200 shadow-sm hover:shadow-md hover:border-primary/40 transition-all"
+                      >
+                        <img
+                          src={URL.createObjectURL(file)}
+                          alt={`upload-${index}`}
+                          className="h-32 w-full object-cover"
+                        />
+
+                        {/* Remove Button */}
+                        <button
+                          type="button"
+                          onClick={() => removeImage(index)}
+                          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded-lg font-semibold opacity-0 group-hover:opacity-100 transition-all shadow-lg"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              ) : null}
+            </div>
+          </div>
+
+          <div className="flex gap-3 pt-4 justify-end">
+            <Button variant="secondary" btnText="Back" clickEvent={onBack} />
+            <Button
+              variant={loading ? "disabled" : "primary"}
+              btnText={loading ? "Submitting..." : "Continue"}
+              clickEvent={handleNext}
+            />
+          </div>
         </div>
       </div>
     </div>

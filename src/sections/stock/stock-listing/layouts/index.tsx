@@ -51,15 +51,6 @@ export function StockListingOne() {
     const fetchData = async () => {
       if (!dealerAuthToken) return;
       if (!hasMore && currentPage !== 1) return;
-
-      console.log(
-        "Fetching data...",
-        "page:",
-        currentPage,
-        "params:",
-        searchParams
-      );
-
       try {
         setLoading(true);
 

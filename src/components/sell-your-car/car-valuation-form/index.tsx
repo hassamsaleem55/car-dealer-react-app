@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { WizardStepProps } from "../sell-car-wizard.types";
+import type { CarValuationStepProps } from "../sell-car-wizard.types";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import { postApi } from "@core-dir/services/Api.service";
 import { toast } from "sonner";
@@ -8,16 +8,18 @@ import { ChevronRight } from "lucide-react";
 
 export default function CarValuationForm({
   formData,
-  setVehicleDetails,
-  updateData,
+  updateFormData,
+  updateVehicleDetails,
   onNext,
-}: WizardStepProps) {
+}: CarValuationStepProps) {
   const [loading, setLoading] = useState(false);
   const { dealerAuthToken } = useDealerContext();
 
   const handleNext = () => {
-    // e.preventDefault();
-    if (!formData.registration || !formData.registration) return;
+    if (!formData.regNo || !formData.mileage) {
+      toast.error("Please enter both registration number and mileage.");
+      return;
+    }
 
     setLoading(true);
     // Simulate API call
@@ -25,7 +27,7 @@ export default function CarValuationForm({
       try {
         setLoading(true);
         const body = {
-          Registration: formData.registration,
+          Registration: formData.regNo,
           OdometerReadingMiles: formData.mileage,
         };
         const response = await postApi(
@@ -34,12 +36,30 @@ export default function CarValuationForm({
           dealerAuthToken
         );
 
-        console.log("Stock list response:", response);
-
-        setVehicleDetails?.(response);
+        if (
+          !response.stockId ||
+          response.stockId <= 0 ||
+          response.stockId === null
+        ) {
+          toast.error(
+            "Something went wrong. Please check your details and try again."
+          );
+        }
+        updateFormData({ stockId: response.stockId });
+        updateVehicleDetails({
+          regNo: response.registration,
+          mileage: response.odometerReadingMiles,
+          make: response.make,
+          model: response.model,
+          derivative: response.derivative,
+          year: new Date(response.firstRegistrationDate).getFullYear(),
+          color: response.colour,
+          fuel: response.fuelType,
+          transmission: response.transmissionType,
+          body: response.bodyType,
+        });
         onNext();
       } catch (error) {
-        // console.log(error);
         toast.error(error instanceof Error ? error.message : String(error));
       } finally {
         setLoading(false);
@@ -50,34 +70,33 @@ export default function CarValuationForm({
   };
 
   return (
-    <div className="max-w-4xl rounded-3xl bg-white shadow-xl border border-primary overflow-hidden">
-      <div className="p-12 flex flex-col items-center justify-center gap-2">
-        <h2 className="text-5xl md:text-7xl font-black text-center uppercase tracking-tighter text-gray-900 mb-4">
-          Sell My Car
-        </h2>
-        <p className="mb-8 text-gray-600 text-lg max-w-lg text-center leading-relaxed">
-          <span className="font-bold text-gray-900">Get a free valuation</span>,
-          the best offer from our experts, and free home collection with
-          same-day payment.
-        </p>
+    <div className="max-w-5xl mx-auto rounded-2xl bg-linear-to-br from-white via-gray-50/50 to-white shadow-2xl border border-gray-200/60 overflow-hidden">
+      <div className="p-10 md:p-14 flex flex-col items-center justify-center gap-4">
+        <div className="text-center mb-6">
+          <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gray-900 mb-3">
+            Sell My Car
+          </h2>
+          <p className="text-gray-600 text-lg max-w-2xl leading-relaxed">
+            <span className="font-bold text-primary">Get a free valuation</span>{" "}
+            from our experts, plus free home collection with same-day payment.
+          </p>
+        </div>
 
-        <div className="w-full bg-white p-2 rounded-2xl shadow-2xl shadow-gray-200/50 flex flex-col md:flex-row gap-2 border border-gray-100">
+        <div className="w-full bg-linear-to-br from-white to-gray-50/50 p-3 rounded-2xl shadow-xl border border-gray-200/60 flex flex-col md:flex-row gap-3">
           {/* Registration Input */}
           <div className="relative flex-1 group">
-            <div className="absolute inset-y-0 left-2 flex items-center pointer-events-none">
+            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
               <img className="w-10" src="../images/uk-flag.png" />
             </div>
             <input
               type="text"
               placeholder="ENTER REG"
               maxLength={8}
-              className="w-full h-16 pl-14 pr-4 bg-gray-50 rounded-xl text-2xl uppercase font-bold border border-transparent focus:border-primary/70 focus:bg-white outline-none transition-all"
-              value={formData.registration}
+              className="w-full h-16 pl-16 pr-4 bg-white rounded-xl text-2xl uppercase font-bold border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-sm"
+              value={formData.regNo}
               onChange={(e) =>
-                updateData({
-                  registration: e.target.value
-                    .toUpperCase()
-                    .replace(/[^A-Z0-9]/g, ""),
+                updateFormData({
+                  regNo: e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ""),
                 })
               }
             />
@@ -85,7 +104,7 @@ export default function CarValuationForm({
 
           {/* Mileage Input */}
           <div className="relative flex-1">
-            <div className="absolute inset-y-0 left-2 flex items-center pointer-events-none">
+            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="w-auto h-9 text-gray-500"
@@ -101,9 +120,9 @@ export default function CarValuationForm({
             <input
               type="number"
               placeholder="Mileage"
-              className="w-full h-16 pl-14 pr-4 bg-gray-50 rounded-xl text-2xl uppercase font-bold border border-transparent focus:border-primary/70 focus:bg-white outline-none transition-all"
+              className="w-full h-16 pl-16 pr-4 bg-white rounded-xl text-2xl uppercase font-bold border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-sm"
               value={formData.mileage}
-              onChange={(e) => updateData({ mileage: e.target.value })}
+              onChange={(e) => updateFormData({ mileage: e.target.value })}
             />
           </div>
           <Button
@@ -116,16 +135,6 @@ export default function CarValuationForm({
             roundUtilities="rounded-xl"
             clickEvent={handleNext}
           />
-          {/* 
-        <Button
-          type="submit"
-          disabled={loading}
-          variant="outline"
-          className="h-16 px-8 text-lg md:w-auto w-full"
-        >
-          {loading ? "Searching..." : "Value My Car"}
-          {!loading && <ChevronRight className="w-5 h-5" />}
-        </Button> */}
         </div>
       </div>
     </div>
