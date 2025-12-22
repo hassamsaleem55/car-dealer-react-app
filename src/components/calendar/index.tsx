@@ -199,7 +199,7 @@ export default function CalendarOne({
   }, [dealerAuthToken, TODAY]);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 pt-4 pl-4">
+    <div className="flex flex-col lg:flex-row gap-4">
       {/* Calendar Section */}
       <div className="flex-1">
         <div className="flex mb-6 justify-between items-center">
@@ -254,7 +254,7 @@ export default function CalendarOne({
         <div className="grid grid-cols-7 gap-1">
           {calendarCells.map((cell, idx) => {
             if (cell.type !== "current")
-              return <div key={idx} className="h-10 sm:h-[59px]" />;
+              return <div key={idx} className="h-auto" />;
 
             const date = cell.date!;
             const isToday = isSameDay(date, TODAY.toDate());

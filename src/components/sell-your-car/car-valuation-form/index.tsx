@@ -1,10 +1,10 @@
 import { useState } from "react";
+import { ChevronRight } from "lucide-react";
+import { toast } from "sonner";
 import type { CarValuationStepProps } from "../sell-car-wizard.types";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import { postApi } from "@core-dir/services/Api.service";
-import { toast } from "sonner";
 import Button from "@elements-dir/button";
-import { ChevronRight } from "lucide-react";
 
 export default function CarValuationForm({
   formData,
@@ -47,8 +47,6 @@ export default function CarValuationForm({
         }
         updateFormData({ stockId: response.stockId });
         updateVehicleDetails({
-          regNo: response.registration,
-          mileage: response.odometerReadingMiles,
           make: response.make,
           model: response.model,
           derivative: response.derivative,

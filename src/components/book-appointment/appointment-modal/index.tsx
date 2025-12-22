@@ -149,14 +149,16 @@ export default function AppointmentModal({
     {
       content: (
         <AppointmentLayout requestType={requestType} carData={carData}>
-          <CalendarOne
-            TODAY={TODAY}
-            setScheduleDayId={setScheduleDayId}
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-            selectedTime={selectedTime}
-            setSelectedTime={setSelectedTime}
-          />
+          <div className="pt-4 pl-4">
+            <CalendarOne
+              TODAY={TODAY}
+              setScheduleDayId={setScheduleDayId}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              selectedTime={selectedTime}
+              setSelectedTime={setSelectedTime}
+            />
+          </div>
         </AppointmentLayout>
       ),
       validate: calendarValidator,

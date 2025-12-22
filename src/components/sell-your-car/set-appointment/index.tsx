@@ -1,10 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import moment from "moment-timezone";
-import Button from "@elements-dir/button";
-import CalendarOne from "@components-dir/calendar";
-import Breadcrumb from "../breadcrumbs";
 import type { SetAppointmentStepProps } from "../sell-car-wizard.types";
+import { useDealerContext } from "@core-dir/dealer-provider";
+import { postApi } from "@core-dir/services/Api.service";
+import Button from "@elements-dir/button";
+import Breadcrumb from "../breadcrumbs";
+import VehicleDetailsPanel from "../vehicle-details-panel";
+import CalendarOne from "@components-dir/calendar";
 
 export default function SetAppointment({
   formData,
@@ -15,6 +18,7 @@ export default function SetAppointment({
   setStep,
 }: SetAppointmentStepProps) {
   const [loading, setLoading] = useState(false);
+  const { dealerAuthToken } = useDealerContext();
   const TODAY = useMemo(() => moment.tz("Europe/London"), []);
   useEffect(() => {
     if (!formData.scheduleDate) {
@@ -34,19 +38,32 @@ export default function SetAppointment({
     return true;
   };
 
-  
+  async function addAppointmentEnquiry() {
+    const body = {
+      StockId: formData.stockId,
+      CustomerId: formData.customerId,
+      ScheduleDayId: formData.scheduleDayId,
+      ScheduleDate: formData.scheduleDate,
+    };
+    const response = await postApi(
+      `/stocks/add-appointment-enquiry/${formData.stockId}`,
+      body,
+      dealerAuthToken
+    );
+
+    console.log("Appointment Enquiry Response:", response);
+  }
 
   const handleNext = async () => {
     if (!validate()) return;
 
     setLoading(true);
     try {
-      // Simulate processing time
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      await addAppointmentEnquiry();
       onNext(); // move to success step
     } catch (error) {
       console.error(error);
-      toast.error("Something went wrong. Please try again.");
+      alert("Something went wrong while submitting the form");
     } finally {
       setLoading(false);
     }
@@ -58,24 +75,24 @@ export default function SetAppointment({
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Left: Vehicle Summary */}
         <div className="lg:col-span-1">
-          <div className="rounded-2xl bg-linear-to-br from-white via-gray-50/50 to-white shadow-2xl border border-gray-200/60 overflow-hidden h-full">
+          {/* <div className="rounded-2xl bg-linear-to-br from-white via-gray-50/50 to-white shadow-2xl border border-gray-200/60 overflow-hidden h-full">
             <div className="p-6 flex flex-col gap-4">
               <div className="border-b border-gray-200 pb-4">
                 <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
                   Your Vehicle
                 </h4>
                 <h3 className="text-2xl font-bold text-gray-900 leading-tight">
-                  {vehicleDetails?.make} {vehicleDetails?.model}
+                  {vehicleDetails.make} {vehicleDetails.model}
                 </h3>
                 <p className="text-sm text-gray-600 mt-1">
-                  {vehicleDetails?.derivative}
+                  {vehicleDetails.derivative}
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3 mb-2">
                 <span className="inline-flex items-center px-4 py-2 rounded-lg font-bold text-lg uppercase bg-linear-to-r from-primary/20 via-primary/10 to-primary/5 text-primary border-2 border-primary/40 shadow-md">
-                  {vehicleDetails?.regNo}
+                  {formData.regNo}
                 </span>
-                {formData?.mileage && (
+                {formData.mileage && (
                   <div className="bg-gray-100 rounded-lg px-3 py-1.5">
                     <p className="text-[10px] text-gray-500 font-medium">
                       Mileage
@@ -102,7 +119,7 @@ export default function SetAppointment({
                   Estimated Value
                 </p>
                 <p className="text-3xl font-bold text-primary relative z-10">
-                  £{vehicleDetails?.retailPrice?.toLocaleString() || "N/A"}
+                  £{vehicleDetails.retailPrice.toLocaleString() || "N/A"}
                 </p>
               </div>
 
@@ -110,17 +127,17 @@ export default function SetAppointment({
                 {[
                   {
                     label: "Year",
-                    value: vehicleDetails?.year
+                    value: vehicleDetails.year
                       ? new Date(vehicleDetails.year).getFullYear()
                       : "N/A",
                   },
-                  { label: "Fuel", value: vehicleDetails?.fuel || "N/A" },
+                  { label: "Fuel", value: vehicleDetails.fuel || "N/A" },
                   {
                     label: "Trans",
-                    value: vehicleDetails?.transmission || "N/A",
+                    value: vehicleDetails.transmission || "N/A",
                   },
-                  { label: "Body", value: vehicleDetails?.body || "N/A" },
-                  { label: "Color", value: vehicleDetails?.color || "N/A" },
+                  { label: "Body", value: vehicleDetails.body || "N/A" },
+                  { label: "Color", value: vehicleDetails.color || "N/A" },
                 ].map((spec, idx) => (
                   <div
                     key={idx}
@@ -136,7 +153,12 @@ export default function SetAppointment({
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
+          <VehicleDetailsPanel
+            formData={formData}
+            vehicleDetails={vehicleDetails}
+            setStep={setStep}
+          />
         </div>
 
         {/* Right: Calendar */}
@@ -158,7 +180,11 @@ export default function SetAppointment({
             />
           </div>
           <div className="flex gap-3 justify-end">
-            <Button variant="secondary" btnText="Back" clickEvent={onBack} />
+            <Button
+              variant={loading ? "disabled" : "secondary"}
+              btnText="Back"
+              clickEvent={onBack}
+            />
             <Button
               variant={loading ? "disabled" : "primary"}
               btnText={loading ? "Processing..." : "Complete Submission"}

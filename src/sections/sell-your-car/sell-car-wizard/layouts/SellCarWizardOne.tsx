@@ -7,7 +7,7 @@ import CarValuationForm from "@components-dir/sell-your-car/car-valuation-form";
 import CarConfirmView from "@components-dir/sell-your-car/car-confirm-view";
 import PersonalDetailsForm from "@components-dir/sell-your-car/personal-details-form";
 import SetAppointment from "@components-dir/sell-your-car/set-appointment";
-// import ConfirmationSuccess from "@components-dir/sell-your-car/confirmation-success";
+import ConfirmationSuccess from "@components-dir/sell-your-car/confirmation-success";
 
 export default function SellCarWizardOne() {
   const [formData, setFormData] = useState<FormData>({
@@ -26,8 +26,6 @@ export default function SellCarWizardOne() {
     scheduleDayId: null,
   });
   const [vehicleDetails, setVehicleDetails] = useState<VehicleDetails>({
-    regNo: "",
-    mileage: 0,
     make: "",
     model: "",
     derivative: "",
@@ -36,7 +34,7 @@ export default function SellCarWizardOne() {
     fuel: "",
     transmission: "",
     body: "",
-    retailPrice: 0,
+    retailPrice: null,
   });
   const [step, setStep] = useState<number>(1);
 
@@ -65,6 +63,7 @@ export default function SellCarWizardOne() {
       )}
       {step === 2 && (
         <CarConfirmView
+          formData={formData}
           vehicleDetails={vehicleDetails}
           onNext={nextStep}
           onBack={prevStep}
@@ -82,21 +81,25 @@ export default function SellCarWizardOne() {
         />
       )}
       {step === 4 && (
-        <SetAppointment
-          formData={formData}
-          updateFormData={updateFormData}
-          vehicleDetails={vehicleDetails}
-          onNext={nextStep}
-          onBack={prevStep}
-          setStep={setStep}
-        />
+        <div className="w-full">
+          <SetAppointment
+            formData={formData}
+            updateFormData={updateFormData}
+            vehicleDetails={vehicleDetails}
+            onNext={nextStep}
+            onBack={prevStep}
+            setStep={setStep}
+          />
+        </div>
       )}
-      {/* {step === 5 && (
-        <ConfirmationSuccess
-          formData={formData}
-          vehicleDetails={vehicleDetails}
-        />
-      )} */}
+      {step === 5 && (
+        <div className="w-full">
+          <ConfirmationSuccess
+            formData={formData}
+            vehicleDetails={vehicleDetails}
+          />
+        </div>
+      )}
     </>
   );
 }

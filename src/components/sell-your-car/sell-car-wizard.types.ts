@@ -15,8 +15,6 @@ export interface FormData {
 }
 
 export interface VehicleDetails {
-  regNo: string;
-  mileage: number;
   make: string;
   model: string;
   derivative: string;
@@ -25,7 +23,7 @@ export interface VehicleDetails {
   fuel: string;
   transmission: string;
   body: string;
-  retailPrice: number;
+  retailPrice: number | null;
 }
 
 export interface CarValuationStepProps {
@@ -36,6 +34,7 @@ export interface CarValuationStepProps {
 }
 
 export interface CarConfirmStepProps {
+  formData: FormData;
   vehicleDetails: VehicleDetails;
   onNext: () => void;
   onBack: () => void;

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
+import { Upload } from "lucide-react";
 import type {
   PersonalDetailsStepProps,
   FormData,
 } from "../sell-car-wizard.types";
-import { Upload } from "lucide-react";
-import Button from "@elements-dir/button";
 import { postFormDataApi } from "@core-dir/services/Api.service";
 import { useDealerContext } from "@core-dir/dealer-provider";
+import Button from "@elements-dir/button";
 import Breadcrumb from "../breadcrumbs";
+import VehicleDetailsPanel from "../vehicle-details-panel";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
@@ -139,7 +140,6 @@ export default function PersonalDetailsForm({
     setLoading(true);
     try {
       await addSellingCustomer();
-
       onNext(); // move to success step
     } catch (error) {
       console.error(error);
@@ -163,80 +163,16 @@ export default function PersonalDetailsForm({
       <div className="grid lg:grid-cols-3 gap-6">
         {/* Left: Vehicle Summary */}
         <div className="lg:col-span-1">
-          <div className="rounded-2xl bg-linear-to-br from-white via-gray-50/50 to-white shadow-2xl border border-gray-200/60 overflow-hidden h-full">
-            <div className="p-6 flex flex-col gap-4">
-              <div className="border-b border-gray-200 pb-4">
-                <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                  Your Vehicle
-                </h4>
-                <h3 className="text-2xl font-bold text-gray-900 leading-tight">
-                  {vehicleDetails.make} {vehicleDetails.model}
-                </h3>
-                <p className="text-sm text-gray-600 mt-1">
-                  {vehicleDetails.derivative}
-                </p>
-              </div>
-              <div className="flex flex-wrap items-center gap-3 mb-2">
-                <span className="inline-flex items-center px-4 py-2 rounded-lg font-bold text-lg uppercase bg-linear-to-r from-primary/20 via-primary/10 to-primary/5 text-primary border-2 border-primary/40 shadow-md">
-                  {vehicleDetails.regNo}
-                </span>
-                {formData.mileage && (
-                  <div className="bg-gray-100 rounded-lg px-3 py-1.5">
-                    <p className="text-[10px] text-gray-500 font-medium">
-                      Mileage
-                    </p>
-                    <p className="text-xs font-bold text-gray-900">
-                      {Number(formData.mileage).toLocaleString()} mi
-                    </p>
-                  </div>
-                )}
-              </div>
-              <div className="text-sm text-gray-600 mb-2">
-                Not your car?{" "}
-                <button
-                  onClick={() => setStep && setStep(1)}
-                  className="text-primary font-semibold underline hover:no-underline transition-all"
-                >
-                  Change
-                </button>
-              </div>
-
-              <div className="grid grid-cols-3 gap-3">
-                {[
-                  {
-                    label: "Year",
-                    value: vehicleDetails.year
-                      ? new Date(vehicleDetails.year).getFullYear()
-                      : "N/A",
-                  },
-                  { label: "Fuel", value: vehicleDetails.fuel || "N/A" },
-                  {
-                    label: "Trans",
-                    value: vehicleDetails.transmission || "N/A",
-                  },
-                  { label: "Body", value: vehicleDetails.body || "N/A" },
-                  { label: "Color", value: vehicleDetails.color || "N/A" },
-                ].map((spec, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md hover:border-primary/40 transition-all duration-300 text-center p-3 group"
-                  >
-                    <p className="text-[10px] text-gray-500 font-medium mb-1 group-hover:text-primary transition-colors uppercase tracking-wide">
-                      {spec.label}
-                    </p>
-                    <p className="text-xs font-bold text-gray-900 truncate">
-                      {spec.value}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          <VehicleDetailsPanel
+            formData={formData}
+            vehicleDetails={vehicleDetails}
+            setStep={setStep}
+          />
         </div>
 
         {/* Right: Form */}
         <div className="lg:col-span-2">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-linear-to-br from-white via-blue-50/20 to-white p-6 rounded-2xl shadow-xl border border-blue-200/60">
               <h3 className="text-xl font-bold mb-5 text-gray-900">
                 Contact Details
@@ -371,7 +307,11 @@ export default function PersonalDetailsForm({
           </div>
 
           <div className="flex gap-3 pt-4 justify-end">
-            <Button variant="secondary" btnText="Back" clickEvent={onBack} />
+            <Button
+              variant={loading ? "disabled" : "secondary"}
+              btnText="Back"
+              clickEvent={onBack}
+            />
             <Button
               variant={loading ? "disabled" : "primary"}
               btnText={loading ? "Submitting..." : "Continue"}

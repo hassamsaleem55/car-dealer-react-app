@@ -1,9 +1,10 @@
 import { useState } from "react";
+import type { CarConfirmStepProps } from "../sell-car-wizard.types";
 import Button from "@elements-dir/button";
 import Breadcrumb from "../breadcrumbs";
-import type { CarConfirmStepProps } from "../sell-car-wizard.types";
 
 export default function CarConfirmView({
+  formData,
   vehicleDetails,
   onNext,
   onBack,
@@ -37,13 +38,13 @@ export default function CarConfirmView({
           </div>
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className="inline-flex items-center px-4 py-2 rounded-lg font-bold text-xl uppercase bg-linear-to-r from-primary/20 via-primary/10 to-primary/5 text-primary border-2 border-primary/40 shadow-md">
-              {vehicleDetails.regNo}
+              {formData.regNo}
             </span>
-            {vehicleDetails.mileage && (
-              <div className="bg-gray-100 rounded-lg px-4 py-2">
+            {formData.mileage && (
+              <div className="bg-gray-100 rounded-lg px-8 py-2">
                 <p className="text-xs text-gray-500 font-medium">Mileage</p>
                 <p className="text-sm font-bold text-gray-900">
-                  {Number(vehicleDetails.mileage).toLocaleString()} mi
+                  {Number(formData.mileage).toLocaleString()} mi
                 </p>
               </div>
             )}
@@ -51,7 +52,7 @@ export default function CarConfirmView({
               Not your car?{" "}
               <button
                 onClick={onBack}
-                className="text-primary font-semibold underline hover:no-underline transition-all"
+                className="text-primary font-semibold underline hover:no-underline transition-all cursor-pointer"
               >
                 Change
               </button>
@@ -62,7 +63,7 @@ export default function CarConfirmView({
             {[
               {
                 icon: "Year",
-                value:  vehicleDetails.year,
+                value: vehicleDetails.year,
               },
               { icon: "Fuel", value: vehicleDetails.fuel },
               { icon: "Trans", value: vehicleDetails.transmission },
