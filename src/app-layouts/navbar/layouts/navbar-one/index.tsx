@@ -148,7 +148,7 @@ export default function index({ styles }: { styles: any }) {
 
         <div className="hidden md:flex items-center gap-4">
           <Link to="/contact">
-            <Button variant="secondary" btnText="Contact Us" />
+            <Button variant="secondary" btnTextSize="text-base" roundUtilities="rounded-xl" btnText="Contact Us" />
           </Link>
         </div>
 

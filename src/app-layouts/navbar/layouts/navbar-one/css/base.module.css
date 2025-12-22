@@ -94,11 +94,11 @@
   @apply hidden md:flex items-center gap-6 lg:gap-8;
 } */
 .navbar-links {
-  @apply hidden md:flex gap-8 list-none p-0 m-0;
+  @apply hidden md:flex gap-5 list-none p-0 m-0;
 }
 
 .navbar-link {
-  @apply text-sm md:text-base py-2 border-t-2 border-transparent 
+  @apply text-sm py-2 border-t-2 border-transparent 
          transition-colors duration-150 hover:text-primary hover:border-primary;
 }
 
