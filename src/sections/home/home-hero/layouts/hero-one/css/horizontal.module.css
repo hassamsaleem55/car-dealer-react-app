@@ -9,6 +9,6 @@
   }
 
   .hero-content {
-    @apply flex flex-col items-center justify-center text-center gap-8 w-full h-full relative z-10;
+    @apply flex flex-col items-center justify-center text-center w-full h-full relative z-10;
   }
 /* } */

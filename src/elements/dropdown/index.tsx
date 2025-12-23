@@ -126,7 +126,7 @@ export default function DropdownFlexible({
         )}
 
         {!showTags && !searchable && (
-          <span className="text-basicFont">{selectedLabel || category}</span>
+          <span className="text-basicFont font-semibold">{selectedLabel || category}</span>
         )}
 
         <span className="dropdown-btn__icon">

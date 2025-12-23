@@ -8,15 +8,16 @@
   --color-primary: oklch(66.6% 0.179 58.318);
   --color-body: oklch(98.5% 0.002 247.839);
   --color-basicFont: oklch(37.3% 0.034 259.733);
-  --font-urbanist: "Urbanist", "Urbanist Fallback";
-  --font-inter: "Inter", "Inter Fallback";
+  --font-urbanist: "Urbanist", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-noto-serif: "Noto Serif", serif;
 }
 
 @layer base {
   html,
   body,
   #root {
-    @apply overflow-x-clip max-w-full scroll-smooth ;
+    @apply overflow-x-clip max-w-full scroll-smooth;
   }
 
   html {

@@ -41,15 +41,13 @@
 .dropdown-options {
   @apply absolute left-0 right-0 mt-1 max-h-60 overflow-auto
          rounded-lg bg-white shadow-lg ring-1 ring-gray-200 z-50;
-  /* apply animation directly (no @apply) */
-  animation: fadeIn 0.15s ease-out;
 }
 
 /* ================================
    OPTIONS
 ================================ */
 .dropdown-option {
-  @apply relative cursor-pointer select-none py-2 pr-4 text-left text-basicFont
+  @apply relative cursor-pointer select-none py-2 pr-4 text-left text-basicFont font-semibold
          hover:bg-gray-50 hover:text-primary transition-colors duration-100;
 }
 
