@@ -6,17 +6,17 @@
 
 /* Root card */
 .car-card {
-  @apply w-auto h-auto md:h-132 pb-4 rounded-2xl border border-gray-200 bg-white 
+  @apply w-auto h-full pb-4 rounded-2xl border border-gray-200 bg-white 
          transition-all duration-300 ease-in-out relative shadow-2xl md:shadow-md;
 }
 
 /* Image wrapper */
 .car-card__image-wrapper {
-  @apply relative overflow-hidden md:h-64;
+  @apply relative overflow-hidden aspect-4/3 ;
 }
 
 .car-card__img {
-  @apply w-full h-full object-fill object-center rounded-t-2xl 
+  @apply w-full h-full object-cover object-center rounded-t-2xl 
          transition-all duration-500 ease-in-out hover:scale-105;
 }
 

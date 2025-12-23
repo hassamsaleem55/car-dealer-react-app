@@ -83,10 +83,7 @@
 }
 
 .hero-filter__wrapper {
-  @apply w-7xl hidden xl:block
-  /* max-[1340px]:w-6xl max-[1175px]:w-5xl max-[1040px]:w-5xl
-         max-[930px]:hidden */
-         ;
+  @apply w-7xl hidden xl:block;
 }
 
 .hero-filter__wrapper-mobile {

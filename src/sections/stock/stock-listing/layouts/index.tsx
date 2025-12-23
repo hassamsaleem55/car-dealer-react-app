@@ -270,7 +270,7 @@ export function StockListingOne() {
               <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
                 {`Browse All ${!loading ? totalRecords : ""} Cars`}
               </h2>
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row items-stretch md:items-center gap-3 w-full sm:w-auto">
                 {/* <div className="relative flex-1 sm:flex-initial sm:min-w-60">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Search className="h-4 w-4 text-gray-400" />
@@ -356,10 +356,12 @@ export function StockListingOne() {
             </div>
           ) : carData.length > 0 ? (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 items-stretch">
                 {carData.map((item, index) => (
                   <MotionReveal key={item.id ?? index} preset="slideLeft">
-                    <CarCardOne car={item} styles={CarCardStyles} />
+                    <div className="h-full flex flex-col">
+                      <CarCardOne car={item} styles={CarCardStyles} />
+                    </div>
                   </MotionReveal>
                 ))}
               </div>

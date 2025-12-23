@@ -74,10 +74,14 @@ export default function index({
 
             <MotionReveal preset="slideDown">
               <h1 className={styles["hero-title"]}>
-                <span>{heading.split(".")[0]}</span>
-                <span className={styles["hero-title-accent"]}>.</span>
-                <span>{heading.split(".")[1]}</span>
-                <span className={styles["hero-title-accent"]}>.</span>
+                {heading.split(".").map((part, index, arr) => (
+                  <span key={index}>
+                    <span>{part}</span>
+                    {index !== arr.length - 1 && (
+                      <span className={styles["hero-title-accent"]}>.</span>
+                    )}
+                  </span>
+                ))}
               </h1>
             </MotionReveal>
 
