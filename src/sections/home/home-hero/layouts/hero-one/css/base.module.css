@@ -18,7 +18,7 @@
 }
 
 .hero-content {
-  @apply flex flex-col z-10 gap-4 md:gap-8 mt-36;
+  @apply flex flex-col z-10 gap-4 md:gap-8 -mt-36 sm:mt-36;
 }
 
 .hero-text {
