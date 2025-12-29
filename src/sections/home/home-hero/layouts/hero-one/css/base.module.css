@@ -5,7 +5,7 @@
 @import "@dealers-dir/style.css";
 
 .hero {
-  @apply relative w-full min-h-screen overflow-hidden text-white;
+  @apply relative flex flex-col justify-center items-center w-full h-auto lg:min-h-screen overflow-hidden text-white;
 }
 
 .hero-bg {
@@ -18,7 +18,7 @@
 }
 
 .hero-content {
-  @apply flex flex-col z-10 gap-4 md:gap-8 -mt-36 sm:mt-36;
+  @apply flex flex-col z-10 gap-4 md:gap-8 pb-24 pt-36 lg:mt-36;
 }
 
 .hero-text {
