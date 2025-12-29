@@ -148,7 +148,12 @@ export default function index({ styles }: { styles: any }) {
 
         <div className="hidden lg:flex items-center gap-4">
           <Link to="/contact">
-            <Button variant="secondary" btnTextSize="text-base" roundUtilities="rounded-xl" btnText="Contact Us" />
+            <Button
+              variant="secondary"
+              btnTextSize="text-base"
+              roundUtilities="rounded-xl"
+              btnText="Contact Us"
+            />
           </Link>
         </div>
 
@@ -164,24 +169,25 @@ export default function index({ styles }: { styles: any }) {
             aria-label={open ? "Close menu" : "Open menu"}
             type="button"
           >
-            <div className="relative w-[18px] h-[18px]">
-              <Menu
-                size={18}
-                className={`absolute inset-0 transition-all duration-200 ${
-                  open
-                    ? "rotate-90 opacity-0 scale-0"
-                    : "rotate-0 opacity-100 scale-100"
-                }`}
-              />
-              <X
-                size={18}
-                className={`absolute inset-0 transition-all duration-200 ${
-                  open
-                    ? "rotate-0 opacity-100 scale-100"
-                    : "-rotate-90 opacity-0 scale-0"
-                }`}
-              />
-            </div>
+            {/* <div className="w-3 h-3 md:w-[18px] md:h-[18px]">
+             
+            </div> */}
+            <Menu
+              size={18}
+              className={`absolute transition-all duration-200 ${
+                open
+                  ? "rotate-90 opacity-0 scale-0"
+                  : "rotate-0 opacity-100 scale-100"
+              }`}
+            />
+            <X
+              size={18}
+              className={`absolute transition-all duration-200 ${
+                open
+                  ? "rotate-0 opacity-100 scale-100"
+                  : "-rotate-90 opacity-0 scale-0"
+              }`}
+            />
           </button>
 
           <div

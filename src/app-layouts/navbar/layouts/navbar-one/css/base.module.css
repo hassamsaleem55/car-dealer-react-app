@@ -61,7 +61,7 @@
    NAVBAR
 ======================================= */
 .navbar {
-  @apply flex items-center justify-between h-16 md:h-20 p-4 md:px-8 transition-colors duration-300;
+  @apply flex items-center justify-between px-4 py-2 lg:py-4 lg:px-8 transition-colors duration-300;
 }
 
 .navbar.scrolled {
@@ -110,14 +110,12 @@
    MOBILE MENU
 ======================================= */
 .navbar-mobile__btn {
-  @apply relative z-50 flex h-10 w-10 items-center justify-center rounded-md border 
-         border-primary text-primary transition-colors duration-200 
-         hover:bg-primary hover:text-white lg:hidden;
+  @apply relative z-50 flex items-center justify-center p-4 border border-primary rounded-md text-primary lg:hidden;
 }
 
 /* Dropdown menu */
 .navbar-mobile__menu {
-  @apply absolute right-2 sm:right-0 top-16 sm:top-16 z-40 origin-top-right rounded-xl 
+  @apply absolute right-2 md:right-0 top-12 md:top-16 z-40 origin-top-right rounded-xl 
          bg-white shadow-xl backdrop-blur-sm transform transition-all duration-200 
          w-[calc(100vw-1rem)] sm:w-64 max-h-[calc(100vh-5rem)] overflow-y-auto
          border border-gray-200;
