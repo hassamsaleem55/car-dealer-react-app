@@ -10,9 +10,9 @@ import "swiper/css/effect-fade";
 export default function SwiperComponent(props: Partial<SwiperComponentProps>) {
   const {
     data,
-    speed = 1000,
+    speed = 2500,
     autoplay = {
-      delay: 800,
+      delay: 1200,
       pauseOnMouseEnter: true,
       disableOnInteraction: false,
     },
@@ -28,7 +28,7 @@ export default function SwiperComponent(props: Partial<SwiperComponentProps>) {
   /** ────────────────────────────────────────────────
    * Setup and defaults
    * ──────────────────────────────────────────────── */
-  const FIRST_DELAY = (autoplay as any)?.firstDelay ?? 1000;
+  const FIRST_DELAY = (autoplay as any)?.firstDelay ?? 1600;
   const swiperRef = useRef<SwiperType | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const firstDelayTimer = useRef<number | null>(null);
@@ -80,7 +80,7 @@ export default function SwiperComponent(props: Partial<SwiperComponentProps>) {
       <Swiper
         modules={[Autoplay]}
         speed={speed}
-        // autoplay={autoplay}
+        autoplay={autoplay}
         breakpoints={breakpoints}
         className={className}
         onInit={handleInit}

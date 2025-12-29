@@ -18,7 +18,7 @@
 }
 
 .hero-content {
-  @apply flex flex-col z-10 gap-4 md:gap-8 mt-12 md:mt-16;
+  @apply flex flex-col z-10 gap-4 md:gap-8 mt-36;
 }
 
 .hero-text {
@@ -41,18 +41,18 @@
 }
 
 .hero-subtitle {
-  @apply max-w-xl py-1 md:py-2 text-sm md:text-lg lg:text-xl font-bold bg-linear-to-r from-primary via-gray-50 to-white bg-clip-text text-transparent;
+  @apply max-w-xl py-1 md:py-2 text-sm md:text-base lg:text-xl font-bold bg-linear-to-r from-primary via-gray-50 to-white bg-clip-text text-transparent;
 }
 
 /* Trust Features */
 .hero-features {
-  @apply flex flex-wrap justify-center py-2 md:py-4 gap-2 md:gap-4;
+  @apply flex flex-wrap justify-center md:px-20 py-2 md:py-4 gap-2 md:gap-4;
 }
 
 .hero-feature {
-  @apply flex items-center gap-2 px-2 py-1 md:px-3 md:py-2 
+  @apply flex items-center gap-2 px-2 py-1 lg:px-3 lg:py-2 
          bg-white/10 backdrop-blur-sm border border-white/10 
-         rounded-lg text-[10px] md:text-sm font-medium text-white/90
+         rounded-lg text-[10px] lg:text-sm font-medium text-white/90
          transition-all duration-300 hover:border-white/25
          hover:scale-105 cursor-default;
 }

@@ -100,7 +100,7 @@ function FilterOne({
             {/* {!location.pathname.startsWith("/stock") && ( */}
             <Link
               to={`/stock${queryString ? `?${queryString}` : ""}`}
-              className="hidden md:block"
+              className="hidden lg:block"
             >
               <Button
                 variant="primary"
@@ -111,7 +111,7 @@ function FilterOne({
 
             <Link
               to={`/stock${queryString ? `?${queryString}` : ""}`}
-              className="block md:hidden"
+              className="block lg:hidden"
             >
               <Button
                 clickEvent={() => setShowFilters && setShowFilters(false)}

@@ -9,7 +9,7 @@
   @apply w-auto h-full pb-4 rounded-2xl overflow-hidden relative
          border border-gray-200 bg-white
          transition-all duration-300 ease-out
-         shadow-md hover:shadow-xl hover:-translate-y-1;
+         shadow-md hover:shadow-xl;
 }
 
 /* Image wrapper */

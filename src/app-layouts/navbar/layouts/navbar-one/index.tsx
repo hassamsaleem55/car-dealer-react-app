@@ -146,14 +146,14 @@ export default function index({ styles }: { styles: any }) {
           )}
         </ul>
 
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-4">
           <Link to="/contact">
             <Button variant="secondary" btnTextSize="text-base" roundUtilities="rounded-xl" btnText="Contact Us" />
           </Link>
         </div>
 
         {/* Mobile Menu */}
-        <div className="md:hidden">
+        <div className="lg:hidden">
           <button
             ref={btnRef}
             onClick={toggle}

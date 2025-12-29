@@ -120,12 +120,11 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
       </div>
 
       {/* Overlay Actions - Desktop Only */}
-      <div className="hidden md:flex">
+      <div className="hidden lg:flex">
         <div
           className={`
         ${styles["car-card__actions"]}
-        opacity-0 translate-y-3
-        group-hover:opacity-100 group-hover:translate-y-0
+        opacity-0 group-hover:opacity-100
       `}
         >
           <Button
@@ -160,7 +159,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
       </div>
 
       {/* Mobile Actions */}
-      <div className="flex md:hidden">
+      <div className="flex lg:hidden">
         <div className="w-full flex flex-col px-4 gap-2">
           <Button
             variant="secondary"

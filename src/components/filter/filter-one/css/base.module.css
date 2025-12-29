@@ -15,8 +15,8 @@
 /* =======================================
    RESPONSIVE FIXES
 ======================================= */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .filter-box {
     @apply flex-col items-stretch gap-3;
   }
-}
+} */

@@ -7,15 +7,15 @@
   @apply flex-col justify-center items-stretch p-8 gap-4;
 }
 
-.filter-box > * {
+/* .filter-box > * {
   @apply w-full;
-}
+} */
 
 /* =======================================
    MOBILE OVERRIDES
 ======================================= */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .filter-box {
     @apply flex-col items-stretch gap-3 p-4;
   }
-}
+} */
