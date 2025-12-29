@@ -60,21 +60,18 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
           loading="lazy"
           decoding="async"
         />
-        {isReserved && (
-          <div className={styles["car-card__reserved"]}>Reserved</div>
-        )}
+        {/* {isReserved && ( */}
+        <div className={styles["car-card__reserved"]}>Reserved</div>
+        {/* )} */}
         <div className={styles["car-card__year"]}>{year}</div>
       </div>
 
       {/* Content */}
-      <div className={styles["car-card__content"]}>
+      <div className={`${styles["car-card__content"]}`}>
         <div>
           <TooltipText text={title} className={styles["car-card__title"]} />
           {derivative && (
-            <TooltipText
-              text={`${derivative}`}
-              className={styles["car-card__subtitle"]}
-            />
+            <p className={styles["car-card__subtitle"]}>{derivative}</p>
           )}
         </div>
 
@@ -123,9 +120,13 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
       </div>
 
       {/* Overlay Actions - Desktop Only */}
-      <div className="hidden md:block">
+      <div className="hidden md:flex">
         <div
-          className={`${styles["car-card__actions"]} opacity-0 group-hover:opacity-100`}
+          className={`
+        ${styles["car-card__actions"]}
+        opacity-0 translate-y-3
+        group-hover:opacity-100 group-hover:translate-y-0
+      `}
         >
           <Button
             variant="secondary"
@@ -159,43 +160,44 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
       </div>
 
       {/* Mobile Actions */}
-      <div className="flex flex-col gap-2 px-4 md:hidden">
-        <Button
-          variant="secondary"
-          btnText="View Car"
-          btnTextSize="text-sm"
-          paddingUtilities="px-3 py-2"
-          clickEvent={() => {
-            navigate(`/car-details?stockId=${stockId}`);
-          }}
-        />
-
-        <Button
-          variant={isReserved ? "disabled-mobile" : "secondary"}
-          btnText="Reserve for £99"
-          btnTextSize="text-sm"
-          paddingUtilities="px-3 py-2"
-          clickEvent={() => {
-            setReservationModalOpen(true);
-            setReservationCarData(car);
-          }}
-        />
-
-        {dealerData.FCANumber && (
+      <div className="flex md:hidden">
+        <div className="w-full flex flex-col px-4 gap-2">
           <Button
-            variant={isReserved ? "disabled-mobile" : "secondary"}
-            btnText="Apply Finance"
+            variant="secondary"
+            btnText="View Car"
             btnTextSize="text-sm"
             paddingUtilities="px-3 py-2"
             clickEvent={() => {
-              navigate(
-                `/car-details?stockId=${stockId}#codeweaver-finance-section`
-              );
+              navigate(`/car-details?stockId=${stockId}`);
             }}
           />
-        )}
 
-        {/* <div className="flex gap-1 justify-between items-center">
+          <Button
+            variant={isReserved ? "disabled-mobile" : "secondary"}
+            btnText="Reserve for £99"
+            btnTextSize="text-sm"
+            paddingUtilities="px-3 py-2"
+            clickEvent={() => {
+              setReservationModalOpen(true);
+              setReservationCarData(car);
+            }}
+          />
+
+          {dealerData.FCANumber && (
+            <Button
+              variant={isReserved ? "disabled-mobile" : "secondary"}
+              btnText="Apply Finance"
+              btnTextSize="text-sm"
+              paddingUtilities="px-3 py-2"
+              clickEvent={() => {
+                navigate(
+                  `/car-details?stockId=${stockId}#codeweaver-finance-section`
+                );
+              }}
+            />
+          )}
+
+          {/* <div className="flex gap-1 justify-between items-center">
           <div className="grow">
             <Button
               variant="secondary"
@@ -217,6 +219,7 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
             />
           </div>
         </div> */}
+        </div>
       </div>
 
       {/* Footer - Price Ratings */}
