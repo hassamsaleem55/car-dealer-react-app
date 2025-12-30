@@ -12,7 +12,7 @@ export default function AABannerOne() {
       {/* <MotionReveal preset="slideRight" distance={distance} duration={1.2}> */}
       <MotionReveal preset="slideRight" duration={1.2}>
         <img
-          src="../../images/AACars/aa-logo-left.jpg"
+          src="../../images/AACars/aa-logo-left.webp"
           alt="AA Logo Left"
           className="object-contain transition-transform duration-300 hover:scale-105 w-60 sm:w-80 md:w-100 lg:w-125"
         />

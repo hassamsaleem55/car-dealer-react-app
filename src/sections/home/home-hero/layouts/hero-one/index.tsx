@@ -47,7 +47,7 @@ export default function index({
     <>
       <section className={styles["hero"]}>
         <video
-          src="https://cdn.pixabay.com/video/2023/04/10/158316-816359649_large.mp4"
+          src="../videos/hero-bg.mp4"
           className={styles["hero-bg"]}
           muted
           autoPlay

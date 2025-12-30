@@ -15,6 +15,8 @@
 .trusted-partner-card {
   @apply flex items-center justify-center w-auto min-w-45 px-10
          h-[85px] sm:h-[95px] md:h-[105px]
+         rounded-full
+         hover:bg-primary/10
          transition-all duration-500 
          ease-out
          cursor-pointer
@@ -22,23 +24,8 @@
          shrink-0;
 }
 
-.trusted-partner-card::before {
-  @apply absolute inset-0 bg-linear-to-br from-primary/0 to-primary/0
-         transition-all duration-500 ease-out opacity-0
-         content-[''];
-}
-
-.trusted-partner-card:hover::before {
-  @apply rounded-full from-primary/5 to-primary/10 opacity-100;
-}
-
 .trusted-partner-card__image {
   @apply object-contain max-h-[55px] sm:max-h-[65px] md:max-h-[75px]
          w-auto mx-auto transition-all duration-500 ease-out
-         grayscale opacity-60
-         relative z-10;
-}
-
-.trusted-partner-card:hover .trusted-partner-card__image {
-  @apply grayscale-0 opacity-100 scale-105;
+         relative z-10 hover:scale-110;
 }

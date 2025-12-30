@@ -14,7 +14,7 @@ export default function BrandListingOne({ heading }: { heading: string }) {
 
   useEffect(() => {
     if (!filtersData || !filtersData[0]?.options) return;
-    const imageRootPath = "../images/car-brand-logo/";
+    const imageRootPath = "../images/car-brands-logo/";
     const toTitleCase = (str: string) => {
       return str
         .split(" ")
@@ -27,7 +27,7 @@ export default function BrandListingOne({ heading }: { heading: string }) {
     const carBrandsList = filtersData[0].options.map((item: any) => ({
       id: item.id,
       name: item.value.toUpperCase(),
-      media: `${imageRootPath}${toTitleCase(item.value)}.jpg`,
+      media: `${imageRootPath}${toTitleCase(item.value)}.webp`,
     }));
 
     setCarBrands(carBrandsList);

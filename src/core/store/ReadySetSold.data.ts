@@ -14,7 +14,7 @@ export const readySetSold = [
     tag: "Quick vehicle upload",
     title: "Profile your vehicle",
     description: "Take clear photos to ensure the highest possible valuation.",
-    imgSrc: `${imgBasePath}car-profile.jpeg`,
+    imgSrc: `${imgBasePath}car-profile.webp`,
   },
   {
     id: 3,
@@ -22,6 +22,6 @@ export const readySetSold = [
     title: "We pick up. You get paid.",
     description:
       "Sold! We collect from you wherever you are, and pay the same day. Outstanding finance? We’ll sort it.",
-    imgSrc: `${imgBasePath}complete-sale.png`,
+    imgSrc: `${imgBasePath}complete-sale.webp`,
   },
 ];

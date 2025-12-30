@@ -30,7 +30,7 @@ export default function TrustedPartnerOne({
                   className={`${styles["trusted-partner-card"]}`}
                 >
                   <img
-                    src={`${imageRootPath}${item}.png`}
+                    src={`${imageRootPath}${item}.webp`}
                     alt={item}
                     className={styles["trusted-partner-card__image"]}
                     loading="lazy"
