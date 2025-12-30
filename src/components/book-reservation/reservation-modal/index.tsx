@@ -157,19 +157,6 @@ export default function ReservationModal({
         if (response.checkoutUrl) {
           window.location.href = response.checkoutUrl;
         } else if (response.clientSecret && response.publishableKeyDecoded) {
-          // Validate publishable key format
-          // if (!response.publishableKey.startsWith('pk_')) {
-          //   console.error("Invalid publishable key received from backend:", response.publishableKey);
-          //   toast.error("Invalid payment configuration received from server. Please try again or contact support.");
-          //   return false;
-          // }
-
-          // // Validate client secret format
-          // if (!response.clientSecret.startsWith('pi_')) {
-          //   console.error("Invalid client secret received from backend:", response.clientSecret?.substring(0, 20));
-          //   toast.error("Invalid payment configuration received from server. Please try again or contact support.");
-          //   return false;
-          // }
 
           // Set Stripe parameters for in-modal payment
           setClientSecret(response.clientSecret);

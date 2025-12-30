@@ -4,14 +4,14 @@ import type {
   DealerSectionKeys,
 } from "@types-dir/dealer-props";
 import { useDealerContext } from "@core-dir/dealer-provider";
-import {
-  HomeSkeleton,
-  StockSkeleton,
-  CarDetailsSkeleton,
-  ContentPageSkeleton,
-  ContactPageSkeleton,
-  DefaultPageSkeleton,
-} from "@components-dir/loader/PageSkeleton";
+// import {
+//   HomeSkeleton,
+//   StockSkeleton,
+//   CarDetailsSkeleton,
+//   ContentPageSkeleton,
+//   ContactPageSkeleton,
+//   DefaultPageSkeleton,
+// } from "@components-dir/loader/PageSkeleton";
 
 const sectionModules = import.meta.glob("../sections/**/variants/index.tsx");
 
@@ -36,26 +36,26 @@ export default function PageRenderer({ page }: { page: BaseDealerPage }) {
   );
 
   // Select appropriate skeleton based on page name
-  const getPageSkeleton = () => {
-    switch (page.pageName) {
-      case "home":
-        return <HomeSkeleton />;
-      case "stock":
-        return <StockSkeleton />;
-      case "car-details":
-        return <CarDetailsSkeleton />;
-      case "contact":
-        return <ContactPageSkeleton />;
-      case "privacy-policy":
-      case "terms-of-service":
-      case "about":
-      case "warranty":
-      case "finance":
-        return <ContentPageSkeleton />;
-      default:
-        return <DefaultPageSkeleton />;
-    }
-  };
+  // const getPageSkeleton = () => {
+  //   switch (page.pageName) {
+  //     case "home":
+  //       return <HomeSkeleton />;
+  //     case "stock":
+  //       return <StockSkeleton />;
+  //     case "car-details":
+  //       return <CarDetailsSkeleton />;
+  //     case "contact":
+  //       return <ContactPageSkeleton />;
+  //     case "privacy-policy":
+  //     case "terms-of-service":
+  //     case "about":
+  //     case "warranty":
+  //     case "finance":
+  //       return <ContentPageSkeleton />;
+  //     default:
+  //       return <DefaultPageSkeleton />;
+  //   }
+  // };
 
   return (
     <>
@@ -98,7 +98,12 @@ export default function PageRenderer({ page }: { page: BaseDealerPage }) {
         });
 
         return (
-          <React.Suspense key={i} fallback={getPageSkeleton()}>
+          <React.Suspense
+            key={i}
+            // fallback={
+            //   getPageSkeleton()
+            //   }
+          >
             <Section props={props} />
           </React.Suspense>
         );
