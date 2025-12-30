@@ -14,11 +14,11 @@
 
 /* Premium Gradient Overlay */
 .hero-overlay {
-  @apply absolute inset-0 z-1 bg-linear-to-br from-primary/70 via-black/5;
+  @apply absolute z-10 inset-0 bg-linear-to-br from-primary/70 via-black/5;
 }
 
 .hero-content {
-  @apply flex flex-col z-10 gap-4 lg:gap-8 pt-28 pb-24 md:pt-36 lg:pb-24 lg:pt-48;
+  @apply flex flex-col gap-4 lg:gap-8 pt-28 pb-24 md:pt-36 lg:pb-24 lg:pt-48;
 }
 
 .hero-text {
@@ -67,7 +67,7 @@
 
 /* Stats Section */
 .hero-stats__web {
-  @apply hidden md:flex flex-row justify-center rounded-full gap-18 px-16 py-4 border border-primary/50 bg-white/10;
+  @apply hidden md:flex flex-row justify-center rounded-full gap-18 px-16 py-4 border border-primary/50 bg-white/10 relative z-10;
 }
 
 .hero-stat {
@@ -83,7 +83,7 @@
 }
 
 .hero-filter__wrapper {
-  @apply w-7xl hidden xl:block;
+  @apply w-7xl hidden xl:block relative z-50;
 }
 
 .hero-filter__wrapper-mobile {

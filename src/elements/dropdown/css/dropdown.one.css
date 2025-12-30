@@ -2,7 +2,7 @@
    DROPDOWN BASE
 ================================ */
 .dropdown {
-  @apply relative w-full text-sm;
+  @apply relative w-full text-sm z-50;
 }
 
 /* ================================
