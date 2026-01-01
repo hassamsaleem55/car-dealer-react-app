@@ -63,9 +63,9 @@ export default function TestimonialsOne({
                 “{item.review}”
               </p>
 
-              <div className={`${styles["testimonial-customer"]}mt-4`}>
-                <h4 className="font-semibold text-lg">{item.customerName}</h4>
-                <span className="text-sm text-gray-500">{item.reviewDate}</span>
+              <div className={`${styles["testimonial-customer"]} mt-4`}>
+                <h1 className="font-semibold text-lg">{item.customerName}</h1 >
+                <p className="text-sm text-gray-500">{item.reviewDate}</p>
               </div>
             </div>
           </MotionReveal>

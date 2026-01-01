@@ -181,7 +181,7 @@ export default function Footer({ styles }: { styles: any }) {
       <div className={styles["footer__bottom"]}>
         <div className={styles["footer__bottom-container"]}>
           <p className="flex flex-col md:flex-row gap-2 justify-center items-center">
-            © {new Date().getFullYear()} {dealerData?.CompanyName}. All rights
+            © 2026 {dealerData?.CompanyName}. All rights
             reserved.{" "}
             <a
               className="w-fit text-black bg-neutral-300 text-xs rounded-full flex items-center gap-1 px-1 py-0.5 pr-2"

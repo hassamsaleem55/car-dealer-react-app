@@ -101,6 +101,7 @@ function FilterOne({
             <Link
               to={`/stock${queryString ? `?${queryString}` : ""}`}
               className="hidden lg:block"
+              aria-label="search cars"
             >
               <Button
                 variant="primary"

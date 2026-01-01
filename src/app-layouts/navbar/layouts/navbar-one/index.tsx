@@ -122,11 +122,7 @@ export default function index({ styles }: { styles: any }) {
           </Link>
         )}
 
-        <ul
-          className={styles["navbar-links"]}
-          role="menubar"
-          aria-label="Main navigation"
-        >
+        <ul className={styles["navbar-links"]}>
           {dealerConfig.pages.map(
             (page: BaseDealerPage) =>
               page.showInNavbar &&
@@ -169,9 +165,6 @@ export default function index({ styles }: { styles: any }) {
             aria-label={open ? "Close menu" : "Open menu"}
             type="button"
           >
-            {/* <div className="w-3 h-3 md:w-[18px] md:h-[18px]">
-             
-            </div> */}
             <Menu
               size={18}
               className={`absolute transition-all duration-200 ${

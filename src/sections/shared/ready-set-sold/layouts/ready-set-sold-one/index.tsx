@@ -66,7 +66,7 @@ export default function ReadySetSoldOne({
       <div className="text-center -mt-8 mb-12">
         <Button
           clickEvent={() => navigate("/sell-your-car")}
-          variant="primary"
+          variant="secondary"
           btnText="Sell your car today"
           btnTextSize="text-sm md:text-base"
           widthUtilities="w-auto mx-auto "

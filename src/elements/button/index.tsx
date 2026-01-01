@@ -18,7 +18,7 @@ export default function Button({
   paddingUtilities?: string;
 }) {
   const hoverClasses: Record<string, string> = {
-    "rounded": "hover:rounded",
+    rounded: "hover:rounded",
     "rounded-md": "hover:rounded-md",
     "rounded-lg": "hover:rounded-lg",
     "rounded-full": "hover:rounded-full",
@@ -30,8 +30,15 @@ export default function Button({
       type="button"
       className={`btn btn-${variant} ${btnTextSize} ${widthUtilities} ${roundUtilities} ${paddingUtilities} ${hoverEffect}`}
       onClick={clickEvent}
+      aria-label={
+        !btnText
+          ? typeof btnIcon === "string"
+            ? btnIcon
+            : "Button"
+          : undefined
+      } // ✅ Only needed for icon-only buttons
     >
-      {btnIcon && btnIcon}
+      {btnIcon && <span aria-hidden={!!btnText}>{btnIcon}</span>}
       {btnText && <span>{btnText}</span>}
     </button>
   );

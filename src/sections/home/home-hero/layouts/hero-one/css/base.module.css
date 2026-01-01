@@ -9,12 +9,12 @@
 }
 
 .hero-bg {
-  @apply absolute inset-0 w-full h-full object-cover;
+  @apply absolute inset-0 w-full h-full object-cover brightness-30;
 }
 
 /* Premium Gradient Overlay */
 .hero-overlay {
-  @apply absolute z-10 inset-0 bg-linear-to-br from-primary/70 via-black/5;
+  @apply absolute z-10 inset-0 bg-linear-to-br from-primary/50 via-black/5;
 }
 
 .hero-content {
@@ -52,8 +52,8 @@
 .hero-feature {
   @apply flex items-center gap-2 px-2 py-1 lg:px-3 lg:py-2 
          bg-white/10 backdrop-blur-sm border border-white/10 
-         rounded-lg text-[10px] lg:text-sm font-medium text-white/90
-         transition-all duration-300 hover:border-white/25
+         rounded-lg text-[10px] lg:text-sm text-white/90
+         transition-all duration-300 hover:border-white/15
          hover:scale-105 cursor-default;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .hero-feature-text {
-  @apply whitespace-nowrap uppercase font-bold;
+  @apply whitespace-nowrap uppercase font-semibold tracking-wide;
 }
 
 /* Stats Section */
@@ -71,7 +71,7 @@
 }
 
 .hero-stat {
-  @apply flex flex-col items-center hover:scale-105 transition-transform duration-300;
+  @apply flex flex-col items-center hover:scale-105 transition-transform duration-300 cursor-default;
 }
 
 .hero-stat-value {
