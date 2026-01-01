@@ -182,15 +182,15 @@ export default function index({
 
                 let iconSrc = "";
                 if (platform === "Facebook") {
-                  iconSrc = "/images/social/facebook.png";
+                  iconSrc = "/images/social/facebook.webp";
                 } else if (platform === "Instagram") {
-                  iconSrc = "/images/social/instagram.png";
+                  iconSrc = "/images/social/instagram.webp";
                 } else if (platform === "LinkedIn") {
-                  iconSrc = "/images/social/linkedin.png";
+                  iconSrc = "/images/social/linkedin.webp";
                 } else if (platform === "YouTube") {
-                  iconSrc = "/images/social/youtube.png";
+                  iconSrc = "/images/social/youtube.webp";
                 } else if (platform === "Twitter") {
-                  iconSrc = "/images/social/twitter.png";
+                  iconSrc = "/images/social/twitter.webp";
                 } else {
                   return null;
                 }
