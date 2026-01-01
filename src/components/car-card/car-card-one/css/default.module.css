@@ -6,7 +6,7 @@
 
 /* Root card */
 .car-card {
-  @apply w-auto [1440px]:min-h-[490px] lg:min-h-[540px] pb-4 rounded-2xl overflow-hidden relative
+  @apply w-auto h-full pb-4 rounded-2xl overflow-hidden relative
          border border-gray-200 bg-white
          transition-all duration-300 ease-out
          shadow-md hover:shadow-xl;
