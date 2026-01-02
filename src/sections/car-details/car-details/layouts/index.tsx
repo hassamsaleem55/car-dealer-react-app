@@ -57,7 +57,7 @@ export default function CarDetailsOne() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const stockId = searchParams.split("=")[1];
+        const stockId = Number(searchParams.split("=")[1]);
 
         const [carRes, imgRes, featureRes] = await Promise.all([
           fetchApi(`/stocks/${stockId}`, dealerAuthToken),
@@ -67,6 +67,7 @@ export default function CarDetailsOne() {
 
         const processedCarArray = await processCarCardData([carRes]);
         const processedCar = processedCarArray[0];
+        processedCar.stockId = stockId; // Add stockId to car data
         setCarData(processedCar);
         setReservationCarData(processedCar);
         setCarDetails(carRes);
@@ -131,7 +132,7 @@ export default function CarDetailsOne() {
     <>
       <div className="container mx-auto px-4 pt-6 space-y-6">
         {/* === Breadcrumb === */}
-        <Breadcrumb title={carData.title} />
+        <Breadcrumb title={carData.title} stockId={carData.stockId} />
 
         <main className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:items-start">
           {/* === Left Column (Car Details) === */}
