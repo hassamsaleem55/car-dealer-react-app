@@ -29,7 +29,7 @@ export default function PdfVehicleInfo({ data }: { data: StockSmanDto }) {
               {data.make} {data.model} {vehicle?.trim && `• ${vehicle.trim}`}
             </h2>
             <p className="text-[11px] text-white/90 uppercase tracking-wide">
-              {year || "N/A"} • {data.registration || "N/A"}
+              {year && year}
               {vehicle?.derivative && ` • ${vehicle.derivative}`}
             </p>
           </div>
@@ -90,7 +90,14 @@ export default function PdfVehicleInfo({ data }: { data: StockSmanDto }) {
       )}
 
       {/* Compact Grid Info */}
+
       <div className="grid grid-cols-2 gap-2 text-[10px]">
+        <div className="bg-linear-to-br from-primary/5 to-white p-2 rounded-lg border border-primary/20">
+          <p className="text-gray-500 text-[9px] uppercase tracking-wide mb-0.5">
+            Registration
+          </p>
+          <p className="font-bold text-primary">{data.registration}</p>
+        </div>
         <div className="bg-linear-to-br from-primary/5 to-white p-2 rounded-lg border border-primary/20">
           <p className="text-gray-500 text-[9px] uppercase tracking-wide mb-0.5">
             Mileage

@@ -138,25 +138,12 @@ const StockSmanPdf = forwardRef<HTMLDivElement, Props>(
 
         {/* Right Column - Elegant Vehicle Details (5/12) */}
         <div className="col-span-5">
-          {/* <PdfVehicleDetails data={data} /> */}
           <PdfVehicleInfo data={data} />
         </div>
       </div>
-      <PdfVehicleDetails data={data} />
-      {/* Description Section - Full Width if Available */}
-      {data.advert?.description && data.advert.description.trim() && (
-        <div className="mt-3 bg-white border-l-4 border-primary p-3 rounded-xl shadow-lg">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-1 h-4 bg-linear-to-b from-primary to-primary/70 rounded-full"></div>
-            <h3 className="font-bold text-[10px] text-gray-800 uppercase tracking-wide">
-              Vehicle Description
-            </h3>
-          </div>
-          <p className="text-[9px] leading-relaxed text-gray-700 pl-3">
-            {data.advert.description}
-          </p>
-        </div>
-      )}
+      <div className="mt-2">
+        <PdfVehicleDetails data={data} />
+      </div>
 
       {/* Features Section - Full Width */}
       <PdfFeatures features={data.features} />
