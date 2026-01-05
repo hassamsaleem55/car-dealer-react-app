@@ -244,7 +244,7 @@ export default function PrintAdvertModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-200 p-2 sm:p-4">
       <div
         ref={modalRef}
-        className="relative bg-linear-to-br from-gray-50 to-white rounded-lg sm:rounded-2xl shadow-2xl w-full h-full sm:w-[96vw] sm:h-[96vh] max-w-[1400px] overflow-hidden flex flex-col border border-gray-200/50"
+        className="relative bg-linear-to-br from-gray-50 to-white rounded-lg sm:rounded-2xl shadow-2xl h-full overflow-hidden flex flex-col border border-gray-200/50"
       >
         {/* Elegant Header */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 px-3 sm:px-6 md:px-8 py-2 sm:py-3 md:py-5 bg-linear-to-r from-primary/5 to-transparent border-b border-gray-200/50">
