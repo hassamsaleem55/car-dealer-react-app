@@ -1,15 +1,18 @@
 import { useRef } from "react";
 import { useDealerContext } from "@core-dir/dealer-provider";
 import StockSmanPdf from "./StockSmanPdf";
+import StockSmanPdfMinified from "./StockSmanPdfMinified";
 import { useStockSmanData } from "./useStockSmanData";
 
 interface StockSmanPdfContainerProps {
   stockId: number;
+  mode?: "detailed" | "minified";
   onPrintReady?: (ref: React.RefObject<HTMLDivElement>) => void;
 }
 
 export default function StockSmanPdfContainer({
   stockId,
+  mode = "detailed",
 }: StockSmanPdfContainerProps) {
   const pdfRef = useRef<HTMLDivElement>(null);
   const { dealerAuthToken } = useDealerContext();
@@ -62,7 +65,9 @@ export default function StockSmanPdfContainer({
     );
   }
 
-  return (
+  return mode === "minified" ? (
+    <StockSmanPdfMinified ref={pdfRef} data={data} />
+  ) : (
     <StockSmanPdf
       ref={pdfRef}
       data={data}

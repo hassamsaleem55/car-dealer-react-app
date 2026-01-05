@@ -1,7 +1,9 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { X, Download, Printer } from "lucide-react";
 import { StockSmanPdfContainer } from "@components-dir/print-advert";
 import Button from "@elements-dir/button";
+
+type PrintMode = "detailed" | "minified";
 
 interface PrintAdvertModalProps {
   isOpen: boolean;
@@ -16,6 +18,7 @@ export default function PrintAdvertModal({
 }: PrintAdvertModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const printAreaRef = useRef<HTMLDivElement>(null);
+  const [printMode, setPrintMode] = useState<PrintMode>("detailed");
 
   // Handle escape key
   useEffect(() => {
@@ -244,73 +247,123 @@ export default function PrintAdvertModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-200 p-2 sm:p-4">
       <div
         ref={modalRef}
-        className="relative bg-linear-to-br from-gray-50 to-white rounded-lg sm:rounded-2xl shadow-2xl h-full overflow-hidden flex flex-col border border-gray-200/50"
+        className="relative bg-white rounded-lg sm:rounded-2xl shadow-2xl w-full max-w-7xl h-[95vh] overflow-hidden flex flex-col border border-gray-200/50"
       >
-        {/* Elegant Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-3 px-3 sm:px-6 md:px-8 py-2 sm:py-3 md:py-5 bg-linear-to-r from-primary/5 to-transparent border-b border-gray-200/50">
+        {/* Header - Title and Actions */}
+        <div className="flex items-center justify-between gap-3 px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-linear-to-r from-gray-50 to-white border-b border-gray-200">
           <div className="flex-1 min-w-0">
-            <h2 className="text-base sm:text-xl md:text-2xl font-bold text-gray-800 tracking-tight">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
               Vehicle Print Preview
             </h2>
-            <p className="text-xs sm:text-sm text-gray-500 mt-0.5 truncate">
+            <p className="text-xs sm:text-sm text-gray-600 mt-0.5">
               Stock #{stockId} • Ready to print or download
             </p>
           </div>
 
-          <div className="flex flex-row items-center gap-1.5 sm:gap-2 md:gap-3 w-full sm:w-auto">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Button
               variant="secondary"
               btnText="Download"
-              paddingUtilities="px-2 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5"
+              paddingUtilities="px-3 sm:px-4 md:px-6 py-2 sm:py-2.5"
               widthUtilities="w-auto"
-              btnTextSize="text-[10px] sm:text-xs md:text-sm"
-              btnIcon={<Download className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4" />}
+              btnTextSize="text-xs sm:text-sm"
+              btnIcon={<Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
               clickEvent={handleDownloadPDF}
             />
             <Button
               variant="primary"
               btnText="Print"
-              paddingUtilities="px-2 sm:px-4 md:px-5 py-1.5 sm:py-2 md:py-2.5"
+              paddingUtilities="px-3 sm:px-4 md:px-6 py-2 sm:py-2.5"
               widthUtilities="w-auto"
-              btnTextSize="text-[10px] sm:text-xs md:text-sm"
-              btnIcon={<Printer className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4" />}
+              btnTextSize="text-xs sm:text-sm"
+              btnIcon={<Printer className="w-3.5 h-3.5 sm:w-4 sm:h-4" />}
               clickEvent={handlePrint}
             />
             <button
               onClick={onClose}
-              className="p-1.5 sm:p-2 md:p-2.5 rounded-lg sm:rounded-xl hover:bg-gray-100 transition-all duration-200 text-gray-500 hover:text-gray-700 border border-transparent hover:border-gray-200"
+              className="p-2 sm:p-2.5 rounded-lg hover:bg-gray-100 transition-all duration-200 text-gray-500 hover:text-gray-700"
               aria-label="Close modal"
             >
-              <X className="w-4 h-4 sm:w-4.5 sm:h-4.5 md:w-5 md:h-5" />
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           </div>
         </div>
 
+        {/* Tab-style Mode Selector */}
+        <div className="flex items-center gap-1 px-4 sm:px-6 md:px-8 pt-3 pb-0 bg-linear-to-b from-gray-50 to-transparent">
+          <button
+            onClick={() => setPrintMode("detailed")}
+            className={`relative px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300 ${
+              printMode === "detailed"
+                ? "text-primary"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            <span className="relative z-10">Detailed View</span>
+            {printMode === "detailed" && (
+              <div className="absolute inset-0 bg-white rounded-t-lg shadow-sm border-t-2 border-l border-r border-primary -bottom-px" />
+            )}
+          </button>
+          <button
+            onClick={() => setPrintMode("minified")}
+            className={`relative px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300 ${
+              printMode === "minified"
+                ? "text-primary"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            <span className="relative z-10">Minified (1 Page)</span>
+            {printMode === "minified" && (
+              <div className="absolute inset-0 bg-white rounded-t-lg shadow-sm border-t-2 border-l border-r border-primary -bottom-px" />
+            )}
+          </button>
+          <div className="flex-1 border-b border-gray-200" />
+        </div>
+
         {/* Content Area with Shadow Inset */}
-        <div className="flex-1 overflow-auto bg-linear-to-br from-gray-100 to-gray-50 p-2 sm:p-4 md:p-8">
-          <div className="flex justify-center">
+        <div className="flex-1 overflow-auto bg-linear-to-br from-gray-50 via-gray-100/50 to-gray-50 p-4 sm:p-6 md:p-8">
+          <div className="flex justify-center items-start min-h-full">
             <div 
               ref={printAreaRef} 
-              className="bg-white shadow-2xl rounded-lg overflow-hidden"
-              style={{ width: '210mm', minHeight: '297mm' }}
+              className="bg-white shadow-xl rounded-md overflow-hidden transition-all duration-300"
+              style={{ 
+                width: '210mm', 
+                minHeight: printMode === "minified" ? '297mm' : 'auto',
+                maxHeight: printMode === "minified" ? '297mm' : 'none'
+              }}
             >
-              <StockSmanPdfContainer stockId={stockId} />
+              <StockSmanPdfContainer stockId={stockId} mode={printMode} />
             </div>
           </div>
         </div>
 
         {/* Footer Info Bar */}
-        <div className="px-4 sm:px-8 py-2 sm:py-3 bg-linear-to-r from-gray-50 to-white border-t border-gray-200/50">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 sm:gap-0 text-[10px] sm:text-xs text-gray-500">
-            <div className="flex items-center gap-6">
+        <div className="px-4 sm:px-6 md:px-8 py-3 bg-white border-t border-gray-200">
+          <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-gray-600">
+            <div className="flex items-center gap-4 sm:gap-6">
               <span className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                Preview Mode
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-sm shadow-green-500/50"></span>
+                <span className="font-medium">{printMode === "detailed" ? "Detailed Preview" : "Minified Preview"}</span>
               </span>
-              <span>Document Size: A4 (210mm × 297mm)</span>
+              <span className="hidden sm:inline-flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <span>A4 (210mm × 297mm)</span>
+              </span>
+              {printMode === "minified" && (
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-primary/10 text-primary rounded text-[11px] font-medium">
+                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Single Page
+                </span>
+              )}
             </div>
-            <div className="text-gray-400">
-              Press <kbd className="px-2 py-0.5 bg-gray-100 border border-gray-300 rounded text-[10px] font-mono">ESC</kbd> to close
+            <div className="flex items-center gap-2 text-gray-500">
+              <span className="hidden sm:inline">Press</span>
+              <kbd className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-[10px] font-mono shadow-sm">ESC</kbd>
+              <span className="hidden sm:inline">to close</span>
             </div>
           </div>
         </div>
