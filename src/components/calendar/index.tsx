@@ -286,8 +286,8 @@ export default function CalendarOne({
       </div>
 
       {/* Time Slots Section */}
-      <div className="w-full lg:w-56 rounded-t-xl p-4 border border-b-0 border-gray-200">
-        <div className="mb-2">
+      <div className="w-full lg:w-56 rounded-t-xl border border-b-0 border-gray-200">
+        <div className="p-3">
           <h4 className="text-lg font-medium">Time Slots For</h4>
           {selectedDate ? (
             <p className="text-primary font-medium">
@@ -316,7 +316,7 @@ export default function CalendarOne({
             }
 
             return (
-              <div className="grid grid-cols-1 gap-2">
+              <div className="grid grid-cols-1 gap-2 max-h-80 px-2 overflow-y-auto">
                 {scheduleForDay.slots.map((slot: any) => {
                   const formatted = `${formatTo12Hour(
                     slot.startTime.substring(0, 5)

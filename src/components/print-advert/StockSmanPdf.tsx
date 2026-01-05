@@ -116,13 +116,13 @@ const StockSmanPdf = forwardRef<HTMLDivElement, Props>(
   ({ data, generatedAt }, ref) => (
     <div
       ref={ref}
-      className="max-w-[210mm] w-full min-h-[297mm] bg-linear-to-br from-slate-50/30 via-white to-gray-50/20 mx-auto text-[11px] font-sans print:bg-white print:max-w-full"
+      className="max-w-[210mm] w-full min-h-[297mm] bg-linear-to-br from-slate-50/30 via-white to-gray-50/20 mx-auto text-[10px] sm:text-[11px] font-sans print:bg-white print:max-w-full"
       style={
         {
           WebkitPrintColorAdjust: "exact",
           printColorAdjust: "exact",
           colorAdjust: "exact",
-          padding: "10mm",
+          padding: "5mm",
         } as React.CSSProperties
       }
     >
@@ -130,18 +130,18 @@ const StockSmanPdf = forwardRef<HTMLDivElement, Props>(
       <PdfHeader data={data} />
 
       {/* Main Content - Refined Two Column Layout */}
-      <div className="mt-3.5 grid grid-cols-12 gap-4">
+      <div className="mt-2 sm:mt-3.5 grid grid-cols-1 md:grid-cols-12 gap-2 sm:gap-4">
         {/* Left Column - Premium Images (7/12) */}
-        <div className="col-span-7">
+        <div className="col-span-1 md:col-span-7">
           <PdfImages data={data} />
         </div>
 
         {/* Right Column - Elegant Vehicle Details (5/12) */}
-        <div className="col-span-5">
+        <div className="col-span-1 md:col-span-5">
           <PdfVehicleInfo data={data} />
         </div>
       </div>
-      <div className="mt-2">
+      <div className="mt-1.5 sm:mt-2">
         <PdfVehicleDetails data={data} />
       </div>
 

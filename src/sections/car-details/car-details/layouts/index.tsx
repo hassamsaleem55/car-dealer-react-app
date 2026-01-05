@@ -239,7 +239,7 @@ export default function CarDetailsOne() {
           </div>
 
           {/* === Right Column (Sticky Aside) === */}
-          <aside className="col-span-1 relative md:sticky md:top-20 space-y-4 hidden md:block">
+          <aside className="col-span-1 relative md:sticky md:top-23 space-y-4 hidden md:block">
             <MotionReveal preset="slideLeft">
               <CarHeader
                 carData={carData}

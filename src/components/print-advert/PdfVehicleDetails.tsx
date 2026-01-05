@@ -9,10 +9,10 @@ const SectionHeader = ({
   colorClass?: string;
 }) => (
   <div
-    className={`bg-linear-to-r from-${colorClass}-50 to-transparent px-2 py-1 border-b border-gray-200/50`}
+    className={`bg-linear-to-r from-${colorClass}-50 to-transparent px-1.5 sm:px-2 py-0.5 sm:py-1 border-b border-gray-200/50`}
   >
     <h3
-      className={`font-bold text-[10px] text-${colorClass}-700 uppercase tracking-wide`}
+      className={`font-bold text-[9px] sm:text-[10px] text-${colorClass}-700 uppercase tracking-wide`}
     >
       {title}
     </h3>
@@ -73,7 +73,7 @@ const Section = ({
   colorClass?: string;
   children: React.ReactNode;
 }) => (
-  <div className="bg-linear-to-br from-gray-50 to-white rounded-lg shadow-sm border border-gray-200/80 overflow-hidden">
+  <div className="bg-linear-to-br from-gray-50 to-white rounded-md sm:rounded-lg shadow-sm border border-gray-200/80 overflow-hidden">
     <SectionHeader title={title} colorClass={colorClass} />
     {children}
   </div>
@@ -86,10 +86,10 @@ export default function PdfVehicleDetails({ data }: { data: StockSmanDto }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
         {/* Engine Specifications */}
         <Section title="Engine">
-          <div className="grid grid-cols-2 text-[9px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 text-[8px] sm:text-[9px]">
             {vehicle.engineCapacityCC && (
               <GridItem
                 label="Capacity"
@@ -142,7 +142,7 @@ export default function PdfVehicleDetails({ data }: { data: StockSmanDto }) {
 
         {/* Body & Cabin */}
         <Section title="Body & Cabin">
-          <div className="grid grid-cols-2 text-[9px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 text-[8px] sm:text-[9px]">
             {vehicle.bodyType && (
               <GridItem label="Body" value={vehicle.bodyType} />
             )}
@@ -204,7 +204,7 @@ export default function PdfVehicleDetails({ data }: { data: StockSmanDto }) {
         {/* <div className="grid grid-cols-2 gap-1.5"> */}
           {/* Economy & Emissions */}
           <Section title="Economy & Emissions" colorClass="emerald">
-            <div className="text-[9px] p-2 space-y-0.5">
+            <div className="text-[8px] sm:text-[9px] p-1.5 sm:p-2 space-y-0.5">
               <div className="grid grid-cols-2 gap-x-2">
                 {vehicle.fuelEconomyWLTPCombinedMPG && (
                   <DetailRow
@@ -276,7 +276,7 @@ export default function PdfVehicleDetails({ data }: { data: StockSmanDto }) {
 
           {/* Performance */}
           <Section title="Performance" colorClass="blue">
-            <div className="text-[9px] space-y-0.5 p-2">
+            <div className="text-[8px] sm:text-[9px] space-y-0.5 p-1.5 sm:p-2">
               {vehicle.topSpeedMPH && (
                 <div className="flex justify-between">
                   <span className="text-gray-500">Top Speed:</span>
@@ -303,7 +303,7 @@ export default function PdfVehicleDetails({ data }: { data: StockSmanDto }) {
 
         {/* Additional Information */}
         <Section title="Additional Info" colorClass="amber">
-          <div className="text-[9px] space-y-0.5 p-2">
+          <div className="text-[8px] sm:text-[9px] space-y-0.5 p-1.5 sm:p-2">
             {vehicle.insuranceGroup && (
               <DetailRow
                 label="Insurance Group"
