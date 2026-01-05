@@ -22,25 +22,11 @@ export default function Breadcrumb({ title, stockId }: BreadcrumbProps) {
     const shareTitle = `Check out this ${title}`;
 
     if (navigator.share) {
-      try {
-        await navigator.share({
-          title: shareTitle,
-          text: `Take a look at this vehicle: ${title}`,
-          url: shareUrl,
-        });
-      } catch (error) {
-        if ((error as Error).name !== "AbortError") {
-          console.error("Error sharing:", error);
-        }
-      }
-    } else {
-      // Fallback: Copy to clipboard
-      try {
-        await navigator.clipboard.writeText(shareUrl);
-        alert("Link copied to clipboard!");
-      } catch (error) {
-        console.error("Error copying to clipboard:", error);
-      }
+      await navigator.share({
+        title: shareTitle,
+        text: `Take a look at this vehicle: ${title}`,
+        url: shareUrl,
+      });
     }
   };
 
