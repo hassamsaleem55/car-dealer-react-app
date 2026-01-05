@@ -86,7 +86,7 @@ export default function PdfVehicleDetails({ data }: { data: StockSmanDto }) {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2">
+      <div className="columns-1 sm:columns-2 space-y-1.5 sm:space-y-2">
         {/* Engine Specifications */}
         <Section title="Engine">
           <div className="grid grid-cols-1 sm:grid-cols-2 text-[8px] sm:text-[9px]">
@@ -202,103 +202,105 @@ export default function PdfVehicleDetails({ data }: { data: StockSmanDto }) {
         )}
 
         {/* <div className="grid grid-cols-2 gap-1.5"> */}
-          {/* Economy & Emissions */}
-          <Section title="Economy & Emissions" colorClass="emerald">
-            <div className="text-[8px] sm:text-[9px] p-1.5 sm:p-2 space-y-0.5">
-              <div className="grid grid-cols-2 gap-x-2">
-                {vehicle.fuelEconomyWLTPCombinedMPG && (
-                  <DetailRow
-                    label="WLTP MPG"
-                    value={vehicle.fuelEconomyWLTPCombinedMPG.toFixed(1)}
-                    isHighlight
-                  />
-                )}
-                {vehicle.fuelEconomyNEDCCombinedMPG && (
-                  <DetailRow
-                    label="NEDC MPG"
-                    value={vehicle.fuelEconomyNEDCCombinedMPG.toFixed(1)}
-                    isHighlight
-                  />
-                )}
-              </div>
-              {vehicle.fuelEconomyWLTPLowMPG && (
+        {/* Economy & Emissions */}
+        <Section title="Economy & Emissions" colorClass="emerald">
+          <div className="text-[8px] sm:text-[9px] p-1.5 sm:p-2 space-y-0.5">
+            <div
+              className={`grid ${
+                vehicle.fuelEconomyWLTPCombinedMPG &&
+                vehicle.fuelEconomyNEDCCombinedMPG
+                  ? `grid-cols-2 gap-x-2`
+                  : `grid-cols-1`
+              }`}
+            >
+              {vehicle.fuelEconomyWLTPCombinedMPG && (
                 <DetailRow
-                  label="WLTP Low"
-                  value={`${vehicle.fuelEconomyWLTPLowMPG.toFixed(1)} MPG`}
+                  label="WLTP MPG"
+                  value={vehicle.fuelEconomyWLTPCombinedMPG.toFixed(1)}
+                  isHighlight
                 />
               )}
-              {vehicle.fuelEconomyWLTPMediumMPG && (
+              {vehicle.fuelEconomyNEDCCombinedMPG && (
                 <DetailRow
-                  label="WLTP Medium"
-                  value={`${vehicle.fuelEconomyWLTPMediumMPG.toFixed(1)} MPG`}
-                />
-              )}
-              {vehicle.fuelEconomyWLTPHighMPG && (
-                <DetailRow
-                  label="WLTP High"
-                  value={`${vehicle.fuelEconomyWLTPHighMPG.toFixed(1)} MPG`}
-                />
-              )}
-              {vehicle.fuelEconomyWLTPExtraHighMPG && (
-                <DetailRow
-                  label="WLTP Extra High"
-                  value={`${vehicle.fuelEconomyWLTPExtraHighMPG.toFixed(
-                    1
-                  )} MPG`}
-                />
-              )}
-              {vehicle.co2EmissionGPKM && (
-                <DetailRow
-                  label="CO2 Emissions"
-                  value={`${vehicle.co2EmissionGPKM} g/km`}
-                />
-              )}
-              {vehicle.emissionClass && (
-                <DetailRow
-                  label="Emission Class"
-                  value={vehicle.emissionClass}
-                />
-              )}
-              {vehicle.rde2Compliant !== null && (
-                <DetailRow
-                  label="RDE2 Compliant"
-                  value={vehicle.rde2Compliant ? "Yes" : "No"}
-                />
-              )}
-              {vehicle.vehicleExciseDutyWithoutSupplementGBP && (
-                <DetailRow
-                  label="VED (Yearly)"
-                  value={`£${vehicle.vehicleExciseDutyWithoutSupplementGBP}`}
+                  label="NEDC MPG"
+                  value={vehicle.fuelEconomyNEDCCombinedMPG.toFixed(1)}
+                  isHighlight
                 />
               )}
             </div>
-          </Section>
+            {vehicle.fuelEconomyWLTPLowMPG && (
+              <DetailRow
+                label="WLTP Low"
+                value={`${vehicle.fuelEconomyWLTPLowMPG.toFixed(1)} MPG`}
+              />
+            )}
+            {vehicle.fuelEconomyWLTPMediumMPG && (
+              <DetailRow
+                label="WLTP Medium"
+                value={`${vehicle.fuelEconomyWLTPMediumMPG.toFixed(1)} MPG`}
+              />
+            )}
+            {vehicle.fuelEconomyWLTPHighMPG && (
+              <DetailRow
+                label="WLTP High"
+                value={`${vehicle.fuelEconomyWLTPHighMPG.toFixed(1)} MPG`}
+              />
+            )}
+            {vehicle.fuelEconomyWLTPExtraHighMPG && (
+              <DetailRow
+                label="WLTP Extra High"
+                value={`${vehicle.fuelEconomyWLTPExtraHighMPG.toFixed(1)} MPG`}
+              />
+            )}
+            {vehicle.co2EmissionGPKM && (
+              <DetailRow
+                label="CO2 Emissions"
+                value={`${vehicle.co2EmissionGPKM} g/km`}
+              />
+            )}
+            {vehicle.emissionClass && (
+              <DetailRow label="Emission Class" value={vehicle.emissionClass} />
+            )}
+            {vehicle.rde2Compliant !== null && (
+              <DetailRow
+                label="RDE2 Compliant"
+                value={vehicle.rde2Compliant ? "Yes" : "No"}
+              />
+            )}
+            {vehicle.vehicleExciseDutyWithoutSupplementGBP && (
+              <DetailRow
+                label="VED (Yearly)"
+                value={`£${vehicle.vehicleExciseDutyWithoutSupplementGBP}`}
+              />
+            )}
+          </div>
+        </Section>
 
-          {/* Performance */}
-          <Section title="Performance" colorClass="blue">
-            <div className="text-[8px] sm:text-[9px] space-y-0.5 p-1.5 sm:p-2">
-              {vehicle.topSpeedMPH && (
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Top Speed:</span>
-                  <span className="font-bold text-blue-600">
-                    {vehicle.topSpeedMPH} MPH
-                  </span>
-                </div>
-              )}
-              {vehicle.zeroToSixtyMPHSeconds && (
-                <DetailRow
-                  label="0-60 MPH"
-                  value={`${vehicle.zeroToSixtyMPHSeconds}s`}
-                />
-              )}
-              {vehicle.zeroToOneHundredKMPHSeconds && (
-                <DetailRow
-                  label="0-100 KM/H"
-                  value={`${vehicle.zeroToOneHundredKMPHSeconds}s`}
-                />
-              )}
-            </div>
-          </Section>
+        {/* Performance */}
+        <Section title="Performance" colorClass="blue">
+          <div className="text-[8px] sm:text-[9px] space-y-0.5 p-1.5 sm:p-2">
+            {vehicle.topSpeedMPH && (
+              <div className="flex justify-between">
+                <span className="text-gray-500">Top Speed:</span>
+                <span className="font-bold text-blue-600">
+                  {vehicle.topSpeedMPH} MPH
+                </span>
+              </div>
+            )}
+            {vehicle.zeroToSixtyMPHSeconds && (
+              <DetailRow
+                label="0-60 MPH"
+                value={`${vehicle.zeroToSixtyMPHSeconds}s`}
+              />
+            )}
+            {vehicle.zeroToOneHundredKMPHSeconds && (
+              <DetailRow
+                label="0-100 KM/H"
+                value={`${vehicle.zeroToOneHundredKMPHSeconds}s`}
+              />
+            )}
+          </div>
+        </Section>
         {/* </div> */}
 
         {/* Additional Information */}

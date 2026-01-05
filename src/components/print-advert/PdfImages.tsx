@@ -8,7 +8,7 @@ export default function PdfImages({ data }: { data: StockSmanDto }) {
   return (
     <div className="flex flex-col h-full space-y-1 sm:space-y-1.5">
       {/* Main Featured Image */}
-      <div className="relative overflow-hidden aspect-video rounded-md sm:rounded-lg shadow-md sm:shadow-lg border border-gray-200/70 bg-linear-to-br from-gray-100 to-white flex-1">
+      <div className="relative overflow-hidden aspect-4/3 rounded-md sm:rounded-lg shadow-md sm:shadow-lg border border-gray-200/70 bg-linear-to-br from-gray-100 to-white flex-1">
         <img
           src={images[0]?.photoPath ?? FALLBACK_IMAGE}
           className="w-full h-full object-cover object-center"
@@ -21,7 +21,7 @@ export default function PdfImages({ data }: { data: StockSmanDto }) {
         {images.slice(0, 3).map((img, i) => (
           <div
             key={i}
-            className="relative overflow-hidden rounded-md shadow-md border border-gray-200/50 bg-gray-100 aspect-video"
+            className="relative overflow-hidden rounded-md shadow-md border border-gray-200/50 bg-gray-100 aspect-4/3"
           >
             <img
               src={img.photoPath}

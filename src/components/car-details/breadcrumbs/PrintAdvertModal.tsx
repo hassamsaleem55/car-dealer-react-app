@@ -18,7 +18,7 @@ export default function PrintAdvertModal({
 }: PrintAdvertModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
   const printAreaRef = useRef<HTMLDivElement>(null);
-  const [printMode, setPrintMode] = useState<PrintMode>("detailed");
+  const [printMode, setPrintMode] = useState<PrintMode>("minified");
 
   // Handle escape key
   useEffect(() => {
@@ -40,14 +40,16 @@ export default function PrintAdvertModal({
   const handlePrint = () => {
     if (printAreaRef.current) {
       const printContent = printAreaRef.current.innerHTML;
-      
+
       // Extract all computed styles from the page
       const allStyles: string[] = [];
-      
+
       // Get all stylesheet rules
       for (const styleSheet of Array.from(document.styleSheets)) {
         try {
-          const rules = Array.from(styleSheet.cssRules || styleSheet.rules || []);
+          const rules = Array.from(
+            styleSheet.cssRules || styleSheet.rules || []
+          );
           for (const rule of rules) {
             allStyles.push(rule.cssText);
           }
@@ -58,9 +60,9 @@ export default function PrintAdvertModal({
           }
         }
       }
-      
+
       // Get inline styles from style tags
-      document.querySelectorAll('style').forEach(styleTag => {
+      document.querySelectorAll("style").forEach((styleTag) => {
         allStyles.push(styleTag.innerHTML);
       });
 
@@ -76,7 +78,7 @@ export default function PrintAdvertModal({
               <meta name="viewport" content="width=1024">
               <style>
                 /* Injected styles from parent page */
-                ${allStyles.join('\n')}
+                ${allStyles.join("\n")}
                 
                 /* Force screen-width rendering for print */
                 @media print {
@@ -223,7 +225,7 @@ export default function PrintAdvertModal({
           </html>
         `);
         printWindow.document.close();
-        
+
         // Wait for styles and images to load
         setTimeout(() => {
           printWindow.focus();
@@ -247,12 +249,12 @@ export default function PrintAdvertModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm animate-in fade-in duration-200 p-2 sm:p-4">
       <div
         ref={modalRef}
-        className="relative bg-white rounded-lg sm:rounded-2xl shadow-2xl w-full max-w-7xl h-[95vh] overflow-hidden flex flex-col border border-gray-200/50"
+        className="relative bg-white rounded-lg sm:rounded-2xl shadow-2xl h-[95vh] overflow-hidden flex flex-col border border-gray-200/50"
       >
         {/* Header - Title and Actions */}
         <div className="flex items-center justify-between gap-3 px-4 sm:px-6 md:px-8 py-3 sm:py-4 bg-linear-to-r from-gray-50 to-white border-b border-gray-200">
           <div className="flex-1 min-w-0">
-            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+            <h2 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-tight">
               Vehicle Print Preview
             </h2>
             <p className="text-xs sm:text-sm text-gray-600 mt-0.5">
@@ -292,19 +294,6 @@ export default function PrintAdvertModal({
         {/* Tab-style Mode Selector */}
         <div className="flex items-center gap-1 px-4 sm:px-6 md:px-8 pt-3 pb-0 bg-linear-to-b from-gray-50 to-transparent">
           <button
-            onClick={() => setPrintMode("detailed")}
-            className={`relative px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300 ${
-              printMode === "detailed"
-                ? "text-primary"
-                : "text-gray-500 hover:text-gray-700"
-            }`}
-          >
-            <span className="relative z-10">Detailed View</span>
-            {printMode === "detailed" && (
-              <div className="absolute inset-0 bg-white rounded-t-lg shadow-sm border-t-2 border-l border-r border-primary -bottom-px" />
-            )}
-          </button>
-          <button
             onClick={() => setPrintMode("minified")}
             className={`relative px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300 ${
               printMode === "minified"
@@ -317,20 +306,29 @@ export default function PrintAdvertModal({
               <div className="absolute inset-0 bg-white rounded-t-lg shadow-sm border-t-2 border-l border-r border-primary -bottom-px" />
             )}
           </button>
+          <button
+            onClick={() => setPrintMode("detailed")}
+            className={`relative px-4 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300 ${
+              printMode === "detailed"
+                ? "text-primary"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            <span className="relative z-10">Detailed View</span>
+            {printMode === "detailed" && (
+              <div className="absolute inset-0 bg-white rounded-t-lg shadow-sm border-t-2 border-l border-r border-primary -bottom-px" />
+            )}
+          </button>
+
           <div className="flex-1 border-b border-gray-200" />
         </div>
 
         {/* Content Area with Shadow Inset */}
         <div className="flex-1 overflow-auto bg-linear-to-br from-gray-50 via-gray-100/50 to-gray-50 p-4 sm:p-6 md:p-8">
           <div className="flex justify-center items-start min-h-full">
-            <div 
-              ref={printAreaRef} 
+            <div
+              ref={printAreaRef}
               className="bg-white shadow-xl rounded-md overflow-hidden transition-all duration-300"
-              style={{ 
-                width: '210mm', 
-                minHeight: printMode === "minified" ? '297mm' : 'auto',
-                maxHeight: printMode === "minified" ? '297mm' : 'none'
-              }}
             >
               <StockSmanPdfContainer stockId={stockId} mode={printMode} />
             </div>
@@ -343,18 +341,40 @@ export default function PrintAdvertModal({
             <div className="flex items-center gap-4 sm:gap-6">
               <span className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-sm shadow-green-500/50"></span>
-                <span className="font-medium">{printMode === "detailed" ? "Detailed Preview" : "Minified Preview"}</span>
+                <span className="font-medium">
+                  {printMode === "detailed"
+                    ? "Detailed Preview"
+                    : "Minified Preview"}
+                </span>
               </span>
               <span className="hidden sm:inline-flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                <svg
+                  className="w-3.5 h-3.5 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
                 </svg>
                 <span>A4 (210mm × 297mm)</span>
               </span>
               {printMode === "minified" && (
                 <span className="inline-flex items-center gap-1.5 px-2 py-0.5 bg-primary/10 text-primary rounded text-[11px] font-medium">
-                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  <svg
+                    className="w-3 h-3"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   Single Page
                 </span>
@@ -362,7 +382,9 @@ export default function PrintAdvertModal({
             </div>
             <div className="flex items-center gap-2 text-gray-500">
               <span className="hidden sm:inline">Press</span>
-              <kbd className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-[10px] font-mono shadow-sm">ESC</kbd>
+              <kbd className="px-2 py-1 bg-gray-100 border border-gray-300 rounded text-[10px] font-mono shadow-sm">
+                ESC
+              </kbd>
               <span className="hidden sm:inline">to close</span>
             </div>
           </div>
