@@ -46,36 +46,72 @@ export default function index({
   return (
     <>
       <section className={styles["hero"]}>
-        <video
-          src="../videos/hero-bg.mp4"
-          className={styles["hero-bg"]}
-          muted
-          autoPlay
-          loop
-          playsInline
-          preload="none"
-          poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect fill='%23111827' width='1920' height='1080'/%3E%3C/svg%3E"
-          style={{ aspectRatio: '16/9' }}
-        />
+        {typeof window !== 'undefined' && window.innerWidth >= 768 ? (
+          <video
+            src="../videos/hero-bg.mp4"
+            className={styles["hero-bg"]}
+            muted
+            autoPlay
+            loop
+            playsInline
+            preload="none"
+            poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1920 1080'%3E%3Crect fill='%23111827' width='1920' height='1080'/%3E%3C/svg%3E"
+            style={{ aspectRatio: '16/9' }}
+          />
+        ) : (
+          <div
+            className={styles["hero-bg"]}
+            style={{
+              aspectRatio: '16/9',
+              backgroundColor: '#111827',
+              position: 'absolute',
+              inset: 0,
+            }}
+          />
+        )}
 
         {/* Gradient Overlay */}
         <div className={styles["hero-overlay"]}></div>
 
         <div className={styles["hero-content"]}>
-          <MotionReveal preset="fadeIn">
+          {typeof window !== 'undefined' && window.innerWidth >= 768 ? (
+            <MotionReveal preset="fadeIn">
+              <div className={styles["hero-badge"]}>
+                <Star
+                  className="w-4 h-4 text-primary animate-pulse"
+                  fill="currentColor"
+                />
+                <span>Premium Car Dealership</span>
+                <TrendingUp className="w-4 h-4" />
+              </div>
+            </MotionReveal>
+          ) : (
             <div className={styles["hero-badge"]}>
               <Star
-                className="w-4 h-4 text-primary animate-pulse"
+                className="w-4 h-4 text-primary"
                 fill="currentColor"
               />
               <span>Premium Car Dealership</span>
               <TrendingUp className="w-4 h-4" />
             </div>
-          </MotionReveal>
+          )}
           <div className={styles["hero-text"]}>
             {/* Premium Badge */}
 
-            <MotionReveal preset="slideDown">
+            {typeof window !== 'undefined' && window.innerWidth >= 768 ? (
+              <MotionReveal preset="slideDown">
+                <h1 className={styles["hero-title"]}>
+                  {heading.split(".").map((part, index, arr) => (
+                    <span key={index}>
+                      <span>{part}</span>
+                      {index !== arr.length - 1 && (
+                        <span className={styles["hero-title-accent"]}>.</span>
+                      )}
+                    </span>
+                  ))}
+                </h1>
+              </MotionReveal>
+            ) : (
               <h1 className={styles["hero-title"]}>
                 {heading.split(".").map((part, index, arr) => (
                   <span key={index}>
@@ -86,14 +122,31 @@ export default function index({
                   </span>
                 ))}
               </h1>
-            </MotionReveal>
+            )}
 
-            <MotionReveal preset="zoomOut">
+            {typeof window !== 'undefined' && window.innerWidth >= 768 ? (
+              <MotionReveal preset="zoomOut">
+                <p className={styles["hero-subtitle"]}>{subHeading}</p>
+              </MotionReveal>
+            ) : (
               <p className={styles["hero-subtitle"]}>{subHeading}</p>
-            </MotionReveal>
+            )}
 
             {/* Trust Features */}
-            <MotionReveal preset="fadeIn" delay={0.2}>
+            {typeof window !== 'undefined' && window.innerWidth >= 768 ? (
+              <MotionReveal preset="fadeIn" delay={0.2}>
+                <div className={styles["hero-features"]}>
+                  {trustFeatures.map((feature, index) => (
+                    <div key={index} className={styles["hero-feature"]}>
+                      <feature.icon className={styles["hero-feature-icon"]} />
+                      <span className={styles["hero-feature-text"]}>
+                        {feature.text}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </MotionReveal>
+            ) : (
               <div className={styles["hero-features"]}>
                 {trustFeatures.map((feature, index) => (
                   <div key={index} className={styles["hero-feature"]}>
@@ -104,7 +157,7 @@ export default function index({
                   </div>
                 ))}
               </div>
-            </MotionReveal>
+            )}
             <MotionReveal preset="fadeIn" delay={0.2}>
               <div className="flex flex-row gap-8 md:gap-18 w-full items-center justify-center">
                 <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 w-full md:w-auto justify-center">
