@@ -1,63 +1,127 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Thumbs } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
-import "swiper/css";
-import "swiper/css/effect-fade";
 import "./car-slider.css";
+// import "swiper/css";
+// import "swiper/css/effect-fade";
 
 export default function CarSlider({ isReserved, images }: any) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
+  
+  // Initialize with correct values based on viewport width
+  const getInitialConfig = () => {
+    const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1024;
+    const isMobileView = viewportWidth < 768;
+    
+    return {
+      count: isMobileView ? (viewportWidth < 480 ? 3 : 4) : 4,
+      height: isMobileView ? "90px" : "500px",
+      isVertical: !isMobileView,
+    };
+  };
+  
+  const [thumbnailConfig, setThumbnailConfig] = useState(getInitialConfig());
+  const mainSliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateThumbnailConfig = () => {
+      const viewportWidth = window.innerWidth;
+      const isMobileView = viewportWidth < 768;
+
+      if (isMobileView) {
+        // Mobile: horizontal layout
+        setThumbnailConfig({
+          count: viewportWidth < 480 ? 3 : 4,
+          height: "90px",
+          isVertical: false,
+        });
+      } else {
+        // Desktop: vertical layout - measure actual main image height
+        const mainImageContainer = mainSliderRef.current;
+        if (!mainImageContainer) return;
+
+        // Get the actual rendered height of the main image
+        const mainHeight = mainImageContainer.offsetHeight;
+        
+        // Calculate how many thumbnails can fit based on actual height
+        // Each thumbnail: 80px height + 8px gap
+        const thumbnailHeight = 80;
+        const gap = 8;
+        const paddingAndButtons = 60; // Container padding + navigation buttons
+        
+        const availableHeight = mainHeight - paddingAndButtons;
+        const thumbnailsPerItem = thumbnailHeight + gap;
+        const calculatedCount = Math.floor(availableHeight / thumbnailsPerItem);
+        
+        // Ensure at least 3, max of available images
+        const count = Math.max(3, Math.min(calculatedCount, images.length));
+
+        setThumbnailConfig({
+          count,
+          height: `${mainHeight}px`, // Match main image height exactly
+          isVertical: true,
+        });
+      }
+    };
+
+    // Initial calculation with delay for DOM readiness
+    const timer = setTimeout(updateThumbnailConfig, 150);
+
+    // Use ResizeObserver to watch main image size changes
+    const resizeObserver = new ResizeObserver(() => {
+      updateThumbnailConfig();
+    });
+
+    if (mainSliderRef.current) {
+      resizeObserver.observe(mainSliderRef.current);
+    }
+
+    // Update on window resize
+    const handleResize = () => {
+      updateThumbnailConfig();
+      // Reset thumbs connection to prevent stale reference
+      setThumbsSwiper(null);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      clearTimeout(timer);
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [images.length]);
 
   return (
     <div className="flex flex-col md:flex-row gap-2">
       {/* === Thumbnail Slider (Responsive) === */}
       {images.length > 1 && (
-        <div className="w-full h-full md:bg-white/30 md:backdrop-blur-xl rounded-2xl shadow-2xl md:border md:border-white/40 px-2 pt-2 pb-1 md:w-28 lg:w-36 md:shrink-0 order-2 md:order-1 relative">
+        <div
+          className="w-full md:bg-white/30 md:backdrop-blur-xl rounded-2xl shadow-2xl md:border md:border-white/40 p-2 md:w-28 lg:w-36 md:shrink-0 order-2 md:order-1 relative"
+          style={{ height: thumbnailConfig.height }}
+        >
           <Swiper
             modules={[Navigation, Thumbs]}
             spaceBetween={8}
-            slidesPerView={4}
+            slidesPerView={thumbnailConfig.count}
+            direction={thumbnailConfig.isVertical ? "vertical" : "horizontal"}
             watchSlidesProgress={true}
             onSwiper={setThumbsSwiper}
-            direction="horizontal"
             navigation={{
               nextEl: ".thumb-nav-next",
               prevEl: ".thumb-nav-prev",
             }}
-            breakpoints={{
-              0: {
-                direction: "horizontal",
-                slidesPerView: 3,
-              },
-              480: {
-                direction: "horizontal",
-                slidesPerView: 4,
-              },
-              768: {
-                direction: "vertical",
-                slidesPerView: 4,
-              },
-              1440: {
-                direction: "vertical",
-                slidesPerView: 6,
-              },
-            }}
-            // className="h-20 md:h-[630px] thumb-slider"
-            className="h-20 md:h-[630px] thumb-slider"
+            className="h-auto md:h-full thumb-slider"
           >
             {images.map((img: any, idx: number) => (
               <SwiperSlide key={idx}>
                 <img
                   src={img.photoPath}
                   alt={`Thumbnail ${idx + 1}`}
-                  className="h-19 md:h-24 w-full cursor-pointer rounded-xl object-cover transition-all duration-200 ease-in-out"
-                  width="150"
-                  height="100"
-                  loading="lazy"
-                  decoding="async"
+                  className="w-full cursor-pointer rounded-xl object-center object-contain transition-all duration-200 ease-in-out"
                 />
               </SwiperSlide>
             ))}
@@ -80,7 +144,10 @@ export default function CarSlider({ isReserved, images }: any) {
       )}
 
       {/* === Main Image Slider === */}
-      <section className="relative bg-white/30 backdrop-blur-xl rounded-2xl md:shadow-2xl border border-white/40 flex-1 min-w-0 order-1 md:order-2">
+      <section
+        ref={mainSliderRef}
+        className="relative shadow-2xl rounded-2xl flex-1 min-w-0 order-1 md:order-2"
+      >
         <MotionReveal preset="fadeIn" once={true}>
           <Swiper
             modules={[Navigation, Thumbs]}
@@ -95,16 +162,14 @@ export default function CarSlider({ isReserved, images }: any) {
               nextEl: ".main-nav-next",
               prevEl: ".main-nav-prev",
             }}
-            // className="h-[300px] md:h-[640px]"
-            className="h-auto"
           >
             {images.map((img: any, idx: number) => (
               <SwiperSlide key={idx}>
-                <div className="flex items-center justify-center h-full">
+                <div className="flex items-center justify-center">
                   <img
                     src={img.photoPath}
                     alt={`Car image ${idx + 1}`}
-                    className="rounded-2xl w-full h-full object-cover object-center mx-auto transition-all duration-300 ease-in-out"
+                    className="object-center object-contain rounded-2xl w-full mx-auto transition-all duration-300 ease-in-out"
                   />
                 </div>
               </SwiperSlide>

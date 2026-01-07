@@ -1,6 +1,22 @@
 @reference "tailwindcss";
 @import "@dealers-dir/style.css";
 
+/* Active thumbnail styling */
+
+.thumb-slider .swiper-slide-thumb-active {
+  @apply border-3 border-primary rounded-2xl;
+}
+
 .thumb-slider .swiper-slide-thumb-active img {
-  @apply border-2 border-primary;
+  @apply opacity-100 scale-95;
+}
+
+/* Inactive thumbnail styling */
+.thumb-slider .swiper-slide:not(.swiper-slide-thumb-active) img {
+  @apply opacity-60;
+}
+
+/* Hover effect for inactive thumbnails */
+.thumb-slider .swiper-slide:not(.swiper-slide-thumb-active):hover img {
+  @apply opacity-100;
 }
