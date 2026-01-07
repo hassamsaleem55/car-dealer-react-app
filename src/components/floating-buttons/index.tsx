@@ -6,9 +6,28 @@ export function ScrollToTopButton() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsVisible(window.scrollY > 300);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    let rafId: number | null = null;
+    
+    const handleScroll = () => {
+      // Cancel any pending frame
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+      
+      // Batch layout reads with requestAnimationFrame to prevent forced reflows
+      rafId = requestAnimationFrame(() => {
+        setIsVisible(window.scrollY > 300);
+        rafId = null;
+      });
+    };
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+    };
   }, []);
 
   const scrollToTop = () => {

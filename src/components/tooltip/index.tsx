@@ -12,10 +12,16 @@ export default function TooltipText({
 
   useEffect(() => {
     const el = textRef.current;
-    if (el)
+    if (!el) return;
+
+    // Use requestAnimationFrame to batch layout reads and prevent forced reflows
+    const rafId = requestAnimationFrame(() => {
       setIsTruncated(
         el.scrollWidth > el.clientWidth || el.scrollHeight > el.clientHeight
       );
+    });
+
+    return () => cancelAnimationFrame(rafId);
   }, [text]);
 
   return (

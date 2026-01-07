@@ -8,7 +8,7 @@ import {
   AnimatePresence,
   type MotionProps,
 } from "framer-motion";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { type MotionRevealProps } from "./framer-motion.types";
 
 export default function MotionReveal(props: Partial<MotionRevealProps>) {
@@ -26,16 +26,35 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
   const ref = useRef<HTMLDivElement | null>(null);
   const controls = useAnimation();
   const isInView = useInView(ref, { once, margin: "-100px" });
+  
+  // Track window width in state to avoid forced reflows
+  const [windowWidth, setWindowWidth] = useState(() => 
+    typeof window !== "undefined" ? window.innerWidth : 1024
+  );
+
+  // Use ResizeObserver for efficient window size tracking
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const updateWidth = () => {
+      // Use requestAnimationFrame to batch layout reads
+      requestAnimationFrame(() => {
+        setWindowWidth(window.innerWidth);
+      });
+    };
+
+    // Initial size
+    updateWidth();
+
+    window.addEventListener("resize", updateWidth, { passive: true });
+    return () => window.removeEventListener("resize", updateWidth);
+  }, []);
 
   // Responsive distance based on screen size
   const getResponsiveDistance = () => {
-    if (typeof window !== "undefined") {
-      const width = window.innerWidth;
-      if (width < 640) return Math.min(distance, 40); // Mobile: max 40px
-      if (width < 1024) return Math.min(distance, 60); // Tablet: max 60px
-      return distance; // Desktop: original value
-    }
-    return Math.min(distance, 40); // Fallback for SSR
+    if (windowWidth < 640) return Math.min(distance, 40); // Mobile: max 40px
+    if (windowWidth < 1024) return Math.min(distance, 60); // Tablet: max 60px
+    return distance; // Desktop: original value
   };
 
   const responsiveDistance = getResponsiveDistance();

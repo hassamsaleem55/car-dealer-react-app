@@ -21,24 +21,28 @@ export default function CarSpecifications({
     const header = headerRef.current;
     if (!sentinel || !header) return;
 
-    const computedTop = getComputedStyle(header).top;
-    const fallbackTop = 120; // matches CSS top-30 (~7.5rem)
-    const topPx =
-      computedTop && computedTop !== "auto"
-        ? parseFloat(computedTop)
-        : fallbackTop;
+    // Batch getComputedStyle read in requestAnimationFrame to prevent forced reflows
+    const rafId = requestAnimationFrame(() => {
+      const computedTop = getComputedStyle(header).top;
+      const fallbackTop = 120; // matches CSS top-30 (~7.5rem)
+      const topPx =
+        computedTop && computedTop !== "auto"
+          ? parseFloat(computedTop)
+          : fallbackTop;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsSticky(!entry.isIntersecting),
-      {
-        root: null,
-        threshold: 1,
-        rootMargin: `-${topPx}px 0px 0px 0px`,
-      }
-    );
+      const observer = new IntersectionObserver(
+        ([entry]) => setIsSticky(!entry.isIntersecting),
+        {
+          root: null,
+          threshold: 1,
+          rootMargin: `-${topPx}px 0px 0px 0px`,
+        }
+      );
 
-    observer.observe(sentinel);
-    return () => observer.disconnect();
+      observer.observe(sentinel);
+    });
+
+    return () => cancelAnimationFrame(rafId);
   }, []);
 
   const moveToTop = () => {

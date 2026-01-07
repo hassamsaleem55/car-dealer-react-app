@@ -19,16 +19,31 @@ export default function index({ styles }: { styles: any }) {
 
   // handle scroll with React's onScroll
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    handleScroll(); // initialize on mount
-
-    // Use React's passive event handling
+    let rafId: number | null = null;
+    
     const onScroll = () => {
-      setScrolled(window.scrollY > 10);
+      // Cancel any pending frame
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+      
+      // Batch layout reads with requestAnimationFrame to prevent forced reflows
+      rafId = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 10);
+        rafId = null;
+      });
     };
 
+    // Initialize on mount
+    onScroll();
+
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -72,14 +87,30 @@ export default function index({ styles }: { styles: any }) {
 
   // Handle window resize with React event handling
   useEffect(() => {
+    let rafId: number | null = null;
+    
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        close();
+      // Cancel any pending frame
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
       }
+      
+      // Batch layout reads with requestAnimationFrame to prevent forced reflows
+      rafId = requestAnimationFrame(() => {
+        if (window.innerWidth >= 768) {
+          close();
+        }
+        rafId = null;
+      });
     };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+    };
   }, [close]);
 
   // Close menu on scroll

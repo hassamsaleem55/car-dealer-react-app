@@ -39,26 +39,43 @@ export default function CarDescription({
   const [expanded, setExpanded] = useState(false);
   const [isClamped, setIsClamped] = useState(false);
   const [collapsedHeight, setCollapsedHeight] = useState<number>(0);
+  const [expandedHeight, setExpandedHeight] = useState<number>(0);
   const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = textRef.current;
     if (!el) return;
 
-    // Calculate height for 4 lines (approx based on line-height)
-    const lineHeight = parseFloat(getComputedStyle(el).lineHeight || "24");
-    const visibleLines = 4;
-    const maxCollapsed = lineHeight * visibleLines;
-    setCollapsedHeight(maxCollapsed);
+    // Batch all layout reads in requestAnimationFrame to prevent forced reflows
+    const rafId = requestAnimationFrame(() => {
+      // Calculate height for 4 lines (approx based on line-height)
+      const lineHeight = parseFloat(getComputedStyle(el).lineHeight || "24");
+      const visibleLines = 4;
+      const maxCollapsed = lineHeight * visibleLines;
+      const fullHeight = el.scrollHeight;
 
-    // Check if text overflows
+      setCollapsedHeight(maxCollapsed);
+      setExpandedHeight(fullHeight);
+      setIsClamped(fullHeight > maxCollapsed + 1);
+    });
+
     const checkClamped = () => {
-      setIsClamped(el.scrollHeight > maxCollapsed + 1);
+      // Debounce resize checks with requestAnimationFrame
+      requestAnimationFrame(() => {
+        const fullHeight = el.scrollHeight;
+        const lineHeight = parseFloat(getComputedStyle(el).lineHeight || "24");
+        const maxCollapsed = lineHeight * 4;
+        setCollapsedHeight(maxCollapsed);
+        setExpandedHeight(fullHeight);
+        setIsClamped(fullHeight > maxCollapsed + 1);
+      });
     };
 
-    checkClamped();
     window.addEventListener("resize", checkClamped);
-    return () => window.removeEventListener("resize", checkClamped);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", checkClamped);
+    };
   }, [description]);
 
   return (
@@ -69,9 +86,7 @@ export default function CarDescription({
       <div
         className="overflow-hidden transition-all duration-500 ease-in-out"
         style={{
-          maxHeight: expanded
-            ? textRef.current?.scrollHeight
-            : `${collapsedHeight}px`,
+          maxHeight: expanded ? `${expandedHeight}px` : `${collapsedHeight}px`,
         }}
       >
         {/* <p ref={textRef} className="text-sm md:text-base leading-relaxed">

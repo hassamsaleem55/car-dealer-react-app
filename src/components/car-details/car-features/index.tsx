@@ -11,6 +11,7 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
   const [expanded, setExpanded] = useState(false);
   const [isClamped, setIsClamped] = useState(false);
   const [collapsedHeight, setCollapsedHeight] = useState(0);
+  const [expandedHeight, setExpandedHeight] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
   const [isSticky, setIsSticky] = useState(false);
 
@@ -34,15 +35,28 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
     const visibleRows = 8;
     const maxCollapsed = cardHeight * visibleRows;
 
-    setCollapsedHeight(maxCollapsed);
+    // Batch layout reads in requestAnimationFrame to prevent forced reflows
+    const rafId = requestAnimationFrame(() => {
+      const fullHeight = wrapper.scrollHeight;
+      setCollapsedHeight(maxCollapsed);
+      setExpandedHeight(fullHeight);
+      setIsClamped(fullHeight > maxCollapsed + 5);
+    });
 
     const checkClamped = () => {
-      setIsClamped(wrapper.scrollHeight > maxCollapsed + 5);
+      // Debounce resize checks with requestAnimationFrame
+      requestAnimationFrame(() => {
+        const fullHeight = wrapper.scrollHeight;
+        setExpandedHeight(fullHeight);
+        setIsClamped(fullHeight > maxCollapsed + 5);
+      });
     };
 
-    checkClamped();
     window.addEventListener("resize", checkClamped);
-    return () => window.removeEventListener("resize", checkClamped);
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("resize", checkClamped);
+    };
   }, [features, searchTerm]);
 
   // === Sticky header detection
@@ -51,24 +65,28 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
     const header = headerRef.current;
     if (!sentinel || !header) return;
 
-    const computedTop = getComputedStyle(header).top;
-    const fallbackTop = 120; // matches Tailwind top-[7.5rem] ~ top-30
-    const topPx =
-      computedTop && computedTop !== "auto"
-        ? parseFloat(computedTop)
-        : fallbackTop;
+    // Batch getComputedStyle read in requestAnimationFrame to prevent forced reflows
+    const rafId = requestAnimationFrame(() => {
+      const computedTop = getComputedStyle(header).top;
+      const fallbackTop = 120; // matches Tailwind top-[7.5rem] ~ top-30
+      const topPx =
+        computedTop && computedTop !== "auto"
+          ? parseFloat(computedTop)
+          : fallbackTop;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsSticky(!entry.isIntersecting),
-      {
-        root: null,
-        threshold: 1,
-        rootMargin: `-${topPx}px 0px 0px 0px`,
-      }
-    );
+      const observer = new IntersectionObserver(
+        ([entry]) => setIsSticky(!entry.isIntersecting),
+        {
+          root: null,
+          threshold: 1,
+          rootMargin: `-${topPx}px 0px 0px 0px`,
+        }
+      );
 
-    observer.observe(sentinel);
-    return () => observer.disconnect();
+      observer.observe(sentinel);
+    });
+
+    return () => cancelAnimationFrame(rafId);
   }, []);
 
   const moveToTop = () => {
@@ -144,9 +162,7 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
         ref={wrapperRef}
         className="overflow-hidden transition-all duration-500 ease-in-out px-8 pb-6"
         style={{
-          maxHeight: expanded
-            ? wrapperRef.current?.scrollHeight
-            : `${collapsedHeight}px`,
+          maxHeight: expanded ? `${expandedHeight}px` : `${collapsedHeight}px`,
         }}
       >
         {/* <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3"> */}

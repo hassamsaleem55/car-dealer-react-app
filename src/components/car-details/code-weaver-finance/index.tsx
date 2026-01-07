@@ -44,22 +44,20 @@ export default function CodeWeaverFinance({
   websiteUrl,
 }: Props) {
   const [isLoading, setIsLoading] = useState(true);
+  const [shouldHide, setShouldHide] = useState(false);
   const depositAmount = Math.floor(model.retailPrice * 0.1);
   const cwVehicleType = model.isPriceExcludingVAT ? "lcv" : "car";
   const linkBackUrl = `${websiteUrl}/stock/${model.stockId}`;
 
   useEffect(() => {
-    const container = document.getElementById("cw-plugin-container");
-    if (!container) return;
-
-    const shouldHide =
+    const hide =
       !model.aT_StockInfo?.vehicle?.derivativeId ||
       !userFCA ||
       model.hideFinance ||
       model.isReserved;
 
-    if (shouldHide) {
-      container.style.display = "none";
+    if (hide) {
+      setShouldHide(true);
       setIsLoading(false);
       console.warn("CodeWeavers hidden due to missing data or conditions");
       return;
@@ -122,6 +120,9 @@ export default function CodeWeaverFinance({
       document.body.removeChild(script);
     };
   }, [model, userFCA, codeWeaverApi, websiteUrl]);
+
+  // Don't render if should be hidden
+  if (shouldHide) return null;
 
   return (
     <div className="relative">
