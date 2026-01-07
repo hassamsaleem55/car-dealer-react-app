@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { useOutletContext } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
 // import { Heart } from "lucide-react";
 import Button from "@elements-dir/button";
-import AppointmentModal from "@components-dir/book-appointment/appointment-modal";
+const AppointmentModal = lazy(() => import("@components-dir/book-appointment/appointment-modal"));
 import type { Car } from "@components-dir/car-card/car-card.types";
 import { AutoTraderLogo, CarGuruLogo } from "@core-dir/svgs";
 
@@ -280,12 +280,14 @@ export default function CarHeader({
           </div>
         )}
         {appointmentModalOpen && (
-          <AppointmentModal
-            isOpen={appointmentModalOpen}
-            setIsOpen={setAppointmentModalOpen}
-            carData={carData}
-            requestType={requestType}
-          />
+          <Suspense fallback={<div />}>
+            <AppointmentModal
+              isOpen={appointmentModalOpen}
+              setIsOpen={setAppointmentModalOpen}
+              carData={carData}
+              requestType={requestType}
+            />
+          </Suspense>
         )}
       </header>
     </div>

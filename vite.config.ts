@@ -22,22 +22,71 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
+      modulePreload: {
+        polyfill: false,
+        resolveDependencies: (_filename, deps) => {
+          // Only preload React core - everything else lazy loads
+          return deps.filter(dep => 
+            dep.includes('react.js') || 
+            dep.includes('react-dom') || 
+            dep.includes('router')
+          );
+        },
+      },
       rollupOptions: {
         output: {
-          manualChunks: {
-            'vendor': ['react', 'react-dom', 'react-router-dom'],
-            'animations': ['framer-motion'],
-            'ui': ['swiper', 'lucide-react'],
+          manualChunks(id) {
+            // Core React
+            if (id.includes('node_modules/react/') && !id.includes('react-dom') && !id.includes('react-router') && !id.includes('react-qr')) {
+              return 'react';
+            }
+            if (id.includes('node_modules/react-dom/')) {
+              return 'react-dom';
+            }
+            if (id.includes('node_modules/react-router')) {
+              return 'router';
+            }
+            
+            // Heavy libraries - separate chunks
+            if (id.includes('node_modules')) {
+              if (id.includes('framer-motion')) return 'framer';
+              if (id.includes('swiper')) return 'swiper';
+              if (id.includes('lucide-react')) return 'icons';
+              if (id.includes('moment')) return 'moment';
+              if (id.includes('jsonwebtoken') || id.includes('jws') || id.includes('jwa')) return 'jwt';
+              if (id.includes('qr')) return 'qr';
+              if (id.includes('slick')) return 'slick';
+              if (id.includes('sonner')) return 'toast';
+              return 'vendor';
+            }
+            
+            // Pages
+            if (id.includes('/sections/home/')) return 'home';
+            if (id.includes('/sections/stock/')) return 'stock';
+            if (id.includes('/sections/car-details/')) return 'details-page';
+            
+            // Shared sections
+            if (id.includes('/sections/shared/')) {
+              if (id.includes('featured') || id.includes('brand')) return 'shared-a';
+              if (id.includes('testimonial') || id.includes('faq')) return 'shared-b';
+              return 'shared-c';
+            }
+            
+            // Components
+            if (id.includes('/components/car-card')) return 'card';
+            if (id.includes('/components/filter')) return 'filter';
+            if (id.includes('/components/car-details')) return 'details';
           },
         },
       },
       minify: 'esbuild',
       cssMinify: 'lightningcss',
       target: 'es2020',
-      chunkSizeWarningLimit: 1000,
+      chunkSizeWarningLimit: 250,
       sourcemap: false,
       cssCodeSplit: true,
       reportCompressedSize: false,
+      assetsInlineLimit: 4096,
     },
     optimizeDeps: {
       include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
