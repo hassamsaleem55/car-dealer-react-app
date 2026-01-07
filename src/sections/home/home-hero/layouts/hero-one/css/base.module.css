@@ -10,6 +10,14 @@
 
 .hero-bg {
   @apply absolute inset-0 w-full h-full object-cover brightness-30;
+  background: #111827;
+}
+
+/* Hide video on mobile - use background color instead for better performance */
+@media (max-width: 767px) {
+  .hero-bg {
+    display: none;
+  }
 }
 
 /* Premium Gradient Overlay */

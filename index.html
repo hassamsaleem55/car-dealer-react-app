@@ -4,22 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Critical CSS for hero section - inline to avoid render blocking -->
-    <style>
-      #root{display:flex;flex-direction:column;min-height:100vh}
-      body{margin:0;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;background:#111827}
-      .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:#111827}
-      @media(max-width:768px){body{font-size:14px}.hero{min-height:80vh}}
-    </style>
-
-    <!-- Preconnect to reduce connection latency -->
+    <!-- Preconnect for fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Preload main CSS for faster rendering -->
-    <link rel="preload" as="style" href="/src/App.css" />
-
-    <!-- Async font loading -->   <link
+    <!-- Load fonts with display=swap for instant text rendering -->
+    <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Urbanist:wght@400;500;600;700&display=swap"
       media="print"

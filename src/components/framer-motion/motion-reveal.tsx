@@ -8,7 +8,7 @@ import {
   AnimatePresence,
   type MotionProps,
 } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { type MotionRevealProps } from "./framer-motion.types";
 
 export default function MotionReveal(props: Partial<MotionRevealProps>) {
@@ -27,76 +27,40 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
   const controls = useAnimation();
   const isInView = useInView(ref, { once, margin: "-100px" });
   
-  // Track window width in state to avoid forced reflows
-  const [windowWidth, setWindowWidth] = useState(() => 
-    typeof window !== "undefined" ? window.innerWidth : 1024
-  );
+  // Use optimized static values - CSS handles responsiveness better than JS
+  const optimizedDistance = Math.min(distance, 40);
+  const optimizedDuration = Math.min(duration, 0.5);
 
-  // Use ResizeObserver for efficient window size tracking
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const updateWidth = () => {
-      // Use requestAnimationFrame to batch layout reads
-      requestAnimationFrame(() => {
-        setWindowWidth(window.innerWidth);
-      });
-    };
-
-    // Initial size
-    updateWidth();
-
-    window.addEventListener("resize", updateWidth, { passive: true });
-    return () => window.removeEventListener("resize", updateWidth);
-  }, []);
-
-  // Responsive distance based on screen size
-  const getResponsiveDistance = () => {
-    if (windowWidth < 640) return Math.min(distance, 30); // Mobile: max 30px
-    if (windowWidth < 1024) return Math.min(distance, 50); // Tablet: max 50px
-    return distance; // Desktop: original value
-  };
-
-  const responsiveDistance = getResponsiveDistance();
-  
-  // Slightly reduce duration on mobile
-  const responsiveDuration = windowWidth < 768 ? Math.min(duration, 0.5) : duration;
-  const simplifyAnimations = windowWidth < 768;
-
-  /** All animation presets */
+  /** All animation presets - simplified and optimized */
   const offsets = {
     // Basic Slides
-    slideUp: { y: responsiveDistance, x: 0 },
-    slideDown: { y: -responsiveDistance, x: 0 },
-    slideLeft: { x: responsiveDistance, y: 0 },
-    slideRight: { x: -responsiveDistance, y: 0 },
+    slideUp: { y: optimizedDistance, x: 0 },
+    slideDown: { y: -optimizedDistance, x: 0 },
+    slideLeft: { x: optimizedDistance, y: 0 },
+    slideRight: { x: -optimizedDistance, y: 0 },
 
     // Fade / Zoom
     fadeIn: { x: 0, y: 0 },
     zoomIn: { scale: 0.9 },
     zoomOut: { scale: 1.1 },
 
-    // Rotations - simplify angle on mobile
-    rotateIn: { rotate: simplifyAnimations ? -8 : -15 },
-    rotateInDownLeft: simplifyAnimations 
-      ? { rotate: -10, y: responsiveDistance }
-      : { rotate: -25, x: -responsiveDistance, y: responsiveDistance },
-    rotateInUpRight: simplifyAnimations
-      ? { rotate: 10, y: -responsiveDistance }
-      : { rotate: 25, x: responsiveDistance, y: -responsiveDistance },
+    // Rotations - reduced intensity
+    rotateIn: { rotate: -10 },
+    rotateInDownLeft: { rotate: -15, x: -optimizedDistance, y: optimizedDistance },
+    rotateInUpRight: { rotate: 15, x: optimizedDistance, y: -optimizedDistance },
 
-    // Flips - reduce complexity on mobile
-    flipIn: { rotateY: simplifyAnimations ? 45 : 90 },
-    flipX: { rotateX: simplifyAnimations ? 45 : 90 },
+    // Flips - reduced
+    flipIn: { rotateY: 45 },
+    flipX: { rotateX: 45 },
 
-    // Advanced - keep but reduce intensity
-    bounceUp: { y: responsiveDistance },
-    bounceDown: { y: -responsiveDistance },
-    popIn: { scale: simplifyAnimations ? 0.7 : 0.5, opacity: 0 },
-    skewIn: { skewX: simplifyAnimations ? 8 : 15, opacity: 0 },
-    tiltIn: { rotateZ: simplifyAnimations ? -5 : -10, opacity: 0 },
-    blurIn: simplifyAnimations ? { opacity: 0 } : { filter: "blur(8px)", opacity: 0 },
-    floatIn: { y: responsiveDistance / 2, opacity: 0 },
+    // Advanced - simplified
+    bounceUp: { y: optimizedDistance },
+    bounceDown: { y: -optimizedDistance },
+    popIn: { scale: 0.8, opacity: 0 },
+    skewIn: { skewX: 8, opacity: 0 },
+    tiltIn: { rotateZ: -5, opacity: 0 },
+    blurIn: { opacity: 0 },
+    floatIn: { y: optimizedDistance / 2, opacity: 0 },
 
     none: {},
   }[preset];
@@ -106,11 +70,11 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
     bounceUp: { type: "spring", stiffness: 200, damping: 12 },
     bounceDown: { type: "spring", stiffness: 200, damping: 12 },
     popIn: { type: "spring", stiffness: 180, damping: 10 },
-    blurIn: { duration: responsiveDuration + 0.3, ease: "easeOut" },
+    blurIn: { duration: optimizedDuration + 0.2, ease: "easeOut" },
     rotateIn: { type: "spring", stiffness: 100, damping: 15 },
     rotateInDownLeft: { type: "spring", stiffness: 100, damping: 15 },
     rotateInUpRight: { type: "spring", stiffness: 100, damping: 15 },
-    default: { delay, duration: responsiveDuration, type: "spring", stiffness: 80, damping: 20 },
+    default: { delay, duration: optimizedDuration, type: "spring", stiffness: 80, damping: 20 },
   } as const;
 
   const transition =
@@ -152,7 +116,7 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
     });
 
     const opacity = useTransform(smooth, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
-    const yMove = useTransform(smooth, [0, 1], [responsiveDistance, -responsiveDistance]);
+    const yMove = useTransform(smooth, [0, 1], [optimizedDistance, -optimizedDistance]);
 
     return (
       <motion.div
