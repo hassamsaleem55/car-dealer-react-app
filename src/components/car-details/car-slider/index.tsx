@@ -38,9 +38,14 @@ export default function CarSlider({ isReserved, images }: any) {
               },
               768: {
                 direction: "vertical",
+                slidesPerView: 4,
+              },
+              1440: {
+                direction: "vertical",
                 slidesPerView: 6,
               },
             }}
+            // className="h-20 md:h-[630px] thumb-slider"
             className="h-20 md:h-[630px] thumb-slider"
           >
             {images.map((img: any, idx: number) => (
@@ -86,7 +91,8 @@ export default function CarSlider({ isReserved, images }: any) {
               nextEl: ".main-nav-next",
               prevEl: ".main-nav-prev",
             }}
-            className="h-[300px] md:h-[640px]"
+            // className="h-[300px] md:h-[640px]"
+            className="h-auto"
           >
             {images.map((img: any, idx: number) => (
               <SwiperSlide key={idx}>
@@ -94,7 +100,7 @@ export default function CarSlider({ isReserved, images }: any) {
                   <img
                     src={img.photoPath}
                     alt={`Car image ${idx + 1}`}
-                    className="object-fill rounded-2xl w-full h-[300px] md:h-[640px] mx-auto transition-all duration-300 ease-in-out"
+                    className="rounded-2xl w-full h-full object-cover object-center mx-auto transition-all duration-300 ease-in-out"
                   />
                 </div>
               </SwiperSlide>

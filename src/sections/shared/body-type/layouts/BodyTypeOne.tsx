@@ -28,7 +28,7 @@ export default function BodyTypeOne({ heading }: { heading: string }) {
     const carTypesList = filtersData[2].options.map((item: any) => ({
       id: item.id,
       name: item.value.toUpperCase(),
-      media: `${imageRootPath}${toTitleCase(item.value)}.webp`,
+      media: `${imageRootPath}${toTitleCase(item.value)}-removebg-preview.png`,
       fallbackMedia: `${imageRootPath}${toTitleCase(
         filtersData[2].options[0].value
       )}.png`,
