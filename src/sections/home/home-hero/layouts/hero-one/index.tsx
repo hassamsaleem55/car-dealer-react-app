@@ -30,7 +30,7 @@ export default function index({
   const trustFeatures = [
     { icon: Shield, text: "Warranty Protected" },
     { icon: Award, text: "Quality Assured" },
-    { icon: Clock, text: "Fastest Delivery" },
+    { icon: Clock, text: "Fast Delivery" },
     { icon: CheckCircle2, text: "HPI Checked" },
   ];
 
