@@ -32,13 +32,19 @@ export default defineConfig(({ mode }) => {
         },
       },
       minify: 'esbuild',
-      cssMinify: true,
+      cssMinify: 'lightningcss',
       target: 'es2020',
       chunkSizeWarningLimit: 1000,
       sourcemap: false,
+      cssCodeSplit: true,
+      reportCompressedSize: false,
     },
     optimizeDeps: {
-      include: ['react', 'react-dom', 'react-router-dom'],
+      include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+      exclude: [],
+    },
+    esbuild: {
+      drop: mode === 'production' ? ['console', 'debugger'] : [],
     },
   };
 });
