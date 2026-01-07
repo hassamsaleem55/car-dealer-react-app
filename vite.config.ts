@@ -22,37 +22,62 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      // Optimize chunk splitting for better caching
       rollupOptions: {
         output: {
-          manualChunks: {
-            // Vendor chunks
-            'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-            'framer-motion': ['framer-motion'],
-            'swiper': ['swiper'],
-            // Icon library (lucide-react) will be in its own chunk
-            'icons': ['lucide-react'],
+          manualChunks: (id) => {
+            // Critical vendor chunks
+            if (id.includes('node_modules')) {
+              if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+                return 'react-vendor';
+              }
+              if (id.includes('framer-motion')) {
+                return 'framer-motion';
+              }
+              if (id.includes('swiper')) {
+                return 'swiper';
+              }
+              if (id.includes('lucide-react')) {
+                return 'icons';
+              }
+              // All other vendors in one chunk to reduce requests
+              return 'vendor';
+            }
+            // Separate chunks for large features
+            if (id.includes('/sections/')) {
+              return 'sections';
+            }
+            if (id.includes('/components/car-details/')) {
+              return 'car-details';
+            }
           },
         },
       },
-      // Optimize for production
-      minify: 'esbuild',
-      cssMinify: true,
-      // Target modern browsers for smaller bundle
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+          pure_funcs: ['console.log', 'console.info', 'console.debug'],
+          passes: 2,
+        },
+        mangle: {
+          safari10: true,
+        },
+        format: {
+          comments: false,
+        },
+      },
+      cssMinify: 'lightningcss',
       target: 'es2020',
-      // Optimize chunk size
-      chunkSizeWarningLimit: 1000,
-      // Enable source maps for production debugging (disable in production if not needed)
+      chunkSizeWarningLimit: 500,
       sourcemap: false,
+      reportCompressedSize: false,
     },
-    // Optimize dependencies pre-bundling
     optimizeDeps: {
       include: [
         'react',
         'react-dom',
         'react-router-dom',
-        'framer-motion',
-        'swiper',
       ],
       exclude: ['lucide-react'],
     },
