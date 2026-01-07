@@ -24,62 +24,21 @@ export default defineConfig(({ mode }) => {
     build: {
       rollupOptions: {
         output: {
-          manualChunks: (id) => {
-            // Critical vendor chunks
-            if (id.includes('node_modules')) {
-              if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
-                return 'react-vendor';
-              }
-              if (id.includes('framer-motion')) {
-                return 'framer-motion';
-              }
-              if (id.includes('swiper')) {
-                return 'swiper';
-              }
-              if (id.includes('lucide-react')) {
-                return 'icons';
-              }
-              // All other vendors in one chunk to reduce requests
-              return 'vendor';
-            }
-            // Separate chunks for large features
-            if (id.includes('/sections/')) {
-              return 'sections';
-            }
-            if (id.includes('/components/car-details/')) {
-              return 'car-details';
-            }
+          manualChunks: {
+            'vendor': ['react', 'react-dom', 'react-router-dom'],
+            'animations': ['framer-motion'],
+            'ui': ['swiper', 'lucide-react'],
           },
         },
       },
-      minify: 'terser',
-      terserOptions: {
-        compress: {
-          drop_console: true,
-          drop_debugger: true,
-          pure_funcs: ['console.log', 'console.info', 'console.debug'],
-          passes: 2,
-        },
-        mangle: {
-          safari10: true,
-        },
-        format: {
-          comments: false,
-        },
-      },
-      cssMinify: 'lightningcss',
+      minify: 'esbuild',
+      cssMinify: true,
       target: 'es2020',
-      chunkSizeWarningLimit: 500,
+      chunkSizeWarningLimit: 1000,
       sourcemap: false,
-      reportCompressedSize: false,
     },
     optimizeDeps: {
-      include: [
-        'react',
-        'react-dom',
-        'react-router-dom',
-      ],
-      exclude: ['lucide-react'],
+      include: ['react', 'react-dom', 'react-router-dom'],
     },
   };
 });

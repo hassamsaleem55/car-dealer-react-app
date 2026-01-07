@@ -11,21 +11,6 @@ import {
 import { useRef, useEffect, useState } from "react";
 import { type MotionRevealProps } from "./framer-motion.types";
 
-// Check if user prefers reduced motion or device is low-powered
-const shouldReduceAnimations = () => {
-  if (typeof window === "undefined") return false;
-  
-  // Check prefers-reduced-motion
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return true;
-  
-  // Check for low-power device indicators
-  const connection = (navigator as any).connection;
-  if (connection?.saveData) return true;
-  if ((navigator as any).deviceMemory && (navigator as any).deviceMemory < 4) return true;
-  
-  return false;
-};
-
 export default function MotionReveal(props: Partial<MotionRevealProps>) {
   const {
     children,
@@ -46,9 +31,6 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
   const [windowWidth, setWindowWidth] = useState(() => 
     typeof window !== "undefined" ? window.innerWidth : 1024
   );
-  
-  // Disable animations for reduced motion or low-power devices
-  const [animationsEnabled] = useState(!shouldReduceAnimations());
 
   // Use ResizeObserver for efficient window size tracking
   useEffect(() => {
@@ -68,18 +50,17 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
     return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
-  // Responsive distance based on screen size (aggressive reduction for mobile)
+  // Responsive distance based on screen size
   const getResponsiveDistance = () => {
-    if (windowWidth < 640) return Math.min(distance, 20); // Mobile: max 20px
-    if (windowWidth < 1024) return Math.min(distance, 40); // Tablet: max 40px
+    if (windowWidth < 640) return Math.min(distance, 30); // Mobile: max 30px
+    if (windowWidth < 1024) return Math.min(distance, 50); // Tablet: max 50px
     return distance; // Desktop: original value
   };
 
   const responsiveDistance = getResponsiveDistance();
   
-  // Reduce duration and delay on mobile
-  const responsiveDuration = windowWidth < 768 ? Math.min(duration, 0.3) : duration;
-  const responsiveDelay = windowWidth < 768 ? 0 : delay;
+  // Slightly reduce duration on mobile for better performance
+  const responsiveDuration = windowWidth < 768 ? Math.min(duration, 0.4) : duration;
 
   /** All animation presets */
   const offsets = {
@@ -128,11 +109,11 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
     bounceUp: { type: "spring", stiffness: 200, damping: 12 },
     bounceDown: { type: "spring", stiffness: 200, damping: 12 },
     popIn: { type: "spring", stiffness: 180, damping: 10 },
-    blurIn: { duration: duration + 0.3, ease: "easeOut" },
+    blurIn: { duration: responsiveDuration + 0.3, ease: "easeOut" },
     rotateIn: { type: "spring", stiffness: 100, damping: 15 },
     rotateInDownLeft: { type: "spring", stiffness: 100, damping: 15 },
     rotateInUpRight: { type: "spring", stiffness: 100, damping: 15 },
-    default: { delay, duration, type: "spring", stiffness: 80, damping: 20 },
+    default: { delay, duration: responsiveDuration, type: "spring", stiffness: 80, damping: 20 },
   } as const;
 
   const transition =
@@ -168,25 +149,21 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
     });
 
     const smooth = useSpring(scrollYProgress, {
-      stiffness: 80,
-      damping: 20,
-      mass: 0.8,
+      stiffness: 100,
+      damping: 30,
+      restDelta: 0.001,
     });
 
-    const opacity = useTransform(smooth, [0, 1], [0, 1]);
-    const yVal =
-      "y" in offsets ? useTransform(smooth, [0, 1], [offsets.y ?? 0, 0]) : 0;
-    const xVal =
-      "x" in offsets ? useTransform(smooth, [0, 1], [offsets.x ?? 0, 0]) : 0;
-    const scaleVal =
-      "scale" in offsets
-        ? useTransform(smooth, [0, 1], [offsets.scale ?? 1, 1])
-        : 1;
+    const opacity = useTransform(smooth, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
+    const yMove = useTransform(smooth, [0, 1], [responsiveDistance, -responsiveDistance]);
 
     return (
       <motion.div
         ref={ref}
-        style={{ opacity, x: xVal, y: yVal, scale: scaleVal }}
+        style={{
+          opacity,
+          y: yMove,
+        }}
         className={className}
       >
         {children}
@@ -196,18 +173,9 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
 
   /** InView trigger animation */
   useEffect(() => {
-    if (!animationsEnabled) {
-      controls.set({ opacity: 1, x: 0, y: 0, scale: 1 });
-      return;
-    }
     if (isInView) controls.start(visibleState);
     else if (!once) controls.set(hiddenState);
-  }, [isInView, controls, once, animationsEnabled]);
-
-  // Return simple div if animations disabled
-  if (!animationsEnabled) {
-    return <div ref={ref} className={className}>{children}</div>;
-  }
+  }, [isInView, controls, once]);
 
   return (
     <AnimatePresence mode="wait">
