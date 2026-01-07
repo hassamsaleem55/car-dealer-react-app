@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import type {
   BaseDealerPage,
   DealerSectionKeys,
@@ -166,19 +166,41 @@ export default function PageRenderer({ page }: { page: BaseDealerPage }) {
           }
         });
 
+        // Defer loading below-fold sections on mobile
+        const isBelowFold = i >= 2;
+        const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+        const shouldDefer = isMobile && isBelowFold;
+
         return (
           <React.Suspense
             key={i}
-            // fallback={
-            //   getPageSkeleton()
-            //   }
+            fallback={shouldDefer ? <div style={{ minHeight: '300px' }} /> : null}
           >
-            <Section props={props} />
+            {shouldDefer ? (
+              <DeferredSection delay={i * 50}>
+                <Section props={props} />
+              </DeferredSection>
+            ) : (
+              <Section props={props} />
+            )}
           </React.Suspense>
         );
       })}
     </>
   );
+}
+
+// Defer rendering of below-fold sections
+function DeferredSection({ children, delay }: { children: React.ReactNode; delay: number }) {
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShouldRender(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  if (!shouldRender) return <div style={{ minHeight: '300px' }} />;
+  return <>{children}</>;
 }
 
 // import React, { useMemo, useEffect } from "react";

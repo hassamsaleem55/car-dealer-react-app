@@ -59,8 +59,9 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
 
   const responsiveDistance = getResponsiveDistance();
   
-  // Slightly reduce duration on mobile for better performance
-  const responsiveDuration = windowWidth < 768 ? Math.min(duration, 0.4) : duration;
+  // Reduce duration and complexity on mobile
+  const responsiveDuration = windowWidth < 768 ? Math.min(duration, 0.3) : duration;
+  const simplifyAnimations = windowWidth < 768;
 
   /** All animation presets */
   const offsets = {
@@ -70,35 +71,31 @@ export default function MotionReveal(props: Partial<MotionRevealProps>) {
     slideLeft: { x: responsiveDistance, y: 0 },
     slideRight: { x: -responsiveDistance, y: 0 },
 
-    // Fade / Zoom
+    // Fade / Zoom - simplify on mobile
     fadeIn: { x: 0, y: 0 },
-    zoomIn: { scale: 0.8 },
-    zoomOut: { scale: 1.2 },
+    zoomIn: simplifyAnimations ? {} : { scale: 0.8 },
+    zoomOut: simplifyAnimations ? {} : { scale: 1.2 },
 
-    // Rotations
-    rotateIn: { rotate: -15 },
-    rotateInDownLeft: {
-      rotate: -25,
-      x: -responsiveDistance,
-      y: responsiveDistance,
-    },
-    rotateInUpRight: {
-      rotate: 25,
-      x: responsiveDistance,
-      y: -responsiveDistance,
-    },
+    // Rotations - disable on mobile
+    rotateIn: simplifyAnimations ? { y: responsiveDistance } : { rotate: -15 },
+    rotateInDownLeft: simplifyAnimations 
+      ? { y: responsiveDistance }
+      : { rotate: -25, x: -responsiveDistance, y: responsiveDistance },
+    rotateInUpRight: simplifyAnimations
+      ? { y: -responsiveDistance }
+      : { rotate: 25, x: responsiveDistance, y: -responsiveDistance },
 
-    // Flips
-    flipIn: { rotateY: 90 },
-    flipX: { rotateX: 90 },
+    // Flips - disable on mobile
+    flipIn: simplifyAnimations ? { y: responsiveDistance } : { rotateY: 90 },
+    flipX: simplifyAnimations ? { y: responsiveDistance } : { rotateX: 90 },
 
-    // Advanced / Stylized
+    // Advanced - simplify on mobile
     bounceUp: { y: responsiveDistance },
     bounceDown: { y: -responsiveDistance },
-    popIn: { scale: 0.5, opacity: 0 },
-    skewIn: { skewX: 15, opacity: 0 },
-    tiltIn: { rotateZ: -10, opacity: 0 },
-    blurIn: { filter: "blur(8px)", opacity: 0 },
+    popIn: simplifyAnimations ? { opacity: 0 } : { scale: 0.5, opacity: 0 },
+    skewIn: simplifyAnimations ? { opacity: 0 } : { skewX: 15, opacity: 0 },
+    tiltIn: simplifyAnimations ? { opacity: 0 } : { rotateZ: -10, opacity: 0 },
+    blurIn: simplifyAnimations ? { opacity: 0 } : { filter: "blur(8px)", opacity: 0 },
     floatIn: { y: responsiveDistance / 2, opacity: 0 },
 
     none: {},
