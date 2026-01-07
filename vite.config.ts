@@ -21,5 +21,40 @@ export default defineConfig(({ mode }) => {
         "@types-dir": path.resolve(__dirname, "./src/types"),
       },
     },
+    build: {
+      // Optimize chunk splitting for better caching
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            // Vendor chunks
+            'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+            'framer-motion': ['framer-motion'],
+            'swiper': ['swiper'],
+            // Icon library (lucide-react) will be in its own chunk
+            'icons': ['lucide-react'],
+          },
+        },
+      },
+      // Optimize for production
+      minify: 'esbuild',
+      cssMinify: true,
+      // Target modern browsers for smaller bundle
+      target: 'es2020',
+      // Optimize chunk size
+      chunkSizeWarningLimit: 1000,
+      // Enable source maps for production debugging (disable in production if not needed)
+      sourcemap: false,
+    },
+    // Optimize dependencies pre-bundling
+    optimizeDeps: {
+      include: [
+        'react',
+        'react-dom',
+        'react-router-dom',
+        'framer-motion',
+        'swiper',
+      ],
+      exclude: ['lucide-react'],
+    },
   };
 });

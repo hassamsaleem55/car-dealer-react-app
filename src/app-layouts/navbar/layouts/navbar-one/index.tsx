@@ -126,8 +126,10 @@ export default function index({ styles }: { styles: any }) {
   }, [open, close]);
 
   useEffect(() => {
-    setLogoUrl(dealerData?.LogoUrl);
-  }, []);
+    if (dealerData?.LogoUrl) {
+      setLogoUrl(dealerData.LogoUrl);
+    }
+  }, [dealerData?.LogoUrl]);
 
   return (
     <header

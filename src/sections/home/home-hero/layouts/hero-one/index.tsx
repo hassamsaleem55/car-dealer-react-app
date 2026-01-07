@@ -53,6 +53,7 @@ export default function index({
           autoPlay
           loop
           playsInline
+          preload="auto"
         />
 
         {/* Gradient Overlay */}
@@ -208,6 +209,10 @@ export default function index({
                       src={iconSrc}
                       alt={platform}
                       className="w-4.5 h-4.5 object-contain group-hover:scale-110 transition-all duration-300"
+                      width="18"
+                      height="18"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </a>
                 );

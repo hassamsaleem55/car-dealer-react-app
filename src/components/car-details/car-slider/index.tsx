@@ -54,6 +54,10 @@ export default function CarSlider({ isReserved, images }: any) {
                   src={img.photoPath}
                   alt={`Thumbnail ${idx + 1}`}
                   className="h-19 md:h-24 w-full cursor-pointer rounded-xl object-cover transition-all duration-200 ease-in-out"
+                  width="150"
+                  height="100"
+                  loading="lazy"
+                  decoding="async"
                 />
               </SwiperSlide>
             ))}

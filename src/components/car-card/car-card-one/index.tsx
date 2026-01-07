@@ -59,6 +59,8 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
           className={styles["car-card__img"]}
           loading="lazy"
           decoding="async"
+          width="800"
+          height="600"
         />
         {/* {isReserved && ( */}
         <div className={styles["car-card__reserved"]}>Reserved</div>
