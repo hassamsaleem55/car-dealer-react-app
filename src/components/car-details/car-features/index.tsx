@@ -110,7 +110,7 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
       {/* === Header (sticky) === */}
       <div
         ref={headerRef}
-        className={`sticky top-16 md:top-20 z-999 flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4
+        className={`sticky top-12.5 md:top-20 z-999 flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4
            bg-white text-gray-600 bg-linear-to-r from-transparent to-gray-100 transition-all duration-200 ease-in-out
           ${
             isSticky
@@ -118,7 +118,7 @@ export default function CarFeatures({ features }: CarFeaturesProps) {
               : "px-4 py-4 md:px-8 md:py-4 mb-2 shadow-none rounded-t-2xl"
           }`}
       >
-        <h2 className="text-lg md:text-2xl font-semibold ">Features</h2>
+        <h2 className="text-lg md:text-2xl font-semibold">Features</h2>
         <div className="relative w-full md:w-64">
           <input
             type="text"

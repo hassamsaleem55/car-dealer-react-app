@@ -84,7 +84,7 @@ export default function CarSpecifications({
       {/* === Sticky Header === */}
       <div
         ref={headerRef}
-        className={`sticky top-16 md:top-20 z-999 flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4
+        className={`sticky top-12.5 md:top-20 z-999 flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4
            bg-white text-gray-600 bg-linear-to-r from-transparent to-gray-100 transition-all duration-200 ease-in-out
           ${
             isSticky
