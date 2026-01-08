@@ -16,7 +16,7 @@
 }
 
 .filter-card-title {
-  @apply text-gray-700 
+  @apply md:absolute md:top-3 md:left-3 w-fit text-center mx-auto md:mx-0 text-gray-700 
          text-[10px] md:text-xs font-semibold 
          border border-primary bg-transparent text-primary backdrop-blur-sm px-3 py-1.5 rounded-md 
          transition-all duration-300 ease-in-out;
