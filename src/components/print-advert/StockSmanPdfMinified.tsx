@@ -155,7 +155,7 @@ export const StockSmanPdfMinified = React.forwardRef<
     >
       <div className="space-y-2 sm:space-y-3">
         {/* Header Section */}
-        <header className="bg-linear-to-r from-primary via-primary/70 text-white shadow-lg rounded-lg overflow-hidden">
+        <header className="bg-linear-to-r from-primary to-primary/60 text-white shadow-lg rounded-lg overflow-hidden">
           <div className="flex items-center justify-between gap-3 sm:gap-4 p-2 sm:p-3">
             <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
               {companyInfo?.logoUrl && (
@@ -217,23 +217,23 @@ export const StockSmanPdfMinified = React.forwardRef<
 
           {/* Right Column: Specifications (7 cols) */}
           <div className="col-span-1 md:col-span-5 space-y-2">
-            <div className="bg-linear-to-br from-primary to-primary/90 text-white p-2 sm:p-3 rounded-md sm:rounded-lg shadow-md sm:shadow-lg">
+            <div className="bg-linear-to-br from-primary/5 to-white text-slate-700 p-2 sm:p-3 rounded-md sm:rounded-lg shadow-md sm:shadow-lg border border-primary/20">
               <div className="flex flex-col gap-2">
                 <div className="flex-1 min-w-0">
-                  <h2 className="font-bold text-xs sm:text-sm md:text-[15px] mb-0.5">
+                  <h2 className="font-bold text-primary text-xs sm:text-sm md:text-[15px] mb-0.5">
                     {data.make} {data.model}{" "}
                     {vehicle?.trim && `• ${vehicle.trim}`}
                   </h2>
-                  <p className="font-semibold text-[9px] sm:text-[10px] md:text-[11px] text-white/90 uppercase tracking-wide">
+                  <p className="font-semibold text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-wide">
                     {year && year}
                     {vehicle?.derivative && ` • ${vehicle.derivative}`}
                   </p>
                 </div>
                 <div className="flex items-baseline justify-between sm:justify-end gap-2">
-                  <p className="text-[8px] sm:text-[9px] text-white uppercase tracking-wide">
+                  <p className="text-[8px] sm:text-[9px] uppercase tracking-wide">
                     Price:
                   </p>
-                  <p className="text-lg sm:text-xl md:text-2xl font-black">
+                  <p className="text-primary text-lg sm:text-xl md:text-2xl font-black">
                     {formatPrice(data.retailPrice)}
                   </p>
                 </div>

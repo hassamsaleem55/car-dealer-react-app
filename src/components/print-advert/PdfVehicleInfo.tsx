@@ -22,7 +22,7 @@ export default function PdfVehicleInfo({ data }: { data: StockSmanDto }) {
   return (
     <div className="flex flex-col h-full space-y-1 sm:space-y-1.5">
       {/* Title & Price Header */}
-      <div className="bg-linear-to-br from-primary to-primary/90 text-white p-2 sm:p-3 rounded-md sm:rounded-lg shadow-md sm:shadow-lg">
+      {/* <div className="bg-linear-to-br from-primary to-primary/90 text-white p-2 sm:p-3 rounded-md sm:rounded-lg shadow-md sm:shadow-lg">
         <div className="flex flex-col gap-2">
           <div className="flex-1 min-w-0">
             <h2 className="font-bold text-xs sm:text-sm md:text-[15px] mb-0.5">
@@ -42,8 +42,29 @@ export default function PdfVehicleInfo({ data }: { data: StockSmanDto }) {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
 
+      <div className="bg-linear-to-br from-primary/5 to-white text-slate-700 p-2 sm:p-3 rounded-md sm:rounded-lg shadow-md sm:shadow-lg border border-primary/20">
+        <div className="flex flex-col gap-2">
+          <div className="flex-1 min-w-0">
+            <h2 className="font-bold text-primary text-xs sm:text-sm md:text-[15px] mb-0.5">
+              {data.make} {data.model} {vehicle?.trim && `• ${vehicle.trim}`}
+            </h2>
+            <p className="font-semibold text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-wide">
+              {year && year}
+              {vehicle?.derivative && ` • ${vehicle.derivative}`}
+            </p>
+          </div>
+          <div className="flex items-baseline justify-between sm:justify-end gap-2">
+            <p className="text-[8px] sm:text-[9px] uppercase tracking-wide">
+              Price:
+            </p>
+            <p className="text-primary text-lg sm:text-xl md:text-2xl font-black">
+              {formatPrice(data.retailPrice)}
+            </p>
+          </div>
+        </div>
+      </div>
       {/* Vehicle Identification */}
       {vehicle && (
         <div className="bg-linear-to-br from-slate-50 to-white rounded-md sm:rounded-lg border border-slate-200/80 overflow-hidden">
@@ -101,13 +122,13 @@ export default function PdfVehicleInfo({ data }: { data: StockSmanDto }) {
       {/* Compact Grid Info */}
 
       <div className="grid grid-cols-2 gap-1 sm:gap-2 text-[8px] sm:text-[9px] md:text-[10px]">
-        <div className="bg-linear-to-br from-primary/5 to-white p-1.5 sm:p-2 rounded-md sm:rounded-lg border border-primary/20">
+        <div className="bg-linear-to-br from-gray-50 to-white p-1.5 sm:p-2 rounded-md sm:rounded-lg border border-gray-200">
           <p className="text-gray-500 text-[7px] sm:text-[8px] md:text-[9px] uppercase tracking-wide mb-0.5">
             Registration
           </p>
           <p className="font-bold text-primary truncate">{data.registration}</p>
         </div>
-        <div className="bg-linear-to-br from-primary/5 to-white p-1.5 sm:p-2 rounded-md sm:rounded-lg border border-primary/20">
+        <div className="bg-linear-to-br from-gray-50 to-white p-1.5 sm:p-2 rounded-md sm:rounded-lg border border-gray-200">
           <p className="text-gray-500 text-[7px] sm:text-[8px] md:text-[9px] uppercase tracking-wide mb-0.5">
             Mileage
           </p>

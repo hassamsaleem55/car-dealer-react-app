@@ -3,7 +3,7 @@ import type { StockSmanDto } from "./StockSmanPdf";
 
 export default function PdfHeader({ data }: { data: StockSmanDto }) {
   return (
-    <div className="bg-linear-to-r from-primary via-primary/70 text-white shadow-lg rounded-lg overflow-hidden">
+    <div className="bg-linear-to-r from-primary to-primary/60 text-white shadow-lg rounded-lg overflow-hidden">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0 p-2 sm:p-3">
         <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
           {data.companyInfo?.logoUrl && (
