@@ -21,7 +21,6 @@ export default function FaqOne({
     <SectionLayoutOne
       headingText={heading}
       styles={SectionStyles}
-      //   className="!mt-0 pb-18"
     >
       <div className={styles["faqs-container"]}>
         {faqs.slice(0, 5).map((faq, index) => {

@@ -20,7 +20,6 @@ export default function PrintAdvertModal({
   const printAreaRef = useRef<HTMLDivElement>(null);
   const [printMode, setPrintMode] = useState<PrintMode>("minified");
 
-  // Handle escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -41,10 +40,8 @@ export default function PrintAdvertModal({
     if (printAreaRef.current) {
       const printContent = printAreaRef.current.innerHTML;
 
-      // Extract all computed styles from the page
       const allStyles: string[] = [];
 
-      // Get all stylesheet rules
       for (const styleSheet of Array.from(document.styleSheets)) {
         try {
           const rules = Array.from(

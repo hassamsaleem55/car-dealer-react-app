@@ -31,38 +31,7 @@ export default function ContactContentOne() {
     }));
   };
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   setIsSubmitting(true);
-
-  //   try {
-  //     // Simulate API call - replace with actual API endpoint
-  //     await new Promise((resolve) => setTimeout(resolve, 1500));
-
-  //     toast.success("Message sent successfully!", {
-  //       description: "We'll get back to you as soon as possible.",
-  //     });
-
-  //     // Reset form
-  //     setFormData({
-  //       name: "",
-  //       email: "",
-  //       phone: "",
-  //       message: "",
-  //     });
-  //   } catch (error) {
-  //     toast.error("Failed to send message", {
-  //       description: "Please try again or contact us directly.",
-  //     });
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // };
-
   const formValidator = (): boolean => {
-    // const emptyField = formData.find(
-    //   (field) => field.required && !field.value.trim()
-    // );
     if (formData.name.trim() === "") {
       toast.error(`Please fill out the name field.`);
       return false;
@@ -79,15 +48,12 @@ export default function ContactContentOne() {
       toast.error(`Please fill out the message field.`);
       return false;
     }
-    // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.email && !emailRegex.test(formData.email)) {
       toast.error("Please enter a valid email address.");
       return false;
     }
 
-    // Validate UK phone number
-    // UK phone regex: +44 or 0 followed by 9–10 digits
     const ukPhoneRegex =
       /^(?:\+?44\s?\d{10}|0044\s?\d{10}|07\d{9}|01\d{9}|02\d{9})$/;
     if (
@@ -106,7 +72,6 @@ export default function ContactContentOne() {
       return false;
     }
     setIsSubmitting(true);
-    // Prepare payload according to Postman structure
     const body = {
       FullName: formData.name,
       EmailAddress: formData.email,

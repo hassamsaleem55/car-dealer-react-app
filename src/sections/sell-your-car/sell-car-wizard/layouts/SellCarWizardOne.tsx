@@ -45,7 +45,6 @@ export default function SellCarWizardOne() {
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
 
-  // Scroll to top on step change
   useEffect(() => {
     console.log("formData:", formData);
     window.scrollTo({ top: 0, behavior: "smooth" });

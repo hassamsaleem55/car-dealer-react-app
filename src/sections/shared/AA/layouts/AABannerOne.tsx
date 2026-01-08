@@ -1,15 +1,8 @@
-// import { useMediaQuery } from "react-responsive";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
 
 export default function AABannerOne() {
-  // const isMobile = useMediaQuery({ maxWidth: 639 });
-  // const isTablet = useMediaQuery({ minWidth: 640, maxWidth: 1023 });
-
-  // const distance = isMobile ? 40 : isTablet ? 100 : 300;
-
   return (
     <section className="w-full bg-[#FFD302] overflow-hidden flex flex-row justify-center items-center py-1.5 sm:py-2 md:py-3 px-2 sm:px-3 md:px-4 lg:px-6 gap-2 sm:gap-3 md:gap-4 lg:gap-6 xl:gap-8">
-      {/* <MotionReveal preset="slideRight" distance={distance} duration={1.2}> */}
       <MotionReveal preset="slideRight" duration={1.2}>
         <img
           src="../../images/AACars/aa-logo-left.webp"

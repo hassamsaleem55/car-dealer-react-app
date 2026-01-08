@@ -42,10 +42,8 @@ function PlanCard({
 
   return (
     <div className="border border-primary/40 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col relative">
-      {/* Sentinel */}
       <div ref={sentinelRef} className="w-full h-0" />
 
-      {/* Sticky Header */}
       <div
         className={`sticky top-20 z-10 bg-gray-50 px-5 py-4 border-b border-gray-100 transition-all duration-300 ${
           isSticky
@@ -57,7 +55,6 @@ function PlanCard({
         <p className="text-sm sm:text-base">{plan.description}</p>
       </div>
 
-      {/* Features */}
       <div className="p-6 overflow-y-auto">
         <ul className="space-y-2">
           {plan.features.map((feature, i) => (

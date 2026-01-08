@@ -26,10 +26,8 @@ export function GetDirectionV1() {
   };
 
   return (
-    // <section className="bg-white">
     <div className="container mx-auto px-4">
       <div className="grid grid-cols-1 sm:grid-cols-2">
-        {/* Left: Dealer Info & Timetable */}
         <div className="bg-white p-8 md:p-10 space-y-6 shadow-lg border border-gray-200 rounded-tl-2xl">
           <div className="flex flex-row border-b border-b-gray-200 pb-4 mb-6 gap-4">
             <div className="grow flex flex-col">
@@ -50,16 +48,6 @@ export function GetDirectionV1() {
                 </p>
               )}
             </div>
-            {/* <div>
-            <Button
-              variant="secondary"
-              btnText="Get Directions"
-              btnTextSize="text-xs"
-              widthUtilities="w-30"
-              paddingUtilities="px-2 py-2"
-              clickEvent={handleGetDirections}
-            />
-          </div> */}
           </div>
           <div className="px-8 text-sm">
             <ul className="space-y-2">
@@ -100,22 +88,6 @@ export function GetDirectionV1() {
           </div>
         </div>
 
-        {/* Right: Map */}
-        {/* <div
-            className="flex-1 min-w-[320px] h-96 md:h-full rounded-r-2xl"
-            ref={mapRef}
-          >
-            <iframe
-              className="rounded-tr-2xl"
-              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6027.31910334582!2d-0.485736!3d52.130750000000006!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4877b13468b2dcaf%3A0x9d0931ffcfb72e51!2s84A%20Ford%20End%20Rd%2C%20Bedford%20MK40%204JX%2C%20UK!5e1!3m2!1sen!2sus!4v1762854317878!5m2!1sen!2sus"
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            ></iframe>
-          </div> */}
         <div
           className="flex-1 min-w-[320px] h-96 md:h-full rounded-r-2xl"
           ref={mapRef}
@@ -135,6 +107,5 @@ export function GetDirectionV1() {
         </div>
       </div>
     </div>
-    // </section>
   );
 }

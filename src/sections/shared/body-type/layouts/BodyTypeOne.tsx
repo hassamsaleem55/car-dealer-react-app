@@ -4,7 +4,6 @@ import SectionLayoutOne from "@app-layout-dir/sections/section-layout-one";
 import SwiperComponent from "@components-dir/swiper";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
 import { FilterCardModern } from "@components-dir/filter-card/variants";
-// import { carTypes } from "@core-dir/services/CarTypes.service";
 import SectionStyles from "@app-layout-dir/sections/section-layout-one/css/default.module.css";
 
 export default function BodyTypeOne({ heading }: { heading: string }) {

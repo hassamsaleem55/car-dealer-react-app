@@ -1,5 +1,4 @@
 import { useEffect, useState, useCallback, useRef } from "react";
-// import { ChevronRight, SlidersHorizontal, X, Search } from "lucide-react";
 import { ChevronRight, SlidersHorizontal, X } from "lucide-react";
 import { useOutletContext, useNavigate, useLocation } from "react-router-dom";
 import { useDealerContext } from "@core-dir/dealer-provider";
@@ -23,9 +22,7 @@ export function StockListingOne() {
   }>();
   const [loading, setLoading] = useState(false);
   const [carData, setCarData] = useState<Array<any>>([]);
-  // const [allCarData, setAllCarData] = useState<Array<any>>([]);
   const [showFilters, setShowFilters] = useState(false);
-  // const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalRecords, setTotalRecords] = useState(0);
   const [hasMore, setHasMore] = useState(true);
@@ -34,12 +31,9 @@ export function StockListingOne() {
   const PageSize = 9;
   const navigate = useNavigate();
 
-  // Search filter effect
-
   useEffect(() => {
     setCurrentPage(1);
     setHasMore(true);
-    // setAllCarData([]);
     setCarData([]);
   }, [location.search]);
 
@@ -64,10 +58,6 @@ export function StockListingOne() {
         const processedData = await processCarCardData(
           response.stockList || []
         );
-
-        // setAllCarData((prev) =>
-        //   currentPage === 1 ? processedData : [...prev, ...processedData]
-        // );
 
         setCarData((prev) =>
           currentPage === 1 ? processedData : [...prev, ...processedData]
@@ -102,33 +92,6 @@ export function StockListingOne() {
     return () => observer.disconnect();
   }, [loading, hasMore]);
 
-  // search field filtering effect
-  // useEffect(() => {
-  //   if (!searchQuery.trim()) {
-  //     setCarData(allCarData);
-  //     return;
-  //   }
-
-  //   const query = searchQuery.toLowerCase();
-  //   const filtered = allCarData.filter((car) => {
-  //     const title = car.title?.toLowerCase() || "";
-  //     const derivative = car.derivative?.toLowerCase() || "";
-  //     const registrationNo = car.registrationNo?.toLowerCase() || "";
-  //     const make = car.make?.toLowerCase() || "";
-  //     const model = car.model?.toLowerCase() || "";
-
-  //     return (
-  //       title.includes(query) ||
-  //       derivative.includes(query) ||
-  //       registrationNo.includes(query) ||
-  //       make.includes(query) ||
-  //       model.includes(query)
-  //     );
-  //   });
-
-  //   setCarData(filtered);
-  // }, [searchQuery, allCarData]);
-
   const handleSortByChange = useCallback(
     (value: string[]) => {
       const params = new URLSearchParams(queryString);
@@ -154,7 +117,6 @@ export function StockListingOne() {
 
   return (
     <div className="container mx-auto px-4 py-4 md:py-6 md:space-y-6">
-      {/* === Breadcrumb === */}
       <nav
         className="flex text-xs md:text-sm text-gray-500 gap-3"
         aria-label="breadcrumb"
@@ -175,7 +137,6 @@ export function StockListingOne() {
         </ol>
       </nav>
 
-      {/* === Mobile Filter Toggle Button === */}
       <div className="lg:hidden sticky top-12.5 z-30 bg-transparent backdrop-blur-xs py-2 -mx-4 mt-3 px-4">
         <button
           onClick={() => setShowFilters(!showFilters)}
@@ -207,7 +168,6 @@ export function StockListingOne() {
         </button>
       </div>
 
-      {/* === Mobile Filter Modal === */}
       <div
         className={`lg:hidden fixed inset-0 z-40 transition-all duration-300 ease-in-out ${
           showFilters
@@ -215,7 +175,6 @@ export function StockListingOne() {
             : "opacity-0 pointer-events-none"
         }`}
       >
-        {/* Backdrop */}
         <div
           className={`absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 ease-in-out ${
             showFilters ? "opacity-100" : "opacity-0"
@@ -223,7 +182,6 @@ export function StockListingOne() {
           onClick={() => setShowFilters(false)}
         />
 
-        {/* Filter Panel */}
         <div
           className={`absolute inset-x-0 top-[120px] bottom-0 bg-white overflow-y-auto transition-transform duration-500 ease-out ${
             showFilters ? "translate-y-0" : "translate-y-full"
@@ -245,18 +203,14 @@ export function StockListingOne() {
         </div>
       </div>
 
-      {/* === Main Content === */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-        {/* === Sidebar (Filters - Desktop Only) === */}
         <aside className="hidden lg:block lg:col-span-1 lg:sticky lg:top-24 h-fit">
           <FilterOne styles={FilterOneVerticalStyles} />
         </aside>
 
-        {/* === Right Content === */}
         <section className="lg:col-span-3 space-y-2">
           {dealerData.FCANumber && (
             <>
-              {/* Finance Representation */}
               <FinanceRepresentation
                 totalCash={37537}
                 deposit={3527}
@@ -267,7 +221,6 @@ export function StockListingOne() {
               />
             </>
           )}
-          {/* Header */}
           <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <h2 className="text-xl sm:text-2xl font-semibold text-gray-900">
@@ -326,33 +279,6 @@ export function StockListingOne() {
             </div>
           </div>
 
-          {/* === Car Listing Grid === */}
-
-          {/* {loading ? (
-            <div className="flex items-center justify-center h-[60vh]">
-              <DotLoader size="lg" />
-            </div>
-          ) : carData.length > 0 ? (
-            <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                {carData.map((item, index) => (
-                  <MotionReveal key={item.id ?? index} preset="slideLeft">
-                    <CarCardOne car={item} styles={CarCardStyles} />
-                  </MotionReveal>
-                ))}
-              </div>
-              {hasMore && (
-                <div ref={loaderRef} className="flex justify-center py-10">
-                  <DotLoader size="md" />
-                </div>
-              )}
-            </>
-          ) : (
-            <div className="flex items-center justify-center h-[40vh] text-gray-500 text-base">
-              No cars found matching your filters.
-            </div>
-          )} */}
-
           {isInitialLoading ? (
             <div className="flex items-center justify-center h-[60vh]">
               <DotLoader size="lg" />
@@ -369,14 +295,12 @@ export function StockListingOne() {
                 ))}
               </div>
 
-              {/* Pagination Loader (ONLY for next pages) */}
               {loading && currentPage > 1 && (
                 <div className="flex justify-center py-10">
                   <DotLoader size="md" />
                 </div>
               )}
 
-              {/* Intersection Observer Trigger */}
               {!loading && hasMore && <div ref={loaderRef} className="h-10" />}
             </>
           ) : (

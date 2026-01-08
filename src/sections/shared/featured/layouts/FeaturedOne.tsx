@@ -60,7 +60,6 @@ export default function FeaturedOne({ heading }: { heading: string }) {
             // "768": { slidesPerView: 2, spaceBetween: 12 },
             "1024": { slidesPerView: 3, spaceBetween: 12 },
             "1280": { slidesPerView: 4, spaceBetween: 12 },
-            // "1536": { slidesPerView: 4, spaceBetween: 12 },
           }}
           renderItem={(item, index) => (
             <MotionReveal preset="slideLeft" delay={index * 0.15}>

@@ -11,7 +11,6 @@ import {
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
 import { Link } from "react-router-dom";
 
-// --- Types ---
 interface BentoCardProps {
   title: string;
   desc: string;
@@ -31,8 +30,6 @@ interface SectionHeaderProps {
 }
 
 const imagePath = "../images/AACars/";
-
-// --- Components ---
 
 const BentoCard = ({ title, desc, icon }: BentoCardProps) => (
   <div className="relative border-gray-200 bg-white hover:border-primary/30 hover:shadow-xl overflow-hidden rounded-xl md:rounded-2xl border-2 p-4 md:p-6 cursor-default group hover:bg-linear-to-br hover:from-primary/5 hover:via-white hover:to-white hover:border-primary/20 transition-all duration-300">
@@ -75,7 +72,6 @@ const SectionHeader = ({ title, subtitle }: SectionHeaderProps) => (
   </div>
 );
 
-// Icon mapping helper
 const getIcon = (iconName: string, size = 24) => {
   const icons: Record<string, React.ReactNode> = {
     shield: <ShieldCheck size={size} />,
@@ -88,14 +84,9 @@ const getIcon = (iconName: string, size = 24) => {
   return icons[iconName] || <CheckCircle2 size={size} />;
 };
 
-// --- Main Layout ---
-
 export default function AAOne() {
-  // Extract dealer name from context
   const dealerName = "Motors Hub";
 
-  // Extract hero data
-  //   const hero = (restProps as any).hero || {};
   const badge = "AA Approved Dealer";
   const title = "Drive With Confidence";
   const subtitle = `At ${dealerName}, every vehicle meets the prestigious AA Cars Standards, ensuring quality, transparency, and complete peace of mind with every purchase.`;
@@ -105,7 +96,6 @@ export default function AAOne() {
     { label: "Warranty", value: "6+ mo" },
   ];
 
-  // Extract standards data
   const standardsSubtitle = "The Gold Standard";
   const standardsTitle = "Performance & Peace of Mind";
   const cards = [
@@ -142,7 +132,6 @@ export default function AAOne() {
     },
   ];
 
-  // Extract trust data
   const trustBadge = "TSI APPROVED CODE";
   const trustTitle = "Backed by UK Trading Standards";
   const content = [
@@ -155,7 +144,6 @@ export default function AAOne() {
     "Exceptional customer service with transparent pricing and no hidden fees",
   ];
 
-  // Extract CTA data
   const ctaTitle = "Ready to Drive Excellence?";
   const ctaSubtitle = `Experience the confidence of buying from ${dealerName}, where every vehicle meets the prestigious AA Cars Standards for quality, safety, and complete peace of mind.`;
   const primaryButton = "View Showroom";
@@ -167,13 +155,6 @@ export default function AAOne() {
 
       {/* --- HERO SECTION --- */}
       <header className="relative w-full overflow-hidden bg-linear-to-br from-white via-primary/5 to-white">
-        {/* <div
-          className="absolute inset-0 opacity-30"
-          style={{
-            background:
-              "radial-gradient(circle at 20% 50%, rgba(255,107,53,0.08) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(255,107,53,0.05) 0%, transparent 50%)",
-          }}
-        ></div> */}
         <div className="container mx-auto px-6 md:px-12 lg:px-24 py-12 md:py-16 lg:py-20 grid md:grid-cols-12 gap-8 md:gap-12 items-center relative z-10">
           {/* Left: Text Content */}
           <div className="md:col-span-12 lg:col-span-7 space-y-6 md:space-y-8">

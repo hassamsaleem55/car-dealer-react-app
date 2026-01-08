@@ -2,7 +2,6 @@ import SectionLayoutOne from "@app-layout-dir/sections/section-layout-one";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
 import { InfoCardModernLight } from "@components-dir/info-card/variants";
 import { useOutletContext } from "react-router-dom";
-// import { trustContent } from "@core-dir/store/TrustContent.data";
 
 export default function TrustOne({
   heading,

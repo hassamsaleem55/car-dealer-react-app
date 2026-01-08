@@ -50,7 +50,6 @@ export default function TrustAlba() {
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-linear-to-br from-gray-900 via-gray-800 to-gray-900 text-white relative overflow-hidden">
-      {/* Background Elements */}
       <div className="absolute inset-0 opacity-20">
         <div className="absolute top-20 right-20 w-48 h-48 bg-primary/30 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 left-20 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl"></div>
@@ -58,7 +57,6 @@ export default function TrustAlba() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
         <MotionReveal preset="fadeIn">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-4 py-2 rounded-full text-sm font-medium mb-6">
@@ -76,7 +74,6 @@ export default function TrustAlba() {
           </div>
         </MotionReveal>
 
-        {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 lg:gap-8 mb-12">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
@@ -104,7 +101,7 @@ export default function TrustAlba() {
           })}
         </div>
 
-        {/* Trust Statement */}
+
         <MotionReveal preset="fadeIn" delay={0.6}>
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 lg:p-8 border border-white/20 text-center">
             <h3 className="text-xl font-bold text-white mb-3">

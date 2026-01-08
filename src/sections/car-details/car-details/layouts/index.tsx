@@ -31,7 +31,6 @@ export default function CarDetailsOne() {
     setReservationModalOpen: (qs: boolean) => void;
     setReservationCarData: (data: Car) => void;
   }>();
-  // const [isFavorite, setIsFavorite] = useState(false);
   const [loading, setLoading] = useState(false);
   const [carData, setCarData] = useState<Car | null>(null);
   const [carDetails, setCarDetails] = useState<any>(null);
@@ -48,7 +47,6 @@ export default function CarDetailsOne() {
     PCP: null,
     HP: null,
   });
-  // === Fetch data on mount
   useEffect(() => {
     const searchParams = location.search.startsWith("?")
       ? location.search.substring(1)
@@ -77,7 +75,6 @@ export default function CarDetailsOne() {
         setMotDue(carRes.motDue || "");
         setLastServiceDate(carRes.history.historyInfo.lastServiceDate || "");
         setFullPrice(carRes.retailPrice || null);
-        // Finance options
         const PCP =
           carRes.financeQuotes?.pcpQuote?.quote?.allInclusiveRegularPayment;
         const HP =
@@ -97,7 +94,6 @@ export default function CarDetailsOne() {
     fetchData();
   }, [location.search, dealerAuthToken]);
 
-  // === Scroll to finance section if hash is present
   useEffect(() => {
     if (location.hash === "#codeweaver-finance-section" && !loading) {
       const timer = setTimeout(() => {
@@ -112,7 +108,6 @@ export default function CarDetailsOne() {
     }
   }, [location.hash, loading]);
 
-  // === Loading state
   if (loading)
     return (
       <div className="flex items-center justify-center h-[80vh]">
@@ -120,7 +115,6 @@ export default function CarDetailsOne() {
       </div>
     );
 
-  // === Not found
   if (!carData)
     return (
       <div className="flex items-center justify-center h-[70vh] text-gray-500 text-lg text-center px-4">
@@ -131,11 +125,9 @@ export default function CarDetailsOne() {
   return (
     <>
       <div className="container mx-auto px-4 pt-6 space-y-6">
-        {/* === Breadcrumb === */}
         <Breadcrumb title={carData.title} stockId={carData.stockId} />
 
         <main className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:items-start">
-          {/* === Left Column (Car Details) === */}
           <div className="col-span-2 space-y-8">
             {/* Slider */}
             <CarSlider
@@ -151,8 +143,6 @@ export default function CarDetailsOne() {
               <MotionReveal preset="slideLeft">
                 <CarHeader
                   carData={carData}
-                  // isFavorite={isFavorite}
-                  // toggleFavorite={() => setIsFavorite(!isFavorite)}
                 />
               </MotionReveal>
             </aside>
@@ -238,24 +228,19 @@ export default function CarDetailsOne() {
             )}
           </div>
 
-          {/* === Right Column (Sticky Aside) === */}
           <aside className="col-span-1 relative md:sticky md:top-23 space-y-4 hidden md:block">
             <MotionReveal preset="slideLeft">
               <CarHeader
                 carData={carData}
-                // isFavorite={isFavorite}
-                // toggleFavorite={() => setIsFavorite(!isFavorite)}
               />
             </MotionReveal>
           </aside>
         </main>
       </div>
-      {/* <section className="bg-white"> */}
       <div className="container mx-auto px-4">
         <FeaturedDefault props={{ heading: "Latest Stock" }} />
       </div>
       <AABannerDefault />
-      {/* </section> */}
       <div className="mb-18 pb-18 bg-white border border-gray-200">
         <RightChoiceForDetailsPage
           props={{

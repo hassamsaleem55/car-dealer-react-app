@@ -86,7 +86,6 @@ function AchievementCard({
   const spring = useSpring(count, { stiffness: 60, damping: 18 });
   const [display, setDisplay] = useState("0");
 
-  // update display value smoothly
   useEffect(() => {
     const unsubscribe = spring.on("change", (latest) => {
       setDisplay(new Intl.NumberFormat("en-US").format(Math.floor(latest)));
