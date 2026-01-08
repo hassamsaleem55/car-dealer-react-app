@@ -99,7 +99,9 @@ const InfoRow: React.FC<{
     className={noBorder ? "text-[8px] flex justify-between pb-0.5" : INFO_ROW}
   >
     <span className="text-slate-500">{label}:</span>
-    <span className={`font-semibold ${highlight ? "text-primary" : INFO_VALUE}`}>
+    <span
+      className={`font-semibold ${highlight ? "text-primary" : INFO_VALUE}`}
+    >
       {value}
     </span>
   </div>
@@ -111,13 +113,8 @@ export const StockSmanPdfMinified = React.forwardRef<
 >(({ data, companyInfo }, ref) => {
   if (!data) return null;
 
-  const {
-    stockId,
-    colour,
-    fuelType,
-    transmissionType,
-    odometerReadingMiles,
-  } = data;
+  const { stockId, colour, fuelType, transmissionType, odometerReadingMiles } =
+    data;
 
   const year = data.aT_StockInfo?.vehicle?.yearOfManufacture;
   const vehicle = data.aT_StockInfo?.vehicle;
@@ -171,7 +168,7 @@ export const StockSmanPdfMinified = React.forwardRef<
                 </div>
               )}
               <div className="space-y-0.5 sm:space-y-1 flex-1 min-w-0">
-                <h1 className="font-bold text-sm sm:text-base tracking-tight text-white line-clamp-1">
+                <h1 className="font-bold text-sm sm:text-base tracking-tight text-white">
                   {companyInfo?.companyName || ""}
                 </h1>
                 <div className="flex flex-wrap gap-x-3 sm:gap-x-4 text-white/95 text-[9px] sm:text-[10px]">
@@ -223,11 +220,11 @@ export const StockSmanPdfMinified = React.forwardRef<
             <div className="bg-linear-to-br from-primary to-primary/90 text-white p-2 sm:p-3 rounded-md sm:rounded-lg shadow-md sm:shadow-lg">
               <div className="flex flex-col gap-2">
                 <div className="flex-1 min-w-0">
-                  <h2 className="font-bold text-xs sm:text-sm md:text-[15px] mb-0.5 line-clamp-2">
+                  <h2 className="font-bold text-xs sm:text-sm md:text-[15px] mb-0.5">
                     {data.make} {data.model}{" "}
                     {vehicle?.trim && `• ${vehicle.trim}`}
                   </h2>
-                  <p className="text-[9px] sm:text-[10px] md:text-[11px] text-white/90 uppercase tracking-wide line-clamp-1">
+                  <p className="text-[9px] sm:text-[10px] md:text-[11px] text-white/90 uppercase tracking-wide">
                     {year && year}
                     {vehicle?.derivative && ` • ${vehicle.derivative}`}
                   </p>
@@ -409,24 +406,25 @@ export const StockSmanPdfMinified = React.forwardRef<
             </div>
             <div className="columns-1 sm:columns-2 space-y-3 sm:space-y-4">
               {Object.entries(groupedFeatures)
-                .slice(0, 5)
+                .slice(0, 6)
                 .map(([category, items]) => (
                   <div key={category} className="space-y-0.5 sm:space-y-1">
                     <p className="text-[8px] font-bold text-primary uppercase tracking-wide border-b border-primary/10 pb-0.5">
                       {category}
                     </p>
-                    <div className="space-y-0.5">
-                      {items.slice(0, 6).map((feature: any, i: number) => (
+                    <div className="space-y-0.5 text-[8px] sm:text-[9px] mt-1 sm:mt-1.5">
+                      {items.slice(0, 5).map((feature: any, i: number) => (
                         <div
-                          key={i}
-                          className="flex items-start gap-1.5 text-[8px]"
+                          key={`${feature.name}-${i}`}
+                          className="flex items-center gap-1 sm:gap-1.5 mt-0.5 leading-tight text-slate-700"
                         >
-                          <span className="text-primary font-bold shrink-0">
+                          <span
+                            className="text-primary text-[8px] sm:text-[10px] font-bold select-none"
+                            aria-hidden="true"
+                          >
                             •
                           </span>
-                          <span className="text-slate-700 leading-tight font-semibold">
-                            {feature.name}
-                          </span>
+                          <span className="font-medium">{feature.name}</span>
                         </div>
                       ))}
                     </div>

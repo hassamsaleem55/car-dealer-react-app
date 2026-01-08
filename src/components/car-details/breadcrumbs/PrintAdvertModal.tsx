@@ -73,7 +73,9 @@ export default function PrintAdvertModal({
           <!DOCTYPE html>
           <html>
             <head>
-              <title>Print Advert - Stock ${stockId}</title>
+              <title>Print Advert ${
+                printMode === "minified" ? "" : "(Detailed view)"
+              } - Stock ${stockId}</title>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=1024">
               <style>

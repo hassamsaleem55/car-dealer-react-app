@@ -25,10 +25,10 @@ export default function PdfVehicleInfo({ data }: { data: StockSmanDto }) {
       <div className="bg-linear-to-br from-primary to-primary/90 text-white p-2 sm:p-3 rounded-md sm:rounded-lg shadow-md sm:shadow-lg">
         <div className="flex flex-col gap-2">
           <div className="flex-1 min-w-0">
-            <h2 className="font-bold text-xs sm:text-sm md:text-[15px] mb-0.5 line-clamp-2">
+            <h2 className="font-bold text-xs sm:text-sm md:text-[15px] mb-0.5">
               {data.make} {data.model} {vehicle?.trim && `• ${vehicle.trim}`}
             </h2>
-            <p className="text-[9px] sm:text-[10px] md:text-[11px] text-white/90 uppercase tracking-wide line-clamp-1">
+            <p className="text-[9px] sm:text-[10px] md:text-[11px] text-white/90 uppercase tracking-wide">
               {year && year}
               {vehicle?.derivative && ` • ${vehicle.derivative}`}
             </p>
@@ -52,9 +52,10 @@ export default function PdfVehicleInfo({ data }: { data: StockSmanDto }) {
               Vehicle ID
             </h3>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 text-[7px] sm:text-[8px] md:text-[9px] p-1.5 sm:p-2 gap-0.5 sm:gap-1">
+          {/* <div className="grid grid-cols-1 sm:grid-cols-2 text-[7px] sm:text-[8px] md:text-[9px] p-1.5 sm:p-2 gap-0.5 sm:gap-1"> */}
+          <div className="flex flex-col text-[8px] sm:text-[9px] md:text-[10px] p-1.5 sm:p-2 gap-0.5 sm:gap-1">
             {vehicle.vin && (
-              <div className="col-span-2">
+              <div>
                 <span className="text-gray-500">VIN:</span>
                 <span className="font-bold text-gray-800 ml-1">
                   {vehicle.vin}
@@ -62,26 +63,34 @@ export default function PdfVehicleInfo({ data }: { data: StockSmanDto }) {
               </div>
             )}
             {vehicle.generation && (
-              <div className="col-span-2">
+              <div>
                 <span className="text-gray-500">Generation:</span>
                 <span className="font-bold text-gray-800 ml-1">
                   {vehicle.generation}
                 </span>
               </div>
             )}
-            {vehicle.owners !== null && (
+            {/* {vehicle.owners !== null && (
               <div>
                 <span className="text-gray-500">Owners:</span>
                 <span className="font-bold text-primary ml-1">
                   {vehicle.owners}
                 </span>
               </div>
-            )}
+            )} */}
             {vehicle.sector && (
               <div>
                 <span className="text-gray-500">Sector:</span>
                 <span className="font-bold text-gray-800 ml-1">
                   {vehicle.sector}
+                </span>
+              </div>
+            )}
+            {vehicle.countryOfOrigin && (
+              <div>
+                <span className="text-gray-500">Country of Origin:</span>
+                <span className="font-bold text-gray-800 ml-1">
+                  {vehicle.countryOfOrigin}
                 </span>
               </div>
             )}
@@ -122,14 +131,18 @@ export default function PdfVehicleInfo({ data }: { data: StockSmanDto }) {
           <p className="text-gray-500 text-[7px] sm:text-[8px] md:text-[9px] uppercase tracking-wide mb-0.5">
             Transmission
           </p>
-          <p className="font-bold text-gray-800 truncate">{data.transmissionType}</p>
+          <p className="font-bold text-gray-800 truncate">
+            {data.transmissionType}
+          </p>
         </div>
         {vehicle?.drivetrain && (
           <div className="bg-linear-to-br from-gray-50 to-white p-1.5 sm:p-2 rounded-md sm:rounded-lg border border-gray-200">
             <p className="text-gray-500 text-[7px] sm:text-[8px] md:text-[9px] uppercase tracking-wide mb-0.5">
               Drivetrain
             </p>
-            <p className="font-bold text-gray-800 truncate">{vehicle.drivetrain}</p>
+            <p className="font-bold text-gray-800 truncate">
+              {vehicle.drivetrain}
+            </p>
           </div>
         )}
         {vehicle?.motExpiryDate && (
