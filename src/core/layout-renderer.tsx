@@ -6,7 +6,7 @@ export default function LayoutRenderer({ module }: { module: string }) {
   const { dealerConfig } = useDealerContext();
 
   const Component = React.lazy(async () => {
-    const variant = dealerConfig[module];
+    const variant = dealerConfig[module as keyof typeof dealerConfig] as string;
 
     try {
       const m = await import(`../app-layouts/${module}/variants/index.tsx`);
@@ -21,7 +21,9 @@ export default function LayoutRenderer({ module }: { module: string }) {
 
       return { default: Comp };
     } catch (err) {
-      console.error(`Failed to load ${module}-${variant}:`, err);
+      if (process.env.NODE_ENV === 'development') {
+        console.error(`Failed to load ${module}-${variant}:`, err);
+      }
       throw err;
     }
   });

@@ -1,6 +1,5 @@
 import { memo } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-// import { Heart } from "lucide-react";
 import Button from "@elements-dir/button";
 import { type Car } from "../car-card.types";
 import TooltipText from "@components-dir/tooltip";
@@ -40,17 +39,13 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
     dealerConfig.dealer.isCarGuruRatingEnabled && isValidRating(carGuruRating);
   const showRatingFooter = hasAutoTraderRating || hasCarGuruRating;
 
-  // const handleSecondaryAction = () => {
-  //   console.log(`Added to favorites ${stockId}: ${title}`);
-  //   // Replace with wishlist logic or UI feedback
-  // };
-
   const specOrder = ["Fuel", "Transmission", "Mileage"];
   const visibleSpecs = specs
     .filter((s) => specOrder.includes(s.key))
     .sort((a, b) => specOrder.indexOf(a.key) - specOrder.indexOf(b.key));
+    
   return (
-    <div className={`${styles["car-card"]} group`}>
+    <article className={`${styles["car-card"]} group`} aria-label={`${title} for sale`}>
       {/* Image */}
       <div className={styles["car-card__image-wrapper"]}>
         <img
@@ -234,26 +229,26 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
             }`}
           >
             {hasAutoTraderRating && (
-              <div className="flex flex-col items-start">
+              <div className="flex flex-col items-start" aria-label="AutoTrader rating">
                 <span className="text-sm text-primary font-bold capitalize">
                   {autoTraderRating} Price
                 </span>
-                <AutoTraderLogo className="w-14" />
+                <AutoTraderLogo className="w-14" aria-hidden="true" />
               </div>
             )}
 
             {hasCarGuruRating && (
-              <div className="flex flex-col items-end">
+              <div className="flex flex-col items-end" aria-label="CarGuru rating">
                 <span className="text-sm text-primary font-bold capitalize">
                   {carGuruRating} Price
                 </span>
-                <CarGuruLogo className="w-14" />
+                <CarGuruLogo className="w-14" aria-hidden="true" />
               </div>
             )}
           </div>
         </div>
       )}
-    </div>
+    </article>
   );
 }
 

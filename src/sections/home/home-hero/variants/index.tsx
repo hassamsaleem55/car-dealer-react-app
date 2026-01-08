@@ -1,19 +1,19 @@
-
 import HeroOne from "../layouts/hero-one";
 import HeroOneHorizontalStyles from "../layouts/hero-one/css/horizontal.module.css";
 import HeroOneVerticalLeftStyles from "../layouts/hero-one/css/vertical-left.module.css";
 import HeroOneVerticalRightStyles from "../layouts/hero-one/css/vertical-right.module.css";
+import type { DealerSectionProps } from "@types-dir/dealer-props";
 
 import FilterOne from "@components-dir/filter/filter-one";
 import FilterOneHorizontalStyles from "@components-dir/filter/filter-one/css/horizontal.module.css";
 import FilterOneVerticalStyles from "@components-dir/filter/filter-one/css/vertical.module.css";
 
-export function HeroOneHorizontal({ props }: any) {
+export function HeroOneHorizontal({ props }: { props: DealerSectionProps }) {
   const { heading, subHeading } = props;
   return (
     <HeroOne
-      heading={heading}
-      subHeading={subHeading}
+      heading={heading || ""}
+      subHeading={subHeading || ""}
       styles={HeroOneHorizontalStyles}
     >
       <FilterOne styles={FilterOneHorizontalStyles} />
@@ -21,7 +21,7 @@ export function HeroOneHorizontal({ props }: any) {
   );
 }
 
-export function HeroOneVerticalLeft({ props }: any) {
+export function HeroOneVerticalLeft({ props }: { props: DealerSectionProps }) {
   return (
     <HeroOne
       heading={props.heading || ""}
@@ -33,7 +33,7 @@ export function HeroOneVerticalLeft({ props }: any) {
   );
 }
 
-export function HeroOneVerticalRight({ props }: any) {
+export function HeroOneVerticalRight({ props }: { props: DealerSectionProps }) {
   return (
     <HeroOne
       heading={props.heading || ""}

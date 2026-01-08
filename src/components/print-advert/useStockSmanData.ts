@@ -10,13 +10,19 @@ interface UseStockSmanDataResult {
 
 export function useStockSmanData(
   stockId: number,
-  authToken: string
+  authToken: string | null
 ): UseStockSmanDataResult {
   const [data, setData] = useState<StockSmanDto | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!authToken) {
+      setError('Authentication token is missing');
+      setLoading(false);
+      return;
+    }
+    
     let isMounted = true;
 
     async function fetchStockSmanData() {

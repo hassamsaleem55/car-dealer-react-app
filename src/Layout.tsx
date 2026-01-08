@@ -11,9 +11,14 @@ import { Toaster } from "sonner";
 export default function Layout() {
   return (
     <div className="bg-body text-basicFont min-h-screen">
+      <a href="#main-content" className="skip-to-main">
+        Skip to main content
+      </a>
       <MetaManager />
       <LayoutRenderer module="navbar" />
-      <AppOutlet />
+      <main id="main-content">
+        <AppOutlet />
+      </main>
       <LayoutRenderer module="footer" />
       <ScrollToTopButton />
       <WhatsAppChatButton />

@@ -28,7 +28,10 @@ export default function SwiperComponent(props: Partial<SwiperComponentProps>) {
   /** ────────────────────────────────────────────────
    * Setup and defaults
    * ──────────────────────────────────────────────── */
-  const FIRST_DELAY = (autoplay as any)?.firstDelay ?? 1600;
+  const firstDelay = typeof autoplay === 'object' && 'firstDelay' in autoplay 
+    ? (autoplay.firstDelay as number) 
+    : 1600;
+  const FIRST_DELAY = firstDelay;
   const swiperRef = useRef<SwiperType | null>(null);
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const firstDelayTimer = useRef<number | null>(null);

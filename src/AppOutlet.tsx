@@ -6,14 +6,16 @@ import ReservationModal from "@components-dir/book-reservation/reservation-modal
 import type { Car } from "@components-dir/car-card/car-card.types";
 import { transformFilterData } from "@core-dir/helpers/FilterDataProcessor";
 
+interface AchievementsData {
+  soldStockCount: number | null;
+  availableStockCount: number | null;
+}
+
 function AppOutlet() {
   const location = useLocation();
   const { dealerAuthToken, dealerData } = useDealerContext();
   const [queryString, setQueryString] = useState("");
-  const [achievementsData, setAchievementsData] = useState<{
-    soldStockCount: number | null;
-    availableStockCount: number | null;
-  }>({
+  const [achievementsData, setAchievementsData] = useState<AchievementsData>({
     soldStockCount: null,
     availableStockCount: null,
   });
@@ -42,6 +44,7 @@ function AppOutlet() {
       );
       const transformedData = transformFilterData(response);
       setFiltersData(transformedData);
+      
       if (
         achievementsData.soldStockCount === null &&
         achievementsData.availableStockCount === null
@@ -58,12 +61,14 @@ function AppOutlet() {
         });
       }
     } catch (error) {
-      console.error("Error fetching filters:", error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error("Error fetching filters:", error);
+      }
     } finally {
       setFiltersLoading(false);
       setFiltersFirstLoad(false);
     }
-  }, [queryString, dealerAuthToken, dealerData?.CompanyId, achievementsData.soldStockCount, achievementsData.availableStockCount]);
+  }, [queryString, dealerAuthToken, dealerData?.CompanyId]);
 
   useEffect(() => {
     fetchData();

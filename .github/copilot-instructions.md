@@ -1,210 +1,177 @@
-# Car Dealer React App - AI Coding Instructions
+# Car Dealer React App - Development Guide
 
-## Project Architecture
+## Architecture Overview
 
-This is a **multi-tenant car dealership platform** built with React 19, TypeScript, Vite, and Tailwind CSS. The app dynamically renders dealer-specific themes and content based on configuration.
+A **multi-tenant car dealership platform** built with React 19, TypeScript, Vite, and Tailwind CSS. The app dynamically renders dealer-specific content and themes.
 
-### Core Concept: Dynamic Multi-Dealer System
+### Multi-Dealer System
 
-The entire app structure is controlled by:
-1. **`VITE_DEALER` environment variable** - Determines active dealer (e.g., `motors-hub`)
-2. **`dealers/{dealer-name}/setup.json`** - Defines pages, sections, navbar/footer variants
-3. **Path alias `@dealers-dir`** - Dynamically resolved to `./dealers/${VITE_DEALER}` at build time
+**How it works:**
+1. `VITE_DEALER` env variable → determines active dealer (e.g., `motors-hub`)
+2. `dealers/{dealer}/setup.json` → defines pages, sections, navbar/footer variants
+3. `@dealers-dir` path alias → resolves to `./dealers/${VITE_DEALER}` at build time
 
-**Critical**: `@dealers-dir` is a Vite alias that resolves differently per dealer. Never hardcode dealer paths.
+**Critical**: Never hardcode dealer paths. Always use `@dealers-dir` alias.
 
-## Path Aliases (Use These Always)
+## Path Aliases
 
 ```typescript
-@dealers-dir/*      → dealers/{VITE_DEALER}/*  (dynamic!)
-@app-layout-dir/*   → src/app-layouts/*
-@components-dir/*   → src/components/*
-@core-dir/*         → src/core/*
-@elements-dir/*     → src/elements/*
-@sections-dir/*     → src/sections/*
-@types-dir/*        → src/types/*
+@dealers-dir/*    → dealers/{VITE_DEALER}/*  (dynamic per dealer)
+@app-layout-dir/* → src/app-layouts/*
+@components-dir/* → src/components/*
+@core-dir/*       → src/core/*
+@elements-dir/*   → src/elements/*
+@sections-dir/*   → src/sections/*
+@types-dir/*      → src/types/*
 ```
 
-## Component Architecture Patterns
+**Always use aliases** - never use relative paths like `../../`.
 
-### 1. Section Variants System
+## Component Patterns
 
-Sections follow a **layout → variant** pattern:
+### 1. Section Structure
+
 ```
-src/sections/{page-name}/{section-name}/
-  ├── layouts/           # Reusable layout components
-  │   └── {layout-name}/
-  │       ├── index.tsx
-  │       └── css/
-  │           ├── base.module.css
-  │           └── {variant}.module.css
-  └── variants/
-      └── index.tsx      # Named exports like HeroOneHorizontal, FeaturedDefault
+src/sections/{page}/{section}/
+  ├── layouts/{layout}/
+  │   ├── index.tsx
+  │   └── css/*.module.css
+  └── variants/index.tsx  # Named exports: HeroDefault, FeaturedDark, etc.
 ```
 
-**Example**: Adding a new section variant
+**Adding a variant:**
 ```tsx
-// src/sections/shared/featured/variants/index.tsx
-export function FeaturedDefault({ props }: { props: DealerSectionProps }) {
-  return <FeaturedOne heading={props.heading || ""} />;
-}
+// variants/index.tsx
+import type { DealerSectionProps } from "@types-dir/dealer-props";
 
 export function FeaturedDark({ props }: { props: DealerSectionProps }) {
   return <FeaturedOne heading={props.heading || ""} styles={darkStyles} />;
 }
 ```
 
-**Registration**: Add variant name to `dealers/{dealer}/setup.json`:
+**Register in setup.json:**
 ```json
 {
-  "isShared": true,
   "folderName": "featured",
   "variant": "FeaturedDark",
   "props": { "heading": "Latest Stock" }
 }
 ```
 
-### 2. CSS Module Pattern
+### 2. CSS Modules
 
-Components use **CSS modules** with variant-specific styles:
 ```tsx
-import BaseStyles from "./css/base.module.css";
-import DarkStyles from "./css/dark.module.css";
+import styles from "./css/default.module.css";
 
-// Styles passed as props for swapping
-<CarCardOne car={car} styles={DarkStyles} />
+<CarCardOne car={car} styles={styles} />
+
+// Access: styles.carCard or styles["car-card"]
 ```
 
-Access styles: `styles["car-card__image-wrapper"]` or `styles.carCardImageWrapper`
+### 3. Lazy Loading
 
-### 3. Lazy Loading & Dynamic Imports
+All sections auto-lazy load. Export named functions in `variants/index.tsx` matching your `variant` name in setup.json.
 
-All sections/layouts are lazy loaded:
-```tsx
-const sectionModules = import.meta.glob("../sections/**/variants/index.tsx");
-const Section = React.lazy(async () => {
-  const m = await loader() as Record<string, React.ComponentType<any>>;
-  const Comp = m[variant]; // Named export from variants/index.tsx
-  return { default: Comp };
-});
-```
+## Data & API
 
-**When adding new sections**: Export named functions matching the `variant` field in setup.json.
-
-## Data Flow
-
-### 1. Dealer Context (Global State)
+### Dealer Context
 ```tsx
 const { dealerConfig, dealerAuthToken, dealerData } = useDealerContext();
 ```
+- `dealerConfig` - Static setup.json
+- `dealerAuthToken` - JWT for API (can be null)
+- `dealerData` - Company info, logo, contact, schedules
 
-- **`dealerConfig`**: Static setup.json (pages, navbar/footer variants)
-- **`dealerAuthToken`**: JWT for API calls
-- **`dealerData`**: Dynamic dealer info (company name, logo, contact, schedules)
-
-### 2. API Service Pattern
-```typescript
-// Always use with authToken from context
+### API Calls
+```tsx
 import { fetchApi, postApi } from "@core-dir/services/Api.service";
 
-const data = await fetchApi("/Vehicles/GetCars", dealerAuthToken);
-const result = await postApi("/Appointment/Book", body, dealerAuthToken);
+const data = await fetchApi("/stocks/list", dealerAuthToken);
+const result = await postApi("/appointment", body, dealerAuthToken);
 ```
 
-Base URL from `VITE_API_BASE_URL` env variable.
-
-### 3. Data Processing Helpers
-```typescript
-// Transform raw API data to typed components
+### Data Processing
+```tsx
 import { processCarCardData } from "@core-dir/helpers/CarCardDataProcessor";
 const cars = processCarCardData(rawApiData);
 ```
 
-Located in `src/core/helpers/` - sanitize, format, and type data before rendering.
+## Key Files
 
-## Key Files for Understanding
+- `src/App.tsx` - Router built from dealerConfig.pages
+- `src/core/dealer-provider.tsx` - Fetches dealer data, provides context
+- `src/core/page-renderer.tsx` - Dynamically loads sections
+- `src/core/layout-renderer.tsx` - Loads navbar/footer variants
+- `src/core/ErrorBoundary.tsx` - Global error handler
+- `src/types/dealer-props.ts` - Core TypeScript types
 
-- **`src/App.tsx`**: Router config built from `dealerConfig.pages`
-- **`src/core/page-renderer.tsx`**: Dynamically loads sections per page
-- **`src/core/layout-renderer.tsx`**: Loads navbar/footer variants
-- **`src/core/dealer-provider.tsx`**: Fetches dealer data on mount
-- **`src/types/dealer-props.ts`**: Core types (DealerConfig, DealerSectionProps)
+## Development
 
-## Development Workflow
-
-### Build & Run
+### Commands
 ```bash
-npm install
+npm install      # Install dependencies
 npm run dev      # Dev server (http://localhost:5173)
-npm run build    # TypeScript check + production build
-npm run preview  # Preview production build
+npm run build    # Production build
+npm run preview  # Preview build
 ```
 
-### Environment Setup
-Create `.env`:
-```
+### Environment (.env)
+```env
 VITE_DEALER=motors-hub
 VITE_API_BASE_URL=https://api.motors-hub.co.uk
-VITE_DEALER_TOKEN=<dealer-specific-token>
+VITE_DEALER_TOKEN=your-token
 ```
 
-### Adding a New Dealer
-1. Create `dealers/{dealer-name}/setup.json` (copy existing structure)
-2. Add `dealers/{dealer-name}/style.css` for custom CSS variables
-3. Set `VITE_DEALER={dealer-name}` in `.env`
+### Adding a Dealer
+1. Create `dealers/{dealer}/setup.json`
+2. Create `dealers/{dealer}/style.css`
+3. Add `dealers/{dealer}/images/`
+4. Set `VITE_DEALER={dealer}` in `.env`
 
 ## Common Patterns
 
-### Passing Styles to Components
 ```tsx
-<FilterOne styles={FilterOneVerticalStyles} />
+// Dealer assets
+import logo from "@dealers-dir/images/logo.png";
+import config from "@dealers-dir/setup.json";
+
+// Styles
 <CarCardOne car={car} styles={CarCardStyles} />
-```
 
-### Accessing Dealer-Specific Assets
-```tsx
-import dealerLogo from "@dealers-dir/images/logo.png";
-import dealerConfig from "@dealers-dir/setup.json";
-```
-
-### Type-Safe Section Props
-```tsx
+// Section props (always use DealerSectionProps type)
 import type { DealerSectionProps } from "@types-dir/dealer-props";
 
 export function MySection({ props }: { props: DealerSectionProps }) {
-  const heading = props.heading || "Default Heading";
-  const points = props.points || [];
+  return <div>{props.heading || "Default"}</div>;
 }
 ```
 
-## Deployment
+## Code Conventions
 
-Deployed to Vercel with SPA routing:
-```json
-// vercel.json
-{ "rewrites": [{ "source": "/(.*)", "destination": "/" }] }
-```
-
-## Conventions
-
-- **File naming**: Use kebab-case for folders, PascalCase for React components
+- **Files**: kebab-case folders, PascalCase components
 - **Exports**: Named exports for variants (not default)
-- **Imports**: Always use path aliases, never relative paths across directories
-- **Styling**: CSS modules + Tailwind utility classes (avoid inline styles)
-- **State**: Use React Router's `useOutletContext` for cross-component state (see `AppOutlet.tsx`)
+- **Imports**: Use path aliases (`@core-dir/*`), not relative paths
+- **Styling**: CSS modules + Tailwind (no inline styles)
+- **Types**: Use proper types, avoid `any`
+- **Errors**: Wrap console.error in `if (process.env.NODE_ENV === 'development')`
 
-## Key Dependencies
+## Tech Stack
 
-- **React Router 7**: Client-side routing with data passing
-- **Framer Motion**: Animation library (see `@components-dir/framer-motion`)
-- **Swiper**: Carousels/sliders (see `@components-dir/swiper`)
-- **Sonner**: Toast notifications
-- **Lucide React**: Icon library
-- **Tailwind CSS 4**: Utility-first styling with `@tailwindcss/vite`
+- React 19 + TypeScript
+- Vite 7 (build tool)
+- Tailwind CSS 4
+- React Router 7
+- Framer Motion (animations)
+- Swiper (carousels)
+- Sonner (toasts)
+- Lucide React (icons)
 
 ## Troubleshooting
 
-- **"Section not found"**: Check `folderName` and `variant` in setup.json match folder/export names
-- **Path alias errors**: Run `npm run build` to verify TypeScript + Vite resolve aliases
-- **Missing dealer data**: Verify `VITE_DEALER_TOKEN` is valid and API is accessible
-- **Style not applying**: Ensure CSS module imported and passed as `styles` prop
+| Issue | Solution |
+|-------|----------|
+| Section not found | Check `folderName` and `variant` match in setup.json |
+| Path alias error | Run `npm run build` to verify |
+| Missing dealer data | Check `VITE_DEALER_TOKEN` is valid |
+| Styles not applying | Ensure CSS module passed as `styles` prop |
+| TypeScript errors | Run `npm run build` to see all errors |

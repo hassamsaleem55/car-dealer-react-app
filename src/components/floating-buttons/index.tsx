@@ -54,6 +54,8 @@ export function WhatsAppChatButton() {
     ""
   )}?text=${encodedMessage}`;
 
+  if (!phoneNumber) return null;
+
   return (
     <div className="whatsapp-chat-btn-container">
       <a
@@ -61,15 +63,17 @@ export function WhatsAppChatButton() {
         target="_blank"
         rel="noopener noreferrer"
         className="whatsapp-chat-btn"
-        aria-label="Chat on WhatsApp"
+        aria-label="Chat with us on WhatsApp"
+        title="Chat on WhatsApp"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          // viewBox="0 0 32 32"
           width="24"
           height="24"
           color="#ffffff"
           fill="none"
+          aria-hidden="true"
+          focusable="false"
         >
           <path
             d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.3789 2.27907 14.6926 2.78382 15.8877C3.06278 16.5481 3.20226 16.8784 3.21953 17.128C3.2368 17.3776 3.16334 17.6521 3.01642 18.2012L2 22L5.79877 20.9836C6.34788 20.8367 6.62244 20.7632 6.87202 20.7805C7.12161 20.7977 7.45185 20.9372 8.11235 21.2162C9.30745 21.7209 10.6211 22 12 22Z"

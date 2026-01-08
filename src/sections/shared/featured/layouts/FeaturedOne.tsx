@@ -16,6 +16,8 @@ export default function FeaturedOne({ heading }: { heading: string }) {
   const [carData, setCarData] = useState<Array<any>>([]);
   const queryString = "SortBy=DateAdded&PageSize=10";
   useEffect(() => {
+    if (!dealerAuthToken) return;
+    
     const fetchData = async () => {
       try {
         setLoading(true);
@@ -26,13 +28,15 @@ export default function FeaturedOne({ heading }: { heading: string }) {
         const processedData = await processCarCardData(response.stockList);
         setCarData(processedData);
       } catch (error) {
-        console.error("Error fetching stock featured list:", error);
+        if (process.env.NODE_ENV === 'development') {
+          console.error("Error fetching stock featured list:", error);
+        }
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, []);
+  }, [dealerAuthToken]);
   return (
     <SectionLayoutOne
       headingText={heading}

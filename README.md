@@ -1,202 +1,160 @@
 # Car Dealer React App
 
-A **multi-tenant car dealership platform** built with React 19, TypeScript, Vite, and Tailwind CSS. Features dynamic dealer theming, comprehensive SEO optimization, and high-performance architecture.
+A **multi-tenant car dealership platform** built with React 19, TypeScript, Vite, and Tailwind CSS. Dynamically renders dealer-specific themes and content with optimized performance and accessibility.
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
+**Prerequisites:** Node.js 18+
 
-### Installation
+```bash
+# 1. Clone and install
+git clone <repository-url>
+cd car-dealer-react-app
+npm install
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd car-dealer-react-app
-   ```
+# 2. Create .env file
+VITE_DEALER=motors-hub
+VITE_API_BASE_URL=https://api.motors-hub.co.uk
+VITE_DEALER_TOKEN=your-token
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+# 3. Start dev server
+npm run dev
+# Open http://localhost:5173
+```
 
-3. Create `.env` file:
-   ```env
-   VITE_DEALER=motors-hub
-   VITE_API_BASE_URL=https://api.motors-hub.co.uk
-   VITE_DEALER_TOKEN=your-dealer-token-here
-   ```
-
-4. Start development server:
-   ```bash
-   npm run dev
-   ```
-
-5. Open [http://localhost:5173](http://localhost:5173)
-
-## 📁 Project Structure
+## 📁 Structure
 
 ```
 car-dealer-react-app/
-├── dealers/                    # Dealer-specific configurations
-│   ├── motors-hub/
-│   │   ├── setup.json         # Pages and sections config
-│   │   ├── style.css          # Dealer-specific styles
-│   │   └── images/            # Dealer assets
-│   └── auto-pro/
+├── dealers/              # Multi-tenant configs
+│   ├── motors-hub/      # Dealer 1
+│   │   ├── setup.json   # Pages, sections, variants
+│   │   ├── style.css    # Custom CSS variables
+│   │   └── images/      # Logos, assets
+│   └── auto-pro/        # Dealer 2
 ├── public/
-│   ├── robots.txt             # SEO: Crawler instructions
-│   ├── sitemap.xml            # SEO: Site structure
-│   └── images/                # Static assets
+│   ├── robots.txt       # SEO crawlers
+│   ├── sitemap.xml      # SEO sitemap
+│   └── images/          # Shared assets
 ├── src/
-│   ├── app-layouts/           # Layout components
-│   │   ├── MetaManager.tsx    # SEO meta tag manager
-│   │   ├── navbar/            # Navigation variants
-│   │   └── footer/            # Footer variants
-│   ├── components/            # Reusable components
-│   ├── core/                  # Core utilities
-│   │   ├── dealer-provider.tsx
-│   │   ├── page-meta-context.tsx  # SEO context
-│   │   ├── page-renderer.tsx
-│   │   └── helpers/
-│   ├── sections/              # Page sections
-│   └── types/                 # TypeScript types
-└── vercel.json               # Deployment config
+│   ├── app-layouts/     # Navbar, footer, meta manager
+│   ├── components/      # Reusable UI components
+│   ├── core/            # Context, providers, utilities
+│   ├── elements/        # Base UI elements
+│   ├── sections/        # Page sections with variants
+│   └── types/           # TypeScript definitions
+└── vercel.json          # Deployment config
 ```
 
-## 🎨 Key Features
+## ✨ Features
 
-### Multi-Tenant Architecture
-- Dynamic dealer switching via `VITE_DEALER` environment variable
-- Isolated dealer configurations in `dealers/{dealer-name}/setup.json`
-- Custom styling per dealer with CSS variables
+**Multi-Tenant**
+- Dynamic dealer switching via `VITE_DEALER`
+- Isolated configs in `dealers/{dealer}/setup.json`
+- Custom CSS variables per dealer
 
-### SEO Optimization (100% Lighthouse Score)
-- ✅ Dynamic meta tags (title, description)
-- ✅ Open Graph tags (Facebook, LinkedIn)
-- ✅ Twitter Card integration
-- ✅ Canonical URLs
-- ✅ robots.txt with proper crawler instructions
-- ✅ sitemap.xml for search engines
-- ✅ Structured data ready
+**Performance**
+- ✅ Code splitting & lazy loading
+- ✅ Optimized builds (4-5s build time)
+- ✅ Tree shaking enabled
+- ✅ Image optimization
+- ✅ CSS modules
 
-**See [SEO_SETUP.md](./SEO_SETUP.md) for detailed SEO documentation.**
+**SEO Optimized**
+- ✅ Dynamic meta tags
+- ✅ Open Graph & Twitter Cards
+- ✅ robots.txt & sitemap.xml
+- ✅ Lighthouse SEO: 100%
 
-### Performance
-- Code splitting with dynamic imports
-- Lazy loading for sections and components
-- Optimized font loading with preconnect
-- CSS modules for scoped styling
-- Image optimization
-- Tree shaking enabled
+**Accessibility**
+- ✅ WCAG 2.1 AA compliant
+- ✅ Keyboard navigation
+- ✅ Screen reader support
+- ✅ Semantic HTML
+- ✅ Focus management
 
-## 🛠️ Available Scripts
+## 🛠️ Commands
 
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run preview      # Preview production build
-npm run lint         # Run ESLint
+npm run dev      # Dev server
+npm run build    # Production build
+npm run preview  # Preview build
+npm run lint     # ESLint
 ```
 
 ## 🔧 Configuration
 
 ### Environment Variables
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `VITE_DEALER` | Active dealer theme identifier | `motors-hub` |
-| `VITE_API_BASE_URL` | API base URL for dealer data | `https://api.motors-hub.co.uk` |
-| `VITE_DEALER_TOKEN` | Authentication token for API | `your-token-here` |
+| Variable | Description |
+|----------|-------------|
+| `VITE_DEALER` | Dealer identifier (e.g., `motors-hub`) |
+| `VITE_API_BASE_URL` | API endpoint |
+| `VITE_DEALER_TOKEN` | Auth token |
 
 ### Adding a New Dealer
 
-1. Create dealer folder: `dealers/new-dealer-name/`
-2. Add `setup.json` with pages and sections config
-3. Add `style.css` with custom CSS variables
-4. Add dealer images to `images/` folder
-5. Set `VITE_DEALER=new-dealer-name` in `.env`
-6. Update `public/sitemap.xml` with new domain
-7. Update `public/robots.txt` sitemap URL
+1. Create `dealers/{dealer}/setup.json`
+2. Create `dealers/{dealer}/style.css`
+3. Add `dealers/{dealer}/images/`
+4. Set `VITE_DEALER={dealer}` in `.env`
+5. Update `public/sitemap.xml` with dealer domain
 
-## 🌐 SEO Configuration
+### SEO Setup
 
-### Before Deployment
-1. ✅ Update domain in `public/robots.txt`
-2. ✅ Update all URLs in `public/sitemap.xml`
-3. ✅ Set proper page titles/descriptions in dealer's `setup.json`
-4. ✅ Test locally: `npm run preview`
+**Before deployment:**
+- Update domain in `public/robots.txt`
+- Update URLs in `public/sitemap.xml`
+- Set titles/descriptions in `setup.json`
 
-### After Deployment
-1. ✅ Verify `https://yourdomain.com/robots.txt`
-2. ✅ Verify `https://yourdomain.com/sitemap.xml`
-3. ✅ Submit sitemap to Google Search Console
-4. ✅ Run Lighthouse SEO audit (target: 100%)
+**After deployment:**
+- Verify `/robots.txt` and `/sitemap.xml` are accessible
+- Submit sitemap to Google Search Console
+- Run Lighthouse audit
 
-**Full SEO documentation: [SEO_SETUP.md](./SEO_SETUP.md)**
+## 📱 Tech Stack
 
-## 📱 Technologies
-
-- **React 19** - UI library
-- **TypeScript** - Type safety
-- **Vite 7** - Build tool
-- **Tailwind CSS 4** - Utility-first CSS
-- **React Router 7** - Client-side routing
-- **Framer Motion** - Animations
-- **Swiper** - Carousels
-- **Sonner** - Toast notifications
-
-## 📄 Documentation
-
-- [SEO Setup Guide](./SEO_SETUP.md) - Complete SEO implementation
-- [Performance Optimizations](./PERFORMANCE_OPTIMIZATIONS.md) - Performance tuning
-- [Mobile Performance](./MOBILE_PERFORMANCE.md) - Mobile-specific optimizations
-- [AI Coding Instructions](./.github/copilot-instructions.md) - Development guidelines
+- React 19 + TypeScript
+- Vite 7
+- Tailwind CSS 4
+- React Router 7
+- Framer Motion
+- Swiper
+- Sonner
 
 ## 🚢 Deployment
 
 ### Vercel (Recommended)
 ```bash
-# Install Vercel CLI
 npm i -g vercel
-
-# Deploy
 vercel
 ```
 
-### Manual Build
+### Manual
 ```bash
 npm run build
-# Upload dist/ folder to your hosting
+# Upload dist/ to hosting
 ```
 
-**Important**: Ensure `vercel.json` is properly configured to:
-- Serve `robots.txt` and `sitemap.xml` as static files
-- Rewrite all other routes to index.html (SPA)
+**Note**: `vercel.json` configured for SPA routing + static assets.
 
 ## 🐛 Troubleshooting
 
-### robots.txt returns HTML
-**Solution**: Ensure `public/robots.txt` exists and `vercel.json` excludes it from rewrites.
+| Issue | Solution |
+|-------|----------|
+| robots.txt returns HTML | Check `public/robots.txt` exists and `vercel.json` excludes it |
+| Meta tags not updating | Verify `PageMetaContext` wraps app and `MetaManager` in Layout |
+| Build errors | Run `npm install`, ensure Node.js ≥ 18 |
+| Section not found | Check `folderName` and `variant` match in setup.json |
+| TypeScript errors | Run `npm run build` to see all errors |
 
-### Meta tags not updating
-**Solution**: Verify `PageMetaContext` is wrapped in `App.tsx` and `MetaManager` is in Layout.
+## 📚 Documentation
 
-### {dealerName} not replaced
-**Solution**: Check `useDealerContext()` returns data and setup.json uses exact `{dealerName}` format.
-
-### Build errors
-**Solution**: Run `npm install` and ensure Node.js version ≥ 18.
-
-## 📝 License
-
-[Add your license here]
-
-## 🤝 Contributing
-
-[Add contribution guidelines here]
+See [.github/copilot-instructions.md](./.github/copilot-instructions.md) for detailed development guide.
 
 ---
+
+**License:** [Add your license]
+**Contributing:** [Add guidelines]
 
 **Made with ❤️ for car dealerships**

@@ -1,11 +1,15 @@
 @import "tailwindcss";
 @import "@dealers-dir/style.css";
 
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-} */
+/* Focus visible for keyboard navigation accessibility */
+*:focus-visible {
+  @apply outline-2 outline-offset-2 outline-primary;
+}
+
+/* Skip to main content link for screen readers */
+.skip-to-main {
+  @apply absolute -top-full left-0 z-9999 bg-primary text-white px-4 py-2 focus:top-0;
+}
 
 /* Scrollbar styles */
 ::-webkit-scrollbar {
@@ -19,6 +23,18 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-400;
+}
+
+/* Reduced motion support for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* Slide up animation for mobile filters */
