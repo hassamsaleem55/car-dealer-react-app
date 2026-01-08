@@ -74,7 +74,7 @@ export default function ModalWithSteps({
         </div>
 
         {/* Body - Scrollable content area */}
-        <div className="flex-1">
+        <div className="flex-1 overflow-y-auto">
           {steps[stepIndex]?.content}
         </div>
 
