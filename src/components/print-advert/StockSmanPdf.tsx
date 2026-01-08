@@ -127,7 +127,7 @@ const StockSmanPdf = forwardRef<HTMLDivElement, Props>(
       }
     >
       {/* Premium Header */}
-      <PdfHeader data={data} />
+      <PdfHeader companyInfo={data.companyInfo} variant="full" />
 
       {/* Main Content - Refined Two Column Layout */}
       <div className="mt-2 sm:mt-3.5 grid grid-cols-1 md:grid-cols-12 gap-2 sm:gap-4">

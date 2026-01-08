@@ -213,12 +213,57 @@ export default function PrintAdvertModal({
                   -webkit-print-color-adjust: exact !important;
                   print-color-adjust: exact !important;
                   color-adjust: exact !important;
+                  -moz-print-color-adjust: exact !important;
+                }
+                
+                /* Force background colors and images to print */
+                div, section, header, footer {
+                  -webkit-print-color-adjust: exact !important;
+                  print-color-adjust: exact !important;
+                  color-adjust: exact !important;
                 }
               </style>
             </head>
             <body>
               ${printContent}
               <script>
+                // Wait for all images and resources to load
+                function waitForResources() {
+                  return new Promise((resolve) => {
+                    const images = document.querySelectorAll('img');
+                    let loadedCount = 0;
+                    const totalImages = images.length;
+                    
+                    if (totalImages === 0) {
+                      resolve();
+                      return;
+                    }
+                    
+                    const checkComplete = () => {
+                      loadedCount++;
+                      if (loadedCount === totalImages) {
+                        // Extra delay to ensure CSS is fully applied
+                        setTimeout(resolve, 300);
+                      }
+                    };
+                    
+                    images.forEach((img) => {
+                      if (img.complete) {
+                        checkComplete();
+                      } else {
+                        img.onload = checkComplete;
+                        img.onerror = checkComplete;
+                      }
+                    });
+                  });
+                }
+                
+                // Wait for everything to be ready before printing
+                window.onload = async function() {
+                  await waitForResources();
+                  window.print();
+                };
+                
                 window.onafterprint = function() {
                   window.close();
                 };
@@ -227,12 +272,6 @@ export default function PrintAdvertModal({
           </html>
         `);
         printWindow.document.close();
-
-        // Wait for styles and images to load
-        setTimeout(() => {
-          printWindow.focus();
-          printWindow.print();
-        }, 1500);
       }
     }
   };

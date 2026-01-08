@@ -1,7 +1,7 @@
 import React from "react";
 import type { StockSmanDto } from "./StockSmanPdf";
-import QRCode from "react-qr-code";
 import PdfImages from "./PdfImages";
+import PdfHeader from "./PdfHeader";
 
 // Utility function for grouping features by category
 const groupBy = <T, K extends keyof any>(
@@ -130,8 +130,6 @@ export const StockSmanPdfMinified = React.forwardRef<
   const formatMileage = (miles: number) =>
     new Intl.NumberFormat("en-GB").format(miles);
 
-  const stockDetailsUrl = `${companyInfo?.url}/stock/${stockId}` || "";
-
   const formattedFeatures =
     features.map((f: any) => ({
       name: f.name,
@@ -155,58 +153,7 @@ export const StockSmanPdfMinified = React.forwardRef<
     >
       <div className="space-y-2 sm:space-y-3">
         {/* Header Section */}
-        <header className="bg-linear-to-r from-primary to-primary/60 text-white shadow-lg rounded-lg overflow-hidden">
-          <div className="flex items-center justify-between gap-3 sm:gap-4 p-2 sm:p-3">
-            <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
-              {companyInfo?.logoUrl && (
-                <div className="bg-white/95 backdrop-blur-sm p-1.5 sm:p-2 rounded-lg shadow-md shrink-0">
-                  <img
-                    src={companyInfo.logoUrl}
-                    className="h-8 sm:h-10 w-auto object-contain"
-                    alt="Company Logo"
-                  />
-                </div>
-              )}
-              <div className="space-y-0.5 sm:space-y-1 flex-1 min-w-0">
-                <h1 className="font-bold text-sm sm:text-base tracking-tight text-white">
-                  {companyInfo?.companyName || ""}
-                </h1>
-                <div className="flex flex-wrap gap-x-3 sm:gap-x-4 text-white/95 text-[9px] sm:text-[10px]">
-                  {companyInfo?.contactInfo?.phoneNumber && (
-                    <span className="flex items-center gap-1.5">
-                      <span className="text-white/70">📞</span>
-                      <span className="font-medium">
-                        {companyInfo.contactInfo.phoneNumber}
-                      </span>
-                    </span>
-                  )}
-                  {companyInfo?.url && (
-                    <span className="flex items-center gap-1.5 truncate">
-                      <span className="text-white/70">🌐</span>
-                      <span className="font-medium truncate">
-                        {companyInfo.url}
-                      </span>
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-            {stockDetailsUrl && (
-              <div className="bg-white p-1.5 sm:p-2 rounded-lg shadow-md shrink-0">
-                <QRCode
-                  value={stockDetailsUrl}
-                  size={40}
-                  className="sm:hidden"
-                />
-                <QRCode
-                  value={stockDetailsUrl}
-                  size={50}
-                  className="hidden sm:block"
-                />
-              </div>
-            )}
-          </div>
-        </header>
+        <PdfHeader companyInfo={companyInfo} variant="minimal" />
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-2 sm:gap-4">
