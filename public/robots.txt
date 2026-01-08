@@ -1,0 +1,8 @@
+# robots.txt for Car Dealer Platform
+User-agent: *
+Allow: /
+Disallow: /Payment/
+
+# Sitemap location
+Sitemap: https://www.yourdomain.com/sitemap.xml
+
