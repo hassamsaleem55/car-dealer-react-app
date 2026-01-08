@@ -224,13 +224,13 @@ export const StockSmanPdfMinified = React.forwardRef<
                     {data.make} {data.model}{" "}
                     {vehicle?.trim && `• ${vehicle.trim}`}
                   </h2>
-                  <p className="text-[9px] sm:text-[10px] md:text-[11px] text-white/90 uppercase tracking-wide">
+                  <p className="font-semibold text-[9px] sm:text-[10px] md:text-[11px] text-white/90 uppercase tracking-wide">
                     {year && year}
                     {vehicle?.derivative && ` • ${vehicle.derivative}`}
                   </p>
                 </div>
                 <div className="flex items-baseline justify-between sm:justify-end gap-2">
-                  <p className="text-[8px] sm:text-[9px] text-white/60 uppercase tracking-wide">
+                  <p className="text-[8px] sm:text-[9px] text-white uppercase tracking-wide">
                     Price:
                   </p>
                   <p className="text-lg sm:text-xl md:text-2xl font-black">
