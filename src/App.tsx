@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { DealerProvider, useDealerContext } from "@core-dir/dealer-provider";
+import { PageMetaProvider } from "@core-dir/page-meta-context";
 import PageRenderer from "@core-dir/page-renderer";
 import Layout from "./Layout";
 import { type BaseDealerPage } from "@types-dir/dealer-props";
@@ -54,7 +55,9 @@ function AppRouter() {
 export default function App() {
   return (
     <DealerProvider>
-      <AppRouter />
+      <PageMetaProvider>
+        <AppRouter />
+      </PageMetaProvider>
     </DealerProvider>
   );
 }

@@ -4,6 +4,7 @@ import type {
   DealerSectionKeys,
 } from "@types-dir/dealer-props";
 import { useDealerContext } from "@core-dir/dealer-provider";
+import { usePageMeta } from "@core-dir/page-meta-context";
 // import {
 //   HomeSkeleton,
 //   StockSkeleton,
@@ -17,75 +18,15 @@ const sectionModules = import.meta.glob("../sections/**/variants/index.tsx");
 
 export default function PageRenderer({ page }: { page: BaseDealerPage }) {
   const { dealerData } = useDealerContext();
+  const { setPageMeta } = usePageMeta();
 
-  // useEffect(() => {
-  //   document.title = page.title || "Dealers Hub";
-
-  //   const updateMeta = (
-  //     nameOrProperty: string,
-  //     content: string,
-  //     isProperty = false
-  //   ) => {
-  //     let metaTag: HTMLMetaElement | null;
-  //     if (isProperty) {
-  //       metaTag = document.querySelector(`meta[property='${nameOrProperty}']`);
-  //     } else {
-  //       metaTag = document.querySelector(`meta[name='${nameOrProperty}']`);
-  //     }
-
-  //     if (metaTag) {
-  //       metaTag.setAttribute("content", content);
-  //     } else {
-  //       const meta = document.createElement("meta");
-  //       if (isProperty) meta.setAttribute("property", nameOrProperty);
-  //       else meta.name = nameOrProperty;
-  //       meta.content = content;
-  //       document.head.appendChild(meta);
-  //     }
-  //   };
-
-  //   updateMeta("description", page.description || "");
-  //   updateMeta("og:title", page.title || "", true);
-  //   updateMeta("og:description", page.description || "", true);
-  // }, [page.title, page.description]);
-
+  // Update page meta context for MetaManager to consume
   useEffect(() => {
-    // Replace {dealerName} placeholders in title and description
-    const dealerName = dealerData.CompanyName || "Dealers Hub";
-    const pageTitle =
-      page.title?.replace("{dealerName}", dealerName) || dealerName;
-    const pageDescription =
-      page.description?.replace("{dealerName}", dealerName) || "";
-
-    document.title = pageTitle.toUpperCase();
-
-    const updateMeta = (
-      nameOrProperty: string,
-      content: string,
-      isProperty = false
-    ) => {
-      let metaTag: HTMLMetaElement | null;
-      if (isProperty) {
-        metaTag = document.querySelector(`meta[property='${nameOrProperty}']`);
-      } else {
-        metaTag = document.querySelector(`meta[name='${nameOrProperty}']`);
-      }
-
-      if (metaTag) {
-        metaTag.setAttribute("content", content);
-      } else {
-        const meta = document.createElement("meta");
-        if (isProperty) meta.setAttribute("property", nameOrProperty);
-        else meta.name = nameOrProperty;
-        meta.content = content;
-        document.head.appendChild(meta);
-      }
-    };
-
-    updateMeta("description", pageDescription);
-    updateMeta("og:title", pageTitle, true);
-    updateMeta("og:description", pageDescription, true);
-  }, [page.title, page.description, dealerData.CompanyName]);
+    setPageMeta({
+      title: page.title,
+      description: page.description,
+    });
+  }, [page.title, page.description, setPageMeta]);
 
   const filteredSections = useMemo(
     () =>

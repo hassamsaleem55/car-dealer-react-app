@@ -5,13 +5,10 @@ import type { Swiper as SwiperType } from "swiper";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 import MotionReveal from "@components-dir/framer-motion/motion-reveal";
 import "./car-slider.css";
-// import "swiper/css";
-// import "swiper/css/effect-fade";
 
 export default function CarSlider({ isReserved, images }: any) {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperType | null>(null);
   
-  // Initialize with correct values based on viewport width
   const getInitialConfig = () => {
     const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : 1024;
     const isMobileView = viewportWidth < 768;
