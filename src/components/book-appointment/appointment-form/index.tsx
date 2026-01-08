@@ -24,12 +24,13 @@ export default function AppointmentForm({
   const inputFieldsClasses =
     "border border-gray-300 p-2 text-sm rounded placeholder-gray-500 focus:outline-none focus:bg-white focus:ring-1 focus:ring-primary/70";
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 rounded-xl p-4 md:rounded-none md:p-0 shadow-2xl md:shadow-none">
       {requestType !== "vehicledetails" && (
         <div className="font-medium">
           <h2 className="text-xl">Ready to See This Vehicle in Person?</h2>
           <p className="text-sm text-basicFont">
-            Fill out the form below to schedule your {requestType === "testdrive" ? "test drive" : "appointment"}.
+            Fill out the form below to schedule your{" "}
+            {requestType === "testdrive" ? "test drive" : "appointment"}.
           </p>
         </div>
       )}

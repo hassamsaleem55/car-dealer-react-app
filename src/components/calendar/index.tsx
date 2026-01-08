@@ -164,10 +164,7 @@ export default function CalendarOne({
   useEffect(() => {
     const fetchData = async () => {
       setLoadingSlots(true);
-      const response = await fetchApi(
-        "/companies/schedule",
-        dealerAuthToken
-      );
+      const response = await fetchApi("/companies/schedule", dealerAuthToken);
 
       // Filter slots based on UK current time
       const filteredTimeSlots = response.schedule
@@ -201,7 +198,7 @@ export default function CalendarOne({
   return (
     <div className="flex flex-col lg:flex-row gap-4">
       {/* Calendar Section */}
-      <div className="flex-1">
+      <div className="flex-1 rounded-2xl md:rounded-none shadow-lg md:shadow-none p-4 md:p-0">
         <div className="flex mb-6 justify-between items-center">
           <div className="flex justify-between items-center w-full max-w-xs space-x-2">
             <button
@@ -286,11 +283,11 @@ export default function CalendarOne({
       </div>
 
       {/* Time Slots Section */}
-      <div className="w-full lg:w-56 rounded-t-xl border border-b-0 border-gray-200">
-        <div className="p-3">
+      <div className="w-full lg:w-56 rounded-xl md:rounded-t-xl border border-b-0 border-gray-200 shadow-lg md:shadow-none shrink-0">
+        <div className="p-3 text-center md:text-start border-b border-gray-200 md:border-0">
           <h4 className="text-lg font-medium">Time Slots For</h4>
           {selectedDate ? (
-            <p className="text-primary font-medium">
+            <p className="text-primary text-sm md:font-medium">
               {selectedDate.toDateString()}
             </p>
           ) : (
@@ -316,7 +313,7 @@ export default function CalendarOne({
             }
 
             return (
-              <div className="grid grid-cols-1 gap-2 max-h-80 px-2 overflow-y-auto">
+              <div className="grid grid-cols-2 md:grid-cols-1 gap-2 max-h-80 p-4 md:px-2 md:p-0 md:pb-4 overflow-y-auto">
                 {scheduleForDay.slots.map((slot: any) => {
                   const formatted = `${formatTo12Hour(
                     slot.startTime.substring(0, 5)
@@ -330,7 +327,7 @@ export default function CalendarOne({
                         setSelectedTime(formatted);
                         setScheduleDayId?.(slot.scheduleDayId);
                       }}
-                      className={`group flex items-center justify-center rounded-lg px-3 py-2 cursor-pointer ${
+                      className={`group flex items-center justify-center rounded-lg py-1.5 md:px-3 md:py-2 cursor-pointer ${
                         isSelected
                           ? "bg-primary/50"
                           : "border border-gray-200 hover:border-primary/80"

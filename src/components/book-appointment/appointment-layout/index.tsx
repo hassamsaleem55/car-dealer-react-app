@@ -13,7 +13,7 @@ export default function AppointmentLayout({
   return (
     <div className="flex flex-col md:flex-row justify-center p-4 gap-4">
       {/* LEFT COLUMN */}
-      <aside className="w-full md:w-1/3 rounded-xl">
+      <aside className="w-full md:w-1/3 rounded-xl shadow-lg md:shadow-none">
         {/* Car Image + Title */}
         <div className="rounded-xl overflow-hidden">
           <div className="h-48 w-full">

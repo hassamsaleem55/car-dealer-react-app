@@ -173,7 +173,7 @@ export function StockListingOne() {
       </nav>
 
       {/* === Mobile Filter Toggle Button === */}
-      <div className="lg:hidden sticky top-16 z-30 bg-transparent backdrop-blur-xs py-2 -mx-4 mt-3 px-4">
+      <div className="lg:hidden sticky top-12.5 z-30 bg-transparent backdrop-blur-xs py-2 -mx-4 mt-3 px-4">
         <button
           onClick={() => setShowFilters(!showFilters)}
           className="btn btn-primary-no-hover w-full px-4 py-2 rounded-sm transition-transform duration-200 active:scale-95"
