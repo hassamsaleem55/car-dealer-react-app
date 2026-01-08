@@ -39,7 +39,7 @@
 
 /* --- SECONDARY (Top → Bottom Shutter) --- */
 .btn-secondary {
-  @apply bg-transparent text-primary border border-primary;
+  @apply bg-white text-primary border-2 border-primary;
 }
 .btn-secondary::before {
   @apply bg-primary top-0;
