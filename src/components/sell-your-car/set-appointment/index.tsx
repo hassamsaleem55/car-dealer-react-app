@@ -70,9 +70,9 @@ export default function SetAppointment({
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 sm:gap-6">
       <Breadcrumb pageName="Set Appointment" />
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Left: Vehicle Summary */}
         <div className="lg:col-span-1">
           {/* <div className="rounded-2xl bg-linear-to-br from-white via-gray-50/50 to-white shadow-2xl border border-gray-200/60 overflow-hidden h-full">
@@ -162,8 +162,8 @@ export default function SetAppointment({
         </div>
 
         {/* Right: Calendar */}
-        <div className="lg:col-span-2 flex flex-col gap-4">
-          <div className="bg-linear-to-br from-white via-blue-50/20 to-white rounded-2xl shadow-2xl border border-blue-200/60 p-6 md:p-8 flex-1">
+        <div className="lg:col-span-2 flex flex-col gap-3 sm:gap-4">
+          <div className="bg-linear-to-br from-white via-blue-50/20 to-white rounded-xl md:rounded-2xl shadow-xl md:shadow-2xl border border-blue-200/60 p-4 sm:p-6 md:p-8 flex-1">
             <CalendarOne
               TODAY={TODAY}
               setScheduleDayId={(dayId: number | null) =>
@@ -179,7 +179,7 @@ export default function SetAppointment({
               }
             />
           </div>
-          <div className="flex gap-3 justify-end">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-end">
             <Button
               variant={loading ? "disabled" : "secondary"}
               btnText="Back"

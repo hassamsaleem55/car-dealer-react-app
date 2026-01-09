@@ -26,13 +26,13 @@ const Input = ({
   <div className="w-full">
     <label
       htmlFor={id}
-      className="block mb-2 text-sm font-medium text-gray-700"
+      className="block mb-1.5 sm:mb-2 text-xs sm:text-sm font-medium text-gray-700"
     >
       {label} {required && <span className="text-red-600">*</span>}
     </label>
     <input
       id={id}
-      className={`bg-gray-50 border text-gray-900 text-sm rounded-xl block w-full p-3 transition-all outline-none ${
+      className={`bg-gray-50 border text-gray-900 text-sm rounded-lg sm:rounded-xl block w-full p-2.5 sm:p-3 transition-all outline-none touch-manipulation ${
         error ? "border-red-500" : "focus:border-gray-400 border-gray-200"
       } ${className}`}
       {...props}
@@ -158,9 +158,9 @@ export default function PersonalDetailsForm({
   }, [formData.images]);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 sm:gap-6">
       <Breadcrumb pageName="Your Personal Details" />
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Left: Vehicle Summary */}
         <div className="lg:col-span-1">
           <VehicleDetailsPanel
@@ -172,12 +172,12 @@ export default function PersonalDetailsForm({
 
         {/* Right: Form */}
         <div className="lg:col-span-2">
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-linear-to-br from-white via-blue-50/20 to-white p-6 rounded-2xl shadow-xl border border-blue-200/60">
-              <h3 className="text-xl font-bold mb-5 text-gray-900">
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <div className="bg-linear-to-br from-white via-blue-50/20 to-white p-4 sm:p-6 rounded-xl md:rounded-2xl shadow-xl border border-blue-200/60">
+              <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-5 text-gray-900">
                 Contact Details
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 <Input
                   label="Full Name"
                   id="name"
@@ -219,11 +219,11 @@ export default function PersonalDetailsForm({
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block mb-2 text-sm font-medium text-gray-700">
+                  <label className="block mb-1.5 sm:mb-2 text-xs sm:text-sm font-medium text-gray-700">
                     Message (Optional)
                   </label>
                   <textarea
-                    className="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 block w-full p-3 outline-none transition-all"
+                    className="bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-lg sm:rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 block w-full p-2.5 sm:p-3 outline-none transition-all touch-manipulation"
                     rows={3}
                     value={formData.message}
                     onChange={(e) =>
@@ -234,20 +234,20 @@ export default function PersonalDetailsForm({
               </div>
             </div>
 
-            <div className="bg-linear-to-br from-white via-purple-50/20 to-white p-6 rounded-2xl shadow-xl border border-purple-200/60">
-              <h3 className="text-xl font-bold mb-5 text-gray-900">
+            <div className="bg-linear-to-br from-white via-purple-50/20 to-white p-4 sm:p-6 rounded-xl md:rounded-2xl shadow-xl border border-purple-200/60">
+              <h3 className="text-lg sm:text-xl font-bold mb-4 sm:mb-5 text-gray-900">
                 Upload Photos
               </h3>
 
-              <label className="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:bg-gray-50 hover:border-primary/50 transition-all cursor-pointer group block">
-                <div className="w-14 h-14 bg-linear-to-br from-primary/20 to-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform shadow-sm">
-                  <Upload size={24} strokeWidth={2.5} />
+              <label className="border-2 border-dashed border-gray-300 rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-8 text-center hover:bg-gray-50 hover:border-primary/50 active:bg-gray-100 transition-all cursor-pointer group block touch-manipulation">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-linear-to-br from-primary/20 to-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-2 sm:mb-3 group-hover:scale-110 transition-transform shadow-sm">
+                  <Upload size={20} strokeWidth={2.5} className="sm:w-6 sm:h-6" />
                 </div>
 
-                <p className="text-sm font-semibold text-gray-900">
+                <p className="text-xs sm:text-sm font-semibold text-gray-900">
                   Click or drag photos here
                 </p>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-[10px] sm:text-xs text-gray-500 mt-1">
                   JPG, PNG up to 10MB each
                 </p>
                 <input
@@ -265,36 +265,36 @@ export default function PersonalDetailsForm({
               {/* Image Preview Grid */}
               {formData.images.length ? (
                 <>
-                  <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-200">
-                    <p className="text-xs text-gray-600 font-medium">
+                  <div className="flex items-center justify-between mt-3 sm:mt-4 md:mt-5 pt-3 sm:pt-4 border-t border-gray-200">
+                    <p className="text-[10px] sm:text-xs text-gray-600 font-medium">
                       {formData.images.length} image(s) selected
                     </p>
 
                     <button
                       type="button"
                       onClick={removeAllImages}
-                      className="text-xs font-semibold text-red-600 hover:text-red-700 hover:underline transition-colors"
+                      className="text-[10px] sm:text-xs font-semibold text-red-600 hover:text-red-700 hover:underline active:text-red-800 transition-colors touch-manipulation"
                     >
                       Remove all
                     </button>
                   </div>
-                  <div className="grid grid-cols-2 gap-3 mt-3">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3 mt-2 sm:mt-3">
                     {formData.images.map((file, index) => (
                       <div
                         key={index}
-                        className="relative group rounded-xl overflow-hidden border-2 border-gray-200 shadow-sm hover:shadow-md hover:border-primary/40 transition-all"
+                        className="relative group rounded-lg sm:rounded-xl overflow-hidden border-2 border-gray-200 shadow-sm hover:shadow-md hover:border-primary/40 transition-all"
                       >
                         <img
                           src={URL.createObjectURL(file)}
                           alt={`upload-${index}`}
-                          className="h-32 w-full object-cover"
+                          className="h-24 sm:h-28 md:h-32 w-full object-cover"
                         />
 
                         {/* Remove Button */}
                         <button
                           type="button"
                           onClick={() => removeImage(index)}
-                          className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white text-xs px-3 py-1.5 rounded-lg font-semibold opacity-0 group-hover:opacity-100 transition-all shadow-lg"
+                          className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white text-[10px] sm:text-xs px-2 py-1 sm:px-3 sm:py-1.5 rounded-md sm:rounded-lg font-semibold opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all shadow-lg touch-manipulation"
                         >
                           Remove
                         </button>
@@ -306,7 +306,7 @@ export default function PersonalDetailsForm({
             </div>
           </div>
 
-          <div className="flex gap-3 pt-4 justify-end">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 pt-3 sm:pt-4 justify-end">
             <Button
               variant={loading ? "disabled" : "secondary"}
               btnText="Back"

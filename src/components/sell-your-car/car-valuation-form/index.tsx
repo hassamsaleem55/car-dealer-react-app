@@ -68,29 +68,29 @@ export default function CarValuationForm({
   };
 
   return (
-    <div className="max-w-5xl mx-auto rounded-2xl bg-linear-to-br from-white via-gray-50/50 to-white shadow-2xl border border-gray-200/60 overflow-hidden">
-      <div className="p-10 md:p-14 flex flex-col items-center justify-center gap-4">
-        <div className="text-center mb-6">
-          <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter text-gray-900 mb-3">
+    <div className="w-full max-w-5xl mx-auto rounded-lg sm:rounded-xl md:rounded-2xl bg-white shadow-lg sm:shadow-xl md:shadow-2xl border border-gray-200 overflow-hidden">
+      <div className="p-6 sm:p-8 md:p-10 lg:p-14 flex flex-col items-center justify-center gap-4 md:gap-5">
+        <div className="text-center mb-2 md:mb-4">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter text-gray-900 mb-3">
             Sell My Car
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl leading-relaxed">
+          <p className="text-gray-600 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed px-2">
             <span className="font-bold text-primary">Get a free valuation</span>{" "}
             from our experts, plus free home collection with same-day payment.
           </p>
         </div>
 
-        <div className="w-full bg-linear-to-br from-white to-gray-50/50 p-3 rounded-2xl shadow-xl border border-gray-200/60 flex flex-col md:flex-row gap-3">
+        <div className="w-full bg-gray-50 p-3 sm:p-4 rounded-xl border border-gray-200 flex flex-col md:flex-row gap-3">
           {/* Registration Input */}
-          <div className="relative flex-1 group">
+          <div className="relative flex-1">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-              <img className="w-10" src="../images/uk-flag.png" />
+              <img className="w-8 sm:w-9" src="../images/uk-flag.png" alt="UK Flag" />
             </div>
             <input
               type="text"
               placeholder="ENTER REG"
               maxLength={8}
-              className="w-full h-16 pl-16 pr-4 bg-white rounded-xl text-2xl uppercase font-bold border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-sm"
+              className="w-full h-14 sm:h-14 md:h-16 pl-14 sm:pl-14 md:pl-16 pr-4 bg-white rounded-lg text-xl sm:text-xl md:text-2xl uppercase font-bold border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-sm touch-manipulation"
               value={formData.regNo}
               onChange={(e) =>
                 updateFormData({
@@ -105,7 +105,7 @@ export default function CarValuationForm({
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-auto h-9 text-gray-500"
+                className="w-7 h-7 sm:w-8 sm:h-8 md:h-9 text-gray-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -118,7 +118,7 @@ export default function CarValuationForm({
             <input
               type="number"
               placeholder="Mileage"
-              className="w-full h-16 pl-16 pr-4 bg-white rounded-xl text-2xl uppercase font-bold border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-sm"
+              className="w-full h-14 sm:h-14 md:h-16 pl-14 sm:pl-14 md:pl-16 pr-4 bg-white rounded-lg text-xl sm:text-xl md:text-2xl uppercase font-bold border-2 border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-sm touch-manipulation"
               value={formData.mileage}
               onChange={(e) => updateFormData({ mileage: e.target.value })}
             />
@@ -127,10 +127,10 @@ export default function CarValuationForm({
             variant={loading ? "disabled" : "primary"}
             btnIcon={!loading && <ChevronRight className="w-5 h-5" />}
             btnText={loading ? "Searching..." : "Value My Car"}
-            btnTextSize="text-lg"
-            paddingUtilities="px-8"
+            btnTextSize="text-base sm:text-lg"
+            paddingUtilities="px-6 py-4 sm:px-6 sm:py-4 md:px-8 md:py-5"
             widthUtilities="md:w-auto w-full"
-            roundUtilities="rounded-xl"
+            roundUtilities="rounded-lg"
             clickEvent={handleNext}
           />
         </div>
