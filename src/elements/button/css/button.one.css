@@ -41,7 +41,7 @@
 
 /* --- SECONDARY (Top → Bottom Shutter) --- */
 .btn-secondary {
-  @apply bg-white text-primary border-2 border-primary font-semibold;
+  @apply text-primary border-2 border-primary font-semibold;
   /* Ensure sufficient contrast */
   color: oklch(50% 0.179 58.318); /* Darker version of primary for better contrast */
 }

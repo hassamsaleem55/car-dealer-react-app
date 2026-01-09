@@ -7,6 +7,7 @@ export default function Button({
   widthUtilities = "w-full",
   roundUtilities = "rounded-sm",
   paddingUtilities = "px-4 py-2",
+  colorUtilities = "bg-white",
 }: {
   variant: string;
   btnTextSize?: string;
@@ -16,6 +17,7 @@ export default function Button({
   widthUtilities?: string;
   roundUtilities?: string;
   paddingUtilities?: string;
+  colorUtilities?: string;
 }) {
   const hoverClasses: Record<string, string> = {
     rounded: "hover:rounded",
@@ -28,7 +30,7 @@ export default function Button({
   return (
     <button
       type="button"
-      className={`btn btn-${variant} ${btnTextSize} ${widthUtilities} ${roundUtilities} ${paddingUtilities} ${hoverEffect}`}
+      className={`btn btn-${variant} ${btnTextSize} ${widthUtilities} ${roundUtilities} ${paddingUtilities} ${colorUtilities} ${hoverEffect}`}
       onClick={clickEvent}
       aria-label={
         !btnText
