@@ -59,9 +59,6 @@ car-dealer-react-app/
 - ✅ Tree shaking enabled
 - ✅ Image optimization
 - ✅ CSS modules
-- ✅ Service worker & offline support
-- ✅ Web Vitals monitoring
-- ✅ Lighthouse Performance: 90-100
 
 **SEO Optimized**
 - ✅ Dynamic meta tags
@@ -153,11 +150,7 @@ npm run build
 
 ## 📚 Documentation
 
-- **[Development Guide](./.github/copilot-instructions.md)** - Detailed development patterns
-- **[Performance Guide](./PERFORMANCE.md)** - Lighthouse optimization details
-- **[Quick Start Testing](./QUICK_START_TESTING.md)** - How to run performance tests
-- **[Optimization Summary](./OPTIMIZATION_SUMMARY.md)** - All improvements made
-- **[Bundle Optimization](./BUNDLE_OPTIMIZATION.md)** - Reduce bundle sizes
+See [.github/copilot-instructions.md](./.github/copilot-instructions.md) for detailed development guide.
 
 ---
 

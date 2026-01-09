@@ -50,11 +50,10 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
       <div className={styles["car-card__image-wrapper"]}>
         <img
           src={profilePicture}
-          alt={`${year} ${title} - View car details`}
+          alt={`${title}`}
           className={styles["car-card__img"]}
           loading="lazy"
           decoding="async"
-          fetchPriority="low"
           width="800"
           height="600"
         />

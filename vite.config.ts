@@ -23,9 +23,9 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       modulePreload: {
-        polyfill: true,
+        polyfill: false,
         resolveDependencies: (_filename, deps) => {
-          // Preload critical chunks only
+          // Only preload React core - everything else lazy loads
           return deps.filter(dep => 
             dep.includes('react.js') || 
             dep.includes('react-dom') || 
@@ -36,7 +36,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks(id) {
-            // Core React - highest priority
+            // Core React
             if (id.includes('node_modules/react/') && !id.includes('react-dom') && !id.includes('react-router') && !id.includes('react-qr')) {
               return 'react';
             }
@@ -47,7 +47,7 @@ export default defineConfig(({ mode }) => {
               return 'router';
             }
             
-            // Heavy libraries - separate chunks for better caching
+            // Heavy libraries - separate chunks
             if (id.includes('node_modules')) {
               if (id.includes('framer-motion')) return 'framer';
               if (id.includes('swiper')) return 'swiper';
@@ -60,43 +60,23 @@ export default defineConfig(({ mode }) => {
               return 'vendor';
             }
             
-            // Page-based chunks for better code splitting
+            // Pages
             if (id.includes('/sections/home/')) return 'home';
             if (id.includes('/sections/stock/')) return 'stock';
             if (id.includes('/sections/car-details/')) return 'details-page';
             
-            // Shared sections - split into smaller chunks
+            // Shared sections
             if (id.includes('/sections/shared/')) {
               if (id.includes('featured') || id.includes('brand')) return 'shared-a';
               if (id.includes('testimonial') || id.includes('faq')) return 'shared-b';
               return 'shared-c';
             }
             
-            // Component chunks
+            // Components
             if (id.includes('/components/car-card')) return 'card';
             if (id.includes('/components/filter')) return 'filter';
             if (id.includes('/components/car-details')) return 'details';
           },
-          // Optimize chunk file names for better caching
-          chunkFileNames: () => {
-            return `assets/js/[name]-[hash].js`;
-          },
-          entryFileNames: 'assets/js/[name]-[hash].js',
-          assetFileNames: (assetInfo) => {
-            if (/\.(png|jpe?g|svg|gif|webp|avif)$/.test(assetInfo.name || '')) {
-              return 'assets/images/[name]-[hash][extname]';
-            }
-            if (/\.css$/.test(assetInfo.name || '')) {
-              return 'assets/css/[name]-[hash][extname]';
-            }
-            return 'assets/[name]-[hash][extname]';
-          },
-        },
-        // Optimize tree-shaking
-        treeshake: {
-          moduleSideEffects: false,
-          propertyReadSideEffects: false,
-          unknownGlobalSideEffects: false,
         },
       },
       minify: 'esbuild',
@@ -111,26 +91,9 @@ export default defineConfig(({ mode }) => {
     optimizeDeps: {
       include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
       exclude: [],
-      esbuildOptions: {
-        target: 'es2020',
-      },
     },
     esbuild: {
       drop: mode === 'production' ? ['console', 'debugger'] : [],
-      legalComments: 'none',
-      treeShaking: true,
-    },
-    // Server configuration for development
-    server: {
-      headers: {
-        'Cache-Control': 'public, max-age=31536000',
-      },
-    },
-    // Preview configuration
-    preview: {
-      headers: {
-        'Cache-Control': 'public, max-age=31536000',
-      },
     },
   };
 });
