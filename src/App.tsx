@@ -12,7 +12,7 @@ function AppRouter() {
   const { dealerConfig, dealerData } = useDealerContext();
 
   const router = useMemo(() => {
-    if (!dealerConfig?.pages || !dealerData) return null;
+    if (!dealerConfig || !dealerConfig.pages || !dealerData) return null;
     
     const pages: BaseDealerPage[] = dealerConfig.pages;
 
