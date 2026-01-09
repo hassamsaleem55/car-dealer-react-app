@@ -22,7 +22,9 @@
 
 /* --- PRIMARY (Bottom → Top Shutter) --- */
 .btn-primary {
-  @apply bg-primary text-white;
+  @apply bg-primary text-white font-bold;
+  /* Improved contrast for accessibility */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary::before {
@@ -39,7 +41,9 @@
 
 /* --- SECONDARY (Top → Bottom Shutter) --- */
 .btn-secondary {
-  @apply bg-white text-primary border-1 border-primary;
+  @apply bg-white text-primary border-2 border-primary font-semibold;
+  /* Ensure sufficient contrast */
+  color: oklch(50% 0.179 58.318); /* Darker version of primary for better contrast */
 }
 .btn-secondary::before {
   @apply bg-primary top-0;
@@ -56,7 +60,9 @@
 
 /* --- PRIMARY NO HOVER (Static) --- */
 .btn-primary-no-hover {
-  @apply bg-primary text-white;
+  @apply bg-primary text-white font-bold;
+  /* Improved contrast for accessibility */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary-no-hover::before {

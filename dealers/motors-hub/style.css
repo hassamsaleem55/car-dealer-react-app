@@ -5,7 +5,7 @@
 @import "@components-dir/floating-buttons/css/floating-buttons.css";
 
 @theme {
-  --color-primary: oklch(66.6% 0.179 58.318);
+  --color-primary: oklch(60% 0.179 58.318); /* Darkened for better contrast (was 66.6%) */
   --color-body: oklch(98.5% 0.002 247.839);
   --color-basicFont: oklch(37.3% 0.034 259.733);
   --font-urbanist: "Urbanist", sans-serif;
