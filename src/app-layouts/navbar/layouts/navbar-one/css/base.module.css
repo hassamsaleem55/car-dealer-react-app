@@ -90,9 +90,6 @@
 }
 
 /* Desktop links */
-/* .navbar-links {
-  @apply hidden md:flex items-center gap-6 lg:gap-8;
-} */
 .navbar-links {
   @apply hidden lg:flex gap-5 list-none p-0 m-0;
 }
