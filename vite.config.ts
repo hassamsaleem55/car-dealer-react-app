@@ -1,14 +1,6 @@
 import { defineConfig, loadEnv } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
-import { compression } from 'vite-plugin-compression2';
-import viteImagemin from '@vheemstra/vite-plugin-imagemin';
-// @ts-ignore - no types available
-import imageminWebp from 'imagemin-webp';
-// @ts-ignore - no types available
-import imageminMozjpeg from 'imagemin-mozjpeg';
-// @ts-ignore - no types available
-import imageminPngquant from 'imagemin-pngquant';
 
 import path from "path";
 
@@ -17,37 +9,7 @@ export default defineConfig(({ mode }) => {
   const activeDealer = env.VITE_DEALER;
 
   return {
-    plugins: [
-      react(),
-      tailwindcss(),
-      // Brotli compression for better compression ratio
-      compression({
-        include: /\.(js|css|html|svg)$/,
-        threshold: 1024,
-        algorithms: ['brotliCompress'],
-        deleteOriginalAssets: false,
-      }),
-      // Gzip compression as fallback
-      compression({
-        include: /\.(js|css|html|svg)$/,
-        threshold: 1024,
-        algorithms: ['gzip'],
-        deleteOriginalAssets: false,
-      }),
-      // Image optimization
-      viteImagemin({
-        plugins: {
-          jpg: imageminMozjpeg({ quality: 80 }),
-          png: imageminPngquant({ quality: [0.7, 0.8], speed: 4 }),
-        },
-        makeWebp: {
-          plugins: {
-            jpg: imageminWebp({ quality: 75 }),
-            png: imageminWebp({ quality: 75 }),
-          },
-        },
-      }),
-    ],
+    plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
         "@dealers-dir": path.resolve(__dirname, `./dealers/${activeDealer}`),
@@ -63,12 +25,11 @@ export default defineConfig(({ mode }) => {
       modulePreload: {
         polyfill: true,
         resolveDependencies: (_filename, deps) => {
-          // Preload critical chunks
+          // Preload critical chunks only
           return deps.filter(dep => 
-            dep.includes('react') || 
-            dep.includes('router') ||
-            dep.includes('home') ||
-            dep.includes('vendor')
+            dep.includes('react.js') || 
+            dep.includes('react-dom') || 
+            dep.includes('router')
           );
         },
       },
@@ -141,10 +102,10 @@ export default defineConfig(({ mode }) => {
       minify: 'esbuild',
       cssMinify: 'lightningcss',
       target: 'es2020',
-      chunkSizeWarningLimit: 200,
+      chunkSizeWarningLimit: 250,
       sourcemap: false,
       cssCodeSplit: true,
-      reportCompressedSize: true,
+      reportCompressedSize: false,
       assetsInlineLimit: 4096,
     },
     optimizeDeps: {

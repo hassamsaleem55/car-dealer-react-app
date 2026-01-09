@@ -35,25 +35,15 @@ const addPreconnect = (href: string, crossorigin?: boolean): void => {
   document.head.appendChild(link);
 };
 
-const addDnsPrefetch = (href: string): void => {
-  if (document.querySelector(`link[rel="dns-prefetch"][href="${href}"]`)) return;
-  
-  const link = document.createElement("link");
-  link.rel = "dns-prefetch";
-  link.href = href;
-  document.head.appendChild(link);
-};
-
 const loadFonts = (fontUrl: string, id: string, preload = false): void => {
   if (document.getElementById(id)) return;
 
-  // Preload critical fonts with high priority
+  // Preload critical fonts
   if (preload) {
     const preloadLink = document.createElement("link");
     preloadLink.rel = "preload";
     preloadLink.as = "style";
     preloadLink.href = fontUrl;
-    preloadLink.fetchPriority = "high";
     document.head.appendChild(preloadLink);
   }
 
@@ -61,14 +51,10 @@ const loadFonts = (fontUrl: string, id: string, preload = false): void => {
   link.id = id;
   link.rel = "stylesheet";
   link.href = fontUrl;
-  // Load non-critical fonts asynchronously
-  if (!preload) {
-    link.media = "print";
-    link.onload = function() {
-      (this as HTMLLinkElement).media = "all";
-    };
-  }
-  document.head.appendChild(link);
+  link.media = "print";
+  link.onload = function() {
+    (this as HTMLLinkElement).media = "all";
+  };
 
   // Add noscript fallback
   const noscript = document.createElement("noscript");
@@ -77,6 +63,8 @@ const loadFonts = (fontUrl: string, id: string, preload = false): void => {
   noscriptLink.href = fontUrl;
   noscript.appendChild(noscriptLink);
   document.head.appendChild(noscript);
+
+  document.head.appendChild(link);
 };
 
 const updateMetaTag = (attribute: "name" | "property", key: string, content: string): void => {
@@ -139,25 +127,22 @@ export default function MetaManager() {
 
     // Setup Preconnects
     PRECONNECTS.forEach(({ href, crossorigin }) => addPreconnect(href, crossorigin));
-    // Add API preconnect for faster API requests
-    addPreconnect(import.meta.env.VITE_API_BASE_URL || 'https://api.motors-hub.co.uk', false);
-    addDnsPrefetch(import.meta.env.VITE_API_BASE_URL || 'https://api.motors-hub.co.uk');
 
     // Load Fonts - preload critical, lazy load others
     loadFonts(FONTS.BASE, "base-fonts", true); // Preload critical fonts
     
-    // Lazy load secondary fonts using requestIdleCallback with shorter timeout
+    // Lazy load secondary fonts using requestIdleCallback
     if ('requestIdleCallback' in window) {
       requestIdleCallback(() => {
         loadFonts(FONTS.DEALER, "dealer-font");
         loadFonts(FONTS.SERIF, "serif-font");
-      }, { timeout: 1000 });
+      }, { timeout: 2000 });
     } else {
       // Fallback for browsers without requestIdleCallback
       setTimeout(() => {
         loadFonts(FONTS.DEALER, "dealer-font");
         loadFonts(FONTS.SERIF, "serif-font");
-      }, 50);
+      }, 100);
     }
 
     // Update Title
