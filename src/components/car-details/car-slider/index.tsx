@@ -288,22 +288,22 @@ export default function CarSlider({ isReserved, images }: any) {
               {images.length > 1 && (
                 <>
                   <button 
-                    className="gallery-nav-prev absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-20 bg-black/50 backdrop-blur-md border border-white/20 hover:bg-black/70 hover:border-white/40 text-white p-2.5 md:p-3.5 rounded-full transition-all duration-300 shadow-2xl hover:scale-110 active:scale-95"
+                    className="gallery-nav-prev absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-20 bg-black/50 backdrop-blur-md border border-white/20 hover:bg-black/70 hover:border-white/40 text-white p-2 md:p-3.5 rounded-full transition-all duration-300 shadow-2xl hover:scale-110 active:scale-95 cursor-pointer"
                     onClick={(e) => {
                       e.stopPropagation();
                       navigateGallery("prev");
                     }}
                   >
-                    <ChevronLeft className="w-6 h-6 md:w-7 md:h-7" />
+                    <ChevronLeft className="w-4 h-4 md:w-7 md:h-7" />
                   </button>
                   <button 
-                    className="gallery-nav-next absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-20 bg-black/50 backdrop-blur-md border border-white/20 hover:bg-black/70 hover:border-white/40 text-white p-2.5 md:p-3.5 rounded-full transition-all duration-300 shadow-2xl hover:scale-110 active:scale-95"
+                    className="gallery-nav-next absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-20 bg-black/50 backdrop-blur-md border border-white/20 hover:bg-black/70 hover:border-white/40 text-white p-2 md:p-3.5 rounded-full transition-all duration-300 shadow-2xl hover:scale-110 active:scale-95 cursor-pointer"
                     onClick={(e) => {
                       e.stopPropagation();
                       navigateGallery("next");
                     }}
                   >
-                    <ChevronRight className="w-6 h-6 md:w-7 md:h-7" />
+                    <ChevronRight className="w-4 h-4 md:w-7 md:h-7" />
                   </button>
                 </>
               )}
