@@ -10,18 +10,18 @@ const PRECACHE_URLS = [
 ];
 
 // Install event - precache critical assets
-self.addEventListener('install', (event: ExtendableEvent) => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(PRECACHE_URLS);
     })
   );
   // Force the waiting service worker to become the active service worker
-  (self as any).skipWaiting();
+  self.skipWaiting();
 });
 
 // Activate event - clean up old caches
-self.addEventListener('activate', (event: ExtendableEvent) => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -32,11 +32,11 @@ self.addEventListener('activate', (event: ExtendableEvent) => {
     })
   );
   // Claim all clients immediately
-  (self as any).clients.claim();
+  self.clients.claim();
 });
 
 // Fetch event - network first, fallback to cache for better freshness
-self.addEventListener('fetch', (event: FetchEvent) => {
+self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
@@ -51,12 +51,11 @@ self.addEventListener('fetch', (event: FetchEvent) => {
     return;
   }
 
-  // Static assets - cache first, fallback to network
+  // Static assets - cache first with stale-while-revalidate for images
   if (
     request.destination === 'script' ||
     request.destination === 'style' ||
-    request.destination === 'font' ||
-    request.destination === 'image'
+    request.destination === 'font'
   ) {
     event.respondWith(
       caches.match(request).then((cachedResponse) => {
@@ -79,6 +78,27 @@ self.addEventListener('fetch', (event: FetchEvent) => {
 
           return response;
         });
+      })
+    );
+    return;
+  }
+
+  // Images - stale-while-revalidate strategy for better UX
+  if (request.destination === 'image') {
+    event.respondWith(
+      caches.match(request).then((cachedResponse) => {
+        const fetchPromise = fetch(request).then((response) => {
+          if (response && response.status === 200) {
+            const responseToCache = response.clone();
+            caches.open(RUNTIME_CACHE).then((cache) => {
+              cache.put(request, responseToCache);
+            });
+          }
+          return response;
+        }).catch(() => cachedResponse);
+
+        // Return cached response immediately, update in background
+        return cachedResponse || fetchPromise;
       })
     );
     return;

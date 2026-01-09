@@ -10,22 +10,30 @@
     <link rel="manifest" href="/manifest.json" />
     
     <!-- Preconnect to critical origins -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://api.motors-hub.co.uk" />
     
-    <!-- DNS Prefetch for faster resolution -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <!-- Preload critical fonts -->
+    <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjg.woff2" as="font" type="font/woff2" crossorigin />
     
     <!-- Critical CSS will be injected by Vite -->
     <style>
       /* Prevent layout shift during loading */
+      *{box-sizing:border-box;margin:0;padding:0}
+      html{-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+      body{margin:0;font-family:Inter,system-ui,-apple-system,sans-serif;background:#f9fafb;line-height:1.5;color:#111827}
       #root{min-height:100vh;display:flex;flex-direction:column}
-      body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#f9fafb}
       /* Loading spinner */
-      .initial-loader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999}
+      .initial-loader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;background:#f9fafb}
       .loader-spinner{width:40px;height:40px;border:4px solid #e5e7eb;border-top-color:#3b82f6;border-radius:50%;animation:spin 0.8s linear infinite}
       @keyframes spin{to{transform:rotate(360deg)}}
+      /* Prevent FOUT */
+      img{display:block;max-width:100%;height:auto}
+      video{max-width:100%;height:auto}
+      /* Reserve space for hero section to reduce CLS */
+      .hero-section{min-height:600px}
+      @media(min-width:768px){.hero-section{min-height:700px}}
     </style>
   </head>
   <body>
