@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import dealerConfig from "@dealers-dir/setup.json";
-import { getDealerData } from "./helpers/DealerDataProcessor.ts";
+import { getDealerData } from "./helpers/DealerDataProcessor";
 import PageLoader from "@app-layout-dir/PageLoader";
 
 interface DealerContextType {

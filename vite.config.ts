@@ -25,18 +25,26 @@ export default defineConfig(({ mode }) => {
       modulePreload: {
         polyfill: false,
         resolveDependencies: (_filename, deps) => {
-          // Only preload React vendor bundle
+          // Only preload React core - everything else lazy loads
           return deps.filter(dep => 
-            dep.includes('react-vendor')
+            dep.includes('react.js') || 
+            dep.includes('react-dom') || 
+            dep.includes('router')
           );
         },
       },
       rollupOptions: {
         output: {
           manualChunks(id) {
-            // Core React - keep together to prevent duplicate instances
-            if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('node_modules/react-router')) {
-              return 'react-vendor';
+            // Core React
+            if (id.includes('node_modules/react/') && !id.includes('react-dom') && !id.includes('react-router') && !id.includes('react-qr')) {
+              return 'react';
+            }
+            if (id.includes('node_modules/react-dom/')) {
+              return 'react-dom';
+            }
+            if (id.includes('node_modules/react-router')) {
+              return 'router';
             }
             
             // Heavy libraries - separate chunks

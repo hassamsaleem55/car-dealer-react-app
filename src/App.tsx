@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { DealerProvider, useDealerContext } from "@core-dir/dealer-provider";
 import { PageMetaProvider } from "@core-dir/page-meta-context";
 import ErrorBoundary from "@core-dir/ErrorBoundary";
@@ -11,14 +11,14 @@ import PaymentResponse from "./pages/PaymentResponse";
 function AppRouter() {
   const { dealerConfig, dealerData } = useDealerContext();
 
-  const routes = useMemo(() => {
+  const router = useMemo(() => {
     if (!dealerConfig?.pages || !dealerData) return null;
     
     const pages: BaseDealerPage[] = dealerConfig.pages;
 
-    return pages
+    const childRoutes: any = pages
       .filter((page: BaseDealerPage) => {
-        // Exclude finance page if dealer doesn't have FCANumber
+        // Exclude finance page if dealer has FCANumber
         if (page.pageName === "finance" && !dealerData.FCANumber) {
           return false;
         }
@@ -27,48 +27,40 @@ function AppRouter() {
       .map((page: BaseDealerPage) => {
         const isHome = page.path === "/";
 
-        if (isHome) {
-          return (
-            <Route
-              key={page.pageName}
-              index
-              element={<PageRenderer page={page} />}
-            />
-          );
-        }
-
-        return (
-          <Route
-            key={page.pageName}
-            path={page.path || undefined}
-            element={<PageRenderer page={page} />}
-          />
-        );
+        return {
+          index: isHome,
+          path: isHome ? undefined : page.path,
+          element: <PageRenderer key={page.pageName} page={page} />,
+        };
       });
+
+    // Add the PaymentResponse route
+    childRoutes.push({
+      path: "/Payment/PaymentResponse",
+      element: <PaymentResponse />,
+    });
+
+    return createBrowserRouter([
+      {
+        element: <Layout />,
+        children: childRoutes,
+      },
+    ]);
   }, [dealerConfig?.pages, dealerData?.FCANumber]);
 
-  if (!routes) return null;
+  if (!router) return null;
 
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          {routes}
-          <Route path="/Payment/PaymentResponse" element={<PaymentResponse />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default function App() {
   return (
     <ErrorBoundary>
-      <PageMetaProvider>
-        <DealerProvider>
+      <DealerProvider>
+        <PageMetaProvider>
           <AppRouter />
-        </DealerProvider>
-      </PageMetaProvider>
+        </PageMetaProvider>
+      </DealerProvider>
     </ErrorBoundary>
   );
 }
