@@ -181,6 +181,7 @@ export default function index({ styles }: { styles: any }) {
               variant="secondary"
               btnTextSize="text-base"
               roundUtilities="rounded-xl"
+              colorUtilities="bg-transparent! text-primary! hover:text-white!"
               btnText="Contact Us"
             />
           </Link>

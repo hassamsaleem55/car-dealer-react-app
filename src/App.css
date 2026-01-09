@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "@dealers-dir/style.css";
 
+/* Critical CSS - Keep minimal for faster FCP */
+
 /* Focus visible for keyboard navigation accessibility */
 *:focus-visible {
   @apply outline-2 outline-offset-2 outline-primary;
@@ -11,21 +13,23 @@
   @apply absolute -top-full left-0 z-9999 bg-primary text-white px-4 py-2 focus:top-0;
 }
 
-/* Scrollbar styles */
-::-webkit-scrollbar {
-  @apply w-2;
-}
-::-webkit-scrollbar-track {
-  @apply bg-gray-100;
-}
-::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 rounded;
-}
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400;
+/* Optimized scrollbar styles - Load after critical render */
+@layer utilities {
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400;
+  }
 }
 
-/* Reduced motion support for accessibility */
+/* Reduced motion support for accessibility - Critical for a11y */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -37,7 +41,7 @@
   }
 }
 
-/* Slide up animation for mobile filters */
+/* Optimized animations - will-change for GPU acceleration */
 @keyframes slideUp {
   from {
     transform: translateY(100%);
@@ -47,6 +51,17 @@
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+/* Performance: Use GPU-accelerated properties */
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+/* Remove will-change after animation completes */
+.animate-slide-up:not(.animating) {
+  will-change: auto;
 }
 
 .animate-slideUp {

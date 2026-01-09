@@ -12,8 +12,11 @@ interface MetaTag {
 
 // Constants
 const FONTS = {
-  BASE: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Urbanist:wght@400;500;600;700&display=swap",
+  // Critical font - preload immediately with display=swap
+  BASE: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Urbanist:wght@400;500;600;700&display=swap",
+  // Secondary fonts - load with higher swap period
   DEALER: "https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap",
+  SERIF: "https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap",
 } as const;
 
 const PRECONNECTS = [
@@ -32,28 +35,34 @@ const addPreconnect = (href: string, crossorigin?: boolean): void => {
   document.head.appendChild(link);
 };
 
-const loadFonts = (fontUrl: string, id: string, lazy = false): void => {
+const loadFonts = (fontUrl: string, id: string, preload = false): void => {
   if (document.getElementById(id)) return;
+
+  // Preload critical fonts
+  if (preload) {
+    const preloadLink = document.createElement("link");
+    preloadLink.rel = "preload";
+    preloadLink.as = "style";
+    preloadLink.href = fontUrl;
+    document.head.appendChild(preloadLink);
+  }
 
   const link = document.createElement("link");
   link.id = id;
   link.rel = "stylesheet";
   link.href = fontUrl;
+  link.media = "print";
+  link.onload = function() {
+    (this as HTMLLinkElement).media = "all";
+  };
 
-  if (lazy) {
-    link.media = "print";
-    link.onload = function() {
-      (this as HTMLLinkElement).media = "all";
-    };
-
-    // Add noscript fallback
-    const noscript = document.createElement("noscript");
-    const noscriptLink = document.createElement("link");
-    noscriptLink.rel = "stylesheet";
-    noscriptLink.href = fontUrl;
-    noscript.appendChild(noscriptLink);
-    document.head.appendChild(noscript);
-  }
+  // Add noscript fallback
+  const noscript = document.createElement("noscript");
+  const noscriptLink = document.createElement("link");
+  noscriptLink.rel = "stylesheet";
+  noscriptLink.href = fontUrl;
+  noscript.appendChild(noscriptLink);
+  document.head.appendChild(noscript);
 
   document.head.appendChild(link);
 };
@@ -119,9 +128,22 @@ export default function MetaManager() {
     // Setup Preconnects
     PRECONNECTS.forEach(({ href, crossorigin }) => addPreconnect(href, crossorigin));
 
-    // Load Fonts
-    loadFonts(FONTS.BASE, "base-fonts", true);
-    loadFonts(FONTS.DEALER, "dealer-font");
+    // Load Fonts - preload critical, lazy load others
+    loadFonts(FONTS.BASE, "base-fonts", true); // Preload critical fonts
+    
+    // Lazy load secondary fonts using requestIdleCallback
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        loadFonts(FONTS.DEALER, "dealer-font");
+        loadFonts(FONTS.SERIF, "serif-font");
+      }, { timeout: 2000 });
+    } else {
+      // Fallback for browsers without requestIdleCallback
+      setTimeout(() => {
+        loadFonts(FONTS.DEALER, "dealer-font");
+        loadFonts(FONTS.SERIF, "serif-font");
+      }, 100);
+    }
 
     // Update Title
     document.title = pageTitle.toUpperCase();

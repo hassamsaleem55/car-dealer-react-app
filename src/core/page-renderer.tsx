@@ -82,7 +82,12 @@ export default function PageRenderer({ page }: { page: BaseDealerPage }) {
         });
 
         return (
-          <React.Suspense key={i}>
+          <React.Suspense 
+            key={i} 
+            fallback={
+              <div className="animate-pulse bg-gray-100 h-64 md:h-96 rounded-lg" />
+            }
+          >
             <Section props={props} />
           </React.Suspense>
         );
