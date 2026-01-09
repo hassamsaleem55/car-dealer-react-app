@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState, useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import Button from "@elements-dir/button";
 import { type Car } from "../car-card.types";
@@ -20,6 +20,17 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
     setReservationCarData: (data: Car) => void;
   }>();
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1280); // xl breakpoint is 1280px
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1280);
+    };
+    
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const {
     stockId,
     title,
@@ -43,9 +54,13 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
   const visibleSpecs = specs
     .filter((s) => specOrder.includes(s.key))
     .sort((a, b) => specOrder.indexOf(a.key) - specOrder.indexOf(b.key));
-    
+
   return (
-    <article className={`${styles["car-card"]} group`} aria-label={`${title} for sale`}>
+    <article
+      className={`${styles["car-card"]} group`}
+      aria-label={`${title} for sale`}
+      onClick={isMobile ? () => navigate(`/car-details?stockId=${stockId}`) : undefined}
+    >
       {/* Image */}
       <div className={styles["car-card__image-wrapper"]}>
         <img
@@ -57,9 +72,9 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
           width="800"
           height="600"
         />
-        {/* {isReserved && ( */}
-        <div className={styles["car-card__reserved"]}>Reserved</div>
-        {/* )} */}
+        {isReserved && (
+          <div className={styles["car-card__reserved"]}>Reserved</div>
+        )}
         <div className={styles["car-card__year"]}>{year}</div>
       </div>
 
@@ -229,7 +244,10 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
             }`}
           >
             {hasAutoTraderRating && (
-              <div className="flex flex-col items-start" aria-label="AutoTrader rating">
+              <div
+                className="flex flex-col items-start"
+                aria-label="AutoTrader rating"
+              >
                 <span className="text-sm text-primary font-bold capitalize">
                   {autoTraderRating} Price
                 </span>
@@ -238,7 +256,10 @@ function CarCard({ car, styles }: { car: Car; styles: any }) {
             )}
 
             {hasCarGuruRating && (
-              <div className="flex flex-col items-end" aria-label="CarGuru rating">
+              <div
+                className="flex flex-col items-end"
+                aria-label="CarGuru rating"
+              >
                 <span className="text-sm text-primary font-bold capitalize">
                   {carGuruRating} Price
                 </span>
